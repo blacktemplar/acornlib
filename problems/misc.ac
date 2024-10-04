@@ -1,0 +1,34 @@
+from int import Int
+default Int
+
+// What is 1 - 1 ?
+solve 1 - 1 by {
+    1 - 1 = 0
+}
+
+// What is 0 times 10?
+solve 0 * 10 by {
+    0 * 10 = 0
+}
+
+// Solve 4 + x = 4 for x.
+forall(x: Int) {
+    if 4 + x = 4 {
+        solve x by {
+            x = 0
+        }
+    }
+}
+
+// Given that y - x = 1, solve for x, then for y.
+forall(x: Int, y: Int) {
+    if y - x = 1 {
+        solve x by {
+            x + 1 = y
+            x = y - 1
+        }
+        solve y by {
+            y = x + 1
+        }
+    }
+} 
