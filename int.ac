@@ -155,15 +155,14 @@ theorem fix_neg(a: Int) {
     negate(a) = a -> a = 0
 } by {
     if negate(a) = a {
-        if negate_case_1(a, negate(a)) {
-            let n: Nat satisfy { a = Int.from_nat(n) and negate(a) = neg_nat(n) }
-            Int.from_nat(n) = neg_nat(n)
-            n = Nat.0
-            a = 0
-        } else {
-            negate_case_2(a, negate(a))
-            let n: Nat satisfy { a = Int.neg_suc(n) and negate(a) = Int.from_nat(n.suc) }
-            false
+        match a {
+            Int.from_nat(n) {
+                n = Nat.0
+                a = 0
+            }
+            Int.neg_suc(n) {
+                false
+            }
         }
         a = 0
     }
