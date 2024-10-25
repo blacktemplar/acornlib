@@ -11,30 +11,19 @@ inductive Int {
 
 let from_nat: Nat -> Int = Int.from_nat
 
-// match syntax would be nicer for defining these basic functions on inductive types
-define abs_case_1(a: Int, n: Nat) -> Bool {
-    a = Int.from_nat(n)
-}
-
-define abs_case_2(a: Int, n: Nat) -> Bool {
-    exists(k: Nat) {
-        a = Int.neg_suc(k) and n = k.suc
+define abs(a: Int) -> Nat {
+    match a {
+        Int.from_nat(n) {
+            n
+        }
+        Int.neg_suc(k) {
+            k.suc
+        }
     }
-}
-
-let abs(a: Int) -> n: Nat satisfy {
-    abs_case_1(a, n) or abs_case_2(a, n)
 }
 
 theorem abs_from_nat(n: Nat) {
     abs(Int.from_nat(n)) = n
-} by {
-    if abs_case_1(Int.from_nat(n), abs(Int.from_nat(n))) {
-        abs(Int.from_nat(n)) = n
-    } else {
-        abs_case_2(Int.from_nat(n), abs(Int.from_nat(n)))
-        false
-    }
 }
 
 class Int {
@@ -79,8 +68,6 @@ theorem abs_neg_nat(n: Nat) {
     } else {
         Int.neg_suc(n - Nat.1) = neg_nat(n)
         Int.from_nat(abs(neg_nat(n))) != neg_nat(n)
-        not abs_case_1(neg_nat(n), abs(neg_nat(n)))
-        abs_case_2(neg_nat(n), abs(neg_nat(n)))
         let k: Nat satisfy { neg_nat(n) = Int.neg_suc(k) and abs(neg_nat(n)) = k.suc }
         neg_nat(n) = Int.neg_suc(n - Nat.1)
         k = n - Nat.1
@@ -201,11 +188,13 @@ theorem abs_neg(a: Int) {
 theorem neg_or_pos(a: Int) {
     a = Int.from_nat(abs(a)) or a = negate(Int.from_nat(abs(a)))
 } by {
-    if abs_case_1(a, abs(a)) {
-        a = Int.from_nat(abs(a))
-    } else {
-        abs_case_2(a, abs(a))
-        a = negate(Int.from_nat(abs(a)))
+    match a {
+        Int.from_nat(n) {
+            a = Int.from_nat(abs(a))
+        }
+        Int.neg_suc(n) {
+            a = negate(Int.from_nat(abs(a)))
+        }
     }
 }
 
