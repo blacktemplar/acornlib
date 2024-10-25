@@ -131,23 +131,23 @@ theorem neg_from_nat(n: Nat) {
 theorem neg_neg(a: Int) {
     negate(negate(a)) = a
 } by {
-    if negate_case_1(a, negate(a)) {
-        let n: Nat satisfy { a = Int.from_nat(n) and negate(a) = neg_nat(n) }
-        if n = Nat.0 {
-            negate(negate(a)) = a
-        } else {
-            let pred: Nat satisfy { n = pred.suc }
-            negate(a) = Int.neg_suc(n - Nat.1)
-            n - Nat.1 = pred
-            negate(a) = Int.neg_suc(pred)
-            negate(Int.neg_suc(pred)) = Int.from_nat(pred.suc)
+    match a {
+        Int.from_nat(n) {
+            if n = Nat.0 {
+                negate(negate(a)) = a
+            } else {
+                let pred: Nat satisfy { n = pred.suc }
+                negate(a) = Int.neg_suc(n - Nat.1)
+                n - Nat.1 = pred
+                negate(a) = Int.neg_suc(pred)
+                negate(Int.neg_suc(pred)) = Int.from_nat(pred.suc)
+                negate(negate(a)) = a
+            }
+        }
+        Int.neg_suc(n) {
+            negate(Int.from_nat(n.suc)) = neg_nat(n.suc)
             negate(negate(a)) = a
         }
-    } else {
-        negate_case_2(a, negate(a))
-        let n: Nat satisfy { a = Int.neg_suc(n) and negate(a) = Int.from_nat(n.suc) }
-        negate(Int.from_nat(n.suc)) = neg_nat(n.suc)
-        negate(negate(a)) = a
     }
 }
 
