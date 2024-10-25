@@ -118,35 +118,14 @@ theorem backward_compat(a: Int) {
 
 theorem neg_zero {
     negate(0) = 0
-} by {
-    if negate_case_1(0, negate(0)) {
-        negate(0) = 0
-    } else {
-        negate_case_2(0, negate(0))
-        false
-    }
 }
 
 theorem neg_neg_suc(n: Nat) {
     negate(Int.neg_suc(n)) = Int.from_nat(n.suc)
-} by {
-    if negate_case_1(Int.neg_suc(n), negate(Int.neg_suc(n))) {
-        false
-    } else {
-        negate_case_2(Int.neg_suc(n), negate(Int.neg_suc(n)))
-        negate(Int.neg_suc(n)) = Int.from_nat(n.suc)
-    }
 }
 
 theorem neg_from_nat(n: Nat) {
     negate(Int.from_nat(n)) = neg_nat(n)
-} by {
-    if negate_case_1(Int.from_nat(n), negate(Int.from_nat(n))) {
-        negate(Int.from_nat(n)) = neg_nat(n)
-    } else {
-        negate_case_2(Int.from_nat(n), negate(Int.from_nat(n)))
-        false
-    }
 }
 
 theorem neg_neg(a: Int) {
