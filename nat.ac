@@ -20,7 +20,17 @@ class Nat {
     let 8: Nat = Nat.7.suc
     let 9: Nat = Nat.8.suc
     let 10: Nat = Nat.9.suc
-    define add(self, b: Nat) -> Nat { repeat(Nat.suc, self, b) }
+
+    define add(self, other: Nat) -> Nat {
+        match other {
+            Nat.0 {
+                self
+            }
+            Nat.suc(pred) {
+                self.add(pred).suc
+            }
+        }
+    }
 }
 
 numerals Nat
@@ -51,8 +61,6 @@ theorem add_zero_left(a: Nat) { 0 + a = a } by {
 
 theorem add_suc_right(a: Nat, b: Nat) {
     a + b.suc = (a + b).suc
-} by {
-    repeat(Nat.suc, a, b).suc = a + b.suc
 }
 
 theorem add_suc_left(a: Nat, b: Nat) { a.suc + b = (a + b).suc } by {
