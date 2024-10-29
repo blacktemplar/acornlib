@@ -1,5 +1,5 @@
-// The axioms of arithmetic.
-// Contains enough detail that we can prove these with "check".
+// Natural numbers, the soul of arithmetic.
+// We build natural numbers from Acorn's inherent properties of inductive types.
 inductive Nat {
     0
     suc(Nat)
