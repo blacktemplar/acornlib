@@ -149,7 +149,14 @@ theorem add_assoc(a: Nat, b: Nat, c: Nat) { a + b + c = a + (b + c) } by {
 
 class Nat {
     define mul(self, b: Nat) -> Nat {
-        repeat(Nat.add(self), 0, b)
+        match b {
+            Nat.0 {
+                0
+            }
+            Nat.suc(pred) {
+                self.mul(pred) + self
+            }
+        }
     }
 
     define read(self, other: Nat) -> Nat {
@@ -164,8 +171,6 @@ theorem mul_zero_left(a: Nat) { 0 * a = 0 } by {
     forall(x: Nat) {
         if mul_zero_left(x) {
             0 + 0 * x = 0
-            0 + repeat(0.add, 0, x) = 0
-            repeat(0.add, 0, x.suc) = 0
             0 * x.suc = 0
             mul_zero_left(x.suc)
         }
@@ -175,10 +180,6 @@ theorem mul_zero_left(a: Nat) { 0 * a = 0 } by {
 
 theorem mul_suc_right(a: Nat, b: Nat) {
     a * b.suc = a + a * b
-} by {
-    repeat(a.add, 0, b) = a * b
-    a + repeat(a.add, 0, b) = repeat(a.add, 0, b.suc)
-    repeat(a.add, 0, b.suc) = a * b.suc
 }
 
 theorem mul_suc_left(a: Nat, b: Nat) { a.suc * b = b + a * b } by {
