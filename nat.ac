@@ -306,6 +306,10 @@ class Nat {
     define lte(self, b: Nat) -> Bool { exists(c: Nat) { self + c = b } }
 
     define lt(self, b: Nat) -> Bool { self <= b and self != b }
+
+    define gt(self, b: Nat) -> Bool { b < self }
+
+    define gte(self, b: Nat) -> Bool { b <= self }
 }
 
 theorem lt_not_ref(a: Nat) { not (a < a) }

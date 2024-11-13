@@ -1266,6 +1266,8 @@ theorem mul_assoc(a: Int, b: Int, c: Int) { a * b * c = a * (b * c) } by {
 class Int {
     define lt(self, b: Int) -> Bool { is_positive(b - self) }
     define lte(self, b: Int) -> Bool { (self < b) or self = b }
+    define gt(self, b: Int) -> Bool { b < self }
+    define gte(self, b: Int) -> Bool { b <= self }
 }
 
 theorem lt_not_ref(a: Int) { not (a < a) } by {
