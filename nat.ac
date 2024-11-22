@@ -1240,3 +1240,11 @@ theorem divides_unmod(d: Nat, a: Nat, m: Nat) {
         false
     }
 }
+
+// Misc helpers
+theorem two_neq_zero {
+    2 != 0
+}
+theorem three_neq_zero {
+    3 != 0
+}
