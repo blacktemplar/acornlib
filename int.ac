@@ -77,20 +77,16 @@ theorem abs_neg_nat(n: Nat) {
     }
 }
 
-define negate(a: Int) -> Int {
-    match a {
-        Int.from_nat(n) {
-            neg_nat(n)
-        }
-        Int.neg_suc(n) {
-            Int.from_nat(n.suc)
-        }
-    }
-}
-
 class Int {
     define neg(self) -> Int {
-        negate(self)
+        match self {
+            Int.from_nat(n) {
+                neg_nat(n)
+            }
+            Int.neg_suc(n) {
+                Int.from_nat(n.suc)
+            }
+        }
     }
 }
 
