@@ -95,19 +95,19 @@ class Int {
 }
 
 theorem neg_zero {
-    negate(0) = 0
+    -0 = 0
 }
 
 theorem neg_neg_suc(n: Nat) {
-    negate(Int.neg_suc(n)) = Int.from_nat(n.suc)
+    -Int.neg_suc(n) = Int.from_nat(n.suc)
 }
 
 theorem neg_from_nat(n: Nat) {
-    negate(Int.from_nat(n)) = neg_nat(n)
+    -Int.from_nat(n) = neg_nat(n)
 }
 
 theorem neg_neg(a: Int) {
-    negate(negate(a)) = a
+    -(-a) = a
 } by {
     match a {
         Int.from_nat(n) {
@@ -130,7 +130,7 @@ theorem neg_neg(a: Int) {
 }
 
 theorem fix_neg(a: Int) {
-    negate(a) = a -> a = 0
+    -a = a -> a = 0
 } by {
     if negate(a) = a {
         match a {
@@ -147,7 +147,7 @@ theorem fix_neg(a: Int) {
 }
 
 theorem abs_neg(a: Int) {
-    abs(negate(a)) = abs(a)
+    abs(-a) = abs(a)
 } by {
     match a {
         Int.from_nat(n) {
