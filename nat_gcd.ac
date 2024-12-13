@@ -365,3 +365,17 @@ theorem mod_maintains_imp_gcd(f: Nat -> Bool, a: Nat, b: Nat) {
     f(gcd_step_n(p, num_gcd_steps(p)).first)
     f(gcd(a, b))
 }
+
+theorem gcd_one_right(a: Nat) {
+    gcd(a, 1) = 1
+}
+
+theorem gcd_one_left(a: Nat) {
+    gcd(1, a) = 1
+}
+
+// theorem gcd_mult_left(a: Nat, b: Nat, m: Nat) {
+//     m * gcd(a, b) = gcd(m * a, m * b)
+// } by {
+//     divides(m * gcd(a, b), gcd(m * a, m * b))
+// }
