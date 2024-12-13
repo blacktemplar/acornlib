@@ -1913,23 +1913,31 @@ theorem gcd_of_prime(p: Int, n: Int) {
     }
 }
 
-theorem euclids_lemma(p: Int, a: Int, b: Int) {
-    is_prime(p) and divides(p, a * b) -> divides(p, a) or divides(p, b)
+// Generalized version
+theorem euclids_lemma(a: Int, b: Int, c: Int) {
+    gcd(a, b) = 1 and divides(a, b * c) -> divides(a, c)
 } by {
-    if not divides(p, a) {
-        gcd(p, a) = 1
-        spans(p, a, 1)
-        let (x: Int, y: Int) satisfy {
-            x * p + y * a = 1
-        }
-        x * p + y * a = 1
-        x * p * b + y * a * b = b
-        let d: Int satisfy {
-            d * p = a * b
-        }
-        x * p * b + y * d * p = b
-        p * x * b + p * y * d = b
-        p * (x * b + y * d) = b
-        divides(p, b)
+    spans(a, b, 1)
+    let (x: Int, y: Int) satisfy {
+        x * a + y * b = 1
+    }
+    x * a * c + y * b * c = c
+    let d: Int satisfy {
+        d * a = b * c
+    }
+    x * a * c + y * d * a = c
+    a * x * c + a * y * d = c
+    a * (x * c + y * d) = c
+    divides(a, c)
+}
+
+theorem euclids_lemma_prime(a: Int, b: Int, c: Int) {
+    is_prime(a) and divides(a, b * c) -> divides(a, b) or divides(a, c)
+} by {
+    if divides(a, b) {
+        divides(a, b)
+    } else {
+        gcd(a, b) = 1
+        divides(a, c)
     }
 }
