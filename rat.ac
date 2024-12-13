@@ -69,6 +69,14 @@ define rat_cross_equals(r: Rat, a: Int, b: Int) -> Bool {
     cross_equals(r.num, r.denom, a, b)
 }
 
+theorem rat_cross_equals_trans(r: Rat, a: Int, b: Int, c: Int, d: Int) {
+    rat_cross_equals(r, a, b) and cross_equals(a, b, c, d) -> rat_cross_equals(r, c, d)
+} by {
+    cross_equals(r.num, r.denom, a, b)
+    cross_equals(r.num, r.denom, c, d)
+    cross_equals(a, b, c, d)
+}
+
 // Either zero, or a / b reduced to simplest form.
 let reduce(a: Int, b: Int) -> r: Rat satisfy {
     if b = 0 {
@@ -89,17 +97,23 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
             b1 * gcd(a, b) = b
         }
         b1 != 0
+        a * b = a * b1 * gcd(a, b)
+        a * b = b * a1 * gcd(a, b)
+        a * b1 * gcd(a, b) = b * a1 * gcd(a, b)
+        a * b1 = b * a1
+        cross_equals(a1, b1, a, b)
         gcd(a1, b1) = 1
 
         // To reduce we also need to swap signs if the denominator is negative
         let a2: Int = a1 * int.unit_sign(b1)
         let b2: Int = b1 * int.unit_sign(b1)
         b2 = Int.from_nat(abs(b1))
+        b2 != 0
+        (a1 * int.unit_sign(b1)) * b1 = (b1 * int.unit_sign(b1)) * a1
+        cross_equals(a2, b2, a1, b1)
         gcd(a2, b2) = 1 * Int.from_nat(abs(int.unit_sign(b1)))
         Int.from_nat(abs(int.unit_sign(b1))) = 1
         gcd(a2, b2) = 1
-        a2 * (int.unit_sign(b1) * gcd(a, b)) = a
-        b2 * (int.unit_sign(b1) * gcd(a, b)) = b
         b2 != 0
         is_reduced(a2, b2)
 
@@ -107,6 +121,7 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         r.num = a2
         r.denom = b2
         rat_cross_equals(r, a2, b2)
+        cross_equals(a2, b2, a, b)
         rat_cross_equals(r, a, b)
     }
 }
