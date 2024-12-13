@@ -39,12 +39,16 @@ theorem from_int_denom(n: Int) {
     Rat.from_int(n).denom = Nat.1
 }
 
+define equals_reduced(r: Rat, a: Int, b: Int) -> Bool {
+    r.num * b = Int.from_nat(r.denom) * a
+}
+
 // Either zero, or a / b reduced to simplest form.
 let reduce_nat(a: Nat, b: Nat) -> r: Rat satisfy {
     if b = Nat.0 {
         r = Rat.0
     } else {
-        not int.is_negative(r.num) and abs(r.num) * b = r.denom * a
+        equals_reduced(r, Int.from_nat(a), Int.from_nat(b))
     }
 } by {
     if b = Nat.0 {
@@ -62,11 +66,46 @@ let reduce_nat(a: Nat, b: Nat) -> r: Rat satisfy {
 
         let r: Rat = Rat.new(Int.from_nat(a1), b1)
         r.num = Int.from_nat(a1)
-        not int.is_negative(Int.from_nat(a1))
-        not int.is_negative(r.num)
         r.denom = b1
-        abs(r.num) = a1
         a1 * b = b1 * a
-        not int.is_negative(r.num) and abs(r.num) * b = r.denom * a
+        r.num * Int.from_nat(b) = Int.from_nat(r.denom * a)
+        equals_reduced(r, Int.from_nat(a), Int.from_nat(b))
+    }
+}
+
+let reduce_int(a: Int, b: Int) -> r: Rat satisfy {
+    if b = 0 {
+        r = Rat.0
+    } else {
+        equals_reduced(r, a, b)
+    }
+} by {
+    if b = 0 {
+        Rat.0 = Rat.0
+    } else {
+        let r_abs: Rat = reduce_nat(abs(a), abs(b))
+        equals_reduced(r_abs, Int.from_nat(abs(a)), Int.from_nat(abs(b)))
+        Int.from_nat(abs(b)) = b * int.unit_sign(b)
+        Int.from_nat(abs(a)) = a * int.unit_sign(a)
+        r_abs.num * Int.from_nat(abs(b)) = Int.from_nat(r_abs.denom) * Int.from_nat(abs(a))
+        r_abs.num * b * int.unit_sign(b) = Int.from_nat(r_abs.denom) * a * int.unit_sign(a)
+        r_abs.num * b * int.unit_sign(b) * int.unit_sign(a) = Int.from_nat(r_abs.denom) * a
+
+        // reduce_int will be the same as reduce_nat, except for this sign.
+        let sign: Int = int.unit_sign(a) * int.unit_sign(b)
+        abs(int.unit_sign(a)) = Nat.1
+        abs(int.unit_sign(b)) = Nat.1
+        abs(sign) = Nat.1
+
+        r_abs.num * b * sign = Int.from_nat(r_abs.denom) * a
+        (r_abs.num * sign) * b = Int.from_nat(r_abs.denom) * a
+
+        abs(r_abs.num * sign) = abs(r_abs.num) * abs(sign)
+        abs(r_abs.num) = abs(r_abs.num * sign)
+
+        let r: Rat = Rat.new(r_abs.num * sign, r_abs.denom)
+        gcd(abs(r_abs.num * sign), r_abs.denom) = Nat.1
+        r.denom = r_abs.denom
+        r.num * b = Int.from_nat(r.denom) * a
     }
 }
