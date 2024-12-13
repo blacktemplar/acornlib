@@ -1,0 +1,16 @@
+from nat import Nat
+from int import Int, gcd, abs
+import nat_gcd
+
+numerals Int
+
+structure Rat {
+    num: Int
+    denom: Nat
+} constraint {
+    gcd(num, Int.from_nat(denom)) = 1
+} by {
+    nat_gcd.gcd(Nat.1, Nat.1) = Nat.1
+    gcd(1, 1) = 1
+    gcd(1, Int.from_nat(Nat.1)) = 1
+}
