@@ -12,5 +12,4 @@ structure Rat {
 } by {
     nat_gcd.gcd(Nat.1, Nat.1) = Nat.1
     gcd(1, 1) = 1
-    gcd(1, Int.from_nat(Nat.1)) = 1
 }
