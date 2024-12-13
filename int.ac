@@ -1733,3 +1733,47 @@ theorem spans_gcd(a: Int, b: Int) { spans(a, b, gcd(a, b)) } by {
     f(abs(b))
     spans(a, b, Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))
 }
+
+// More gcd theorems analogous to the Nat gcd
+theorem gcd_one_right(n: Int) {
+    gcd(n, 1) = 1
+} by {
+    nat_gcd.gcd(abs(n), Nat.1) = Nat.1
+}
+
+theorem gcd_one_left(n: Int) {
+    gcd(1, n) = 1
+}
+
+theorem gcd_mult_left(a: Int, b: Int, m: Int) {
+    Int.from_nat(abs(m)) * gcd(a, b) = gcd(m * a, m * b)
+}
+
+theorem gcd_mult_right(a: Int, b: Int, m: Int) {
+    gcd(a, b) * Int.from_nat(abs(m)) = gcd(a * m, b * m)
+}
+
+theorem cofactor(a: Int, b: Int, af: Int, bf: Int) {
+    (
+        gcd(a, b) != 0 and
+        af * gcd(a, b) = a and
+        bf * gcd(a, b) = b
+    ) -> gcd(af, bf) = 1
+} by {
+    nat_gcd.gcd(abs(a), abs(b)) != Nat.0
+    abs(af) * nat_gcd.gcd(abs(a), abs(b)) = abs(a)
+    abs(bf) * nat_gcd.gcd(abs(a), abs(b)) = abs(b)
+    nat_gcd.gcd(abs(af), abs(bf)) = Nat.1
+}
+
+theorem gcd_nonzero_left(a: Int, b: Int) {
+    a != 0 -> gcd(a, b) != 0
+} by {
+    abs(a) != nat.0
+    nat_gcd.gcd(abs(a), abs(b)) != nat.0
+    gcd(a, b) != 0
+}
+
+theorem gcd_nonzero_right(a: Int, b: Int) {
+    b != 0 -> gcd(a, b) != 0
+}

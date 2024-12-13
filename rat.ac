@@ -1,6 +1,6 @@
 from nat import Nat
-from int import Int, gcd, abs
-import nat_gcd
+from nat_gcd import gcd
+from int import Int, abs
 
 numerals Int
 
@@ -8,10 +8,9 @@ structure Rat {
     num: Int
     denom: Nat
 } constraint {
-    gcd(num, Int.from_nat(denom)) = 1
+    gcd(abs(num), denom) = Nat.1
 } by {
-    nat_gcd.gcd(Nat.1, Nat.1) = Nat.1
-    gcd(1, 1) = 1
+    gcd(abs(1), Nat.1) = Nat.1
 }
 
 class Rat {
@@ -20,14 +19,10 @@ class Rat {
 
 theorem zero_num {
     Rat.0.num = 0
-} by {
-    gcd(0, Int.from_nat(Nat.1)) = 1
 }
 
 theorem zero_denom {
     Rat.0.denom = Nat.1
-} by {
-    gcd(0, Int.from_nat(Nat.1)) = 1
 }
 
 class Rat {
@@ -38,50 +33,40 @@ class Rat {
 
 theorem from_int_num(n: Int) {
     Rat.from_int(n).num = n
-} by {
-    gcd(n, Int.from_nat(Nat.1)) = 1
 }
 
 theorem from_int_denom(n: Int) {
     Rat.from_int(n).denom = Nat.1
-} by {
-    gcd(n, Int.from_nat(Nat.1)) = 1
 }
 
 // Either zero, or a / b reduced to simplest form.
-// let reduce(a: Int, b: Int) -> r: Rat satisfy {
-//     if b = 0 {
-//         r = Rat.0
-//     } else {
-//         r.num * b = Int.from_nat(r.denom) * a
-//     }
-// } by {
-//     if b = 0 {
-//         Rat.0 = Rat.0
-//     } else {
-//         // First factor out the gcd
-//         let d: Int = gcd(a, b)
-//         let a1: Int satisfy {
-//             a1 * d = a
-//         }
-//         let b1: Int satisfy {
-//             b1 * d = b
-//         }
-//         gcd(a1, b1) = 1
-//         a1 * b = b1 * a
-//         b1 != 0
+let reduce_nat(a: Nat, b: Nat) -> r: Rat satisfy {
+    if b = Nat.0 {
+        r = Rat.0
+    } else {
+        not int.is_negative(r.num) and abs(r.num) * b = r.denom * a
+    }
+} by {
+    if b = Nat.0 {
+        Rat.0 = Rat.0
+    } else {
+        // Factor out the gcd
+        gcd(a, b) != Nat.0
+        let a1: Nat satisfy {
+            gcd(a, b) * a1 = a
+        }
+        let b1: Nat satisfy {
+            gcd(a, b) * b1 = b
+        }
+        gcd(a1, b1) = Nat.1
 
-//         // Then make sure the denominator is positive
-//         let a2: Int = a1 * int.unit_sign(b1)
-//         let b2: Int = b1 * int.unit_sign(b1)
-//         a2 * b = b2 * a
-//         b2 != 0
-//         abs(b2) = abs(b1)
-//         b2 > 0
-//         b2 = Int.from_nat(abs(b2))
-
-//         let r: Rat = Rat.new(a2, abs(b2))
-//         r.num = a2
-//         r.denom = abs(b2)
-//     }
-// }
+        let r: Rat = Rat.new(Int.from_nat(a1), b1)
+        r.num = Int.from_nat(a1)
+        not int.is_negative(Int.from_nat(a1))
+        not int.is_negative(r.num)
+        r.denom = b1
+        abs(r.num) = a1
+        a1 * b = b1 * a
+        not int.is_negative(r.num) and abs(r.num) * b = r.denom * a
+    }
+}
