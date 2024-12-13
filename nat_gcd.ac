@@ -374,8 +374,47 @@ theorem gcd_one_left(a: Nat) {
     gcd(1, a) = 1
 }
 
-// theorem gcd_mult_left(a: Nat, b: Nat, m: Nat) {
-//     m * gcd(a, b) = gcd(m * a, m * b)
-// } by {
-//     divides(m * gcd(a, b), gcd(m * a, m * b))
-// }
+theorem gcd_mult_left_nonzero(a: Nat, b: Nat, m: Nat) {
+    m != 0 -> m * gcd(a, b) = gcd(m * a, m * b)
+} by {
+    divides(m, m * a)
+    divides(m, m * b)
+    divides(m, gcd(m * a, m * b))
+    let d: Nat satisfy {
+        m * d = gcd(m * a, m * b)
+    }
+    
+    // Overall we will prove equality by proving both sides divide the other.
+    // First we prove that d equals gcd(a, b), to prove that right divides left.
+    divides(m * d, m * a)
+    divides(d, a)
+    divides(m * d, m * b)
+    divides(d, b)
+    divides(d, gcd(a, b))
+    divides(m * d, m * gcd(a, b))
+    divides(gcd(m * a, m * b), m * gcd(a, b))
+
+    // Now we prove left divides right.
+    divides(m * gcd(a, b), m * a)
+    divides(m * gcd(a, b), m * b)
+    divides(m * gcd(a, b), gcd(m * a, m * b))
+}
+
+theorem gcd_mult_left(a: Nat, b: Nat, m: Nat) {
+    m * gcd(a, b) = gcd(m * a, m * b)
+} by {
+    if m = 0 {
+        m * gcd(a, b) = 0
+        gcd(m * a, m * b) = 0
+    } else {
+        m * gcd(a, b) = gcd(m * a, m * b)
+    }
+}
+
+theorem gcd_mult_right(a: Nat, b: Nat, m: Nat) {
+    gcd(a, b) * m = gcd(a * m, b * m)
+} by {
+    gcd_mult_left(a, b, m)
+    gcd_comm(a, b)
+    gcd_comm(m * a, m * b)
+}

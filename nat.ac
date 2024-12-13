@@ -1262,6 +1262,19 @@ theorem divides_cancel_right(a: Nat, b: Nat, c: Nat) {
     a != 0 and divides(b * a, c * a) -> divides(b, c)
 }
 
+theorem divides_mul_left(a: Nat, b: Nat, m: Nat) {
+    divides(a, b) -> divides(m * a, m * b)
+} by {
+    let d: Nat satisfy {
+        a * d = b
+    }
+    m * a * d = m * b
+}
+
+theorem divides_mul_right(a: Nat, b: Nat, m: Nat) {
+    divides(a, b) -> divides(a * m, b * m)
+}
+
 // Misc helpers
 theorem two_neq_zero {
     2 != 0
