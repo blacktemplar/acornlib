@@ -1734,7 +1734,8 @@ theorem spans_gcd(a: Int, b: Int) { spans(a, b, gcd(a, b)) } by {
     spans(a, b, Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))
 }
 
-// More gcd theorems analogous to the Nat gcd
+// More theorems analogous to nat theorems
+
 theorem gcd_one_right(n: Int) {
     gcd(n, 1) = 1
 } by {
@@ -1776,4 +1777,95 @@ theorem gcd_nonzero_left(a: Int, b: Int) {
 
 theorem gcd_nonzero_right(a: Int, b: Int) {
     b != 0 -> gcd(a, b) != 0
+}
+
+theorem lt_mul_both(a: Int, b: Int, c: Int) {
+    is_positive(a) and b < c -> a * b < a * c
+}
+
+theorem lte_mul_both(a: Int, b: Int, c: Int) {
+    is_positive(a) and b <= c -> a * b <= a * c
+}
+
+theorem lt_mul_both_neg(a: Int, b: Int, c: Int) {
+    is_negative(a) and b < c -> a * b > a * c
+} by {
+    a * c < b * a
+}
+
+theorem lte_mul_both_neg(a: Int, b: Int, c: Int) {
+    is_negative(a) and b <= c -> a * b >= a * c
+}
+
+theorem lt_cancel_mul(a: Int, b: Int, c: Int) {
+    is_positive(a) and a * b < a * c -> b < c
+}
+
+theorem lte_cancel_mul(a: Int, b: Int, c: Int) {
+    is_positive(a) and a * b <= a * c -> b <= c
+} by {
+    if not b <= c {
+        not a * c < a * b
+        not c < b
+        not b < c
+        not is_positive(c - b)
+        not is_negative(b - c)
+        c != b
+        b - c != 0
+        false
+    }
+}
+
+theorem lt_cancel_mul_neg(a: Int, b: Int, c: Int) {
+    is_negative(a) and a * b < a * c -> b > c
+}
+
+theorem lte_cancel_mul_neg(a: Int, b: Int, c: Int) {
+    is_negative(a) and a * b <= a * c -> b >= c
+}
+
+theorem mul_pos_cancel_left(a: Int, b: Int, c: Int) {
+    is_positive(a) and a * b = a * c -> b = c
+} by {
+    if b != c {
+        if b < c {
+            a * b < a * c
+            false
+        } else {
+            c < b
+            a * c < a * b
+            false
+        }
+    }
+}
+
+theorem mul_pos_cancel_right(a: Int, b: Int, c: Int) {
+    is_positive(a) and b * a = c * a -> b = c
+}
+
+theorem mul_neg_cancel_left(a: Int, b: Int, c: Int) {
+    is_negative(a) and a * b = a * c -> b = c
+} by {
+    is_positive(-a)
+    (-a) * b = (-a) * c
+    b = c
+}
+
+theorem mul_neg_cancel_right(a: Int, b: Int, c: Int) {
+    is_negative(a) and b * a = c * a -> b = c
+}
+
+theorem mul_cancel_left(a: Int, b: Int, c: Int) {
+    a != 0 and a * b = a * c -> b = c
+} by {
+    if is_positive(a) {
+        b = c
+    } else {
+        is_negative(a)
+        b = c
+    }
+}
+
+theorem mul_cancel_right(a: Int, b: Int, c: Int) {
+    a != 0 and b * a = c * a -> b = c
 }

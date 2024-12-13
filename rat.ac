@@ -1,20 +1,24 @@
-from nat import Nat
-from nat_gcd import gcd
-from int import Int, abs
+from int import Int, abs, gcd
 
 numerals Int
 
+define is_reduced(a: Int, b: Int) -> Bool {
+    b > 0 and gcd(a, b) = 1
+}
+
+theorem denom_one_is_reduced(a: Int) {
+    is_reduced(a, 1)
+}
+
 structure Rat {
     num: Int
-    denom: Nat
+    denom: Int
 } constraint {
-    gcd(abs(num), denom) = Nat.1
-} by {
-    gcd(abs(1), Nat.1) = Nat.1
+    is_reduced(num, denom)
 }
 
 class Rat {
-    let 0: Rat = Rat.new(0, Nat.1)
+    let 0: Rat = Rat.new(0, 1)
 }
 
 theorem zero_num {
@@ -22,12 +26,18 @@ theorem zero_num {
 }
 
 theorem zero_denom {
-    Rat.0.denom = Nat.1
+    Rat.0.denom = 1
+}
+
+theorem denom_nonzero(r: Rat) {
+    r.denom != 0
+} by {
+    r.denom > 0
 }
 
 class Rat {
     let from_int: Int -> Rat = function(n: Int) {
-        Rat.new(n, Nat.1)
+        Rat.new(n, 1)
     }
 }
 
@@ -36,76 +46,67 @@ theorem from_int_num(n: Int) {
 }
 
 theorem from_int_denom(n: Int) {
-    Rat.from_int(n).denom = Nat.1
+    Rat.from_int(n).denom = 1
 }
 
-define equals_reduced(r: Rat, a: Int, b: Int) -> Bool {
-    r.num * b = Int.from_nat(r.denom) * a
+define cross_equals(a: Int, b: Int, c: Int, d: Int) -> Bool {
+    b != 0 and d != 0 and a * d = c * b
+}
+
+theorem cross_equals_trans(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) {
+    cross_equals(a, b, c, d) and cross_equals(c, d, e, f) -> cross_equals(a, b, e, f)
+} by {
+    a * d = b * c
+    c * f = d * e
+    a * d * f = b * c * f
+    a * d * f = b * d * e
+    a * f * d = b * e * d
+    d != 0
+    a * f = b * e
+}
+
+define rat_cross_equals(r: Rat, a: Int, b: Int) -> Bool {
+    cross_equals(r.num, r.denom, a, b)
 }
 
 // Either zero, or a / b reduced to simplest form.
-let reduce_nat(a: Nat, b: Nat) -> r: Rat satisfy {
-    if b = Nat.0 {
+let reduce(a: Int, b: Int) -> r: Rat satisfy {
+    if b = 0 {
         r = Rat.0
     } else {
-        equals_reduced(r, Int.from_nat(a), Int.from_nat(b))
+        rat_cross_equals(r, a, b)
     }
 } by {
-    if b = Nat.0 {
+    if b = 0 {
         Rat.0 = Rat.0
     } else {
         // Factor out the gcd
-        gcd(a, b) != Nat.0
-        let a1: Nat satisfy {
-            gcd(a, b) * a1 = a
+        gcd(a, b) != 0
+        let a1: Int satisfy {
+            a1 * gcd(a, b) = a
         }
-        let b1: Nat satisfy {
-            gcd(a, b) * b1 = b
+        let b1: Int satisfy {
+            b1 * gcd(a, b) = b
         }
-        gcd(a1, b1) = Nat.1
+        b1 != 0
+        gcd(a1, b1) = 1
 
-        let r: Rat = Rat.new(Int.from_nat(a1), b1)
-        r.num = Int.from_nat(a1)
-        r.denom = b1
-        a1 * b = b1 * a
-        r.num * Int.from_nat(b) = Int.from_nat(r.denom * a)
-        equals_reduced(r, Int.from_nat(a), Int.from_nat(b))
-    }
-}
+        // To reduce we also need to swap signs if the denominator is negative
+        let a2: Int = a1 * int.unit_sign(b1)
+        let b2: Int = b1 * int.unit_sign(b1)
+        b2 = Int.from_nat(abs(b1))
+        gcd(a2, b2) = 1 * Int.from_nat(abs(int.unit_sign(b1)))
+        Int.from_nat(abs(int.unit_sign(b1))) = 1
+        gcd(a2, b2) = 1
+        a2 * (int.unit_sign(b1) * gcd(a, b)) = a
+        b2 * (int.unit_sign(b1) * gcd(a, b)) = b
+        b2 != 0
+        is_reduced(a2, b2)
 
-let reduce_int(a: Int, b: Int) -> r: Rat satisfy {
-    if b = 0 {
-        r = Rat.0
-    } else {
-        equals_reduced(r, a, b)
-    }
-} by {
-    if b = 0 {
-        Rat.0 = Rat.0
-    } else {
-        let r_abs: Rat = reduce_nat(abs(a), abs(b))
-        equals_reduced(r_abs, Int.from_nat(abs(a)), Int.from_nat(abs(b)))
-        Int.from_nat(abs(b)) = b * int.unit_sign(b)
-        Int.from_nat(abs(a)) = a * int.unit_sign(a)
-        r_abs.num * Int.from_nat(abs(b)) = Int.from_nat(r_abs.denom) * Int.from_nat(abs(a))
-        r_abs.num * b * int.unit_sign(b) = Int.from_nat(r_abs.denom) * a * int.unit_sign(a)
-        r_abs.num * b * int.unit_sign(b) * int.unit_sign(a) = Int.from_nat(r_abs.denom) * a
-
-        // reduce_int will be the same as reduce_nat, except for this sign.
-        let sign: Int = int.unit_sign(a) * int.unit_sign(b)
-        abs(int.unit_sign(a)) = Nat.1
-        abs(int.unit_sign(b)) = Nat.1
-        abs(sign) = Nat.1
-
-        r_abs.num * b * sign = Int.from_nat(r_abs.denom) * a
-        (r_abs.num * sign) * b = Int.from_nat(r_abs.denom) * a
-
-        abs(r_abs.num * sign) = abs(r_abs.num) * abs(sign)
-        abs(r_abs.num) = abs(r_abs.num * sign)
-
-        let r: Rat = Rat.new(r_abs.num * sign, r_abs.denom)
-        gcd(abs(r_abs.num * sign), r_abs.denom) = Nat.1
-        r.denom = r_abs.denom
-        r.num * b = Int.from_nat(r.denom) * a
+        let r: Rat = Rat.new(a2, b2)
+        r.num = a2
+        r.denom = b2
+        rat_cross_equals(r, a2, b2)
+        rat_cross_equals(r, a, b)
     }
 }
