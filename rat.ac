@@ -65,24 +65,12 @@ theorem cross_equals_trans(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) {
     a * f = b * e
 }
 
-define rat_cross_equals(r: Rat, a: Int, b: Int) -> Bool {
-    cross_equals(r.num, r.denom, a, b)
-}
-
-theorem rat_cross_equals_trans(r: Rat, a: Int, b: Int, c: Int, d: Int) {
-    rat_cross_equals(r, a, b) and cross_equals(a, b, c, d) -> rat_cross_equals(r, c, d)
-} by {
-    cross_equals(r.num, r.denom, a, b)
-    cross_equals(r.num, r.denom, c, d)
-    cross_equals(a, b, c, d)
-}
-
 // Either zero, or a / b reduced to simplest form.
 let reduce(a: Int, b: Int) -> r: Rat satisfy {
     if b = 0 {
         r = Rat.0
     } else {
-        rat_cross_equals(r, a, b)
+        cross_equals(r.num, r.denom, a, b)
     }
 } by {
     if b = 0 {
@@ -120,8 +108,13 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         let r: Rat = Rat.new(a2, b2)
         r.num = a2
         r.denom = b2
-        rat_cross_equals(r, a2, b2)
+        cross_equals(r.num, r.denom, a2, b2)
         cross_equals(a2, b2, a, b)
-        rat_cross_equals(r, a, b)
+        cross_equals(r.num, r.denom, a, b)
     }
 }
+
+// Maybe could use Gauss's Lemma?
+// theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
+//     cross_equals(r1.num, r1.denom, r2.num, r2.denom) -> r1 = r2
+// }

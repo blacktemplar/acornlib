@@ -435,3 +435,25 @@ theorem cofactor(a: Nat, b: Nat, af: Nat, bf: Nat) {
     divides(gcd(af, bf), 1)
     gcd(af, bf) = 1
 }
+
+theorem gcd_of_prime(p: Nat, n: Nat) {
+    nat.is_prime(p) -> gcd(p, n) = 1 or divides(p, n)
+} by {
+    divides(gcd(p, n), p)
+    let d: Nat satisfy {
+        d * gcd(p, n) = p
+    }
+    d != 0
+    if d = 1 {
+        gcd(p, n) = p
+        divides(p, n)
+    } else {
+        if gcd(p, n) > 1 {
+            d > 1
+            nat.is_composite(p)
+            false
+        }
+        gcd(p, n) != 0
+        gcd(p, n) = 1
+    }
+}

@@ -1896,3 +1896,40 @@ theorem divides_mul_left(a: Int, b: Int, m: Int) {
 theorem divides_mul_right(a: Int, b: Int, m: Int) {
     divides(a, b) -> divides(a * m, b * m)
 }
+
+define is_prime(a: Int) -> Bool {
+    nat.is_prime(abs(a))
+}
+
+theorem gcd_of_prime(p: Int, n: Int) {
+    is_prime(p) -> gcd(p, n) = 1 or divides(p, n)
+} by {
+    nat_gcd.gcd(abs(p), abs(n)) = Nat.1 or nat.divides(abs(p), abs(n))
+    if nat_gcd.gcd(abs(p), abs(n)) = Nat.1 {
+        gcd(p, n) = 1
+    } else {
+        nat.divides(abs(p), abs(n))
+        divides(p, n)
+    }
+}
+
+theorem euclids_lemma(p: Int, a: Int, b: Int) {
+    is_prime(p) and divides(p, a * b) -> divides(p, a) or divides(p, b)
+} by {
+    if not divides(p, a) {
+        gcd(p, a) = 1
+        spans(p, a, 1)
+        let (x: Int, y: Int) satisfy {
+            x * p + y * a = 1
+        }
+        x * p + y * a = 1
+        x * p * b + y * a * b = b
+        let d: Int satisfy {
+            d * p = a * b
+        }
+        x * p * b + y * d * p = b
+        p * x * b + p * y * d = b
+        p * (x * b + y * d) = b
+        divides(p, b)
+    }
+}
