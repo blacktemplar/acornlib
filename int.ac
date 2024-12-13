@@ -1869,3 +1869,30 @@ theorem mul_cancel_left(a: Int, b: Int, c: Int) {
 theorem mul_cancel_right(a: Int, b: Int, c: Int) {
     a != 0 and b * a = c * a -> b = c
 }
+
+theorem divides_cancel_left(a: Int, b: Int, c: Int) {
+    a != 0 and divides(a * b, a * c) -> divides(b, c)
+} by {
+    let d: Int satisfy {
+        a * b * d = a * c
+    }
+    a * (b * d) = a * c
+    b * d = c
+}
+
+theorem divides_cancel_right(a: Int, b: Int, c: Int) {
+    a != 0 and divides(b * a, c * a) -> divides(b, c)
+}
+
+theorem divides_mul_left(a: Int, b: Int, m: Int) {
+    divides(a, b) -> divides(m * a, m * b)
+} by {
+    let d: Int satisfy {
+        d * a = b
+    }
+    m * d * a = m * b
+}
+
+theorem divides_mul_right(a: Int, b: Int, m: Int) {
+    divides(a, b) -> divides(a * m, b * m)
+}
