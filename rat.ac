@@ -148,3 +148,32 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
     r2.denom != 0
     r1.num = r2.num
 }
+
+class Rat {
+    define is_positive(self) -> Bool {
+        self.num.is_positive
+    }
+
+    define is_negative(self) -> Bool {
+        self.num.is_negative
+    }
+
+    define neg(self) -> Rat {
+        Rat.new(-self.num, self.denom)
+    }
+}
+
+theorem neg_is_reduced(r: Rat) {
+    is_reduced(-r.num, r.denom)
+} by {
+    r.denom > 0
+    gcd(-r.num, r.denom) = gcd(r.num, r.denom)
+}
+
+theorem neg_num(r: Rat) {
+    r.neg.num = -r.num
+}
+
+theorem neg_denom(r: Rat) {
+    r.neg.denom = r.denom
+}
