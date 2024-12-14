@@ -161,6 +161,39 @@ class Rat {
     define neg(self) -> Rat {
         Rat.new(-self.num, self.denom)
     }
+
+    define add(self, other: Rat) -> Rat {
+        reduce(self.num * other.denom + other.num * self.denom, self.denom * other.denom)
+    }
+
+    define sub(self, other: Rat) -> Rat {
+        self + -other
+    }
+
+    define mul(self, other: Rat) -> Rat {
+        reduce(self.num * other.num, self.denom * other.denom)
+    }
+
+    // This is the weird version where dividing by zero gives you zero
+    define div(self, other: Rat) -> Rat {
+        reduce(self.num * other.denom, self.denom * other.num)
+    }
+
+    define lt(self, other: Rat) -> Bool {
+        self.num * other.denom < other.num * self.denom
+    }
+
+    define lte(self, other: Rat) -> Bool {
+        self < other or self = other
+    }
+
+    define gt(self, other: Rat) -> Bool {
+        other < self
+    }
+
+    define gte(self, other: Rat) -> Bool {
+        other <= self
+    }
 }
 
 theorem neg_is_reduced(r: Rat) {
