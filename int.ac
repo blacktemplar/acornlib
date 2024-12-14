@@ -532,16 +532,16 @@ theorem add_comm(a: Int, b: Int) { a + b = b + a } by {
     a + b = sub_nat(pos_part(b) + pos_part(a), neg_part(a) + neg_part(b))
 }
 
-theorem neg_distrib(a: Int, b: Int) { -(a + b) = -a + -(b) } by {
-    pos_part(-a) + pos_part(-(b)) = neg_part(a) + neg_part(b)
-    neg_part(-a) + neg_part(-(b)) = pos_part(a) + pos_part(b)
-    -a + -(b) = sub_nat(pos_part(-a) + pos_part(-(b)),
-                                    neg_part(-a) + neg_part(-(b)))
-    -a + -(b) = sub_nat(neg_part(a) + neg_part(b),
-                                    neg_part(-a) + neg_part(-(b)))
-    -a + -(b) = sub_nat(neg_part(a) + neg_part(b),
+theorem neg_distrib(a: Int, b: Int) { -(a + b) = -a + -b } by {
+    pos_part(-a) + pos_part(-b) = neg_part(a) + neg_part(b)
+    neg_part(-a) + neg_part(-b) = pos_part(a) + pos_part(b)
+    -a + -b = sub_nat(pos_part(-a) + pos_part(-b),
+                                    neg_part(-a) + neg_part(-b))
+    -a + -b = sub_nat(neg_part(a) + neg_part(b),
+                                    neg_part(-a) + neg_part(-b))
+    -a + -b = sub_nat(neg_part(a) + neg_part(b),
                                     pos_part(a) + pos_part(b))
-    -a + -(b) = -(sub_nat(pos_part(a) + pos_part(b), neg_part(a) + neg_part(b)))
+    -a + -b = -(sub_nat(pos_part(a) + pos_part(b), neg_part(a) + neg_part(b)))
 }
 
 theorem parts_of_add(a: Int, b: Int) {
@@ -566,13 +566,13 @@ theorem add_neg(a: Int) { a + -a = 0 } by {
     a + -a = 0
 }
 
-theorem add_eq_zero(a: Int, b: Int) { a + b = 0 -> a = -(b) } by {
+theorem add_eq_zero(a: Int, b: Int) { a + b = 0 -> a = -b } by {
     sub_nat(pos_part(a) + pos_part(b), neg_part(a) + neg_part(b)) = 0
     neg_part(a) + neg_part(b) + nat.0 = pos_part(a) + pos_part(b)
     pos_part(a) + pos_part(b) = neg_part(a) + neg_part(b)
-    pos_part(a) + neg_part(-(b)) = neg_part(a) + pos_part(-(b))
-    sub_nat(pos_part(a), neg_part(a)) = sub_nat(pos_part(-(b)), neg_part(-(b)))
-    a = -(b)
+    pos_part(a) + neg_part(-b) = neg_part(a) + pos_part(-b)
+    sub_nat(pos_part(a), neg_part(a)) = sub_nat(pos_part(-b), neg_part(-b))
+    a = -b
 }
 
 theorem add_right_cancel(a: Int, b: Int, c: Int) { a + c = b + c -> a = b } by {
@@ -712,7 +712,7 @@ theorem add_neg_nonpos(a: Int, b: Int) {
 } by {
     (-a).is_positive
     not (-b).is_negative
-    (-a + -(b)).is_positive
+    (-a + -b).is_positive
     (-(a + b)).is_positive
 }
 
@@ -763,9 +763,9 @@ theorem sub_zero_left(a: Int) { 0 - a = -a } by {
 
 theorem sub_anticomm(a: Int, b: Int) { a - b = -(b - a) } by {
     -(b - a) = -(b + -a)
-    -(b - a) = -(b) + -(-a)
-    -(b - a) = -(b) + a
-    -(b - a) = a + -(b)
+    -(b - a) = -b + -(-a)
+    -(b - a) = -b + a
+    -(b - a) = a + -b
 }
 
 theorem sub_self(a: Int) { a - a = 0 }
@@ -775,16 +775,16 @@ theorem sub_eq_zero(a: Int, b: Int) { a - b = 0 -> a = b }
 theorem sub_add_left(a: Int, b: Int) {
     (a + b) - b = a
 } by {
-    a + (b + -(b)) = a
-    a + b + -(b) = a
+    a + (b + -b) = a
+    a + b + -b = a
 }
 
 theorem neg_sub(a: Int, b: Int) { -(a - b) = b - a }
 
-theorem sub_add_right(a: Int, b: Int) { a - (a + b) = -(b) }
+theorem sub_add_right(a: Int, b: Int) { a - (a + b) = -b }
 
 theorem sub_imp_add(a: Int, b: Int, c: Int) { a - b = c -> b + c = a } by {
-    b + (a + -(b)) = a
+    b + (a + -b) = a
     b + (a - b) = a
 }
 
@@ -1075,7 +1075,7 @@ theorem mul_neg_left(a: Int, b: Int) { -a * b = -(a * b) } by {
     }
 }
 
-theorem mul_neg_right(a: Int, b: Int) { a * -(b) = -(a * b) }
+theorem mul_neg_right(a: Int, b: Int) { a * -b = -(a * b) }
 
 theorem mul_distrib_nonneg_right(a: Int, b: Int, c: Int) {
     not c.is_negative -> (a + b) * c = a * c + b * c
@@ -1107,8 +1107,8 @@ theorem mul_distrib_left(a: Int, b: Int, c: Int) { a * (b + c) = a * b + a * c }
 }
 
 theorem mul_sub_distrib_right(a: Int, b: Int, c: Int) { (a - b) * c = a * c - b * c } by {
-    (a - b) * c = (a + -(b)) * c
-    (a - b) * c = a * c + -(b) * c
+    (a - b) * c = (a + -b) * c
+    (a - b) * c = a * c + -b * c
     (a - b) * c = a * c + -(b * c)
     (a - b) * c = a * c - b * c
 }
@@ -1365,8 +1365,8 @@ theorem abs_add_nonpos(a: Int, b: Int) {
 } by {
     not (-a).is_negative
     not (-b).is_negative
-    abs(-a + -(b)) = abs(-a) + abs(-(b))
-    abs(-(a + b)) = abs(-a) + abs(-(b))
+    abs(-a + -b) = abs(-a) + abs(-b)
+    abs(-(a + b)) = abs(-a) + abs(-b)
     abs(-(a + b)) = abs(a) + abs(b)
 }
 
@@ -1376,8 +1376,8 @@ theorem triangle_nonpos_lte_nonneg(a: Int, b: Int) {
 } by {
     let (n: Nat) satisfy { n + abs(b) = abs(a) }
     Int.from_nat(n) + Int.from_nat(abs(b)) = Int.from_nat(abs(a))
-    Int.from_nat(n) + -(b) = Int.from_nat(abs(a))
-    Int.from_nat(n) + -(b) = a
+    Int.from_nat(n) + -b = Int.from_nat(abs(a))
+    Int.from_nat(n) + -b = a
     a + b = Int.from_nat(n)
     abs(a + b) = n
     n <= abs(a)
@@ -1392,12 +1392,12 @@ theorem triangle_nonneg_nonpos(a: Int, b: Int) {
         abs(a + b) <= abs(a) + abs(b)
     } else {
         abs(a) <= abs(b)
-        abs(-a) <= abs(-(b))
-        not (-(b)).is_negative
+        abs(-a) <= abs(-b)
+        not (-b).is_negative
         not (-a).is_positive
-        abs(-(b) + -a) <= abs(-(b)) + abs(-a)
-        abs(-(b + a)) <= abs(-(b)) + abs(-a)
-        abs(b + a) <= abs(-(b)) + abs(-a)
+        abs(-b + -a) <= abs(-b) + abs(-a)
+        abs(-(b + a)) <= abs(-b) + abs(-a)
+        abs(b + a) <= abs(-b) + abs(-a)
         abs(b + a) <= abs(b) + abs(a)
         abs(a + b) <= abs(b) + abs(a)
         abs(a + b) <= abs(a) + abs(b)
@@ -1442,13 +1442,13 @@ theorem lt_mul_neg(a: Int, b: Int, c: Int) { a < b and c.is_negative -> b * c < 
 theorem lt_trans(a: Int, b: Int, c: Int) { a < b and b < c -> a < c } by {
     (b - a).is_positive
     (c - b).is_positive
-    (c + -(b)).is_positive
+    (c + -b).is_positive
     not (b - a).is_negative
     -(-(b - a)) = b - a
     -(b - a) = a - b
-    a + -(b) = a - b
-    (-(a + -(b))).is_negative = (a + -(b)).is_positive
-    not (a + -(b)).is_positive
+    a + -b = a - b
+    (-(a + -b)).is_negative = (a + -b).is_positive
+    not (a + -b).is_positive
     exists(k0: Int) { a + k0 < c + k0 }
     (c - a).is_positive
 }
