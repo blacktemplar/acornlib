@@ -406,29 +406,29 @@ theorem zero_not_pos {
     not 0.is_positive
 } by {
     -(0) = 0
-    not Int.is_negative(0)
-    not Int.is_negative(-(0))
+    not 0.is_negative
+    not (-0).is_negative
 }
 
 theorem one_pos { 1.is_positive } by {
-    Int.is_negative(-(Int.from_nat(nat.1)))
-    Int.is_negative(-(1))
+    (-Int.from_nat(nat.1)).is_negative
+    (-1).is_negative
 }
 
 theorem nonzero_pos_or_neg(a: Int) {
-    a != 0 -> a.is_positive or Int.is_negative(a)
+    a != 0 -> a.is_positive or a.is_negative
 } by {
     if not a.is_positive {
         -a != a
-        not Int.is_negative(-a)
+        not (-a).is_negative
         Int.from_nat(abs(-a)) = -a
         Int.from_nat(abs(a)) = -a
         Int.from_nat(abs(a)) != a
-        Int.is_negative(a)
+        a.is_negative
     }
 }
 
-theorem pos_is_not_neg(a: Int) { a.is_positive -> not Int.is_negative(a) } by {
+theorem pos_is_not_neg(a: Int) { a.is_positive -> not a.is_negative } by {
     -(Int.from_nat(abs(-a))) = -a
     -(Int.from_nat(abs(-(-a)))) = -a
 }
@@ -466,12 +466,12 @@ theorem sub_nat_parts(a: Int) { sub_nat(pos_part(a), neg_part(a)) = a } by {
 theorem pos_part_neg(a: Int) { pos_part(-a) = neg_part(a) } by {
     if a.is_positive {
         neg_part(a) = nat.0
-        not Int.is_positive(-a)
+        not (-a).is_positive
         pos_part(-a) = nat.0
         pos_part(-a) = neg_part(a)
     } else {
         neg_part(a) = abs(a)
-        not Int.is_negative(-a)
+        not (-a).is_negative
         pos_part(-a) = abs(-a)
         pos_part(-a) = abs(a)
         pos_part(-a) = neg_part(a)
@@ -490,7 +490,7 @@ theorem pos_part_from(n: Nat) { pos_part(Int.from_nat(n)) = n } by {
 theorem neg_part_from(n: Nat) {
     neg_part(Int.from_nat(n)) = nat.0
 } by {
-    if Int.is_positive(Int.from_nat(n)) {
+    if Int.from_nat(n).is_positive {
         neg_part(Int.from_nat(n)) = nat.0
     } else {
         neg_part(Int.from_nat(n)) = abs(Int.from_nat(n))
@@ -691,49 +691,49 @@ theorem add_from_nat(a: Nat, b: Nat) {
 }
 
 theorem add_pos_nonneg(a: Int, b: Int) {
-    a.is_positive and not Int.is_negative(b) -> Int.is_positive(a + b)
+    a.is_positive and not b.is_negative -> (a + b).is_positive
 } by {
     if b = 0 {
         a + b = a
-        Int.is_positive(a + b)
+        (a + b).is_positive
     } else {
         b.is_positive
         a = Int.from_nat(abs(a))
         b = Int.from_nat(abs(b))
         a + b = Int.from_nat(abs(a) + abs(b))
         abs(a) + abs(b) != nat.0
-        Int.is_positive(Int.from_nat(abs(a) + abs(b)))
-        Int.is_positive(a + b)
+        (Int.from_nat(abs(a) + abs(b))).is_positive
+        (a + b).is_positive
     }
 }
 
 theorem add_neg_nonpos(a: Int, b: Int) {
-    Int.is_negative(a) and not b.is_positive -> Int.is_negative(a + b)
+    a.is_negative and not b.is_positive -> Int.is_negative(a + b)
 } by {
-    Int.is_positive(-a)
+    (-a).is_positive
     not Int.is_negative(-(b))
-    Int.is_positive(-a + -(b))
-    Int.is_positive(-(a + b))
+    (-a + -(b)).is_positive
+    (-(a + b)).is_positive
 }
 
 theorem add_nonneg_nonneg(a: Int, b: Int) {
-    not Int.is_negative(a) and not Int.is_negative(b) -> not Int.is_negative(a + b)
+    not a.is_negative and not b.is_negative -> not Int.is_negative(a + b)
 } by {
-    if not Int.is_negative(a) and not Int.is_negative(b) and Int.is_negative(a + b) {
+    if not a.is_negative and not b.is_negative and Int.is_negative(a + b) {
         not Int.is_negative(0 + b)
-        not Int.is_positive(a + b)
+        not (a + b).is_positive
         not a.is_positive
         false
     }
 }
 
 theorem add_nonpos_nonpos(a: Int, b: Int) {
-    not a.is_positive and not b.is_positive -> not Int.is_positive(a + b)
+    not a.is_positive and not b.is_positive -> not (a + b).is_positive
 } by {
-    if not a.is_positive and not b.is_positive and Int.is_positive(a + b) {
-        not Int.is_positive(0 + b)
+    if not a.is_positive and not b.is_positive and (a + b).is_positive {
+        not (0 + b).is_positive
         not Int.is_negative(a + b)
-        not Int.is_negative(a)
+        not a.is_negative
         false
     }
 }
@@ -804,7 +804,7 @@ theorem sub_add_cancel_right(a: Int, b: Int, c: Int) { (a + c) - (b + c) = a - b
 // Integer-natural multiplication
 
 define mul_nat(a: Int, n: Nat) -> Int {
-    if Int.is_negative(a) {
+    if a.is_negative {
         -(Int.from_nat(abs(a) * n))
     } else {
         Int.from_nat(abs(a) * n)
@@ -812,7 +812,7 @@ define mul_nat(a: Int, n: Nat) -> Int {
 }
 
 theorem mul_nat_zero_right(a: Int) { mul_nat(a, Nat.0) = 0 } by {
-    if Int.is_negative(a) {
+    if a.is_negative {
         -(Int.from_nat(abs(a) * Nat.0)) = mul_nat(a, Nat.0)
         abs(a) * Nat.0 = Nat.0
         mul_nat(a, Nat.0) = 0
@@ -852,7 +852,7 @@ theorem mul_nat_negate_left(a: Int, n: Nat) { mul_nat(-a, n) = -(mul_nat(a, n)) 
 }
 
 theorem mul_nat_nonneg_suc(a: Int, n: Nat) {
-    not Int.is_negative(a) -> mul_nat(a, n.suc) = mul_nat(a, n) + a
+    not a.is_negative -> mul_nat(a, n.suc) = mul_nat(a, n) + a
 } by {
     mul_nat(a, n.suc) = Int.from_nat(abs(a) * n.suc)
     mul_nat(a, n.suc) = Int.from_nat(abs(a) * n + abs(a))
@@ -863,7 +863,7 @@ theorem mul_nat_nonneg_suc(a: Int, n: Nat) {
 theorem mul_nat_suc(a: Int, n: Nat) {
     mul_nat(a, n.suc) = (mul_nat(a, n) + a)
 } by {
-    if Int.is_negative(a) {
+    if a.is_negative {
         Int.is_positive(-a)
         mul_nat(a, n.suc) = -(mul_nat(-a, n.suc))
         mul_nat(a, n.suc) = -(mul_nat(-a, n) + -a)
@@ -940,7 +940,7 @@ theorem mul_nat_from_nat_right(a: Int, n: Nat) { mul_nat(a, n) = (a * Int.from_n
     }
 }
 
-theorem mul_nonneg_right(a: Int, b: Int) { not Int.is_negative(b) -> a * b = mul_nat(a, abs(b)) } by {
+theorem mul_nonneg_right(a: Int, b: Int) { not b.is_negative -> a * b = mul_nat(a, abs(b)) } by {
     if b = 0 {
         a * b = 0
         mul_nat(a, abs(b)) = 0
@@ -951,19 +951,19 @@ theorem mul_nonneg_right(a: Int, b: Int) { not Int.is_negative(b) -> a * b = mul
 }
 
 theorem mul_nonneg_nonneg(a: Int, b: Int) {
-    not Int.is_negative(a) and not Int.is_negative(b) -> a * b = Int.from_nat(abs(a) * abs(b))
+    not a.is_negative and not b.is_negative -> a * b = Int.from_nat(abs(a) * abs(b))
 } by {
     a * b = mul_nat(a, abs(b))
 }
 
 theorem mul_nonneg_nonpos(a: Int, b: Int) {
-    not Int.is_negative(a) and not b.is_positive -> a * b = -(Int.from_nat(abs(a) * abs(b)))
+    not a.is_negative and not b.is_positive -> a * b = -(Int.from_nat(abs(a) * abs(b)))
 } by {
     a * b = -(mul_nat(a, abs(b)))
 }
 
 theorem mul_nonpos_nonneg(a: Int, b: Int) {
-    not a.is_positive and not Int.is_negative(b) -> a * b = -(Int.from_nat(abs(a) * abs(b)))
+    not a.is_positive and not b.is_negative -> a * b = -(Int.from_nat(abs(a) * abs(b)))
 } by {
     a * b = mul_nat(a, abs(b))
 }
@@ -976,21 +976,21 @@ theorem mul_nonpos_nonpos(a: Int, b: Int) {
 }
 
 theorem mul_nonneg_nonneg_nonneg(a: Int, b: Int) {
-    not Int.is_negative(a) and not Int.is_negative(b) -> not Int.is_negative(a * b)
+    not a.is_negative and not b.is_negative -> not Int.is_negative(a * b)
 } by {
     a * b = Int.from_nat(abs(a) * abs(b))
     not Int.is_negative(Int.from_nat(abs(a) * abs(b)))
 }
 
 theorem mul_nonneg_nonpos_nonpos(a: Int, b: Int) {
-    not Int.is_negative(a) and not b.is_positive -> not Int.is_positive(a * b)
+    not a.is_negative and not b.is_positive -> not Int.is_positive(a * b)
 } by {
     a * b = -(Int.from_nat(abs(a) * abs(b)))
     not Int.is_positive(-(Int.from_nat(abs(a) * abs(b))))
 }
 
 theorem mul_nonpos_nonneg_nonpos(a: Int, b: Int) {
-    not a.is_positive and not Int.is_negative(b) -> not Int.is_positive(a * b)
+    not a.is_positive and not b.is_negative -> not Int.is_positive(a * b)
 } by {
     a * b = -(Int.from_nat(abs(a) * abs(b)))
     not Int.is_positive(-(Int.from_nat(abs(a) * abs(b))))
@@ -1078,7 +1078,7 @@ theorem mul_neg_left(a: Int, b: Int) { -a * b = -(a * b) } by {
 theorem mul_neg_right(a: Int, b: Int) { a * -(b) = -(a * b) }
 
 theorem mul_distrib_nonneg_right(a: Int, b: Int, c: Int) {
-    not Int.is_negative(c) -> (a + b) * c = a * c + b * c
+    not c.is_negative -> (a + b) * c = a * c + b * c
 } by {
     (a + b) * c = mul_nat(a + b, abs(c))
     (a + b) * c = mul_nat(a, abs(c)) + mul_nat(b, abs(c))
@@ -1087,7 +1087,7 @@ theorem mul_distrib_nonneg_right(a: Int, b: Int, c: Int) {
 }
 
 theorem mul_distrib_right(a: Int, b: Int, c: Int) { (a + b) * c = a * c + b * c } by {
-    if Int.is_negative(c) {
+    if c.is_negative {
         Int.is_positive(-(c))
         (a + b) * -(c) = a * -(c) + b * -(c)
         (a + b) * -(c) = -(a * c) + b * -(c)
@@ -1154,7 +1154,7 @@ theorem mul_from_nat(j: Nat, k: Nat) { Int.from_nat(j) * Int.from_nat(k) = Int.f
 theorem abs_zero_imp_zero(a: Int) {
     abs(a) = nat.0 -> a = 0
 } by {
-    if Int.is_negative(a) {
+    if a.is_negative {
         Int.from_nat(abs(a)) != a
         not a.is_positive
         pos_part(a) = Nat.0
@@ -1179,8 +1179,8 @@ theorem mul_zero_imp_factor_zero(a: Int, b: Int) { a * b = 0 -> a = 0 or b = 0 }
 }
 
 theorem mul_pos_pos(a: Int, b: Int) { a.is_positive and b.is_positive -> Int.is_positive(a * b) } by {
-    not Int.is_negative(a)
-    not Int.is_negative(b)
+    not a.is_negative
+    not b.is_negative
     not Int.is_negative(a * b)
     if a * b = 0 {
         if a = 0 {
@@ -1196,11 +1196,11 @@ theorem mul_pos_pos(a: Int, b: Int) { a.is_positive and b.is_positive -> Int.is_
     }
 }
 
-theorem mul_pos_neg(a: Int, b: Int) { a.is_positive and Int.is_negative(b) -> Int.is_negative(a * b) }
+theorem mul_pos_neg(a: Int, b: Int) { a.is_positive and b.is_negative -> Int.is_negative(a * b) }
 
-theorem mul_neg_pos(a: Int, b: Int) { Int.is_negative(a) and b.is_positive -> Int.is_negative(a * b) }
+theorem mul_neg_pos(a: Int, b: Int) { a.is_negative and b.is_positive -> Int.is_negative(a * b) }
 
-theorem mul_neg_neg(a: Int, b: Int) { Int.is_negative(a) and Int.is_negative(b) -> Int.is_positive(a * b) } by {
+theorem mul_neg_neg(a: Int, b: Int) { a.is_negative and b.is_negative -> Int.is_positive(a * b) } by {
     Int.is_positive(-a)
     Int.is_negative(-a * b)
     Int.is_negative(-(a * b))
@@ -1208,7 +1208,7 @@ theorem mul_neg_neg(a: Int, b: Int) { Int.is_negative(a) and Int.is_negative(b) 
 }
 
 theorem mul_int_nat_nat_assoc(a: Int, j: Nat, k: Nat) { mul_nat(a, j * k) = mul_nat(mul_nat(a, j), k) } by {
-    if Int.is_negative(a) {
+    if a.is_negative {
         // Simplify lhs
         a = -(Int.from_nat(abs(a)))
         mul_nat(a, j * k) = -(Int.from_nat(abs(a) * (j * k)))
@@ -1238,7 +1238,7 @@ theorem mul_int_nat_nat_assoc(a: Int, j: Nat, k: Nat) { mul_nat(a, j * k) = mul_
 }
 
 theorem mul_int_int_nat_assoc(a: Int, b: Int, n: Nat) { mul_nat(a * b, n) = a * mul_nat(b, n) } by {
-    if Int.is_negative(b) {
+    if b.is_negative {
         b = -(Int.from_nat(abs(b)))
         mul_nat(a * b, n) = mul_nat(a * -(Int.from_nat(abs(b))), n)
         mul_nat(a * b, n) = mul_nat(-(mul_nat(a, abs(b))), n)
@@ -1258,7 +1258,7 @@ theorem mul_int_int_nat_assoc(a: Int, b: Int, n: Nat) { mul_nat(a * b, n) = a * 
 }
 
 theorem mul_assoc(a: Int, b: Int, c: Int) { a * b * c = a * (b * c) } by {
-    if Int.is_negative(c) {
+    if c.is_negative {
         c = -(Int.from_nat(abs(c)))
         a * b * c = a * b * -(Int.from_nat(abs(c)))
         a * b * c = -(a * b * Int.from_nat(abs(c)))
@@ -1299,26 +1299,26 @@ theorem lte_ref(a: Int) { a <= a }
 
 theorem zero_lt_pos(a: Int) { a.is_positive -> 0 < a }
 
-theorem neg_lt_zero(a: Int) { Int.is_negative(a) -> a < 0 }
+theorem neg_lt_zero(a: Int) { a.is_negative -> a < 0 }
 
 theorem nonpos_lt_pos(a: Int, b: Int) { not a.is_positive and b.is_positive -> a < b }
 
-theorem neg_lt_nonneg(a: Int, b: Int) { Int.is_negative(a) and not Int.is_negative(b) -> a < b }
+theorem neg_lt_nonneg(a: Int, b: Int) { a.is_negative and not b.is_negative -> a < b }
 
 theorem nonpos_lte_nonneg(a: Int, b: Int) {
-    not a.is_positive and not Int.is_negative(b) -> a <= b
+    not a.is_positive and not b.is_negative -> a <= b
 } by {
     if not a <= b {
         b != a
         not a < b
-        not Int.is_negative(a)
+        not a.is_negative
         not b.is_positive
         false
     }
 }
 
 theorem lte_abs(a: Int) { a <= Int.from_nat(abs(a)) } by {
-    if Int.is_negative(a) {
+    if a.is_negative {
         not a.is_positive
         a <= Int.from_nat(abs(a))
     } else {
@@ -1335,7 +1335,7 @@ theorem lt_add_left(a: Int, b: Int, c: Int) { b < c -> a + b < a + c } by {
 theorem lte_add_left(a: Int, b: Int, c: Int) { b <= c -> a + b <= a + c }
 
 theorem abs_add_nonneg(a: Int, b: Int) {
-    not Int.is_negative(a) and not Int.is_negative(b) -> abs(a + b) = abs(a) + abs(b)
+    not a.is_negative and not b.is_negative -> abs(a + b) = abs(a) + abs(b)
 } by {
     Int.from_nat(abs(a)) = a
     Int.from_nat(abs(b)) = b
@@ -1356,7 +1356,7 @@ theorem abs_add_nonpos(a: Int, b: Int) {
 
 // One case of the triangle inequality
 theorem triangle_nonpos_lte_nonneg(a: Int, b: Int) {
-    not Int.is_negative(a) and not b.is_positive and abs(b) <= abs(a) -> abs(a + b) <= abs(a) + abs(b)
+    not a.is_negative and not b.is_positive and abs(b) <= abs(a) -> abs(a + b) <= abs(a) + abs(b)
 } by {
     let (n: Nat) satisfy { n + abs(b) = abs(a) }
     Int.from_nat(n) + Int.from_nat(abs(b)) = Int.from_nat(abs(a))
@@ -1370,7 +1370,7 @@ theorem triangle_nonpos_lte_nonneg(a: Int, b: Int) {
 }
 
 theorem triangle_nonneg_nonpos(a: Int, b: Int) {
-    not Int.is_negative(a) and not b.is_positive -> abs(a + b) <= abs(a) + abs(b)
+    not a.is_negative and not b.is_positive -> abs(a + b) <= abs(a) + abs(b)
 } by {
     if abs(b) <= abs(a) {
         abs(a + b) <= abs(a) + abs(b)
@@ -1389,8 +1389,8 @@ theorem triangle_nonneg_nonpos(a: Int, b: Int) {
 }
 
 theorem triangle_ineq(a: Int, b: Int) { abs(a + b) <= abs(a) + abs(b) } by {
-    if Int.is_negative(a) {
-        if Int.is_negative(b) {
+    if a.is_negative {
+        if b.is_negative {
             abs(a + b) = abs(a) + abs(b)
             abs(a + b) <= abs(a) + abs(b)
         } else {
@@ -1399,7 +1399,7 @@ theorem triangle_ineq(a: Int, b: Int) { abs(a + b) <= abs(a) + abs(b) } by {
             abs(a + b) <= abs(a) + abs(b)
         }
     } else {
-        if Int.is_negative(b) {
+        if b.is_negative {
             abs(a + b) <= abs(a) + abs(b)
         } else {
             abs(a + b) = abs(a) + abs(b)
@@ -1415,7 +1415,7 @@ theorem lt_mul_pos(a: Int, b: Int, c: Int) { a < b and c.is_positive -> a * c < 
     Int.is_positive(b * c - a * c)
 }
 
-theorem lt_mul_neg(a: Int, b: Int, c: Int) { a < b and Int.is_negative(c) -> b * c < a * c } by {
+theorem lt_mul_neg(a: Int, b: Int, c: Int) { a < b and c.is_negative -> b * c < a * c } by {
     a * c - b * c = c * (a - b)
     Int.is_positive(b - a)
     Int.is_negative(a - b)
@@ -1516,7 +1516,7 @@ theorem mul_units(u: Int, v: Int) { is_unit(u) and is_unit(v) -> is_unit(u * v) 
 
 // Like the sign function, but we force it to be a unit, by considering 0 to have sign 1
 define unit_sign(a: Int) -> Int {
-    if Int.is_negative(a) {
+    if a.is_negative {
         -(1)
     } else {
         1
@@ -1524,7 +1524,7 @@ define unit_sign(a: Int) -> Int {
 }
 
 theorem unit_sign_is_unit(a: Int) { is_unit(unit_sign(a)) } by {
-    if Int.is_negative(a) {
+    if a.is_negative {
         unit_sign(a) = -(1)
         abs(-(1)) = nat.1
         is_unit(unit_sign(a))
@@ -1536,7 +1536,7 @@ theorem unit_sign_is_unit(a: Int) { is_unit(unit_sign(a)) } by {
 }
 
 theorem abs_decomp(a: Int) { unit_sign(a) * Int.from_nat(abs(a)) = a } by {
-    if Int.is_negative(a) {
+    if a.is_negative {
         unit_sign(a) = -(1)
         unit_sign(a) * Int.from_nat(abs(a)) = -(1) * Int.from_nat(abs(a))
         unit_sign(a) * Int.from_nat(abs(a)) = -(Int.from_nat(abs(a)))
@@ -1800,13 +1800,13 @@ theorem lte_mul_both(a: Int, b: Int, c: Int) {
 }
 
 theorem lt_mul_both_neg(a: Int, b: Int, c: Int) {
-    Int.is_negative(a) and b < c -> a * b > a * c
+    a.is_negative and b < c -> a * b > a * c
 } by {
     a * c < b * a
 }
 
 theorem lte_mul_both_neg(a: Int, b: Int, c: Int) {
-    Int.is_negative(a) and b <= c -> a * b >= a * c
+    a.is_negative and b <= c -> a * b >= a * c
 }
 
 theorem lt_cancel_mul(a: Int, b: Int, c: Int) {
@@ -1829,11 +1829,11 @@ theorem lte_cancel_mul(a: Int, b: Int, c: Int) {
 }
 
 theorem lt_cancel_mul_neg(a: Int, b: Int, c: Int) {
-    Int.is_negative(a) and a * b < a * c -> b > c
+    a.is_negative and a * b < a * c -> b > c
 }
 
 theorem lte_cancel_mul_neg(a: Int, b: Int, c: Int) {
-    Int.is_negative(a) and a * b <= a * c -> b >= c
+    a.is_negative and a * b <= a * c -> b >= c
 }
 
 theorem mul_pos_cancel_left(a: Int, b: Int, c: Int) {
@@ -1856,7 +1856,7 @@ theorem mul_pos_cancel_right(a: Int, b: Int, c: Int) {
 }
 
 theorem mul_neg_cancel_left(a: Int, b: Int, c: Int) {
-    Int.is_negative(a) and a * b = a * c -> b = c
+    a.is_negative and a * b = a * c -> b = c
 } by {
     Int.is_positive(-a)
     (-a) * b = (-a) * c
@@ -1864,7 +1864,7 @@ theorem mul_neg_cancel_left(a: Int, b: Int, c: Int) {
 }
 
 theorem mul_neg_cancel_right(a: Int, b: Int, c: Int) {
-    Int.is_negative(a) and b * a = c * a -> b = c
+    a.is_negative and b * a = c * a -> b = c
 }
 
 theorem mul_cancel_left(a: Int, b: Int, c: Int) {
@@ -1873,7 +1873,7 @@ theorem mul_cancel_left(a: Int, b: Int, c: Int) {
     if a.is_positive {
         b = c
     } else {
-        Int.is_negative(a)
+        a.is_negative
         b = c
     }
 }
