@@ -1,3 +1,4 @@
+import nat
 from int import Int, abs, gcd
 
 numerals Int
@@ -31,6 +32,12 @@ theorem zero_denom {
 
 theorem denom_nonzero(r: Rat) {
     r.denom != 0
+} by {
+    r.denom > 0
+}
+
+theorem denom_positive(r: Rat) {
+    int.is_positive(r.denom)
 } by {
     r.denom > 0
 }
@@ -114,7 +121,30 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
     }
 }
 
-// Maybe could use Gauss's Lemma?
-// theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
-//     cross_equals(r1.num, r1.denom, r2.num, r2.denom) -> r1 = r2
-// }
+theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
+    cross_equals(r1.num, r1.denom, r2.num, r2.denom) -> r1 = r2
+} by {
+    // The r1 fields divide into the r2 ones
+    gcd(r1.num, r1.denom) = 1
+    int.divides(r1.denom, r1.num * r2.denom)
+    int.divides(r1.denom, r2.denom)
+    nat.divides(abs(r1.denom), abs(r2.denom))
+
+    // The r2 fields divide into the r1 ones
+    gcd(r2.num, r2.denom) = 1
+    int.divides(r2.denom, r2.num * r1.denom)
+    int.divides(r2.denom, r1.denom)
+    nat.divides(abs(r2.denom), abs(r1.denom))
+
+    // Prove int equality from nat equality
+    abs(r1.denom) = abs(r2.denom)
+    int.is_positive(r1.denom)
+    int.is_positive(r2.denom)
+    r1.denom = r2.denom
+
+    // Divide out the denominators
+    r1.num * r2.denom = r2.num * r1.denom
+    r1.num * r2.denom = r2.num * r2.denom
+    r2.denom != 0
+    r1.num = r2.num
+}

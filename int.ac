@@ -392,9 +392,9 @@ theorem sub_nat_double_cancel_right(p: Nat, q: Nat, r: Nat, s: Nat, t: Nat) {
 
 define is_negative(a: Int) -> Bool { a != Int.from_nat(abs(a)) }
 
-theorem zero_not_neg { not is_negative(0) }
-
 define is_positive(a: Int) -> Bool { is_negative(-a) }
+
+theorem zero_not_neg { not is_negative(0) }
 
 theorem zero_not_pos { not is_positive(0) } by {
     -(0) = 0
