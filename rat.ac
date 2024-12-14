@@ -37,7 +37,7 @@ theorem denom_nonzero(r: Rat) {
 }
 
 theorem denom_positive(r: Rat) {
-    int.is_positive(r.denom)
+    r.denom.is_positive
 } by {
     r.denom > 0
 }
@@ -138,8 +138,8 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
 
     // Prove int equality from nat equality
     abs(r1.denom) = abs(r2.denom)
-    int.is_positive(r1.denom)
-    int.is_positive(r2.denom)
+    r1.denom.is_positive
+    r2.denom.is_positive
     r1.denom = r2.denom
 
     // Divide out the denominators
