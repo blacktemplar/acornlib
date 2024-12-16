@@ -266,14 +266,189 @@ theorem mul_one_left(r: Rat) {
     Rat.1 * r = r
 }
 
-// theorem mul_inverse_cancel_right(r: Rat) {
-//     r != Rat.0 -> r * (1 / r) = Rat.from_int(1)
-// }
+theorem mul_int_eq_int_mul(a: Int, b: Int) {
+    Rat.from_int(a) * Rat.from_int(b) = Rat.from_int(a * b)
+}
 
+theorem unreduce(a: Int, b: Int) {
+    b != Int.0 -> exists(d: Int) {
+        reduce(a, b).num * d = a and reduce(a, b).denom * d = b
+    }
+} by {
+    let r: Rat = reduce(a, b)
+    cross_equals(r.num, r.denom, a, b)
+    r.num * b = a * r.denom
+    int.gcd(r.num, r.denom) = Int.1
+    int.divides(r.denom, r.num * b)
+    int.divides(r.denom, b)
+    let d: Int satisfy {
+        r.denom * d = b
+    }
+    r.num * b * d = a * r.denom * d
+    r.num * d * b = a * b
+    r.num * d = a
+}
 
-// theorem reduce_cancel(a: Int, b: Int) {
-//     a != 0 -> Rat.from_int(b) * reduce(a, b) = Rat.from_int(a)
-// }
+theorem mul_int_right(r: Rat, n: Int) {
+    r * Rat.from_int(n) = reduce(r.num * n, r.denom)
+} 
+
+theorem mul_int_left(n: Int, r: Rat) {
+    Rat.from_int(n) * r = reduce(n * r.num, r.denom)
+}
+
+theorem cross_eq_imp_reduce_eq(a: Int, b: Int, c: Int, d: Int) {
+    cross_equals(a, b, c, d) -> reduce(a, b) = reduce(c, d)
+} by {
+    b != Int.0
+    d != Int.0
+    let rab: Rat = reduce(a, b)
+    cross_equals(rab.num, rab.denom, a, b)
+    cross_equals(rab.num, rab.denom, c, d)
+    let rcd: Rat = reduce(c, d)
+    cross_equals(reduce(c, d).num, rcd.denom, c, d)
+    cross_equals(rcd.num, rcd.denom, c, d)
+    c * rab.denom = rab.num * d
+    cross_equals(rcd.num, rcd.denom, rab.num, rab.denom)
+    rab = rcd
+}
+
+theorem reduce_eq_imp_cross_eq(a: Int, b: Int, c: Int, d: Int) {
+    b != Int.0 and d != Int.0 and reduce(a, b) = reduce(c, d)
+        -> cross_equals(a, b, c, d)
+} by {
+    cross_equals(reduce(a, b).num, reduce(a, b).denom, a, b)
+    cross_equals(reduce(c, d).num, reduce(c, d).denom, c, d)
+}
+
+theorem mul_reduced_int_right(a: Int, b: Int, c: Int) {
+    reduce(a, b) * Rat.from_int(c) = reduce(a * c, b)
+} by {
+    if b = Int.0 {
+        reduce(a, b) = Rat.0
+        reduce(a * c, b) = Rat.0
+        reduce(a, b) * Rat.from_int(c) = reduce(a * c, b)
+    } else {
+        let r: Rat = reduce(a, b)
+        r * Rat.from_int(c) = reduce(r.num * c, r.denom)
+        cross_equals(r.num, r.denom, a, b)
+        r.num * b = r.denom * a
+        r.num * c * b = r.denom * (a * c)
+        reduce(r.num * c, r.denom) = reduce(a * c, b)
+        reduce(a, b) * Rat.from_int(c) = reduce(a * c, b)
+    }
+}
+
+theorem mul_reduced_int_left(a: Int, b: Int, c: Int) {
+    Rat.from_int(c) * reduce(a, b) = reduce(c * a, b)
+}
+
+theorem mul_int_right_cancel(r1: Rat, r2: Rat, n: Int) {
+    n != Int.0 and r1 * Rat.from_int(n) = r2 * Rat.from_int(n) -> r1 = r2
+} by {
+    r1 * Rat.from_int(n) = reduce(r1.num * n, r1.denom)
+    r2 * Rat.from_int(n) = reduce(r2.num * n, r2.denom)
+    reduce(r1.num * n, r1.denom) = reduce(r2.num * n, r2.denom)
+    r1.num * n * r2.denom = r1.denom * r2.num * n
+    r1.num * r2.denom = r1.denom * r2.num
+    r1 = r2
+}
+
+theorem mul_int_left_cancel(r1: Rat, r2: Rat, n: Int) {
+    n != Int.0 and Rat.from_int(n) * r1 = Rat.from_int(n) * r2 -> r1 = r2
+}
+
+theorem mul_reduced_nondegen(a: Int, b: Int, c: Int, d: Int) {
+    b != Int.0 and d != Int.0 ->
+        reduce(a, b) * reduce(c, d) = reduce(a * c, b * d)
+} by {
+    let e: Int satisfy {
+        reduce(a, b).num * e = a and reduce(a, b).denom * e = b
+    }
+    e != Int.0
+    let f: Int satisfy {
+        reduce(c, d).num * f = c and reduce(c, d).denom * f = d
+    }
+    f != Int.0
+
+    // Simplify numerator
+    let nums: Int = reduce(a, b).num * reduce(c, d).num
+    (reduce(a, b).num * e) * (reduce(c, d).num * f) = a * c
+    reduce(a, b).num * e * reduce(c, d).num * f = a * c
+    (reduce(a, b).num * reduce(c, d).num) * e * f = a * c
+    (reduce(a, b).num * reduce(c, d).num) * (e * f) = a * c
+    nums * (e * f) = a * c
+
+    // Simplify denominator
+    let denoms: Int = reduce(a, b).denom * reduce(c, d).denom
+    (reduce(a, b).denom * e) * (reduce(c, d).denom * f) = b * d
+    (reduce(a, b).denom * reduce(c, d).denom) * e * f = b * d
+    (reduce(a, b).denom * reduce(c, d).denom) * (e * f) = b * d
+    denoms * (e * f) = b * d
+
+    // Combining
+    nums * (b * d) = denoms * (a * c)
+    reduce(a, b).denom * reduce(c, d).denom != Int.0
+    denoms != Int.0
+    cross_equals(nums, denoms, a * c, b * d)
+    cross_equals(reduce(a, b).num * reduce(c, d).num,
+                 reduce(a, b).denom * reduce(c, d).denom,
+                 a * c, b * d)
+}
+
+theorem reduce_zero_num(a: Int) {
+    reduce(Int.0, a) = Rat.0
+} by {
+    if a = Int.0 {
+        reduce(Int.0, a) = Rat.0
+    } else {
+        Rat.0 = reduce(Int.0, Int.1)
+        cross_equals(Int.0, a, Int.0, Int.1)
+        reduce(Int.0, a) = reduce(Int.0, Int.1)
+        reduce(Int.0, a) = Rat.0
+    }
+}
+
+theorem mul_zero_right(r: Rat) {
+    r * Rat.0 = Rat.0
+} by {
+    r * Rat.0 = reduce(r.num * Int.0, r.denom)
+    r * Rat.0 = reduce(Int.0, r.denom)
+}
+
+theorem mul_reduced_degen(a: Int, b: Int, c: Int) {
+    reduce(a, b) * reduce(c, Int.0) = reduce(a * c, b * Int.0)
+} by {
+    reduce(c, Int.0) = Rat.0
+    reduce(a, b) * Rat.0 = Rat.0
+    reduce(a * c, b * Int.0) = Rat.0
+}
+
+theorem mul_reduced(a: Int, b: Int, c: Int, d: Int) {
+    reduce(a, b) * reduce(c, d) = reduce(a * c, b * d)
+} by {
+    if b = Int.0 or d = Int.0 {
+        // Degen cases
+        if b = Int.0 {
+            reduce(a, Int.0) * reduce(c, d) = reduce(a * c, Int.0 * d)
+            reduce(a, b) * reduce(c, d) = reduce(a * c, b * d)
+        } else {
+            d = Int.0
+            reduce(a, b) * reduce(c, Int.0) = reduce(a * c, b * Int.0)
+            reduce(a, b) * reduce(c, d) = reduce(a * c, b * d)
+        }
+    } else {
+        // Non-degen case
+        reduce(a, b) * reduce(c, d) = reduce(a * c, b * d)
+    }
+}
+
+theorem mul_assoc(a: Rat, b: Rat, c: Rat) {
+    (a * b) * c = a * (b * c)
+} by {
+    (a * b) * c = reduce(a.num * b.num * c.num, a.denom * b.denom * c.denom)
+    a * (b * c) = reduce(a.num * (b.num * c.num), a.denom * (b.denom * c.denom))
+}
 
 // theorem add_reduced_same_denom(a: Int, b: Int, c: Int) {
 //     c != 0 -> reduce(a, c) + reduce(b, c) = reduce(a + b, c)
