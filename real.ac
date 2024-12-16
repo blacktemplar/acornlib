@@ -97,8 +97,6 @@ structure Real {
     gt_rat: Rat -> Bool
 } constraint {
     is_dedekind_cut(gt_rat)
-} by {
-    let gt_rat: Rat -> Bool = Rat.0.gt
 }
 
 class Real {
