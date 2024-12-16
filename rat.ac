@@ -175,9 +175,14 @@ class Rat {
         reduce(self.num * other.num, self.denom * other.denom)
     }
 
+    // This defines the reciprocal of zero to be zero
+    define reciprocal(self) -> Rat {
+        reduce(self.denom, self.num)
+    }
+
     // This is the weird version where dividing by zero gives you zero
     define div(self, other: Rat) -> Rat {
-        reduce(self.num * other.denom, self.denom * other.num)
+        self * other.reciprocal
     }
 
     define lt(self, other: Rat) -> Bool {
@@ -552,3 +557,80 @@ theorem add_assoc(a: Rat, b: Rat, c: Rat) {
     a + b + c = reduce(an, d) + (reduce(bn, d) + reduce(cn, d))
     a + b + c = a + (b + c)
 }
+
+theorem common_denom(r1: Rat, r2: Rat) {
+    exists(n1: Int, n2: Int, d: Int) {
+        r1 = reduce(n1, d) and r2 = reduce(n2, d)
+    }
+} by {
+    let d: Int = r1.denom * r2.denom
+    d != Int.0
+    let n1: Int = r1.num * r2.denom
+    r1 = reduce(r1.num * r2.denom, r1.denom * r2.denom)
+    r1 = reduce(n1, d)
+    let n2: Int = r2.num * r1.denom
+    r2 = reduce(r2.num * r1.denom, r2.denom * r1.denom)
+    r2 = reduce(n2, d)
+}
+
+theorem distrib_left(r1: Rat, r2: Rat, r3: Rat) {
+    r1 * (r2 + r3) = r1 * r2 + r1 * r3
+} by {
+    let (a: Int, b: Int, c: Int) satisfy {
+        r2 = reduce(a, c) and r3 = reduce(b, c)
+    }
+
+    // Simplify the left side
+    r2 + r3 = reduce(a + b, c)
+    r1 * (r2 + r3) = r1 * reduce(a + b, c)
+    r1 * (r2 + r3) = reduce(r1.num * (a + b), r1.denom * c)
+    r1 * (r2 + r3) = reduce(r1.num * a + r1.num * b, r1.denom * c)
+
+    // Simplify the right side
+    r1 * r2 = reduce(r1.num * a, r1.denom * c)
+    r1 * r3 = reduce(r1.num * b, r1.denom * c)
+    r1 * r2 + r1 * r3 = reduce(r1.num * a + r1.num * b, r1.denom * c)
+}
+
+theorem distrib_right(r1: Rat, r2: Rat, r3: Rat) {
+    (r1 + r2) * r3 = r1 * r3 + r2 * r3
+}
+
+theorem add_inv_cancels_right(a: Rat, b: Rat) {
+    a + -a = Rat.0
+} by {
+    a + -a = reduce(a.num * a.denom + -a.num * a.denom, a.denom * a.denom)
+    a + -a = reduce(a.num * a.denom - a.num * a.denom, a.denom * a.denom)
+    a + -a = reduce(Int.0, a.denom * a.denom)
+    a + -a = Rat.0
+}
+
+theorem add_inv_cancels_left(a: Rat, b: Rat) {
+    -a + a = Rat.0
+}
+
+theorem sub_self(a: Rat) {
+    a - a = Rat.0
+}
+
+theorem reduce_self(n: Int) {
+    n != Int.0 -> reduce(n, n) = Rat.1
+} by {
+    Rat.1 = Rat.new(Int.1, Int.1)
+    cross_equals(Int.1, Int.1, n, n)
+    reduce(n, n) = Rat.1
+}
+
+theorem mul_inv_cancels_right(a: Rat) {
+    a != Rat.0 -> a * a.reciprocal = Rat.1
+} by {
+    a * a.reciprocal = reduce(a.num * a.denom, a.denom * a.num)
+    a * a.reciprocal = reduce(a.num * a.denom, a.num * a.denom)
+    a.num * a.denom != Int.0
+    a * a.reciprocal = Rat.1
+}
+
+theorem mul_inv_cancels_left(a: Rat) {
+    a != Rat.0 -> a.reciprocal * a = Rat.1
+}
+
