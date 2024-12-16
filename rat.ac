@@ -450,14 +450,105 @@ theorem mul_assoc(a: Rat, b: Rat, c: Rat) {
     a * (b * c) = reduce(a.num * (b.num * c.num), a.denom * (b.denom * c.denom))
 }
 
-// theorem add_reduced_same_denom(a: Int, b: Int, c: Int) {
-//     c != 0 -> reduce(a, c) + reduce(b, c) = reduce(a + b, c)
-// }
+theorem add_int_eq_int_add(a: Int, b: Int) {
+    Rat.from_int(a) + Rat.from_int(b) = Rat.from_int(a + b)
+}
 
-// theorem add_reduced(a: Int, b: Int, c: Int, d: Int) {
-//     b != 0 and d != 0 -> reduce(a, b) + reduce(c, d) = reduce(a * d + b * c, b * d)
-// }
+theorem reduce_cancels_right(a: Int, b: Int, c: Int) {
+    c != Int.0 -> reduce(a, b) = reduce(a * c, b * c)
+} by {
+    if b = Int.0 {
+        reduce(a, b) = Rat.0
+        b * c = Int.0
+        reduce(a * c, b * c) = Rat.0
+        reduce(a, b) = reduce(a * c, b * c)
+    } else {
+        cross_equals(a, b, a * c, b * c)
+        reduce(a, b) = reduce(a * c, b * c)
+    }
+}
 
-// theorem add_assoc(a: Rat, b: Rat, c: Rat) {
-//     a + b + c = a + (b + c)
-// }
+theorem reduce_cancels_left(a: Int, b: Int, c: Int) {
+    c != Int.0 -> reduce(a, b) = reduce(c * a, c * b)
+}
+
+theorem add_reduce_right(r: Rat, a: Int, b: Int) {
+    b != Int.0 -> r + reduce(a, b) = reduce(r.num * b + a * r.denom, r.denom * b)
+} by {
+    let c: Int satisfy {
+        reduce(a, b).num * c = a and reduce(a, b).denom * c = b
+    }
+    c != Int.0
+    r + reduce(a, b) = reduce(r.num * reduce(a, b).denom + r.denom * reduce(a, b).num,
+                              reduce(a, b).denom * r.denom)
+    r + reduce(a, b) = reduce((r.num * reduce(a, b).denom + r.denom * reduce(a, b).num) * c,
+                              reduce(a, b).denom * r.denom * c)
+    r + reduce(a, b) = reduce(r.num * reduce(a, b).denom * c + r.denom * reduce(a, b).num * c,
+                              reduce(a, b).denom * r.denom * c)
+    r + reduce(a, b) = reduce(r.num * b + a * r.denom, r.denom * b)
+}
+
+theorem add_reduced(a: Int, b: Int, c: Int, d: Int) {
+    b != Int.0 and d != Int.0 -> reduce(a, b) + reduce(c, d) = reduce(a * d + b * c, b * d)
+} by {
+    reduce(a, b) + reduce(c, d) = reduce(reduce(a, b).num * d + c * reduce(a, b).denom,
+                                         reduce(a, b).denom * d)
+    let e: Int satisfy {
+        reduce(a, b).num * e = a and reduce(a, b).denom * e = b
+    }
+    e != Int.0
+    reduce(reduce(a, b).num * d + c * reduce(a, b).denom, reduce(a, b).denom * d) = reduce(
+        (reduce(a, b).num * d + c * reduce(a, b).denom) * e, reduce(a, b).denom * d * e)
+    reduce(a, b) + reduce(c, d) = reduce((reduce(a, b).num * d + c * reduce(a, b).denom) * e,
+                                         reduce(a, b).denom * d * e)
+    reduce(a, b) + reduce(c, d) = reduce(reduce(a, b).num * d * e + c * reduce(a, b).denom * e,
+                                         reduce(a, b).denom * d * e)
+    reduce(a, b) + reduce(c, d) = reduce(reduce(a, b).num * e * d + reduce(a, b).denom * e * c,
+                                         reduce(a, b).denom * e * d)
+}
+
+theorem add_reduced_same_denom(a: Int, b: Int, c: Int) {
+    reduce(a, c) + reduce(b, c) = reduce(a + b, c)
+} by {
+    if c = Int.0 {
+        reduce(a, c) = Rat.0
+        reduce(b, c) = Rat.0
+        reduce(a + b, c) = Rat.0
+        reduce(a, c) + reduce(b, c) = reduce(a + b, c)
+    } else {
+        reduce(a, c) + reduce(b, c) = reduce(a * c + b * c, c * c)
+        reduce(a, c) + reduce(b, c) = reduce((a + b) * c, c * c)
+        reduce(a, c) + reduce(b, c) = reduce(a + b, c)
+    }
+}
+
+theorem add_assoc(a: Rat, b: Rat, c: Rat) {
+    a + b + c = a + (b + c)
+} by {
+    let d: Int = a.denom * b.denom * c.denom
+    let an: Int = a.num * (b.denom * c.denom)
+    a = reduce(a.num, a.denom)
+    b.denom * c.denom != Int.0
+    a = reduce(a.num * (b.denom * c.denom), a.denom * (b.denom * c.denom))
+    a = reduce(an, d)
+
+    let bn: Int = b.num * (a.denom * c.denom)
+    b = reduce(b.num, b.denom)
+    a.denom * c.denom != Int.0
+    b = reduce(b.num * (a.denom * c.denom), b.denom * (a.denom * c.denom))
+    b = reduce(bn, d)
+
+    let cn: Int = c.num * (a.denom * b.denom)
+    c = reduce(c.num, c.denom)
+    a.denom * b.denom != Int.0
+    c = reduce(c.num * (a.denom * b.denom), c.denom * (a.denom * b.denom))
+    c = reduce(cn, d)
+
+    a + b + c = reduce(an, d) + reduce(bn, d) + reduce(cn, d)
+    a + b + c = reduce(an + bn, d) + reduce(cn, d)
+    a + b + c = reduce(an + bn + cn, d)
+    a + b + c = reduce(an + (bn + cn), d)
+    a + b + c = reduce(an, d) + reduce(bn + cn, d)
+    a + b + c = reduce(an, d) + (reduce(bn, d) + reduce(cn, d))
+    a + b + c = a + (b + c)
+}
