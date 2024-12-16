@@ -186,7 +186,7 @@ class Rat {
     }
 
     define lt(self, other: Rat) -> Bool {
-        self.num * other.denom < other.num * self.denom
+        (other - self).is_positive
     }
 
     define lte(self, other: Rat) -> Bool {
@@ -634,3 +634,23 @@ theorem mul_inv_cancels_left(a: Rat) {
     a != Rat.0 -> a.reciprocal * a = Rat.1
 }
 
+theorem sub_zero(a: Rat) {
+    a - Rat.0 = a
+}
+
+theorem pos_imp_zero_lt(a: Rat) {
+    a.is_positive -> Rat.0 < a
+} by {
+    (a - Rat.0).is_positive
+}
+
+theorem zero_lt_imp_pos(a: Rat) {
+    Rat.0 < a -> a.is_positive
+} by {
+    a - Rat.0 = a
+    a.is_positive
+}
+
+theorem not_pos_and_neg(a: Rat) {
+    a.is_positive -> not a.is_negative
+}
