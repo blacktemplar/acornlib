@@ -1,6 +1,5 @@
 from int import Int
 from rat import Rat
-numerals Int
 
 // Using the Dedekind cut definition of reals.
 
@@ -20,7 +19,7 @@ define is_lower(f: Rat -> Bool) -> Bool {
 
 define is_greatest(f: Rat -> Bool, x: Rat) -> Bool {
     f(x) and forall(y: Rat) {
-        f(y) -> x >= y
+        f(y) -> y <= x
     }
 }
 
@@ -30,31 +29,69 @@ define has_greatest(f: Rat -> Bool) -> Bool {
     }
 }
 
-// Rat.is_negative is the cut for zero.
+// "All numbers y such that x is greater then y" is the cut that embeds x.
 
-theorem is_negative_is_cut {
-    is_cut(Rat.is_negative)
+theorem gt_is_cut(r: Rat) {
+    is_cut(r.gt)
 } by {
-    (-1).is_negative
-    not 1.is_negative
+    r - (r - Rat.1) = Rat.1
+    r > (r - Rat.1)
+    not r > r
 }
 
-theorem is_negative_is_lower {
-    is_lower(Rat.is_negative)
+theorem gt_is_lower(r: Rat) {
+    is_lower(r.gt)
 } by {
     forall(x: Rat, y: Rat) {
-        if y.is_negative and x < y {
-            x.is_negative
+        if r > y and x < y {
+            y < r
+            x < r
+            r > x
         }
     }
 }
 
-theorem is_negative_has_no_greatest {
-    not has_greatest(Rat.is_negative)
+theorem gt_has_no_greatest(r: Rat) {
+    not has_greatest(r.gt)
+} by {
+    if has_greatest(r.gt) {
+        let q: Rat satisfy {
+            is_greatest(r.gt, q)
+        }
+        r > q
+        let diff: Rat = r - q
+        diff.is_positive
+        q + diff = r
+
+        // z will be a counterexample.
+        // It's constructed to be larger than q.
+        let z: Rat = q + diff / Rat.2
+        (diff / Rat.2).is_positive
+        q < z
+
+        // z is still less than r, though. Since q is assu
+        z + diff / Rat.2 = r
+        z < r
+        r > z
+
+        // Since q is the greatest satisfying r.gt(_). But this contradicts.
+        q >= z
+        false
+    }
 }
 
+// Real numbers are defined by a function of which rationals they are greater than.
 structure Real {
-    lower: Rat -> Bool
+    gt_rat: Rat -> Bool
 } constraint {
-    is_cut(lower) and is_lower(lower) and not has_greatest(lower)
+    is_cut(gt_rat) and is_lower(gt_rat) and not has_greatest(gt_rat)
+} by {
+    let gt_rat: Rat -> Bool = Rat.0.gt
 }
+
+class Real {
+    let from_rat: Rat -> Real = function(r: Rat) {
+        Real.new(r.gt)
+    }
+}
+

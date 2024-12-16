@@ -1983,3 +1983,17 @@ theorem euclids_lemma_prime(a: Int, b: Int, c: Int) {
         divides(a, c)
     }
 }
+
+theorem one_plus_one {
+    1 + 1 = 2
+} by {
+    2 = Int.from_nat(Nat.1 + Nat.1)
+}
+
+theorem times_two(a: Int) {
+    2 * a = a + a
+} by {
+    2 = 1 + 1
+    2 * a = (1 + 1) * a
+    2 * a = 1 * a + 1 * a
+}
