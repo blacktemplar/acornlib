@@ -150,6 +150,8 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
 }
 
 class Rat {
+    let 1: Rat = Rat.new(1, 1)
+
     define is_positive(self) -> Bool {
         self.num.is_positive
     }
@@ -163,7 +165,8 @@ class Rat {
     }
 
     define add(self, other: Rat) -> Rat {
-        reduce(self.num * other.denom + other.num * self.denom, self.denom * other.denom)
+        reduce(self.num * other.denom + other.num * self.denom,
+               self.denom * other.denom)
     }
 
     define sub(self, other: Rat) -> Rat {
@@ -196,6 +199,10 @@ class Rat {
     }
 }
 
+theorem reduce_idempotent(r: Rat) {
+    reduce(r.num, r.denom) = r
+}
+
 theorem neg_is_reduced(r: Rat) {
     is_reduced(-r.num, r.denom)
 } by {
@@ -210,3 +217,74 @@ theorem neg_num(r: Rat) {
 theorem neg_denom(r: Rat) {
     r.neg.denom = r.denom
 }
+
+theorem add_zero_right(a: Rat) {
+    a + Rat.0 = a
+} by {
+    a + Rat.0 = reduce(a.num * 1 + 0 * a.denom, a.denom * 1)
+    a + Rat.0 = reduce(a.num, a.denom)
+}
+
+theorem add_zero_left(a: Rat) {
+    Rat.0 + a = a
+}
+
+theorem add_comm(a: Rat, b: Rat) {
+    a + b = b + a
+}
+
+theorem from_int_cancel(a: Int, b: Int) {
+    Rat.from_int(a) = Rat.from_int(b) -> a = b
+}
+
+theorem mul_comm(a: Rat, b: Rat) {
+    a * b = b * a
+}
+
+theorem rat_neg_one {
+    -Rat.1 = Rat.from_int(-1)
+} by {
+    Rat.1 = Rat.new(1, 1)
+    Rat.from_int(-1) = Rat.new(-1, 1)
+}
+
+theorem mul_neg_one_right(r: Rat) {
+    r * -Rat.1 = -r
+} by {
+    r * Rat.from_int(-1) = -r
+}
+
+theorem mul_neg_one_left(r: Rat) {
+    -Rat.1 * r = -r
+}
+
+theorem mul_one_right(r: Rat) {
+    r * Rat.1 = r
+} by {
+    r * Rat.from_int(1) = r
+}
+
+theorem mul_one_left(r: Rat) {
+    Rat.1 * r = r
+}
+
+// theorem mul_inverse_cancel_right(r: Rat) {
+//     r != Rat.0 -> r * (1 / r) = Rat.from_int(1)
+// }
+
+
+// theorem reduce_cancel(a: Int, b: Int) {
+//     a != 0 -> Rat.from_int(b) * reduce(a, b) = Rat.from_int(a)
+// }
+
+// theorem add_reduced_same_denom(a: Int, b: Int, c: Int) {
+//     c != 0 -> reduce(a, c) + reduce(b, c) = reduce(a + b, c)
+// }
+
+// theorem add_reduced(a: Int, b: Int, c: Int, d: Int) {
+//     b != 0 and d != 0 -> reduce(a, b) + reduce(c, d) = reduce(a * d + b * c, b * d)
+// }
+
+// theorem add_assoc(a: Rat, b: Rat, c: Rat) {
+//     a + b + c = a + (b + c)
+// }

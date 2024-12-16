@@ -1,0 +1,60 @@
+from int import Int
+from rat import Rat
+numerals Int
+
+// Using the Dedekind cut definition of reals.
+
+define is_cut(f: Rat -> Bool) -> Bool {
+    exists(x: Rat) {
+        f(x)
+    } and exists(x: Rat) {
+        not f(x)
+    }
+}
+
+define is_lower(f: Rat -> Bool) -> Bool {
+    forall(x: Rat, y: Rat) {
+        f(y) and x < y -> f(x)
+    }
+}
+
+define is_greatest(f: Rat -> Bool, x: Rat) -> Bool {
+    f(x) and forall(y: Rat) {
+        f(y) -> x >= y
+    }
+}
+
+define has_greatest(f: Rat -> Bool) -> Bool {
+    exists(x: Rat) {
+        is_greatest(f, x)
+    }
+}
+
+// Rat.is_negative is the cut for zero.
+
+theorem is_negative_is_cut {
+    is_cut(Rat.is_negative)
+} by {
+    (-1).is_negative
+    not 1.is_negative
+}
+
+theorem is_negative_is_lower {
+    is_lower(Rat.is_negative)
+} by {
+    forall(x: Rat, y: Rat) {
+        if y.is_negative and x < y {
+            x.is_negative
+        }
+    }
+}
+
+theorem is_negative_has_no_greatest {
+    not has_greatest(Rat.is_negative)
+}
+
+structure Real {
+    lower: Rat -> Bool
+} constraint {
+    is_cut(lower) and is_lower(lower) and not has_greatest(lower)
+}
