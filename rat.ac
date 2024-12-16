@@ -1,14 +1,12 @@
 import nat
 from int import Int, abs, gcd
 
-numerals Int
-
 define is_reduced(a: Int, b: Int) -> Bool {
-    b > 0 and gcd(a, b) = 1
+    b > Int.0 and gcd(a, b) = Int.1
 }
 
 theorem denom_one_is_reduced(a: Int) {
-    is_reduced(a, 1)
+    is_reduced(a, Int.1)
 }
 
 structure Rat {
@@ -19,32 +17,32 @@ structure Rat {
 }
 
 class Rat {
-    let 0: Rat = Rat.new(0, 1)
+    let 0: Rat = Rat.new(Int.0, Int.1)
 }
 
 theorem zero_num {
-    Rat.0.num = 0
+    Rat.0.num = Int.0
 }
 
 theorem zero_denom {
-    Rat.0.denom = 1
+    Rat.0.denom = Int.1
 }
 
 theorem denom_nonzero(r: Rat) {
-    r.denom != 0
+    r.denom != Int.0
 } by {
-    r.denom > 0
+    r.denom > Int.0
 }
 
 theorem denom_positive(r: Rat) {
     r.denom.is_positive
 } by {
-    r.denom > 0
+    r.denom > Int.0
 }
 
 class Rat {
     let from_int: Int -> Rat = function(n: Int) {
-        Rat.new(n, 1)
+        Rat.new(n, Int.1)
     }
 }
 
@@ -53,11 +51,11 @@ theorem from_int_num(n: Int) {
 }
 
 theorem from_int_denom(n: Int) {
-    Rat.from_int(n).denom = 1
+    Rat.from_int(n).denom = Int.1
 }
 
 define cross_equals(a: Int, b: Int, c: Int, d: Int) -> Bool {
-    b != 0 and d != 0 and a * d = c * b
+    b != Int.0 and d != Int.0 and a * d = c * b
 }
 
 theorem cross_equals_trans(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) {
@@ -68,48 +66,48 @@ theorem cross_equals_trans(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) {
     a * d * f = b * c * f
     a * d * f = b * d * e
     a * f * d = b * e * d
-    d != 0
+    d != Int.0
     a * f = b * e
 }
 
 // Either zero, or a / b reduced to simplest form.
 let reduce(a: Int, b: Int) -> r: Rat satisfy {
-    if b = 0 {
+    if b = Int.0 {
         r = Rat.0
     } else {
         cross_equals(r.num, r.denom, a, b)
     }
 } by {
-    if b = 0 {
+    if b = Int.0 {
         Rat.0 = Rat.0
     } else {
         // Factor out the gcd
-        gcd(a, b) != 0
+        gcd(a, b) != Int.0
         let a1: Int satisfy {
             a1 * gcd(a, b) = a
         }
         let b1: Int satisfy {
             b1 * gcd(a, b) = b
         }
-        b1 != 0
+        b1 != Int.0
         a * b = a * b1 * gcd(a, b)
         a * b = b * a1 * gcd(a, b)
         a * b1 * gcd(a, b) = b * a1 * gcd(a, b)
         a * b1 = b * a1
         cross_equals(a1, b1, a, b)
-        gcd(a1, b1) = 1
+        gcd(a1, b1) = Int.1
 
         // To reduce we also need to swap signs if the denominator is negative
         let a2: Int = a1 * int.unit_sign(b1)
         let b2: Int = b1 * int.unit_sign(b1)
         b2 = Int.from_nat(abs(b1))
-        b2 != 0
+        b2 != Int.0
         (a1 * int.unit_sign(b1)) * b1 = (b1 * int.unit_sign(b1)) * a1
         cross_equals(a2, b2, a1, b1)
-        gcd(a2, b2) = 1 * Int.from_nat(abs(int.unit_sign(b1)))
-        Int.from_nat(abs(int.unit_sign(b1))) = 1
-        gcd(a2, b2) = 1
-        b2 != 0
+        gcd(a2, b2) = Int.1 * Int.from_nat(abs(int.unit_sign(b1)))
+        Int.from_nat(abs(int.unit_sign(b1))) = Int.1
+        gcd(a2, b2) = Int.1
+        b2 != Int.0
         is_reduced(a2, b2)
 
         let r: Rat = Rat.new(a2, b2)
@@ -125,13 +123,13 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
     cross_equals(r1.num, r1.denom, r2.num, r2.denom) -> r1 = r2
 } by {
     // The r1 fields divide into the r2 ones
-    gcd(r1.num, r1.denom) = 1
+    gcd(r1.num, r1.denom) = Int.1
     int.divides(r1.denom, r1.num * r2.denom)
     int.divides(r1.denom, r2.denom)
     nat.divides(abs(r1.denom), abs(r2.denom))
 
     // The r2 fields divide into the r1 ones
-    gcd(r2.num, r2.denom) = 1
+    gcd(r2.num, r2.denom) = Int.1
     int.divides(r2.denom, r2.num * r1.denom)
     int.divides(r2.denom, r1.denom)
     nat.divides(abs(r2.denom), abs(r1.denom))
@@ -145,12 +143,12 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
     // Divide out the denominators
     r1.num * r2.denom = r2.num * r1.denom
     r1.num * r2.denom = r2.num * r2.denom
-    r2.denom != 0
+    r2.denom != Int.0
     r1.num = r2.num
 }
 
 class Rat {
-    let 1: Rat = Rat.new(1, 1)
+    let 1: Rat = Rat.new(Int.1, Int.1)
 
     define is_positive(self) -> Bool {
         self.num.is_positive
@@ -206,7 +204,7 @@ theorem reduce_idempotent(r: Rat) {
 theorem neg_is_reduced(r: Rat) {
     is_reduced(-r.num, r.denom)
 } by {
-    r.denom > 0
+    r.denom > Int.0
     gcd(-r.num, r.denom) = gcd(r.num, r.denom)
 }
 
@@ -221,7 +219,7 @@ theorem neg_denom(r: Rat) {
 theorem add_zero_right(a: Rat) {
     a + Rat.0 = a
 } by {
-    a + Rat.0 = reduce(a.num * 1 + 0 * a.denom, a.denom * 1)
+    a + Rat.0 = reduce(a.num * Int.1 + Int.0 * a.denom, a.denom * Int.1)
     a + Rat.0 = reduce(a.num, a.denom)
 }
 
@@ -242,16 +240,16 @@ theorem mul_comm(a: Rat, b: Rat) {
 }
 
 theorem rat_neg_one {
-    -Rat.1 = Rat.from_int(-1)
+    -Rat.1 = Rat.from_int(-Int.1)
 } by {
-    Rat.1 = Rat.new(1, 1)
-    Rat.from_int(-1) = Rat.new(-1, 1)
+    Rat.1 = Rat.new(Int.1, Int.1)
+    Rat.from_int(-Int.1) = Rat.new(-Int.1, Int.1)
 }
 
 theorem mul_neg_one_right(r: Rat) {
     r * -Rat.1 = -r
 } by {
-    r * Rat.from_int(-1) = -r
+    r * Rat.from_int(-Int.1) = -r
 }
 
 theorem mul_neg_one_left(r: Rat) {
@@ -261,7 +259,7 @@ theorem mul_neg_one_left(r: Rat) {
 theorem mul_one_right(r: Rat) {
     r * Rat.1 = r
 } by {
-    r * Rat.from_int(1) = r
+    r * Rat.from_int(Int.1) = r
 }
 
 theorem mul_one_left(r: Rat) {
