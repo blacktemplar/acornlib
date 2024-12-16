@@ -29,6 +29,10 @@ define has_greatest(f: Rat -> Bool) -> Bool {
     }
 }
 
+define is_dedekind_cut(f: Rat -> Bool) -> Bool {
+    is_cut(f) and is_lower(f) and not has_greatest(f)
+}
+
 // "All numbers y such that x is greater then y" is the cut that embeds x.
 
 theorem gt_is_cut(r: Rat) {
@@ -80,11 +84,19 @@ theorem gt_has_no_greatest(r: Rat) {
     }
 }
 
+theorem gt_is_dedekind_cut(r: Rat) {
+    is_dedekind_cut(r.gt)
+} by {
+    gt_is_cut(r)
+    gt_is_lower(r)
+    gt_has_no_greatest(r)
+}
+
 // Real numbers are defined by a function of which rationals they are greater than.
 structure Real {
     gt_rat: Rat -> Bool
 } constraint {
-    is_cut(gt_rat) and is_lower(gt_rat) and not has_greatest(gt_rat)
+    is_dedekind_cut(gt_rat)
 } by {
     let gt_rat: Rat -> Bool = Rat.0.gt
 }
@@ -95,3 +107,10 @@ class Real {
     }
 }
 
+theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
+    r1 > r2 -> Real.from_rat(r1).gt_rat(r2)
+}
+
+theorem from_rat_gt_imp_gt(r1: Rat, r2: Rat) {
+    Real.from_rat(r1).gt_rat(r2) -> r1 > r2
+}
