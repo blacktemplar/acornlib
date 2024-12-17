@@ -150,6 +150,14 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
 class Rat {
     let 1: Rat = Rat.from_int(Int.1)
     let 2: Rat = Rat.from_int(Int.2)
+    let 3: Rat = Rat.from_int(Int.3)
+    let 4: Rat = Rat.from_int(Int.4)
+    let 5: Rat = Rat.from_int(Int.5)
+    let 6: Rat = Rat.from_int(Int.6)
+    let 7: Rat = Rat.from_int(Int.7)
+    let 8: Rat = Rat.from_int(Int.8)
+    let 9: Rat = Rat.from_int(Int.9)
+    let 10: Rat = Rat.from_int(Int.10)
 
     define is_positive(self) -> Bool {
         self.num.is_positive
@@ -201,6 +209,8 @@ class Rat {
     define gte(self, other: Rat) -> Bool {
         other <= self
     }
+
+    define read(self, other: Rat) -> Rat { Rat.10 * self + other }
 }
 
 theorem reduce_idempotent(r: Rat) {
