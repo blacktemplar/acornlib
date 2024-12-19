@@ -289,6 +289,12 @@ define is_upper_bound(s: Real -> Bool, ub: Real) -> Bool {
     }
 }
 
+define bounded_above(s: Real -> Bool) -> Bool {
+    exists(ub: Real) {
+        is_upper_bound(s, ub)
+    }
+}
+
 define is_lower_bound(s: Real -> Bool, lb: Real) -> Bool {
     forall(r: Real) {
         s(r) -> lb <= r
@@ -303,5 +309,107 @@ define is_least_upper_bound(s: Real -> Bool, lub: Real) -> Bool {
 define add_gt(z1: Real, z2: Real, r: Rat) -> Bool {
     exists(r1: Rat, r2: Rat) {
         z1.gt_rat(r1) and z2.gt_rat(r2) and r = r1 + r2
+    }
+}
+
+theorem exists_lesser_rat(z: Real) {
+    exists(r: Rat) {
+        z.gt_rat(r)
+    }
+} by {
+    is_cut(z.gt_rat)
+}
+
+theorem exists_gte_rat(z: Real) {
+    exists(r: Rat) {
+        not z.gt_rat(r)
+    }
+} by {
+    is_cut(z.gt_rat)
+}
+
+theorem add_gt_is_cut(z1: Real, z2: Real) {
+    is_cut(add_gt(z1, z2))
+} by {
+    // Prove there's something lower
+    let lower1: Rat satisfy {
+        z1.gt_rat(lower1)
+    }
+    let lower2: Rat satisfy {
+        z2.gt_rat(lower2)
+    }
+    add_gt(z1, z2, lower1 + lower2)
+
+    // Prove there's something higher
+    let upper1: Rat satisfy {
+        not z1.gt_rat(upper1)
+    }
+    let upper2: Rat satisfy {
+        not z2.gt_rat(upper2)
+    }
+    if add_gt(z1, z2, upper1 + upper2) {
+        let (f1: Rat, f2: Rat) satisfy {
+            z1.gt_rat(f1) and z2.gt_rat(f2) and upper1 + upper2 = f1 + f2
+        } 
+        f1 < upper1
+        f2 < upper2
+        f1 + f2 < upper1 + f2
+        upper1 + f2 < upper1 + upper2
+        f1 + f2 < upper1 + upper2
+        false
+    }
+}
+
+theorem add_gt_is_lower(z1: Real, z2: Real) {
+    is_lower(add_gt(z1, z2))
+} by {
+    forall(r1: Rat, r2: Rat) {
+        if add_gt(z1, z2, r2) and r1 < r2 {
+            let (f1: Rat, f2: Rat) satisfy {
+                z1.gt_rat(f1) and z2.gt_rat(f2) and r2 = f1 + f2
+            }
+            (r2 - r1).is_positive
+            f1 + f2 + -(r2 - r1) = r2 + -(r2 - r1)
+            f1 + f2 + -(r2 - r1) = r1
+            f1 + (f2 + -(r2 - r1)) = r1
+            f2 + -(r2 - r1) < f2
+            z2.gt_rat(f2 + -(r2 - r1))
+            add_gt(z1, z2, r1)
+        }
+    }
+}
+
+theorem add_gt_has_no_greatest(z1: Real, z2: Real) {
+    not has_greatest(add_gt(z1, z2))
+} by {
+    if has_greatest(add_gt(z1, z2)) {
+        let q: Rat satisfy {
+            is_greatest(add_gt(z1, z2), q)
+        }
+        add_gt(z1, z2, q)
+        let (f1: Rat, f2: Rat) satisfy {
+            z1.gt_rat(f1) and z2.gt_rat(f2) and q = f1 + f2
+        }
+        not is_greatest(z1.gt_rat, f1)
+        let g1: Rat satisfy {
+            z1.gt_rat(g1) and not g1 <= f1
+        }
+        f1 < g1
+        f1 + f2 < g1 + f2
+        add_gt(z1, z2, g1 + f2)
+        q < g1 + f2
+        not g1 + f2 <= q
+        not is_greatest(add_gt(z1, z2), q)
+        false
+    }
+}
+
+theorem add_gt_is_dedekind_cut(z1: Real, z2: Real) {
+    is_dedekind_cut(add_gt(z1, z2))
+}
+
+class Real {
+    define add(self, other: Real) -> Real {
+        Real.new(add_gt(self, other))
     }
 }

@@ -914,3 +914,14 @@ theorem trichotomy(a: Rat, b: Rat) {
         }
     }
 }
+
+theorem lt_add_right(a: Rat, b: Rat, c: Rat) {
+    a < b -> a + c < b + c
+} by {
+    (b - a).is_positive
+    (b + c) - (a + c) = (b + c) + (-a + -c)
+    (b + c) - (a + c) = b + c + (-c + -a)
+    (b + c) - (a + c) = b + (c + -c) + -a
+    (b + c) - (a + c) = b + -a
+    ((b + c) - (a + c)).is_positive
+}
