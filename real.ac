@@ -103,6 +103,34 @@ class Real {
     let from_rat: Rat -> Real = function(r: Rat) {
         Real.new(r.gt)
     }
+
+    let 0: Real = Real.from_rat(Rat.0)
+
+    define is_positive(self) -> Bool {
+        self.gt_rat(Rat.0)
+    }
+
+    define is_negative(self) -> Bool {
+        self != Real.0 and not self.is_positive
+    }
+
+    define lte(self, other: Real) -> Bool {
+        forall(r: Rat) {
+            self.gt_rat(r) -> other.gt_rat(r)
+        }
+    }
+
+    define lt(self, other: Real) -> Bool {
+        self != other and self.lte(other)
+    }
+
+    define gte(self, other: Real) -> Bool {
+        other.lte(self)
+    }
+
+    define gt(self, other: Real) -> Bool {
+        other.lt(self)
+    }
 }
 
 theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
@@ -112,3 +140,58 @@ theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
 theorem from_rat_gt_imp_gt(r1: Rat, r2: Rat) {
     Real.from_rat(r1).gt_rat(r2) -> r1 > r2
 }
+
+theorem zero_not_positive {
+    not Real.0.is_positive
+} by {
+    not Rat.0 > Rat.0
+    not Real.from_rat(Rat.0).gt_rat(Rat.0)
+    not Real.from_rat(Rat.0).is_positive
+}
+
+theorem lte_self(r: Real) {
+    r <= r
+}
+
+theorem gte_self(r: Real) {
+    r >= r
+}
+
+theorem lte_trans(a: Real, b: Real, c: Real) {
+    a <= b and b <= c -> a <= c
+}
+
+theorem gt_rat_sorts(z: Real, r1: Rat, r2: Rat) {
+    z.gt_rat(r1) and not z.gt_rat(r2) -> r1 < r2
+} by {
+    if r2 < r1 {
+        is_lower(z.gt_rat)
+        z.gt_rat(r2)
+        false
+    }
+    if r2 = r1 {
+        z.gt_rat(r2)
+        false
+    }
+}
+
+theorem lte_or_gte(a: Real, b: Real) {
+    a <= b or b <= a
+} by {
+    if not a <= b {
+        let r1: Rat satisfy {
+            a.gt_rat(r1) and not b.gt_rat(r1)
+        }
+        forall(r2: Rat) {
+            if b.gt_rat(r2) {
+                r2 < r1
+                a.gt_rat(r2)
+            }
+        }
+        b <= a
+    }
+}
+
+// theorem lte_gte_imp_eq(a: Real, b: Real) {
+//     a <= b and b <= a -> a = b
+// }

@@ -874,3 +874,43 @@ class Rat {
         }
     }
 }
+
+theorem neg_sub(a: Rat, b: Rat) {
+    -(a - b) = b - a
+} by {
+    -(a - b) = -(a + -b)
+    -(a - b) = -a + --b
+    -(a - b) = -a + b
+    -(a - b) = b + -a
+}
+
+theorem single_trichotomy(a: Rat) {
+    a.is_positive or a.is_negative or a = Rat.0
+} by {
+    if a.num.is_positive {
+        a.is_positive
+    } else {
+        if a.num.is_negative {
+            a.is_negative
+        } else {
+            a.num = Int.0
+            a = Rat.0
+        }
+    }
+}
+
+theorem trichotomy(a: Rat, b: Rat) {
+    a < b or a = b or a > b
+} by {
+    if (a - b).is_positive {
+        a > b
+    } else {
+        if (a - b).is_negative {
+            (-(a - b)).is_positive
+            (b - a).is_positive
+            a < b
+        } else {
+            a = b
+        }
+    }
+}
