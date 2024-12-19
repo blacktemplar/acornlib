@@ -441,3 +441,59 @@ theorem add_comm(a: Real, b: Real) {
     }
     add_gt(a, b) = add_gt(b, a)
 }
+
+theorem gt_rat_adding_three(z1: Real, z2: Real, z3: Real, q: Rat) {
+    (z1 + z2 + z3).gt_rat(q) -> exists(r1: Rat, r2: Rat, r3: Rat) {
+        z1.gt_rat(r1) and z2.gt_rat(r2) and z3.gt_rat(r3) and q = r1 + r2 + r3
+    }
+} by {
+    add_gt(z1 + z2, z3, q)
+    let (r12: Rat, r3: Rat) satisfy {
+        (z1 + z2).gt_rat(r12) and z3.gt_rat(r3) and q = r12 + r3
+    }
+    add_gt(z1, z2, r12)
+    let (r1: Rat, r2: Rat) satisfy {
+        z1.gt_rat(r1) and z2.gt_rat(r2) and r12 = r1 + r2
+    }
+}
+
+theorem gt_rat_adding_three_converse(z1: Real, z2: Real, z3: Real, q: Rat) {
+    exists(r1: Rat, r2: Rat, r3: Rat) {
+        z1.gt_rat(r1) and z2.gt_rat(r2) and z3.gt_rat(r3) and q = r1 + r2 + r3
+    } -> (z1 + z2 + z3).gt_rat(q)
+} by {
+    let (r1: Rat, r2: Rat, r3: Rat) satisfy {
+        z1.gt_rat(r1) and z2.gt_rat(r2) and z3.gt_rat(r3) and q = r1 + r2 + r3
+    }
+    add_gt(z1, z2 + z3, r1 + r2 + r3)
+}
+
+theorem add_assoc(a: Real, b: Real, c: Real) {
+    a + b + c = a + (b + c)
+} by {
+    forall(r: Rat) {
+        if (a + b + c).gt_rat(r) {
+            let (ra: Rat, rb: Rat, rc: Rat) satisfy {
+                a.gt_rat(ra) and b.gt_rat(rb) and c.gt_rat(rc) and r = ra + rb + rc
+            }
+            (b + c).gt_rat(rb + rc)
+            (a + (b + c)).gt_rat(r)
+            (a + b + c).gt_rat(r) = (a + (b + c)).gt_rat(r)
+        } else {
+            if (a + (b + c)).gt_rat(r) {
+                add_gt(a, b + c, r)
+                let (ra: Rat, rbc: Rat) satisfy {
+                    a.gt_rat(ra) and (b + c).gt_rat(rbc) and r = ra + rbc
+                }
+                add_gt(b, c, rbc)
+                let (rb: Rat, rc: Rat) satisfy {
+                    b.gt_rat(rb) and c.gt_rat(rc) and rbc = rb + rc
+                }
+                r = ra + rb + rc
+                false
+            }
+            (a + b + c).gt_rat(r) = (a + (b + c)).gt_rat(r)
+        }
+    }
+    (a + b + c).gt_rat = (a + (b + c)).gt_rat
+}
