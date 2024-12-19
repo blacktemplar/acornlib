@@ -141,6 +141,10 @@ theorem from_rat_gt_imp_gt(r1: Rat, r2: Rat) {
     Real.from_rat(r1).gt_rat(r2) -> r1 > r2
 }
 
+theorem not_gt_rat_self(r: Rat) {
+    not Real.from_rat(r).gt_rat(r)
+}
+
 theorem zero_not_positive {
     not Real.0.is_positive
 } by {
@@ -192,6 +196,88 @@ theorem lte_or_gte(a: Real, b: Real) {
     }
 }
 
-// theorem lte_gte_imp_eq(a: Real, b: Real) {
-//     a <= b and b <= a -> a = b
-// }
+theorem lte_both_ways_imp_eq(a: Real, b: Real) {
+    a <= b and b <= a -> a = b
+} by {
+    forall(r: Rat) {
+        if a.gt_rat(r) {
+            b.gt_rat(r)
+            a.gt_rat(r) = b.gt_rat(r)
+        } else {
+            not a.gt_rat(r)
+            not b.gt_rat(r)
+            a.gt_rat(r) = b.gt_rat(r)
+        }
+    }
+    a.gt_rat = b.gt_rat
+    a = b    
+}
+
+theorem gt_rat_imp_gt_from_rat(a: Real, r: Rat) {
+    a.gt_rat(r) -> a > Real.from_rat(r)
+} by {
+    if not Real.from_rat(r) <= a {
+        let r2: Rat satisfy {
+            Real.from_rat(r).gt_rat(r2) and not a.gt_rat(r2)
+        }
+        r < r2
+        a.gt_rat(r2)
+        false
+    }
+    if Real.from_rat(r) = a {
+        false
+    }
+}
+
+theorem gt_from_rat_imp_gt_rat(a: Real, r: Rat) {
+    a > Real.from_rat(r) -> a.gt_rat(r)
+} by {
+    not a <= Real.from_rat(r)
+    let r2: Rat satisfy {
+        a.gt_rat(r2) and not Real.from_rat(r).gt_rat(r2)
+    }
+}
+
+theorem pos_gt_zero(a: Real) {
+    a.is_positive -> a > Real.0
+} by {
+    a.is_positive
+    a.gt_rat(Rat.0)
+    a > Real.from_rat(Rat.0)
+}
+
+theorem gt_zero_imp_pos(a: Real) {
+    a > Real.0 -> a.is_positive
+} by {
+    a > Real.0
+    a > Real.from_rat(Rat.0)
+    a.gt_rat(Rat.0)
+    a.is_positive
+}
+
+theorem neg_lt_zero(a: Real) {
+    a.is_negative -> a < Real.0
+} by {
+    if not a < Real.0 {
+        Real.0 <= a
+        if a = Real.0 {
+            false
+        } else {
+            a > Real.0
+            a.is_positive
+            false
+        }
+    }
+}
+
+theorem lt_zero_imp_neg(a: Real) {
+    a < Real.0 -> a.is_negative
+} by {
+    if not a.is_negative {
+        a.is_positive
+        a > Real.0
+        a >= Real.0
+        a = Real.0
+        false
+    }
+}
