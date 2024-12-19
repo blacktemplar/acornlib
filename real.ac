@@ -114,6 +114,7 @@ class Real {
         self != Real.0 and not self.is_positive
     }
 
+    // For reals, <= is the comparison operator by which the others are defined. 
     define lte(self, other: Real) -> Bool {
         forall(r: Rat) {
             self.gt_rat(r) -> other.gt_rat(r)
@@ -279,5 +280,28 @@ theorem lt_zero_imp_neg(a: Real) {
         a >= Real.0
         a = Real.0
         false
+    }
+}
+
+define is_upper_bound(s: Real -> Bool, ub: Real) -> Bool {
+    forall(r: Real) {
+        s(r) -> r <= ub
+    }
+}
+
+define is_lower_bound(s: Real -> Bool, lb: Real) -> Bool {
+    forall(r: Real) {
+        s(r) -> lb <= r
+    }
+}
+
+define is_least_upper_bound(s: Real -> Bool, lub: Real) -> Bool {
+    is_lower_bound(is_upper_bound(s), lub)
+}
+
+// TODO: use this to define addition
+define add_gt(z1: Real, z2: Real, r: Rat) -> Bool {
+    exists(r1: Rat, r2: Rat) {
+        z1.gt_rat(r1) and z2.gt_rat(r2) and r = r1 + r2
     }
 }
