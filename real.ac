@@ -305,11 +305,19 @@ define is_least_upper_bound(s: Real -> Bool, lub: Real) -> Bool {
     is_lower_bound(is_upper_bound(s), lub)
 }
 
-// TODO: use this to define addition
 define add_gt(z1: Real, z2: Real, r: Rat) -> Bool {
     exists(r1: Rat, r2: Rat) {
         z1.gt_rat(r1) and z2.gt_rat(r2) and r = r1 + r2
     }
+}
+
+theorem add_gt_symm(z1: Real, z2: Real, r: Rat) {
+    add_gt(z1, z2, r) -> add_gt(z2, z1, r)
+} by {
+    let (r1: Rat, r2: Rat) satisfy {
+        z1.gt_rat(r1) and z2.gt_rat(r2) and r = r1 + r2
+    }
+    add_gt(z2, z1, r2 + r1)
 }
 
 theorem exists_lesser_rat(z: Real) {
@@ -412,4 +420,24 @@ class Real {
     define add(self, other: Real) -> Real {
         Real.new(add_gt(self, other))
     }
+}
+
+theorem add_gt_rat(z1: Real, z2: Real, r1: Rat, r2: Rat) {
+    z1.gt_rat(r1) and z2.gt_rat(r2) -> (z1 + z2).gt_rat(r1 + r2)
+}
+
+theorem add_comm(a: Real, b: Real) {
+    a + b = b + a
+} by {
+    forall(r: Rat) {
+        if add_gt(a, b, r) {
+            add_gt(b, a, r)
+            add_gt(a, b, r) = add_gt(b, a, r)
+        } else {
+            not add_gt(b, a, r)
+            add_gt(a, b, r) = add_gt(b, a, r)
+        }
+        add_gt(a, b, r) = add_gt(b, a, r)
+    }
+    add_gt(a, b) = add_gt(b, a)
 }
