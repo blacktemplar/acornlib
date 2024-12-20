@@ -925,3 +925,39 @@ theorem lt_add_right(a: Rat, b: Rat, c: Rat) {
     (b + c) - (a + c) = b + -a
     ((b + c) - (a + c)).is_positive
 }
+
+theorem add_neg_lt(a: Rat, b: Rat) {
+    a.is_negative -> b + a < b
+}
+
+theorem adding_lts(a: Rat, b: Rat, c: Rat, d: Rat) {
+    a < b and c < d -> a + c < b + d
+} by {
+    a + c < b + c
+    b + c < b + d
+}
+
+theorem minus_cancels_plus(a: Rat, b: Rat) {
+    a + b - b = a
+} by {
+    a + b - b = a + b + -b
+    a + b - b = a + (b + -b)
+    a + b - b = a + Rat.0
+    a + b - b = a
+}
+
+theorem gt_minus_pos(a: Rat, b: Rat) {
+    b.is_positive -> a > a - b
+} by {
+    a - (a - b) = b
+    (a - (a - b)).is_positive
+}
+
+theorem sub_add(a: Rat, b: Rat, c: Rat) {
+    a - (b + c) = a - b - c
+} by {
+    a - (b + c) = a + -(b + c)
+    a - (b + c) = a + (-b + -c)
+    a - (b + c) = a + -b + -c
+    a - (b + c) = a - b - c
+}
