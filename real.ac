@@ -1,3 +1,4 @@
+from nat import Nat
 from int import Int
 from rat import Rat
 
@@ -662,18 +663,296 @@ theorem add_from_rat(p: Rat, q: Rat) {
     }
 }
 
-// Can we prove this?
-// theorem lt_add(a: Real, b: Real, c: Real) {
-//     a < b -> a + c < b + c
+theorem lte_add_right(a: Real, b: Real, c: Real) {
+    a <= b -> a + c <= b + c
+} by {
+    forall(r: Rat) {
+        if (a + c).gt_rat(r) {
+            add_gt(a, c, r)
+            let (ra: Rat, rc: Rat) satisfy {
+                a.gt_rat(ra) and c.gt_rat(rc) and r = ra + rc
+            }
+            b.gt_rat(ra)
+            (b + c).gt_rat(r)
+        }
+    }
+}
+
+theorem lte_add_left(a: Real, b: Real, c: Real) {
+    a <= b -> c + a <= c + b
+}
+
+theorem lt_add_converse(a: Real, b: Real, c: Real) {
+    a + c < b + c -> a < b
+}
+
+theorem add_from_rat_zero(r: Rat) {
+    Real.from_rat(r) + Real.0 = Real.from_rat(r)
+}
+
+theorem add_zero_right(a: Real) {
+    a + Real.0 = a
+} by {
+    if a + Real.0 < a {
+        let r: Rat satisfy {
+            a + Real.0 < Real.from_rat(r) and Real.from_rat(r) < a
+        }
+        Real.from_rat(r) <= a
+        Real.from_rat(r) + Real.0 <= a + Real.0
+        Real.from_rat(r) <= a + Real.0
+        false
+    }
+    if a < a + Real.0 {
+        let r: Rat satisfy {
+            a < Real.from_rat(r) and Real.from_rat(r) < a + Real.0
+        }
+        a <= Real.from_rat(r)
+        a + Real.0 <= Real.from_rat(r) + Real.0
+        a + Real.0 <= Real.from_rat(r)
+        false
+    }
+}
+
+theorem add_zero_left(a: Real) {
+    Real.0 + a = a
+}
+
+theorem from_rat_maintains_lt(p: Rat, q: Rat) {
+    p < q -> Real.from_rat(p) < Real.from_rat(q)
+}
+
+theorem add_lt_lt(a: Real, b: Real, c: Real, d: Real) {
+    a < b and c < d -> a + c < b + d
+} by {
+    // Find two rationals between each pair of real numbers
+    let rab1: Rat satisfy {
+        a < Real.from_rat(rab1) and Real.from_rat(rab1) < b
+    }
+    let rab2: Rat satisfy {
+        Real.from_rat(rab1) < Real.from_rat(rab2) and Real.from_rat(rab2) < b
+    }
+    let rcd1: Rat satisfy {
+        c < Real.from_rat(rcd1) and Real.from_rat(rcd1) < d
+    }
+    let rcd2: Rat satisfy {
+        Real.from_rat(rcd1) < Real.from_rat(rcd2) and Real.from_rat(rcd2) < d
+    }
+
+    // We can get a non-strict inequality in reals. Here's the left side.
+    a + c <= Real.from_rat(rab1) + c
+    Real.from_rat(rab1) + c <= Real.from_rat(rab1) + Real.from_rat(rcd1)
+    a + c <= Real.from_rat(rab1) + Real.from_rat(rcd1)
+
+    // Now we get the right side.
+    Real.from_rat(rab2) + d <= b + d
+    Real.from_rat(rab2) + Real.from_rat(rcd2) <= Real.from_rat(rab2) + d
+    Real.from_rat(rab2) + Real.from_rat(rcd2) <= b + d
+
+    // Then we can get the strict inequality in the middle from the all-rational formula.
+    rab1 < rab2
+    rcd1 < rcd2
+    rab1 + rcd1 < rab2 + rcd2
+    Real.from_rat(rab1 + rcd1) < Real.from_rat(rab2 + rcd2)
+    Real.from_rat(rab1) + Real.from_rat(rcd1) < Real.from_rat(rab2) + Real.from_rat(rcd2)
+
+    Real.from_rat(rab1) + Real.from_rat(rcd1) < Real.from_rat(rab2) + Real.from_rat(rcd2)
+    a + c < Real.from_rat(rab2) + Real.from_rat(rcd2)
+    Real.from_rat(rab2) + Real.from_rat(rcd2) <= b + d
+}
+
+theorem lte_some_rat(a: Real) {
+    exists(r: Rat) {
+        a <= Real.from_rat(r)
+    }
+} by {
+    let r: Rat satisfy {
+        not a.gt_rat(r)
+    }
+}
+
+theorem lt_some_rat(a: Real) {
+    exists(r: Rat) {
+        a < Real.from_rat(r)
+    }
+} by {
+    let r1: Rat satisfy {
+        a <= Real.from_rat(r1)
+    }
+    r1 < r1 + Rat.1
+    Real.from_rat(r1) < Real.from_rat(r1 + Rat.1)
+    a < Real.from_rat(r1 + Rat.1)
+}
+
+theorem gt_some_rat(a: Real) {
+    exists(r: Rat) {
+        a > Real.from_rat(r)
+    }
+}
+
+class Real {
+    let from_int: Int -> Real = function(n: Int) {
+        Real.from_rat(Rat.from_int(n))
+    }
+}
+
+theorem from_rat_maintains_lte(p: Rat, q: Rat) {
+    p <= q -> Real.from_rat(p) <= Real.from_rat(q)
+} by {
+    if p < q {
+        Real.from_rat(p) < Real.from_rat(q)
+    }
+    Real.from_rat(p) <= Real.from_rat(q)
+}
+
+theorem gt_some_int(a: Real) {
+    exists(n: Int) {
+        a > Real.from_int(n)
+    }
+} by {
+    let r: Rat satisfy {
+        a > Real.from_rat(r)
+    }
+    Rat.from_int(rat.floor(r)) <= r
+    Real.from_rat(Rat.from_int(rat.floor(r))) <= Real.from_rat(r)
+    Real.from_int(rat.floor(r)) <= Real.from_rat(r)
+}
+
+theorem lt_some_int(a: Real) {
+    exists(n: Int) {
+        a < Real.from_int(n)
+    }
+} by {
+    let r: Rat satisfy {
+        a < Real.from_rat(r)
+    }
+    let n: Int satisfy {
+        r < Rat.from_int(n)
+    }
+    a < Real.from_int(n)
+}
+
+theorem real_neg_imp_rat_neg(r: Rat) {
+    Real.from_rat(r).is_negative -> r.is_negative
+} by {
+    Real.from_rat(r) < Real.0
+    Real.0.gt_rat(r)
+    r < Rat.0
+}
+
+theorem lt_some_int_cancel(m: Int, n: Int) {
+    Real.from_int(m) < Real.from_int(n) -> m < n
+} by {
+    Real.from_rat(Rat.from_int(m)) < Real.from_rat(Rat.from_int(n))
+    Rat.from_int(m) < Rat.from_int(n)
+}
+
+theorem floor_exists(a: Real) {
+    exists(n: Int) {
+        Real.from_int(n) <= a and a < Real.from_int(n + Int.1)
+    }
+} by {
+    if not floor_exists(a) {
+        // We will show by induction that a is greater than all integers.
+        // First let's find a base case.
+        let m: Int satisfy {
+            a > Real.from_int(m)
+        }
+        Real.from_int(m) <= a
+
+        // Now we define the function to induct on.
+        let f: Nat -> Bool = function(k: Nat) {
+            Real.from_int(m + Int.from_nat(k)) <= a
+        }
+        f(Nat.0)
+
+        // Inductive step
+        forall(x: Nat) {
+            if f(x) {
+                Real.from_int(m + Int.from_nat(x)) <= a
+                Real.from_int(m + Int.from_nat(x) + Int.1) <= a
+                Real.from_int(m + Int.from_nat(x.suc)) <= a
+                f(x.suc)
+            }
+        }
+
+        // By induction we have:
+        forall(x: Nat) {
+            f(x)
+        }
+
+        // But m plus some really big number has to be greater than a.
+        let big: Int satisfy {
+            a < Real.from_int(big)
+        }
+        f(int.abs(m) + int.abs(big))
+        Real.from_int(m + Int.from_nat(int.abs(m) + int.abs(big))) <= a
+        Real.from_int(m + Int.from_nat(int.abs(m) + int.abs(big))) < Real.from_int(big)
+        m + Int.from_nat(int.abs(m) + int.abs(big)) < big
+        m + Int.from_nat(int.abs(m)) + Int.from_nat(int.abs(big)) < big
+        big <= Int.from_nat(int.abs(big))
+        Int.0 <= m + Int.from_nat(int.abs(m))
+        Int.0 + big <= m + Int.from_nat(int.abs(m)) + Int.from_nat(int.abs(big))
+        false
+    }
+}
+
+let floor(a: Real) -> n: Int satisfy {
+    Real.from_int(n) <= a and a < Real.from_int(n + Int.1)
+}
+
+class Real {
+    let 1: Real = Real.from_rat(Rat.1)
+}
+
+theorem add_from_int(m: Int, n: Int) {
+    Real.from_int(m) + Real.from_int(n) = Real.from_int(m + n)
+} by {
+    Real.from_int(m) + Real.from_int(n) = Real.from_rat(Rat.from_int(m)) + Real.from_int(n)
+    Real.from_rat(Rat.from_int(m)) + Real.from_int(n) = Real.from_rat(Rat.from_int(m)) + Real.from_rat(Rat.from_int(n))
+    Real.from_rat(Rat.from_int(m) + Rat.from_int(n)) = Real.from_int(m + n)
+    Real.from_int(m + n) = Real.from_int(m + n)
+}
+
+theorem lt_plus_one(a: Real) {
+    a < a + Real.1
+} by {
+    if a = Real.from_int(floor(a)) {
+        floor(a) < floor(a) + Int.1
+        Real.from_int(floor(a)) < Real.from_int(floor(a) + Int.1)
+        a < Real.from_int(floor(a) + Int.1)
+        a < Real.from_int(floor(a)) + Real.1
+        a < a + Real.1
+    } else {
+        // This is kind of a trick
+        Real.from_int(floor(a)) <= a
+        Real.from_int(floor(a)) < a
+        a < Real.from_int(floor(a) + Int.1)
+        Real.from_int(floor(a)) + a < a + (Real.from_int(floor(a) + Int.1))
+        Real.from_int(floor(a)) + a < a + (Real.from_int(floor(a)) + Real.1)        
+        a + Real.from_int(floor(a)) < a + Real.1 + Real.from_int(floor(a))
+        a < a + Real.1
+    }
+}
+
+// theorem neq_add_pos_rat(a: Real, b: Rat) {
+//     b.is_positive -> a != a + Real.from_rat(b)
+// } by {
+//     if a = a + Real.from_rat(b) {
+//     }
+//     // The non-strict version
+//     Real.0 < b
+//     a + Real.0 <= a + b
+//     a <= a + b
+
+//     if a + b = a {
+//         a = a + b + b
+//     }
 // }
 
-// theorem add_zero_right(a: Real) {
-//     a + Real.0 = a
+// theorem lt_add_right(a: Real, b: Real, c: Real) {
+//     a < b -> a + c < b + c
 // } by {
-//     if a + Real.0 < a {
-//         let r: Rat satisfy {
-//             a + Real.0 < Real.from_rat(r) and Real.from_rat(r) < a
-//         }
-//         // TODO: how does this contradict, exactly.
+//     let r: Rat satisfy {
+//         a < Real.from_rat(r) and Real.from_rat(r) < b
 //     }
 // }

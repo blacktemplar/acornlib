@@ -961,3 +961,215 @@ theorem sub_add(a: Rat, b: Rat, c: Rat) {
     a - (b + c) = a + -b + -c
     a - (b + c) = a - b - c
 }
+
+theorem no_greatest(a: Rat) {
+    exists(b: Rat) {
+        a < b
+    }
+}
+
+theorem sub_from_int(a: Int, b: Int) {
+    Rat.from_int(a) - Rat.from_int(b) = Rat.from_int(a - b)
+} by {
+    Rat.from_int(a) - Rat.from_int(b) = Rat.from_int(a) + -Rat.from_int(b)
+    Rat.from_int(a) - Rat.from_int(b) = Rat.from_int(a) + Rat.from_int(-b)
+    Rat.from_int(a) - Rat.from_int(b) = Rat.from_int(a + -b)
+    Rat.from_int(a) - Rat.from_int(b) = Rat.from_int(a - b)
+}
+
+theorem lt_from_int(a: Int, b: Int) {
+    a < b -> Rat.from_int(a) < Rat.from_int(b)
+} by {
+    Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)
+}
+
+theorem lte_from_int(a: Int, b: Int) {
+    a <= b -> Rat.from_int(a) <= Rat.from_int(b)
+}
+
+theorem gt_from_int(a: Int, b: Int) {
+    a > b -> Rat.from_int(a) > Rat.from_int(b)
+}
+
+theorem gte_from_int(a: Int, b: Int) {
+    a >= b -> Rat.from_int(a) >= Rat.from_int(b)
+}
+
+theorem lt_mul_pos(a: Rat, b: Rat, c: Rat) {
+    a < b and c.is_positive -> a * c < b * c
+} by {
+    b - a > Rat.0
+    c > Rat.0
+    (b - a) * c > Rat.0
+    b * c - a * c > Rat.0
+    a * c < b * c
+}
+
+theorem lte_mul_pos(a: Rat, b: Rat, c: Rat) {
+    a <= b and c.is_positive -> a * c <= b * c
+} by {
+    a < b or a = b
+    a * c < b * c or a * c = b * c
+}
+
+theorem lt_div_pos(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and a < b -> a / c < b / c
+} by {
+    c.reciprocal.is_positive
+    a * c.reciprocal < b * c.reciprocal
+}
+
+theorem lte_div_pos(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and a <= b -> a / c <= b / c
+} by {
+    c.reciprocal.is_positive
+    a * c.reciprocal <= b * c.reciprocal
+}
+
+theorem mul_div_cancels(a: Rat, b: Rat) {
+    b != Rat.0 -> (a * b) / b = a
+} by {
+    (a * b) / b = a * (b / b)
+    (a * b) / b = a * Rat.1
+}
+
+theorem div_from_int(a: Rat) {
+    Rat.from_int(a.num) / Rat.from_int(a.denom) = a
+} by {
+    Rat.from_int(a.num) / Rat.from_int(a.denom) = reduce(a.num, Int.1) * reduce(Int.1, a.denom)
+}
+
+theorem lt_from_int_mul_denom(a: Rat, n: Int) {
+    a.num < n * a.denom -> a < Rat.from_int(n)
+} by {
+    Rat.from_int(a.num) < Rat.from_int(n * a.denom)
+    Rat.from_int(a.num) < Rat.from_int(n) * Rat.from_int(a.denom)
+    Rat.from_int(a.denom).is_positive
+    Rat.from_int(a.num) / Rat.from_int(a.denom) < Rat.from_int(n) * Rat.from_int(a.denom) / Rat.from_int(a.denom)
+    Rat.from_int(n) * Rat.from_int(a.denom) / Rat.from_int(a.denom) = Rat.from_int(n)
+    Rat.from_int(a.num) / Rat.from_int(a.denom) < Rat.from_int(n)
+}
+
+theorem lte_from_int_mul_denom(a: Rat, n: Int) {
+    a.num <= n * a.denom -> a <= Rat.from_int(n)
+} by {
+    if a.num = n * a.denom {
+        a = Rat.from_int(n)
+    } else {
+        a < Rat.from_int(n)
+    }
+}
+
+theorem floor_exists(a: Rat) {
+    exists(q: Int) {
+        Rat.from_int(q) <= a and a < Rat.from_int(q + Int.1)
+    }
+} by {
+    a.denom.is_positive
+    let (q: Int, r: Int) satisfy {
+        Int.0 <= r and r < a.denom and a.num = q * a.denom + r
+    }
+
+    // Left bound
+    Rat.from_int(a.num) = Rat.from_int(q * a.denom + r)
+    Rat.from_int(a.num) = Rat.from_int(q * a.denom) + Rat.from_int(r)
+    Rat.from_int(r) >= Rat.from_int(Int.0)
+    Rat.from_int(q * a.denom) + Rat.from_int(r) >= Rat.from_int(q * a.denom) + Rat.from_int(Int.0)
+    Rat.from_int(a.num) >= Rat.from_int(q * a.denom)
+    Rat.from_int(a.num) >= Rat.from_int(q) * Rat.from_int(a.denom)
+    Rat.from_int(a.denom).is_positive
+    Rat.from_int(q) * Rat.from_int(a.denom) / Rat.from_int(a.denom) <= Rat.from_int(a.num) / Rat.from_int(a.denom)
+    Rat.from_int(q) * Rat.from_int(a.denom) / Rat.from_int(a.denom) = Rat.from_int(q)
+    Rat.from_int(q) <= Rat.from_int(a.num) / Rat.from_int(a.denom)
+    Rat.from_int(q) <= a
+
+    // Right bound
+    q * a.denom + r < q * a.denom + a.denom
+    q * a.denom + a.denom = (q + Int.1) * a.denom
+    a.num < (q + Int.1) * a.denom
+    a < Rat.from_int(q + Int.1)
+}
+
+let floor(a: Rat) -> q: Int satisfy {
+    Rat.from_int(q) <= a and a < Rat.from_int(q + Int.1)
+}
+
+theorem mul_lt_lt(a: Rat, b: Rat, c: Rat, d: Rat) {
+    a.is_positive and c.is_positive and a < b and c < d -> a * c < b * d
+} by {
+    a * c < b * c
+    b.is_positive
+    b * c < b * d
+}
+
+theorem mul_lt_lte(a: Rat, b: Rat, c: Rat, d: Rat) {
+    a.is_positive and c.is_positive and a < b and c <= d -> a * c < b * d
+} by {
+    a * c < b * c
+    b.is_positive
+    b * c <= b * d
+}
+
+theorem pos_lte(a: Rat, b: Rat) {
+    a.is_positive and a <= b -> b.is_positive
+} by {
+    if a = b {
+        b.is_positive
+    } else {
+        a < b
+        b.is_positive
+    }
+}
+
+theorem mul_lte_lt(a: Rat, b: Rat, c: Rat, d: Rat) {
+    a.is_positive and c.is_positive and a <= b and c < d -> a * c < b * d
+} by {
+    a * c <= b * c
+    b.is_positive
+    b * c < b * d
+}
+
+theorem lt_pos_reciprocal(a: Rat, b: Rat) {
+    a.is_positive and a < b -> b.reciprocal < a.reciprocal
+} by {
+    if a.reciprocal <= b.reciprocal {
+        a.reciprocal * a < b.reciprocal * b
+        a.reciprocal * a = Rat.1
+        b.reciprocal * b = Rat.1
+        Rat.1 < Rat.1
+        false
+    }
+}
+
+theorem reciprocal_inverts(a: Rat) {
+    a != Rat.0 -> a.reciprocal.reciprocal = a
+} by {
+    a * a.reciprocal = Rat.1
+    Rat.new(a.reciprocal.num, a.reciprocal.denom) / a * a = Rat.new(a.reciprocal.num, a.reciprocal.denom)
+    a.reciprocal != Rat.0
+    a * a.reciprocal / a.reciprocal = a
+    Rat.1 * a.reciprocal.reciprocal = a
+}
+
+theorem smaller_int_reciprocal(a: Rat) {
+    a.is_positive -> exists(n: Int) {
+        n.is_positive and Rat.from_int(n).reciprocal < a
+    }
+} by {
+    a.reciprocal.is_positive
+    let n: Int satisfy {
+        a.reciprocal < Rat.from_int(n)
+    }
+    Rat.from_int(n).reciprocal < a.reciprocal.reciprocal
+    a.reciprocal.reciprocal = a
+    Rat.from_int(n).is_positive
+    n.is_positive
+}
+
+theorem gte_some_int(a: Rat) {
+    exists(n: Int) {
+        a >= Rat.from_int(n)
+    }
+} by {
+    a >= Rat.from_int(floor(a))
+}

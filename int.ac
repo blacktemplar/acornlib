@@ -1997,3 +1997,81 @@ theorem times_two(a: Int) {
     2 * a = (1 + 1) * a
     2 * a = 1 * a + 1 * a
 }
+
+// This is just the Nat division theorem ported up
+theorem positive_division_theorem(m: Int, n: Int) {
+    0 <= m and n.is_positive -> exists(q: Int, r: Int) {
+        0 <= r and r < n and m = q * n + r
+    }
+} by {
+    let (q: Nat, r: Nat) satisfy {
+        r < abs(n) and abs(m) = q * abs(n) + r
+    }
+    0 <= Int.from_nat(r)
+    Int.from_nat(r) < n
+    Int.from_nat(abs(m)) = Int.from_nat(q * abs(n) + r)
+    m = Int.from_nat(q * abs(n) + r)
+    m = Int.from_nat(q) * Int.from_nat(abs(n)) + Int.from_nat(r)
+}
+
+// Dividing negative numbers is awkward, sometimes you're off by one
+theorem negative_division_theorem(m: Int, n: Int) {
+    m.is_negative and n.is_positive -> exists(q: Int, r: Int) {
+        0 <= r and r < n and m = q * n + r
+    }
+} by {
+    0 <= -m
+    let (qn: Int, rn: Int) satisfy {
+        0 <= rn and rn < n and -m = qn * n + rn
+    }
+    m = (-qn) * n + -rn
+    if rn = 0 {
+        negative_division_theorem(m, n)
+    } else {
+        rn > 0
+        (-qn + -1) * n = (-qn) * n + -n
+        (-qn) * n = (-qn + -1) * n + n
+        m = (-qn) * n + -rn
+        m = (-qn + -1) * n + (n + -rn)
+        0 <= n + -rn
+        -rn < 0
+        n + -rn < n
+        negative_division_theorem(m, n)
+    }
+}
+
+// The entire division theorem is combining the two cases
+theorem division_theorem(m: Int, n: Int) {
+    n.is_positive -> exists(q: Int, r: Int) {
+        0 <= r and r < n and m = q * n + r
+    }
+} by {
+    if m.is_negative {
+        division_theorem(m, n)
+    } else {
+        0 <= m
+        division_theorem(m, n)
+    }
+}
+
+theorem add_lte(a: Int, b: Int, c: Int, d: Int) {
+    a <= b and c <= d -> a + c <= b + d
+} by {
+    forall(x0: Int) { x0 + a <= x0 + b }
+    forall(x0: Int) { x0 + c <= x0 + d }
+    c + b <= b + d
+    c + a <= b + d
+}
+
+theorem plus_abs_gte_zero(n: Int) {
+    n + Int.from_nat(abs(n)) >= 0
+} by {
+    if n.is_negative {
+        Int.from_nat(abs(n)) = -n
+        n + Int.from_nat(abs(n)) = 0
+    } else {
+        n + Int.from_nat(abs(n)) = n + n
+        n + Int.from_nat(abs(n)) >= 0
+    }
+}
+
