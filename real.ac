@@ -989,10 +989,88 @@ theorem lt_add_pos_rat(a: Real, r: Rat) {
     }
 }
 
-// theorem lt_add_right(a: Real, b: Real, c: Real) {
-//     a < b -> a + c < b + c
-// } by {
-//     let r: Rat satisfy {
-//         a < Real.from_rat(r) and Real.from_rat(r) < b
-//     }
-// }
+theorem lt_add_pos(a: Real, b: Real) {
+    b.is_positive -> a < a + b
+} by {
+    Real.0 < b
+    let r: Rat satisfy {
+        Real.0 < Real.from_rat(r) and Real.from_rat(r) < b
+    }
+    Real.from_rat(r).is_positive
+    r.is_positive
+    a < a + Real.from_rat(r)
+    a + Real.from_rat(r) <= a + b
+    a < a + b
+}
+
+theorem lt_add_rat_right(a: Real, b: Real, r: Rat) {
+    a < b -> a + Real.from_rat(r) < b + Real.from_rat(r)
+} by {
+  a + Real.0 < b + Real.0
+  a + (Real.from_rat(r) + Real.from_rat(-r)) < b + (Real.from_rat(r) + Real.from_rat(-r))
+  a + Real.from_rat(r) + Real.from_rat(-r) < b + Real.from_rat(r) + Real.from_rat(-r)
+}
+
+theorem lt_add_rat_left(a: Real, b: Real, r: Rat) {
+    a < b -> Real.from_rat(r) + a < Real.from_rat(r) + b
+}
+
+theorem add_rat_eps_between(a: Real, b: Real) {
+    a < b -> exists(eps: Rat) {
+        eps.is_positive and a + Real.from_rat(eps) < b
+    }
+} by {
+    let r1: Rat satisfy {
+        a < Real.from_rat(r1) and Real.from_rat(r1) < b
+    }
+    let r2: Rat satisfy {
+        Real.from_rat(r1) < Real.from_rat(r2) and Real.from_rat(r2) < b
+    }
+    r1 + (r2 - r1) = r2
+    let eps: Rat = r2 - r1
+    r1 < r2
+    eps.is_positive
+    r1 + eps = r2
+    Real.from_rat(r1) + Real.from_rat(eps) = Real.from_rat(r2)
+    
+    // Combine them
+    a + Real.from_rat(eps) < Real.from_rat(r1) + Real.from_rat(eps)
+    a + Real.from_rat(eps) < Real.from_rat(r2)
+    Real.from_rat(r2) < b
+    a + Real.from_rat(eps) < b
+}
+
+theorem lt_add_right(a: Real, b: Real, c: Real) {
+    a < b -> a + c < b + c
+} by {
+    let r: Rat satisfy {
+        r.is_positive and a + Real.from_rat(r) < b
+    }
+    let hr: Real = Real.from_rat(r / Rat.2)
+    a < a + Real.from_rat(r / Rat.2)
+    a < a + hr
+    c < c + Real.from_rat(r / Rat.2)
+    c < c + hr 
+    hr + hr = Real.from_rat(r)
+    a + c < (a + hr) + (c + hr)
+    a + c < (a + hr + hr) + c
+    a + c < (a + Real.from_rat(r)) + c
+    (a + Real.from_rat(r)) + c <= b + c
+}
+
+theorem lt_add_left(a: Real, b: Real, c: Real) {
+    a < b -> c + a < c + b
+}
+
+theorem lt_add_cancel_right(a: Real, b: Real, c: Real) {
+    a + c = b + c -> a = b
+} by {
+    not a + c < b + c
+    not b + c < a + c
+    not b < a
+    a <= b
+}
+
+theorem lt_add_cancel_left(a: Real, b: Real, c: Real) {
+    c + a = c + b -> a = b
+}

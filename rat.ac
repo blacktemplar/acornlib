@@ -1181,3 +1181,16 @@ theorem mul_denom(r: Rat) {
     Rat.from_int(r.denom) != Rat.0
     Rat.from_int(r.num) / Rat.from_int(r.denom) * Rat.from_int(r.denom) = Rat.from_int(r.num)
 }
+
+theorem half_pos(r: Rat) {
+    r.is_positive -> (r / Rat.2).is_positive
+}
+
+theorem add_half_half(r: Rat) {
+    (r / Rat.2) + (r / Rat.2) = r
+} by {
+    (r / Rat.2) + (r / Rat.2) = r / Rat.2 + r / Rat.2
+    (r / Rat.2) + (r / Rat.2) = (r + r) / Rat.2
+    (r / Rat.2) + (r / Rat.2) = (Rat.2 * r) / Rat.2
+    (r / Rat.2) + (r / Rat.2) = r
+}
