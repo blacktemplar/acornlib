@@ -934,20 +934,60 @@ theorem lt_plus_one(a: Real) {
     }
 }
 
-// theorem neq_add_pos_rat(a: Real, b: Rat) {
-//     b.is_positive -> a != a + Real.from_rat(b)
-// } by {
-//     if a = a + Real.from_rat(b) {
-//     }
-//     // The non-strict version
-//     Real.0 < b
-//     a + Real.0 <= a + b
-//     a <= a + b
+theorem lt_plus_pos_int(a: Real, n: Int) {
+    n.is_positive -> a < a + Real.from_int(n)
+} by {
+    Int.1 <= n
+    Real.1 <= Real.from_int(n)
+    a + Real.1 <= a + Real.from_int(n)
+    a < a + Real.1
+}
 
-//     if a + b = a {
-//         a = a + b + b
-//     }
-// }
+theorem lt_plus_pos_rat(a: Real, r: Rat) {
+    r.is_positive -> a < a + Real.from_rat(r)
+} by {
+    Real.0 <= Real.from_rat(r)
+    a <= a + Real.from_rat(r)
+    if a = a + Real.from_rat(r) {
+        // We can keep sticking on r's. Induct on f:
+        let f: Nat -> Bool = function(k: Nat) {
+            a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(k)))
+        }
+
+        // Base case
+        r * Rat.from_int(Int.from_nat(Nat.0)) = Rat.0
+        f(Nat.0)
+
+        // Inductive step
+        forall(x: Nat) {
+            if f(x) {
+                a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(x)))
+                a = (a + Real.from_rat(r)) + Real.from_rat(r * Rat.from_int(Int.from_nat(x)))
+                a = a + (Real.from_rat(r) + Real.from_rat(r * Rat.from_int(Int.from_nat(x))))
+                a = a + Real.from_rat(r + r * Rat.from_int(Int.from_nat(x)))
+                a = a + Real.from_rat(r * Rat.1 + r * Rat.from_int(Int.from_nat(x)))
+                a = a + Real.from_rat(r * (Rat.1 + Rat.from_int(Int.from_nat(x))))
+                a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(x.suc)))
+                f(x.suc)
+            }
+        }
+
+        // Via induction
+        forall(x: Nat) {
+            f(x)
+        }
+
+        // Just add enough r's to get to an integer
+        f(int.abs(r.denom))
+        a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(int.abs(r.denom))))
+        r.denom.is_positive
+        Int.from_nat(int.abs(r.denom)) = r.denom
+        a = a + Real.from_rat(r * Rat.from_int(r.denom))
+        a = a + Real.from_rat(Rat.from_int(r.num))
+        r.num.is_positive
+        false
+    }
+}
 
 // theorem lt_add_right(a: Real, b: Real, c: Real) {
 //     a < b -> a + c < b + c

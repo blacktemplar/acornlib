@@ -1173,3 +1173,11 @@ theorem gte_some_int(a: Rat) {
 } by {
     a >= Rat.from_int(floor(a))
 }
+
+theorem mul_denom(r: Rat) {
+    r * Rat.from_int(r.denom) = Rat.from_int(r.num)
+} by {
+    Rat.from_int(r.denom).num != Int.0
+    Rat.from_int(r.denom) != Rat.0
+    Rat.from_int(r.num) / Rat.from_int(r.denom) * Rat.from_int(r.denom) = Rat.from_int(r.num)
+}
