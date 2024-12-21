@@ -284,28 +284,6 @@ theorem lt_zero_imp_neg(a: Real) {
     }
 }
 
-define is_upper_bound(s: Real -> Bool, ub: Real) -> Bool {
-    forall(r: Real) {
-        s(r) -> r <= ub
-    }
-}
-
-define bounded_above(s: Real -> Bool) -> Bool {
-    exists(ub: Real) {
-        is_upper_bound(s, ub)
-    }
-}
-
-define is_lower_bound(s: Real -> Bool, lb: Real) -> Bool {
-    forall(r: Real) {
-        s(r) -> lb <= r
-    }
-}
-
-define is_least_upper_bound(s: Real -> Bool, lub: Real) -> Bool {
-    is_lower_bound(is_upper_bound(s), lub)
-}
-
 // Informally, z1 + z2 > r.
 define add_gt(z1: Real, z2: Real, r: Rat) -> Bool {
     exists(r1: Rat, r2: Rat) {
