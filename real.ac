@@ -1341,3 +1341,37 @@ theorem add_neg_gte_zero(a: Real) {
 theorem add_neg_eq_zero(a: Real) {
     a + -a = Real.0
 }
+
+theorem neg_distrib(a: Real, b: Real) {
+    -(a + b) = -a + -b
+} by {
+    a + b + -(a + b) = Real.0
+    -(a + b) + b + a = Real.0
+    -(a + b) + b = -a 
+    -(a + b) + (b + -b) = -(a + b)
+    -(a + b) + b + -b = -(a + b)
+    -(a + b) = -a + -b
+}
+
+class Real {
+    define sub(self, other: Real) -> Real {
+        self + -other
+    }
+
+    define abs(self) -> Real {
+        if self.is_negative {
+            -self
+        } else {
+            self
+        }
+    }
+
+    define unit_sign(self) -> Real {
+        if self.is_negative {
+            -Real.1
+        } else {
+            Real.1
+        }
+    }
+}
+
