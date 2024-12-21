@@ -1262,3 +1262,82 @@ theorem neg_neg(a: Real) {
         false
     }
 }
+
+theorem neg_zero {
+    -Real.0 = Real.0
+}
+
+theorem neg_pos_is_neg(a: Real) {
+    a.is_positive -> (-a).is_negative
+}
+
+theorem neg_neg_is_pos(a: Real) {
+    (-a).is_negative -> a.is_positive
+}
+
+theorem gt_add_neg(a: Real, b: Real) {
+    b.is_negative -> a > a + b
+}
+
+theorem rat_window(a: Real, eps: Rat) {
+    eps.is_positive -> exists(r: Rat) {
+        Real.from_rat(r) < a and a < Real.from_rat(r + eps)
+    }
+} by {
+    a < a + Real.from_rat(eps)
+    let top: Rat satisfy {
+        a < Real.from_rat(top) and Real.from_rat(top) < a + Real.from_rat(eps)
+    }
+    let r: Rat = top + -eps
+    r + eps = top
+    Real.from_rat(r) < a
+    a < Real.from_rat(top)
+}
+
+theorem add_neg_lte_zero(a: Real) {
+    a + -a <= Real.0
+} by {
+    if a + -a > Real.0 {
+        let r: Rat satisfy {
+            Real.0 < Real.from_rat(r) and Real.from_rat(r) < a + -a
+        }
+        Real.from_rat(r) > Real.0
+        Real.from_rat(r).gt_rat(Rat.0)
+        Rat.0 < r
+        r.is_positive
+        let b: Rat satisfy {
+            Real.from_rat(b) < a and a < Real.from_rat(b + r)
+        }
+        -a < Real.from_rat(-b)
+        a + -a < Real.from_rat(b + r) + Real.from_rat(-b)
+        a + -a < Real.from_rat(b + r + -b)
+        a + -a < Real.from_rat(r)
+        false
+    }
+}
+
+theorem add_neg_gte_zero(a: Real) {
+    a + -a >= Real.0
+} by {
+    if a + -a < Real.0 {
+        let r: Rat satisfy {
+            Real.from_rat(r) < Real.0 and a + -a < Real.from_rat(r)
+        }
+        Real.0 > Real.from_rat(r)
+        (-r).is_positive
+        let b: Rat satisfy {
+            Real.from_rat(b) < a and a < Real.from_rat(b + -r)
+        }
+        a > Real.from_rat(b)
+        -a > -Real.from_rat(b + -r)
+        a + -a > Real.from_rat(b) + -Real.from_rat(b + -r)
+        a + -a > Real.from_rat(b) + Real.from_rat(-b + r)
+        a + -a > Real.from_rat(b + -b + r)
+        a + -a > Real.from_rat(r)
+        false
+    }
+}
+
+theorem add_neg_eq_zero(a: Real) {
+    a + -a = Real.0
+}
