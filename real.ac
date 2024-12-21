@@ -1052,3 +1052,8 @@ theorem lt_add_cancel_right(a: Real, b: Real, c: Real) {
 theorem lt_add_cancel_left(a: Real, b: Real, c: Real) {
     c + a = c + b -> a = b
 }
+
+// Whether -a > r. Which is just a < -r.
+define neg_gt(a: Real, r: Rat) -> Bool {
+    a < Real.from_rat(-r)
+}
