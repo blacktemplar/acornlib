@@ -913,7 +913,7 @@ theorem add_from_int(m: Int, n: Int) {
     Real.from_int(m + n) = Real.from_int(m + n)
 }
 
-theorem lt_plus_one(a: Real) {
+theorem lt_add_one(a: Real) {
     a < a + Real.1
 } by {
     if a = Real.from_int(floor(a)) {
@@ -934,7 +934,7 @@ theorem lt_plus_one(a: Real) {
     }
 }
 
-theorem lt_plus_pos_int(a: Real, n: Int) {
+theorem lt_add_pos_int(a: Real, n: Int) {
     n.is_positive -> a < a + Real.from_int(n)
 } by {
     Int.1 <= n
@@ -943,7 +943,7 @@ theorem lt_plus_pos_int(a: Real, n: Int) {
     a < a + Real.1
 }
 
-theorem lt_plus_pos_rat(a: Real, r: Rat) {
+theorem lt_add_pos_rat(a: Real, r: Rat) {
     r.is_positive -> a < a + Real.from_rat(r)
 } by {
     Real.0 <= Real.from_rat(r)
