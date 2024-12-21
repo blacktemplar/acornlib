@@ -1194,3 +1194,10 @@ theorem add_half_half(r: Rat) {
     (r / Rat.2) + (r / Rat.2) = (Rat.2 * r) / Rat.2
     (r / Rat.2) + (r / Rat.2) = r
 }
+
+theorem lt_neg(p: Rat, q: Rat) {
+    p < q -> -q < -p
+} by {
+    q + -p > Rat.0
+    --q + -p > Rat.0
+}
