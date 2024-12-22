@@ -1375,3 +1375,9 @@ class Real {
     }
 }
 
+theorem sub_cancels(a: Real, b: Real) {
+    a + b - b = a
+} by {
+    a + (b + -b) = a
+    a + b + -b = a
+}
