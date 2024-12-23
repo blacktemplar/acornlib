@@ -1381,3 +1381,7 @@ theorem sub_cancels(a: Real, b: Real) {
     a + (b + -b) = a
     a + b + -b = a
 }
+
+theorem sub_moves_sides(a: Real, b: Real, c: Real) {
+    a + b = c -> a = c - b
+}
