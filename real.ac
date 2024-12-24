@@ -1385,3 +1385,11 @@ theorem sub_cancels(a: Real, b: Real) {
 theorem sub_moves_sides(a: Real, b: Real, c: Real) {
     a + b = c -> a = c - b
 }
+
+define pos_mul_gt(a: Real, b: Real, r: Rat) -> Bool {
+    exists(ra: Rat, rb: Rat) {
+        ra.is_positive and Real.from_rat(ra) < a and
+        rb.is_positive and Real.from_rat(rb) < b and
+        r = ra * rb
+    }
+}
