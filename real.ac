@@ -1393,3 +1393,12 @@ define pos_mul_gt(a: Real, b: Real, r: Rat) -> Bool {
         r = ra * rb
     }
 }
+
+theorem pos_mul_not_gt(a: Real, b: Real, ra: Rat, rb: Rat) {
+    a <= Real.from_rat(ra) and b <= Real.from_rat(rb) ->
+    not pos_mul_gt(a, b, ra * rb)
+} by {
+    if pos_mul_gt(a, b, ra * rb) {
+        false
+    }
+}
