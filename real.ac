@@ -1399,6 +1399,13 @@ theorem pos_mul_not_gt(a: Real, b: Real, ra: Rat, rb: Rat) {
     not pos_mul_gt(a, b, ra * rb)
 } by {
     if pos_mul_gt(a, b, ra * rb) {
+        let (r1: Rat, r2: Rat) satisfy {
+            r1.is_positive and Real.from_rat(r1) < a and
+            r2.is_positive and Real.from_rat(r2) < b and
+            ra * rb = r1 * r2
+        }
+        r1 < ra
+        r2 < rb
         false
     }
 }
