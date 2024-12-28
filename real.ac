@@ -1409,3 +1409,21 @@ theorem pos_mul_not_gt(a: Real, b: Real, ra: Rat, rb: Rat) {
         false
     }
 }
+
+theorem pos_mul_not_gt_something(a: Real, b: Real) {
+    a.is_positive and b.is_positive -> exists(r: Rat) {
+        not pos_mul_gt(a, b, r)
+    }
+} by {
+    let ra: Rat satisfy {
+        a < Real.from_rat(ra)
+    }
+    Real.from_rat(ra).is_positive
+    ra.is_positive
+    let rb: Rat satisfy {
+        b < Real.from_rat(rb)
+    }
+    Real.from_rat(rb).is_positive
+    rb.is_positive
+    not pos_mul_gt(a, b, ra * rb)
+}
