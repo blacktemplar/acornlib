@@ -1390,7 +1390,7 @@ define pos_mul_gt(a: Real, b: Real, r: Rat) -> Bool {
     exists(ra: Rat, rb: Rat) {
         ra.is_positive and Real.from_rat(ra) < a and
         rb.is_positive and Real.from_rat(rb) < b and
-        r = ra * rb
+        r <= ra * rb
     }
 }
 
@@ -1402,10 +1402,11 @@ theorem pos_mul_not_gt(a: Real, b: Real, ra: Rat, rb: Rat) {
         let (r1: Rat, r2: Rat) satisfy {
             r1.is_positive and Real.from_rat(r1) < a and
             r2.is_positive and Real.from_rat(r2) < b and
-            ra * rb = r1 * r2
+            ra * rb <= r1 * r2
         }
         r1 < ra
         r2 < rb
+        r1 * r2 < ra * rb
         false
     }
 }
@@ -1426,4 +1427,10 @@ theorem pos_mul_not_gt_something(a: Real, b: Real) {
     Real.from_rat(rb).is_positive
     rb.is_positive
     not pos_mul_gt(a, b, ra * rb)
+}
+
+theorem pos_mul_gt_zero(a: Real, b: Real) {
+    a.is_positive and b.is_positive -> pos_mul_gt(a, b, Rat.0)
+} by {
+
 }
