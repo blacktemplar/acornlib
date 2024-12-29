@@ -1432,5 +1432,19 @@ theorem pos_mul_not_gt_something(a: Real, b: Real) {
 theorem pos_mul_gt_zero(a: Real, b: Real) {
     a.is_positive and b.is_positive -> pos_mul_gt(a, b, Rat.0)
 } by {
-
+    Real.0 < a
+    let ra: Rat satisfy {
+        Real.0 < Real.from_rat(ra) and Real.from_rat(ra) < a
+    }
+    Rat.0 < ra
+    Real.0 < b
+    let rb: Rat satisfy {
+        Real.0 < Real.from_rat(rb) and Real.from_rat(rb) < b
+    }
+    Rat.0 < rb
+    rb.is_positive
+    ra.is_positive
+    (ra * rb).is_positive
+    Rat.0 < ra * rb
+    Rat.0 <= ra * rb
 }
