@@ -1458,7 +1458,46 @@ theorem pos_mul_gt_is_lower(a: Real, b: Real) {
 } by {
     forall(x: Rat, y: Rat) {
         if pos_mul_gt(a, b, y) and x < y {
+            let (ra: Rat, rb: Rat) satisfy {
+                ra.is_positive and Real.from_rat(ra) < a and
+                rb.is_positive and Real.from_rat(rb) < b and
+                y <= ra * rb
+            }
+            y <= ra * rb
+            x <= ra * rb
             pos_mul_gt(a, b, x)
         }
     }
+}
+
+theorem pos_mul_gt_has_no_greatest(a: Real, b: Real, r: Rat) {
+    a.is_positive and b.is_positive -> not is_greatest(pos_mul_gt(a, b), r)
+} by {
+    if is_greatest(pos_mul_gt(a, b), r) {
+        pos_mul_gt(a, b, r)
+        let (ra: Rat, rb: Rat) satisfy {
+            ra.is_positive and Real.from_rat(ra) < a and
+            rb.is_positive and Real.from_rat(rb) < b and
+            r <= ra * rb
+        }
+        let ra2: Rat satisfy {
+            Real.from_rat(ra) < Real.from_rat(ra2) and Real.from_rat(ra2) < a
+        }
+        let rb2: Rat satisfy {
+            Real.from_rat(rb) < Real.from_rat(rb2) and Real.from_rat(rb2) < b
+        }
+        ra < ra2
+        ra2.is_positive
+        rb < rb2
+        rb2.is_positive
+        ra * rb < ra2 * rb2
+        r < ra2 * rb2
+        pos_mul_gt(a, b, ra2 * rb2)
+        ra2 * rb2 <= r
+        false
+    }
+}
+
+theorem pos_mul_gt_is_dedekind_cut(a: Real, b: Real) {
+    a.is_positive and b.is_positive -> is_dedekind_cut(pos_mul_gt(a, b))
 }

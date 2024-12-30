@@ -1201,3 +1201,25 @@ theorem lt_neg(p: Rat, q: Rat) {
     q + -p > Rat.0
     --q + -p > Rat.0
 }
+
+theorem lt_lte_trans(a: Rat, b: Rat, c: Rat) {
+    a < b and b <= c -> a < c
+} by {
+    if b = c {
+        a < c
+    } else {
+        b < c
+        a < c
+    }
+}
+
+theorem lte_lt_trans(a: Rat, b: Rat, c: Rat) {
+    a <= b and b < c -> a < c
+} by {
+    if a = b {
+        a < c
+    } else {
+        a < b
+        a < c
+    }
+}
