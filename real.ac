@@ -1501,3 +1501,11 @@ theorem pos_mul_gt_has_no_greatest(a: Real, b: Real, r: Rat) {
 theorem pos_mul_gt_is_dedekind_cut(a: Real, b: Real) {
     a.is_positive and b.is_positive -> is_dedekind_cut(pos_mul_gt(a, b))
 }
+
+define mul_abs(a: Real, b: Real) -> Real {
+    if a = Real.0 or b = Real.0 {
+        Real.0
+    } else {
+        Real.new(pos_mul_gt(a.abs, b.abs))
+    }
+}
