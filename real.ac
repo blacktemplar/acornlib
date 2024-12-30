@@ -1448,3 +1448,17 @@ theorem pos_mul_gt_zero(a: Real, b: Real) {
     Rat.0 < ra * rb
     Rat.0 <= ra * rb
 }
+
+theorem pos_mul_gt_is_cut(a: Real, b: Real) {
+    a.is_positive and b.is_positive -> is_cut(pos_mul_gt(a, b))
+}
+
+theorem pos_mul_gt_is_lower(a: Real, b: Real) {
+    a.is_positive and b.is_positive -> is_lower(pos_mul_gt(a, b))
+} by {
+    forall(x: Rat, y: Rat) {
+        if pos_mul_gt(a, b, y) and x < y {
+            pos_mul_gt(a, b, x)
+        }
+    }
+}
