@@ -1509,3 +1509,21 @@ define mul_abs(a: Real, b: Real) -> Real {
         Real.new(pos_mul_gt(a.abs, b.abs))
     }
 }
+
+class Real {
+    define mul(self, other: Real) -> Real {
+        if self.is_negative {
+            if other.is_negative {
+                mul_abs(self, other)
+            } else {
+                -mul_abs(-self, other)
+            }
+        } else {
+            if other.is_negative {
+                -mul_abs(self, other)
+            } else {
+                mul_abs(self, other)
+            }
+        }
+    }
+}
