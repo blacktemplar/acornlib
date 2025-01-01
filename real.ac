@@ -1527,3 +1527,25 @@ class Real {
         }
     }
 }
+
+theorem mul_zero_left(a: Real) {
+    Real.0 * a = Real.0
+} by {
+    not Real.0.is_negative
+    if a.is_negative {
+        Real.0 * a = Real.0
+    } else {
+        Real.0 * a = Real.0
+    }
+}
+
+theorem mul_zero_right(a: Real) {
+    a * Real.0 = Real.0
+} by {
+    not Real.0.is_negative
+    if a.is_negative {
+        a * Real.0 = Real.0
+    } else {
+        a * Real.0 = Real.0
+    }
+}
