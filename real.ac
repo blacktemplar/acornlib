@@ -1549,3 +1549,29 @@ theorem mul_zero_right(a: Real) {
         a * Real.0 = Real.0
     }
 }
+
+theorem pos_mul_gt_imp_swap(a: Real, b: Real, r: Rat) {
+    pos_mul_gt(a, b, r) -> pos_mul_gt(b, a, r)
+} by {
+    let (ra: Rat, rb: Rat) satisfy {
+        ra.is_positive and Real.from_rat(ra) < a and
+        rb.is_positive and Real.from_rat(rb) < b and
+        r <= ra * rb
+    }
+    pos_mul_gt(b, a, r)
+}
+
+theorem pos_mul_gt_comm(a: Real, b: Real) {
+    pos_mul_gt(a, b) = pos_mul_gt(b, a)
+} by {
+    forall(r: Rat) {
+        if pos_mul_gt(a, b, r) {
+            pos_mul_gt(b, a, r)
+            pos_mul_gt(a, b, r) = pos_mul_gt(b, a, r)
+        } else {
+            not pos_mul_gt(a, b, r)
+            not pos_mul_gt(b, a, r)
+            pos_mul_gt(a, b, r) = pos_mul_gt(b, a, r)
+        }
+    }
+}
