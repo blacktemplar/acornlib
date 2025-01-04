@@ -1638,3 +1638,17 @@ theorem mul_comm(a: Real, b: Real) {
         }
     }
 }
+
+theorem pos_mul_gt_imp_rat_mul_gt(p: Rat, q: Rat, r: Rat) {
+    pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r) -> p * q > r
+} by {
+    let (rp: Rat, rq: Rat) satisfy {
+        rp.is_positive and Real.from_rat(rp) < Real.from_rat(p) and
+        rq.is_positive and Real.from_rat(rq) < Real.from_rat(q) and
+        r <= rp * rq
+    }
+    p > rp
+    q > rq
+    p * q > rp * rq
+    r < p * q
+}
