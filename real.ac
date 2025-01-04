@@ -1575,3 +1575,66 @@ theorem pos_mul_gt_comm(a: Real, b: Real) {
         }
     }
 }
+
+theorem abs_neg(a: Real) {
+    (-a).abs = a.abs
+} by {
+    if a.is_negative {
+        (-a).abs = a.abs
+    } else {
+        if a = Real.0 {
+            (-a).abs = a.abs
+        } else {
+            (-a).is_negative
+            (-a).abs = a.abs
+        }
+    }
+}
+
+theorem mul_abs_neg_left(a: Real, b: Real) {
+    mul_abs(-a, b) = mul_abs(a, b)
+} by {
+    if a = Real.0 or b = Real.0 {
+        mul_abs(-a, b) = Real.0
+        mul_abs(a, b) = Real.0
+        mul_abs(-a, b) = mul_abs(a, b)
+    } else {
+        mul_abs(-a, b) = Real.new(pos_mul_gt((-a).abs, b.abs))
+        mul_abs(a, b) = Real.new(pos_mul_gt(a.abs, b.abs))
+        (-a).abs = a.abs
+        mul_abs(-a, b) = mul_abs(a, b)
+    }
+}
+
+theorem mul_abs_comm(a: Real, b: Real) {
+    mul_abs(a, b) = mul_abs(b, a)
+} by {
+    if a = Real.0 or b = Real.0 {
+        mul_abs(a, b) = Real.0
+        mul_abs(b, a) = Real.0
+        mul_abs(a, b) = mul_abs(b, a)
+    } else {
+        mul_abs(a, b) = Real.new(pos_mul_gt(a.abs, b.abs))
+        mul_abs(b, a) = Real.new(pos_mul_gt(b.abs, a.abs))
+        pos_mul_gt(a.abs, b.abs) = pos_mul_gt(b.abs, a.abs)
+        mul_abs(a, b) = mul_abs(b, a)
+    }
+}
+
+theorem mul_comm(a: Real, b: Real) {
+    a * b = b * a
+} by {
+    if a.is_negative {
+        if b.is_negative {
+            a * b = b * a
+        } else {
+            a * b = b * a
+        }
+    } else {
+        if b.is_negative {
+            a * b = b * a
+        } else {
+            a * b = b * a
+        }
+    }
+}
