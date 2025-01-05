@@ -1652,3 +1652,11 @@ theorem pos_mul_gt_imp_rat_mul_gt(p: Rat, q: Rat, r: Rat) {
     p * q > rp * rq
     r < p * q
 }
+
+// theorem rat_mul_gt_imp_pos_mul_gt(p: Rat, q: Rat, r: Rat) {
+//     p.is_positive and q.is_positive and p * q > r -> pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
+// } by {
+//     let r1: Rat satisfy {
+//         r < r1 and r1 < p * q
+//     }
+// }

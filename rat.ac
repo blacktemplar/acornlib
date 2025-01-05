@@ -1223,3 +1223,13 @@ theorem lte_lt_trans(a: Rat, b: Rat, c: Rat) {
         a < c
     }
 }
+
+theorem lt_imp_rat_between(a: Rat, b: Rat) {
+    a < b -> exists(c: Rat) {
+        a < c and c < b
+    }
+} by {
+    a / Rat.2 < b / Rat.2    
+    a < (a + b) * Rat.2.reciprocal
+    (a + b) * Rat.2.reciprocal < b
+}
