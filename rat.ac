@@ -1233,3 +1233,16 @@ theorem lt_imp_rat_between(a: Rat, b: Rat) {
     a < (a + b) * Rat.2.reciprocal
     (a + b) * Rat.2.reciprocal < b
 }
+
+theorem gt_imp_rat_between(a: Rat, b: Rat) {
+    a > b -> exists(c: Rat) {
+        a > c and c > b
+    }
+} by {
+    b < a
+    let c: Rat satisfy {
+        b < c and c < a
+    }
+    a > c
+    c > b 
+}
