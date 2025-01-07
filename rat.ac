@@ -1246,3 +1246,11 @@ theorem gt_imp_rat_between(a: Rat, b: Rat) {
     a > c
     c > b 
 }
+
+theorem lt_cancel_pos_mul(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and a * c < b * c -> a < b
+} by {
+    not b * c < a * c
+    b != a
+    b > a
+}
