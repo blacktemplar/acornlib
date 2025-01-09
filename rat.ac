@@ -1247,10 +1247,34 @@ theorem gt_imp_rat_between(a: Rat, b: Rat) {
     c > b 
 }
 
-theorem lt_cancel_pos_mul(a: Rat, b: Rat, c: Rat) {
+theorem lt_cancel_pos_mul_right(a: Rat, b: Rat, c: Rat) {
     c.is_positive and a * c < b * c -> a < b
 } by {
     not b * c < a * c
     b != a
     b > a
+}
+
+theorem lt_cancel_pos_mul_left(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and c * a < c * b -> a < b
+} by {
+    not c * b < c * a
+    b != a
+    b > a
+}
+
+theorem gt_cancel_pos_mul_right(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and a * c > b * c -> a > b
+} by {
+    not b * c > a * c
+    b != a
+    b < a
+}
+
+theorem gt_cancel_pos_mul_left(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and c * a > c * b -> a > b
+} by {
+    not c * b > c * a
+    b != a
+    b < a
 }
