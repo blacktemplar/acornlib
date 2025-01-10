@@ -1291,3 +1291,19 @@ theorem cancel_positivity_left(a: Rat, b: Rat) {
 theorem cancel_positivity_right(a: Rat, b: Rat) {
     b.is_positive and (a * b).is_positive -> a.is_positive
 }
+
+theorem mul_cancels_div_left(a: Rat, b: Rat) {
+    b != Rat.0 -> b * (a / b) = a
+}
+
+theorem lte_trans(a: Rat, b: Rat, c: Rat) {
+    a <= b and b <= c -> a <= c
+} by {
+    if not a <= c {
+        not c < b
+        not a < c
+        not c > a
+        c != a
+        false
+    }
+}

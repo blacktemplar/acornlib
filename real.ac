@@ -1653,29 +1653,62 @@ theorem pos_mul_gt_imp_rat_mul_gt(p: Rat, q: Rat, r: Rat) {
     r < p * q
 }
 
-// theorem rat_mul_gt_pos_imp_pos_mul_gt(p: Rat, q: Rat, r: Rat) {
-//     p.is_positive and q.is_positive and r.is_positive
-//     and p * q > r -> pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
-// } by {
-//     // We need to find p1 and q1 that are less than p and q,
-//     // but they still multiply greater than r.
-//     let r1: Rat satisfy {
-//         r < r1 and r1 < p * q
-//     }
-//     r1.is_positive
-//     let r2: Rat satisfy {
-//         r1 < r2 and r2 < p * q
-//     }
-//     r2.is_positive
-//     let p1: Rat satisfy {
-//         p1 * q = r2
-//     }
-//     p1.is_positive
-//     p * q > p1 * q
-//     p > p1
-//     let q1: Rat satisfy {
-//         p1 * q1 = r1
-//     }
-//     p1 * q > p1 * q1
-//     q > q1
-// }
+theorem pos_mul_gt_combined(a: Rat, b: Rat, c: Rat, d: Rat) {
+    a.is_positive and b.is_positive and a < c and b < d -> pos_mul_gt(Real.from_rat(c), Real.from_rat(d), a * b)
+}
+
+theorem pos_mul_gt_trans(y: Real, z: Real, p: Rat, q: Rat) {
+    pos_mul_gt(y, z, q) and p <= q -> pos_mul_gt(y, z, p)
+} by {
+    let (ry: Rat, rz: Rat) satisfy {
+        ry.is_positive and Real.from_rat(ry) < y and
+        rz.is_positive and Real.from_rat(rz) < z and
+        q <= ry * rz
+    }
+    p <= ry * rz
+}
+
+theorem rat_mul_gt_pos_imp_pos_mul_gt(p: Rat, q: Rat, r: Rat) {
+    p.is_positive and q.is_positive and r.is_positive
+    and p * q > r -> pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
+} by {
+    // We need to find p1 and q1 that are less than p and q,
+    // but they still multiply greater than r.
+    let r1: Rat satisfy {
+        r < r1 and r1 < p * q
+    }
+    r1.is_positive
+    let r2: Rat satisfy {
+        r1 < r2 and r2 < p * q
+    }
+    r2.is_positive
+    let p1: Rat satisfy {
+        p1 * q = r2
+    }
+    (p1 * q).is_positive
+    p1.is_positive
+    p * q > p1 * q
+    p1 < p
+    p1 != Rat.0
+    let q1: Rat satisfy {
+        p1 * q1 = r1
+    }
+    p1 * q > p1 * q1
+    q1 < q
+
+    pos_mul_gt(Real.from_rat(p), Real.from_rat(q), p1 * q1)
+}
+
+theorem rat_mul_gt_imp_pos_mul_gt(p: Rat, q: Rat, r: Rat) {
+    p.is_positive and q.is_positive and p * q > r -> pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
+} by {
+    if r.is_positive {
+        pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
+    } else {
+        Real.from_rat(p).is_positive
+        Real.from_rat(q).is_positive
+        pos_mul_gt(Real.from_rat(p), Real.from_rat(q), Rat.0)
+        r <= Rat.0
+        pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
+    }
+}
