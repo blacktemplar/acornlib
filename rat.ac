@@ -1278,3 +1278,16 @@ theorem gt_cancel_pos_mul_left(a: Rat, b: Rat, c: Rat) {
     b != a
     b < a
 }
+
+theorem cancel_positivity_left(a: Rat, b: Rat) {
+    a.is_positive and (a * b).is_positive -> b.is_positive
+} by {
+    if b.is_negative {
+        (a * b).is_negative
+        false
+    }
+}
+
+theorem cancel_positivity_right(a: Rat, b: Rat) {
+    b.is_positive and (a * b).is_positive -> a.is_positive
+}

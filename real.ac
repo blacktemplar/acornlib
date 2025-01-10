@@ -1653,20 +1653,29 @@ theorem pos_mul_gt_imp_rat_mul_gt(p: Rat, q: Rat, r: Rat) {
     r < p * q
 }
 
-// theorem rat_mul_gt_imp_pos_mul_gt(p: Rat, q: Rat, r: Rat) {
-//     p.is_positive and q.is_positive and p * q > r -> pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
+// theorem rat_mul_gt_pos_imp_pos_mul_gt(p: Rat, q: Rat, r: Rat) {
+//     p.is_positive and q.is_positive and r.is_positive
+//     and p * q > r -> pos_mul_gt(Real.from_rat(p), Real.from_rat(q), r)
 // } by {
 //     // We need to find p1 and q1 that are less than p and q,
 //     // but they still multiply greater than r.
 //     let r1: Rat satisfy {
 //         r < r1 and r1 < p * q
 //     }
+//     r1.is_positive
 //     let r2: Rat satisfy {
 //         r1 < r2 and r2 < p * q
 //     }
+//     r2.is_positive
 //     let p1: Rat satisfy {
 //         p1 * q = r2
 //     }
+//     p1.is_positive
 //     p * q > p1 * q
 //     p > p1
+//     let q1: Rat satisfy {
+//         p1 * q1 = r1
+//     }
+//     p1 * q > p1 * q1
+//     q > q1
 // }
