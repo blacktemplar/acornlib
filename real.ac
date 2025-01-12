@@ -1738,6 +1738,25 @@ theorem rat_mul_gt_imp_mul_abs_gt(p: Rat, q: Rat, r: Rat) {
     mul_abs(Real.from_rat(p), Real.from_rat(q)) > Real.from_rat(r)
 }
 
+theorem mul_abs_gt_imp_rat_mul_gt(p: Rat, q: Rat, r: Rat) {
+    p.is_positive and q.is_positive
+    and mul_abs(Real.from_rat(p), Real.from_rat(q)) > Real.from_rat(r) ->
+    p * q > r
+} by {
+    Real.from_rat(p) = Real.from_rat(p).abs
+    Real.from_rat(p) != Real.0
+    Real.from_rat(p).is_positive
+
+    Real.from_rat(q) = Real.from_rat(q).abs
+    Real.from_rat(q) != Real.0
+    Real.from_rat(q).is_positive
+
+    let f: Rat -> Bool = pos_mul_gt(Real.from_rat(p), Real.from_rat(q))
+    Real.new(pos_mul_gt(Real.from_rat(p).abs, Real.from_rat(q).abs)) = mul_abs(Real.from_rat(p), Real.from_rat(q))
+    mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.new(f)
+    Real.new(f).gt_rat(r)
+}
+
 // theorem mul_abs_pos(p: Rat, q: Rat) {
 //     p.is_positive and q.is_positive ->
 //         mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p * q)
