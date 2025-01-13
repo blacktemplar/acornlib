@@ -1757,23 +1757,62 @@ theorem mul_abs_gt_imp_rat_mul_gt(p: Rat, q: Rat, r: Rat) {
     Real.new(f).gt_rat(r)
 }
 
-// theorem mul_abs_pos(p: Rat, q: Rat) {
-//     p.is_positive and q.is_positive ->
-//         mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p * q)
-// } by {
-//     if mul_abs(Real.from_rat(p), Real.from_rat(q)) < Real.from_rat(p * q) {
-//         let r: Rat satisfy {
-//             mul_abs(Real.from_rat(p), Real.from_rat(q)) < Real.from_rat(r)
-//             and Real.from_rat(r) < Real.from_rat(p * q)
-//         }
-//         p * q > r
-//         false
-//     }
-//     if mul_abs(Real.from_rat(p), Real.from_rat(q)) > Real.from_rat(p * q) {
-//         false
-//     }
-// }
+theorem mul_abs_pos(p: Rat, q: Rat) {
+    p.is_positive and q.is_positive ->
+        mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p * q)
+} by {
+    if mul_abs(Real.from_rat(p), Real.from_rat(q)) < Real.from_rat(p * q) {
+        let r: Rat satisfy {
+            mul_abs(Real.from_rat(p), Real.from_rat(q)) < Real.from_rat(r)
+            and Real.from_rat(r) < Real.from_rat(p * q)
+        }
+        p * q > r
+        false
+    }
+    if mul_abs(Real.from_rat(p), Real.from_rat(q)) > Real.from_rat(p * q) {
+        false
+    }
+}
+
+theorem mul_abs_eats_left_abs(y: Real, z: Real) {
+    mul_abs(y.abs, z) = mul_abs(y, z)
+}
+
+theorem mul_abs_eats_right_abs(y: Real, z: Real) {
+    mul_abs(y, z.abs) = mul_abs(y, z)
+}
+
+theorem mul_abs_zero_left(z: Real) {
+    mul_abs(Real.0, z) = Real.0
+}
+
+theorem mul_abs_zero_right(z: Real) {
+    mul_abs(z, Real.0) = Real.0
+}
+
+theorem mul_abs_nonneg(p: Rat, q: Rat) {
+    p >= Rat.0 and q >= Rat.0 -> mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p * q)
+} by {
+    if p = Rat.0 {
+        mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.0
+        p * q = Rat.0
+        Real.from_rat(p * q) = Real.0
+        mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p * q)
+    } else {
+        if q = Rat.0 {
+            mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p * q)
+        } else {
+            p.is_positive
+            q.is_positive
+            mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p * q)
+        }
+    }
+}
 
 // theorem mul_abs_rat(p: Rat, q: Rat) {
-//     mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat(p.abs * q.abs)
+//     mul_abs(Real.from_rat(p), Real.from_rat(q)) = Real.from_rat((p * q).abs)
+// } by {
+//     p.abs.is_positive
+//     q.abs.is_positive
+//     mul_abs(Real.from_rat(p.abs), Real.from_rat(q.abs)) = Real.from_rat(p.abs * q.abs)
 // }

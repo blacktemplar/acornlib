@@ -1307,3 +1307,72 @@ theorem lte_trans(a: Rat, b: Rat, c: Rat) {
         false
     }
 }
+
+theorem neg_abs(a: Rat) {
+    (-a).abs = a.abs
+} by {
+    if a.is_negative {
+        a.abs = -a
+        (-a).abs = -a
+        (-a).abs = a.abs 
+    } else {
+        if a = Rat.0 {
+            (-a).abs = a.abs
+        } else {
+            a.is_positive
+            a.abs = a
+            (-a).is_negative
+            (-a).abs = a
+            (-a).abs = a.abs
+        }
+    }
+}
+
+theorem abs_non_pos(a: Rat) {
+    not a.is_positive -> a.abs = -a
+}
+
+theorem abs_non_neg(a: Rat) {
+    not a.is_negative -> a.abs = a
+}
+
+theorem abs_mul_abs(a: Rat, b: Rat) {
+    (a * b).abs = (a * b.abs).abs
+} by {
+    if b.is_positive {
+        b.abs = b
+        (a * b).abs = (a * b.abs).abs
+    } else {
+        b.abs = -b
+        (a * b.abs) = a * -b
+        (a * b.abs) = -(a * b)
+        (a * b.abs).abs = (a * b).abs
+    }
+}
+
+theorem mul_non_neg(a: Rat, b: Rat) {
+    not a.is_negative and not b.is_negative -> not (a * b).is_negative
+} by {
+    if a = Rat.0 {
+        not (a * b).is_negative
+    } else {
+        if b = Rat.0 {
+            not (a * b).is_negative
+        } else {
+            a.is_positive
+            b.is_positive
+            (a * b).is_positive
+            not (a * b).is_negative
+        }
+    }
+}
+
+theorem mul_two_abs(a: Rat, b: Rat) {
+    a.abs * b.abs = (a * b).abs
+} by {
+    (a * b).abs = (a.abs * b.abs).abs
+    not a.abs.is_negative
+    not b.abs.is_negative
+    not (a.abs * b.abs).is_negative
+    (a.abs * b.abs).abs = a.abs * b.abs
+}
