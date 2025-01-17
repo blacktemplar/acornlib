@@ -1376,3 +1376,29 @@ theorem mul_two_abs(a: Rat, b: Rat) {
     not (a.abs * b.abs).is_negative
     (a.abs * b.abs).abs = a.abs * b.abs
 }
+
+theorem abs_zero_imp_zero(a: Rat) {
+    a.abs = Rat.0 implies a = Rat.0
+} by {
+    if a != Rat.0 {
+        a.abs != a
+        a.is_negative
+        a.abs = -a
+        a + Rat.0 != Rat.0
+        a + a.abs != Rat.0
+        false
+    }
+}
+
+theorem zero_lte_abs(a: Rat) {
+    Rat.0 <= a.abs
+} by {
+    if a = Rat.0 {
+        a.abs = Rat.0
+        Rat.0 <= a.abs
+    } else {
+        a.abs != Rat.0
+        a.abs.is_positive
+        Rat.0 <= a.abs
+    }
+}
