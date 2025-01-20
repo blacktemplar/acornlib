@@ -1866,12 +1866,25 @@ theorem mul_nonpos_nonneg(y: Real, z: Real) {
     y * z = -mul_abs(y, z)
 }
 
-// TODO
-// theorem mul_nonpos_nonpos(y: Real, z: Real) {
-//     not y.is_positive and not z.is_positive
-//     implies
-//     y * z = mul_abs(y, z)
-// }
+theorem mul_nonpos_nonpos(y: Real, z: Real) {
+    not y.is_positive and not z.is_positive
+    implies
+    y * z = mul_abs(y, z)
+} by {
+    if y = Real.0 or z = Real.0 {
+        if y = Real.0 {
+            y * z = Real.0
+        } else {
+            y * z = Real.0
+        }
+        mul_abs(y, z) = Real.0
+        y * z = mul_abs(y, z)
+    } else {
+        y.is_negative
+        z.is_negative
+        y * z = mul_abs(y, z)
+    }
+}
 
 // plan:
 // prove from_rat and multiplication can be exchanged
