@@ -1886,8 +1886,83 @@ theorem mul_nonpos_nonpos(y: Real, z: Real) {
     }
 }
 
+theorem mul_neg_left(y: Real, z: Real) {
+    (-y) * z = -(y * z)
+} by {
+    if y.is_positive {
+        (-y).is_negative
+        if z.is_positive {
+            (-y) * z = -mul_abs(y, z)
+            (-y) * z = -(y * z)
+        } else {
+            (-y) * z = mul_abs(y, z)
+            (-y) * z = -(y * z)
+        }
+    } else {
+        if z.is_positive {
+            (-y) * z = mul_abs(y, z)
+            (-y) * z = -(y * z)
+        } else {
+            (-y) * z = -mul_abs(y, z)
+            (-y) * z = -(y * z)
+        }
+    }
+}
+
+theorem mul_neg_right(y: Real, z: Real) {
+    y * (-z) = -(y * z)
+}
+
+theorem mul_neg_neg(y: Real, z: Real) {
+    (-y) * (-z) = y * z
+}
+
+theorem mul_nonneg_nonnpos_lifts(p: Rat, q: Rat) {
+    not p.is_negative and not q.is_positive
+    implies
+    Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+} by {
+    not (-q).is_negative
+    Real.from_rat(p) * Real.from_rat(-q) = Real.from_rat(p * -q)
+}
+
+theorem mul_nonpos_nonneg_lifts(p: Rat, q: Rat) {
+    not p.is_positive and not q.is_negative
+    implies
+    Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+} by {
+    not (-p).is_negative
+    Real.from_rat(-p) * Real.from_rat(q) = Real.from_rat(-p * q)
+}
+
+theorem mul_nonpos_nonpos_lifts(p: Rat, q: Rat) {
+    not p.is_positive and not q.is_positive
+    implies
+    Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+} by {
+    not (-p).is_negative
+    Real.from_rat(-p) * Real.from_rat(-q) = Real.from_rat(-p * -q)
+}
+
+theorem mul_from_rat(p: Rat, q: Rat) {
+    Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+} by {
+    if p.is_negative {
+        if q.is_negative {
+            Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+        } else {
+            Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+        }
+    } else {
+        if q.is_negative {
+            Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+        } else {
+            Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
+        }
+    }
+}
+
 // plan:
-// prove from_rat and multiplication can be exchanged
 // then "lift" theorems from rationals.
 // prove what multiplication does with inequalities
 // prove that multiplication is associative
