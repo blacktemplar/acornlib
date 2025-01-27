@@ -1944,6 +1944,8 @@ theorem mul_nonpos_nonpos_lifts(p: Rat, q: Rat) {
     Real.from_rat(-p) * Real.from_rat(-q) = Real.from_rat(-p * -q)
 }
 
+// This is important, that multiplication and
+// type conversion are interchangeable.
 theorem mul_from_rat(p: Rat, q: Rat) {
     Real.from_rat(p) * Real.from_rat(q) = Real.from_rat(p * q)
 } by {
@@ -2017,8 +2019,66 @@ theorem pos_mul_both_lte_rat(a: Real, b: Real, p: Rat, q: Rat) {
     not Real.new(pos_mul_gt(a, b)).gt_rat(p * q)
 }
 
+theorem pos_lte_rat_mul_pos_rat(a: Real, p: Rat, q: Rat) {
+    a.is_positive and a <= Real.from_rat(p) and q.is_positive
+    implies
+    a * Real.from_rat(q) <= Real.from_rat(p * q)
+}
+
+theorem pos_lt_rat_mul_pos_rat(a: Real, p: Rat, q: Rat) {
+    a.is_positive and a < Real.from_rat(p) and q.is_positive
+    implies
+    a * Real.from_rat(q) < Real.from_rat(p * q)
+} by {
+    let r: Rat satisfy {
+        a < Real.from_rat(r) and Real.from_rat(r) < Real.from_rat(p)
+    }
+    r.is_positive
+    a * Real.from_rat(q) <= Real.from_rat(r) * Real.from_rat(q)
+    r < p
+    Real.from_rat(r) * Real.from_rat(q) < Real.from_rat(p) * Real.from_rat(q)
+}
+
+theorem pos_gt_rat_mul_pos_rat(a: Real, p: Rat, q: Rat) {
+    p.is_positive and a > Real.from_rat(p) and q.is_positive
+    implies
+    a * Real.from_rat(q) > Real.from_rat(p * q)
+} by {
+    a.is_positive
+    let r: Rat satisfy {
+        Real.from_rat(p) < Real.from_rat(r) and Real.from_rat(r) < a
+    }
+    r.is_positive
+    r > p
+    r * q > p * q
+    q * r > p * q
+    q * r / r > p * q / r
+    q * r / r = q
+    q > p * q / r
+    (p * q / r).is_positive
+    Real.from_rat(q) > Real.from_rat(p * q / r)
+    a * Real.from_rat(q) > Real.from_rat(r * (p * q / r))
+    a * Real.from_rat(q) > Real.from_rat(p * q / r * r)
+    p * q / r * r = p * q
+}
+
+theorem pos_gte_rat_mul_pos_rat(a: Real, p: Rat, q: Rat) {
+    p.is_positive and a >= Real.from_rat(p) and q.is_positive
+    implies
+    a * Real.from_rat(q) >= Real.from_rat(p * q)
+} by {
+    if a = Real.from_rat(p) {
+        a * Real.from_rat(q) >= Real.from_rat(p * q)
+    } else {
+        a > Real.from_rat(p)
+        a * Real.from_rat(q) > Real.from_rat(p * q)
+        a * Real.from_rat(q) >= Real.from_rat(p * q)
+    }
+}
+
 // plan:
-// then "lift" theorems from rationals.
-// prove what multiplication does with inequalities
+// handle comparing two pos reals, times a pos rational
+// handle comparing two pos reals, times a pos real
+// general interchange of multiplication and comparison
 // prove that multiplication is associative
 // prove that multiplication is distributive
