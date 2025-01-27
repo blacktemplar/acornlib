@@ -2117,7 +2117,6 @@ theorem pos_gte_mul_pos_rat(a: Real, b: Real, r: Rat) {
 }
 
 // plan:
-// handle comparing two pos reals, times a pos rational
 // handle comparing two pos reals, times a pos real
 // general interchange of multiplication and comparison
 // prove that multiplication is associative
