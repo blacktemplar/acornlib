@@ -1402,3 +1402,63 @@ theorem zero_lte_abs(a: Rat) {
         Rat.0 <= a.abs
     }
 }
+
+theorem pos_inverses_lt(p: Rat, q: Rat, r: Rat) {
+    p.is_positive and q.is_positive and r.is_positive
+    and r / p < r / q
+    implies
+    q < p
+} by {
+    r / p * p < r / q * p
+    r / p * p = r
+    r < r / q * p
+    r * q < p * r / q * q
+    (p * r) / q * q = p * r
+    r * q < p * r
+    q * r < p * r
+}
+
+theorem inverses_eq(p: Rat, q: Rat, r: Rat) {
+    p != Rat.0 and q != Rat.0 and r != Rat.0
+    and r / p = r / q
+    implies
+    q = p
+} by {
+    r / p * p = r / q * p
+    r = r / q * p
+    r = p * r / q
+    r * q = p * r / q * q
+    r * q = p * r
+    q * r = p * r
+}
+
+theorem pos_inverses_lte(p: Rat, q: Rat, r: Rat) {
+    p.is_positive and q.is_positive and r.is_positive
+    and r / p <= r / q
+    implies
+    q <= p
+} by {
+    if r / p = r / q {
+        p != Rat.0
+        q != Rat.0
+        q = p
+        q <= p
+    } else {
+        q < p
+        q <= p
+    }
+}
+
+theorem pos_inverses_gt(p: Rat, q: Rat, r: Rat) {
+    p.is_positive and q.is_positive and r.is_positive
+    and r / p > r / q
+    implies
+    q > p
+}
+
+theorem pos_inverses_gte(p: Rat, q: Rat, r: Rat) {
+    p.is_positive and q.is_positive and r.is_positive
+    and r / p >= r / q
+    implies
+    q >= p
+}

@@ -2116,6 +2116,40 @@ theorem pos_gte_mul_pos_rat(a: Real, b: Real, r: Rat) {
     a * Real.from_rat(r) >= b * Real.from_rat(r)
 }
 
+theorem pos_mul_pos_is_pos(a: Real, b: Real) {
+    a.is_positive and b.is_positive
+    implies
+    (a * b).is_positive
+} by {
+    Real.new(pos_mul_gt(a, b)) = a * b
+    pos_mul_gt(a, b, Rat.0)
+    Real.new(pos_mul_gt(a, b)).gt_rat(Rat.0)
+    (a * b).gt_rat(Rat.0)
+}
+
+// theorem pos_rat_lte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
+//     p.is_positive and p <= q and a.is_positive
+//     implies
+//     Real.from_rat(p) * a <= Real.from_rat(q) * a
+// } by {
+//     if Real.from_rat(q) * a < Real.from_rat(p) * a {
+//         let r: Rat satisfy {
+//             Real.from_rat(q) * a < Real.from_rat(r)
+//             and Real.from_rat(r) < Real.from_rat(p) * a 
+//         }
+//         q.is_positive
+//         (Real.from_rat(q) * a).is_positive
+//         Real.from_rat(r).is_positive
+//         r.is_positive
+//         a < Real.from_rat(r / q)
+//         Real.from_rat(r / p) < a
+//         Real.from_rat(r / p) < Real.from_rat(r / q)
+//         r / p < r / q
+//         q < p
+//         false
+//     }
+// }
+
 // plan:
 // handle comparing two pos reals, times a pos real
 // general interchange of multiplication and comparison
