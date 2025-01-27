@@ -2076,6 +2076,20 @@ theorem pos_gte_rat_mul_pos_rat(a: Real, p: Rat, q: Rat) {
     }
 }
 
+theorem pos_lt_mul_pos_rat(a: Real, b: Real, r: Rat) {
+    a.is_positive and a < b and r.is_positive
+    implies
+    a * Real.from_rat(r) < b * Real.from_rat(r)
+} by {
+    b.is_positive
+    let p: Rat satisfy {
+        a < Real.from_rat(p) and Real.from_rat(p) < b
+    }
+    p.is_positive
+    a * Real.from_rat(r) < Real.from_rat(p) * Real.from_rat(r)
+    Real.from_rat(p) * Real.from_rat(r) < b * Real.from_rat(r)
+}
+
 // plan:
 // handle comparing two pos reals, times a pos rational
 // handle comparing two pos reals, times a pos real
