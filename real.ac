@@ -543,6 +543,18 @@ theorem rat_between_reals(a: Real, b: Real) {
     Real.from_rat(r2) < b
 }
 
+theorem rat_between_reals_gt(a: Real, b: Real) {
+    a > b implies
+    exists(r: Rat) {
+        a > Real.from_rat(r) and Real.from_rat(r) > b
+    }
+} by {
+    b < a
+    let r: Rat satisfy {
+        b < Real.from_rat(r) and Real.from_rat(r) < a
+    }
+}
+
 theorem add_gt_trans(z1: Real, z2: Real, r1: Rat, r2: Rat) {
     add_gt(z1, z2, r1) and r1 > r2 -> add_gt(z1, z2, r2)
 }
@@ -2125,6 +2137,115 @@ theorem pos_mul_pos_is_pos(a: Real, b: Real) {
     pos_mul_gt(a, b, Rat.0)
     Real.new(pos_mul_gt(a, b)).gt_rat(Rat.0)
     (a * b).gt_rat(Rat.0)
+}
+
+theorem pos_mul_rat_lt_rat_cancel(a: Real, p: Rat, q: Rat) {
+    a.is_positive and p.is_positive and q.is_positive
+    and a * Real.from_rat(q) < Real.from_rat(p)
+    implies
+    a < Real.from_rat(p / q)
+} by {
+    if a = Real.from_rat(p / q) {
+        Real.from_rat(p / q) * Real.from_rat(q) < Real.from_rat(p)
+        Real.from_rat(p / q * q) < Real.from_rat(p)
+        p / q * q < p
+        p / q * q = p
+        false
+    }
+    if a > Real.from_rat(p / q) {
+        let r: Rat satisfy {
+            Real.from_rat(p / q) < Real.from_rat(r) and Real.from_rat(r) < a
+        }
+        p / q < r
+        (p / q).is_positive
+        r.is_positive
+        Real.from_rat(r) * Real.from_rat(q) < a * Real.from_rat(q)
+        Real.from_rat(r) * Real.from_rat(q) < Real.from_rat(p)
+        r * q < p
+        r * q / q < p / q
+        r * q / q = r
+        false
+    }
+}
+
+theorem pos_mul_rat_gt_rat_cancel(a: Real, p: Rat, q: Rat) {
+    a.is_positive and p.is_positive and q.is_positive
+    and a * Real.from_rat(q) > Real.from_rat(p)
+    implies
+    a > Real.from_rat(p / q)
+} by {
+    if a = Real.from_rat(p / q) {
+        Real.from_rat(p / q) * Real.from_rat(q) > Real.from_rat(p)
+        Real.from_rat(p / q * q) > Real.from_rat(p)
+        p / q * q > p
+        p / q * q = p
+        false
+    }
+    if a < Real.from_rat(p / q) {
+        Real.from_rat(p / q) > a
+        let r: Rat satisfy {
+            Real.from_rat(p / q) > Real.from_rat(r) and Real.from_rat(r) > a
+        }
+        p / q > r
+        (p / q).is_positive
+        r.is_positive
+        Real.from_rat(r) * Real.from_rat(q) > a * Real.from_rat(q)
+        Real.from_rat(r) * Real.from_rat(q) > Real.from_rat(p)
+        r * q > p
+        r * q / q > p / q
+        r * q / q = r
+        false
+    }
+}
+
+theorem pos_mul_rat_eq_rat_cancel(a: Real, p: Rat, q: Rat) {
+    a.is_positive and p.is_positive and q.is_positive
+    and a * Real.from_rat(q) = Real.from_rat(p)
+    implies
+    a = Real.from_rat(p / q)
+} by {
+    (p / q).is_positive
+    p / q * q = p
+    if a < Real.from_rat(p / q) {
+        a * Real.from_rat(q) < Real.from_rat(p / q * q)
+        a * Real.from_rat(q) < Real.from_rat(p)
+        false
+    }
+    if a > Real.from_rat(p / q) {
+        false
+    }
+}
+
+theorem pos_mul_rat_lte_rat_cancel(a: Real, p: Rat, q: Rat) {
+    a.is_positive and p.is_positive and q.is_positive
+    and a * Real.from_rat(q) <= Real.from_rat(p)
+    implies
+    a <= Real.from_rat(p / q)
+} by {
+    if a * Real.from_rat(q) < Real.from_rat(p) {
+        a < Real.from_rat(p / q)
+        a <= Real.from_rat(p / q)
+    } else {
+        a * Real.from_rat(q) = Real.from_rat(p)
+        a = Real.from_rat(p / q)
+        a <= Real.from_rat(p / q)
+    }
+}
+
+theorem pos_mul_rat_gte_rat_cancel(a: Real, p: Rat, q: Rat) {
+    a.is_positive and p.is_positive and q.is_positive
+    and a * Real.from_rat(q) >= Real.from_rat(p)
+    implies
+    a >= Real.from_rat(p / q)
+} by {
+    if a * Real.from_rat(q) > Real.from_rat(p) {
+        a > Real.from_rat(p / q)
+        a >= Real.from_rat(p / q)
+    } else {
+        a * Real.from_rat(q) = Real.from_rat(p)
+        a = Real.from_rat(p / q)
+        a >= Real.from_rat(p / q)
+    }
 }
 
 // theorem pos_rat_lte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
