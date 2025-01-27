@@ -1969,16 +1969,32 @@ theorem gt_pos_rat(z: Real, r: Rat) {
     Real.from_rat(r).is_positive
 }
 
-// theorem mul_both_gt(a: Real, b: Real, p: Rat, q: Rat) {
-//     p.is_positive and q.is_positive
-//     and a > Real.from_rat(p) and b > Real.from_rat(q)
-//     implies
-//     a * b > Real.from_rat(p * q)
-// } by {
-//     a.is_positive
-//     b.is_positive
-//     pos_mul_gt(a, b, p * q)
-// }
+theorem mul_pos_is_pos_mul(a: Real, b: Real) {
+    a.is_positive and b.is_positive
+    implies
+    a * b = Real.new(pos_mul_gt(a, b))
+} by {
+    not a.is_negative
+    not b.is_negative
+    a * b = mul_abs(a, b)
+    Real.0 < a
+    Real.0 < b
+    Real.0 != b
+    mul_abs(a, b) = Real.new(pos_mul_gt(a.abs, b.abs))
+}
+
+theorem mul_both_gt(a: Real, b: Real, p: Rat, q: Rat) {
+    p.is_positive and q.is_positive
+    and a > Real.from_rat(p) and b > Real.from_rat(q)
+    implies
+    a * b > Real.from_rat(p * q)
+} by {
+    a.is_positive
+    b.is_positive
+    pos_mul_gt(a, b, p * q)
+    Real.new(pos_mul_gt(a, b)).gt_rat(p * q)
+    (a * b).gt_rat(p * q)
+}
 
 // plan:
 // then "lift" theorems from rationals.
