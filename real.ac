@@ -2277,28 +2277,49 @@ theorem pos_rat_gte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
     Real.from_rat(p) * a >= Real.from_rat(q) * a
 }
 
-theorem rat_smaller_than_both(a: Real, b: Real) {
+define min(a: Real, b: Real) -> Real {
+    if a < b {
+        a
+    } else {
+        b
+    }
+}
+
+theorem min_pos_pos(a: Real, b: Real) {
     a.is_positive and b.is_positive
     implies
-    exists(r: Rat) {
-        r.is_positive and Real.from_rat(r) < a and Real.from_rat(r) < b
-    }
+    min(a, b).is_positive
 } by {
-    if a <= b {
-        Real.0 < a
-        let r: Rat satisfy {
-            Real.0 < Real.from_rat(r) and Real.from_rat(r) < a
-        }
-        r.is_positive
-        r.is_positive and Real.from_rat(r) < a and Real.from_rat(r) < b
+    if a < b {
+        a.is_positive
+        min(a, b).is_positive
     } else {
-        b < a
-        Real.0 < b
-        let r: Rat satisfy {
-            Real.0 < Real.from_rat(r) and Real.from_rat(r) < b
-        }
-        r.is_positive
-        r.is_positive and Real.from_rat(r) < a and Real.from_rat(r) < b
+        b.is_positive
+        min(a, b).is_positive
+    }
+}
+
+theorem min_lte_left(a: Real, b: Real) {
+    min(a, b) <= a
+} by {
+    if a < b {
+        min(a, b) = a
+        min(a, b) <= a
+    } else {
+        min(a, b) = b
+        min(a, b) <= a
+    }
+}
+
+theorem min_lte_right(a: Real, b: Real) {
+    min(a, b) <= b
+} by {
+    if a < b {
+        min(a, b) = a
+        min(a, b) <= b
+    } else {
+        min(a, b) = b
+        min(a, b) <= b
     }
 }
 
@@ -2312,6 +2333,11 @@ theorem rat_smaller_than_both(a: Real, b: Real) {
 //     let alb: Rat satisfy {
 //         Real.0 < Real.from_rat(alb) and Real.from_rat(alb) < a
 //     }
+//     alb.is_positive
+//     (alb / Rat.2).is_positive
+//     Real.from_rat(alb / Rat.2).is_positive
+//     ((q - p) / p).is_positive
+//     Real.from_rat((q - p) / p alb / Rat.2).is_positive
 //     let eps: Rat satisfy {
 //         Real.0 < Real.from_rat(eps) and Real.from_rat(eps) < a
 //     }
