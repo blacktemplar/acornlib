@@ -2277,12 +2277,41 @@ theorem pos_rat_gte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
     Real.from_rat(p) * a >= Real.from_rat(q) * a
 }
 
+theorem rat_smaller_than_both(a: Real, b: Real) {
+    a.is_positive and b.is_positive
+    implies
+    exists(r: Rat) {
+        r.is_positive and Real.from_rat(r) < a and Real.from_rat(r) < b
+    }
+} by {
+    if a <= b {
+        Real.0 < a
+        let r: Rat satisfy {
+            Real.0 < Real.from_rat(r) and Real.from_rat(r) < a
+        }
+        r.is_positive
+        r.is_positive and Real.from_rat(r) < a and Real.from_rat(r) < b
+    } else {
+        b < a
+        Real.0 < b
+        let r: Rat satisfy {
+            Real.0 < Real.from_rat(r) and Real.from_rat(r) < b
+        }
+        r.is_positive
+        r.is_positive and Real.from_rat(r) < a and Real.from_rat(r) < b
+    }
+}
+
 // theorem pos_rat_lt_rat_mul_pos(p: Rat, q: Rat, a: Real) {
 //     p.is_positive and p < q and a.is_positive
 //     implies
 //     Real.from_rat(p) * a < Real.from_rat(q) * a
 // } by {
+//     // We find a small epsilon that satisfies a bunch of unexpected conditions.
 //     Real.0 < a
+//     let alb: Rat satisfy {
+//         Real.0 < Real.from_rat(alb) and Real.from_rat(alb) < a
+//     }
 //     let eps: Rat satisfy {
 //         Real.0 < Real.from_rat(eps) and Real.from_rat(eps) < a
 //     }
@@ -2305,7 +2334,7 @@ theorem pos_rat_gte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
 //     Real.from_rat(r) * Real.from_rat(q) < a * Real.from_rat(q)
 //     Real.from_rat(q) * Real.from_rat(r) < Real.from_rat(q) * a
 
-//     // This is the tricky one, we defined eps in the first place so that this is true.
+//     // This is the tricky one. We defined eps in the first place so that this is true.
 //     Real.from_rat(p) * Real.from_rat(r + eps) < Real.from_rat(q) * Real.from_rat(r)
 
 //     Real.from_rat(p) * a < Real.from_rat(q) * Real.from_rat(r)
