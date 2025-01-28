@@ -2248,27 +2248,67 @@ theorem pos_mul_rat_gte_rat_cancel(a: Real, p: Rat, q: Rat) {
     }
 }
 
-// theorem pos_rat_lte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
-//     p.is_positive and p <= q and a.is_positive
+theorem pos_rat_lte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
+    p.is_positive and p <= q and a.is_positive
+    implies
+    Real.from_rat(p) * a <= Real.from_rat(q) * a
+} by {
+    if Real.from_rat(q) * a < Real.from_rat(p) * a {
+        let r: Rat satisfy {
+            Real.from_rat(q) * a < Real.from_rat(r)
+            and Real.from_rat(r) < Real.from_rat(p) * a 
+        }
+        q.is_positive
+        (Real.from_rat(q) * a).is_positive
+        Real.from_rat(r).is_positive
+        r.is_positive
+        a < Real.from_rat(r / q)
+        Real.from_rat(r / p) < a
+        Real.from_rat(r / p) < Real.from_rat(r / q)
+        r / p < r / q
+        q < p
+        false
+    }
+}
+
+theorem pos_rat_gte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
+    q.is_positive and p >= q and a.is_positive
+    implies
+    Real.from_rat(p) * a >= Real.from_rat(q) * a
+}
+
+// theorem pos_rat_lt_rat_mul_pos(p: Rat, q: Rat, a: Real) {
+//     p.is_positive and p < q and a.is_positive
 //     implies
-//     Real.from_rat(p) * a <= Real.from_rat(q) * a
+//     Real.from_rat(p) * a < Real.from_rat(q) * a
 // } by {
-//     if Real.from_rat(q) * a < Real.from_rat(p) * a {
-//         let r: Rat satisfy {
-//             Real.from_rat(q) * a < Real.from_rat(r)
-//             and Real.from_rat(r) < Real.from_rat(p) * a 
-//         }
-//         q.is_positive
-//         (Real.from_rat(q) * a).is_positive
-//         Real.from_rat(r).is_positive
-//         r.is_positive
-//         a < Real.from_rat(r / q)
-//         Real.from_rat(r / p) < a
-//         Real.from_rat(r / p) < Real.from_rat(r / q)
-//         r / p < r / q
-//         q < p
+//     Real.0 < a
+//     let eps: Rat satisfy {
+//         Real.0 < Real.from_rat(eps) and Real.from_rat(eps) < a
+//     }
+//     eps.is_positive
+
+//     // r is an approximation of a
+//     let r: Rat satisfy {
+//         Real.from_rat(r) < a and a < Real.from_rat(r + eps)
+//     }
+//     if r <= Rat.0 {
+//         r + eps <= Rat.0 + eps
+//         r + eps <= eps
+//         Real.from_rat(r + eps) <= Real.from_rat(eps)
+//         Real.from_rat(r + eps) < a
 //         false
 //     }
+//     r.is_positive
+
+//     Real.from_rat(p) * a <= Real.from_rat(p) * Real.from_rat(r + eps)
+//     Real.from_rat(r) * Real.from_rat(q) < a * Real.from_rat(q)
+//     Real.from_rat(q) * Real.from_rat(r) < Real.from_rat(q) * a
+
+//     // This is the tricky one, we defined eps in the first place so that this is true.
+//     Real.from_rat(p) * Real.from_rat(r + eps) < Real.from_rat(q) * Real.from_rat(r)
+
+//     Real.from_rat(p) * a < Real.from_rat(q) * Real.from_rat(r)
 // }
 
 // plan:
