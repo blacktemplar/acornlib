@@ -1462,3 +1462,19 @@ theorem pos_inverses_gte(p: Rat, q: Rat, r: Rat) {
     implies
     q >= p
 }
+
+theorem lt_cancel_add_right(p: Rat, q: Rat, r: Rat) {
+    p + r < q + r implies p < q
+} by {
+    not q + r < p + r
+    q != p
+    q > p
+}
+
+theorem sub_distrib(p: Rat, q: Rat, r: Rat) {
+    p * (q - r) = p * q - p * r
+} by {
+    p * (q - r) = p * (q + -r)
+    p * (q - r) = p * q + p * -r
+    p * (q - r) = p * q - p * r
+}

@@ -957,6 +957,7 @@ theorem lt_add_pos_rat(a: Real, r: Rat) {
                 a = a + Real.from_rat(r + r * Rat.from_int(Int.from_nat(x)))
                 a = a + Real.from_rat(r * Rat.1 + r * Rat.from_int(Int.from_nat(x)))
                 a = a + Real.from_rat(r * (Rat.1 + Rat.from_int(Int.from_nat(x))))
+                Rat.1 + Rat.from_int(Int.from_nat(x)) = Rat.from_int(Int.from_nat(x.suc))
                 a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(x.suc)))
                 f(x.suc)
             }
@@ -2323,48 +2324,98 @@ theorem min_lte_right(a: Real, b: Real) {
     }
 }
 
-// theorem pos_rat_lt_rat_mul_pos(p: Rat, q: Rat, a: Real) {
-//     p.is_positive and p < q and a.is_positive
-//     implies
-//     Real.from_rat(p) * a < Real.from_rat(q) * a
-// } by {
-//     // We find a small epsilon that satisfies a bunch of unexpected conditions.
-//     Real.0 < a
-//     let alb: Rat satisfy {
-//         Real.0 < Real.from_rat(alb) and Real.from_rat(alb) < a
-//     }
-//     alb.is_positive
-//     (alb / Rat.2).is_positive
-//     Real.from_rat(alb / Rat.2).is_positive
-//     ((q - p) / p).is_positive
-//     Real.from_rat((q - p) / p alb / Rat.2).is_positive
-//     let eps: Rat satisfy {
-//         Real.0 < Real.from_rat(eps) and Real.from_rat(eps) < a
-//     }
-//     eps.is_positive
+// TODO: the theorem citations shouldn't be necessary here.
+theorem pos_rat_lt_rat_mul_pos(p: Rat, q: Rat, a: Real) {
+    p.is_positive and p < q and a.is_positive
+    implies
+    Real.from_rat(p) * a < Real.from_rat(q) * a
+} by {
+    // We find epsilon satisfying two bounds to be explained later.
+    Real.0 < a
+    let ar: Rat satisfy {
+        Real.0 < Real.from_rat(ar) and Real.from_rat(ar) < a
+    }
+    let bound1: Rat = ar / Rat.2
+    ar.is_positive
+    bound1.is_positive
+    ((q - p) / p).is_positive
+    ((q - p) / p * bound1).is_positive
+    Real.from_rat(((q - p) / p * bound1)).is_positive
+    let bound2: Rat = (q - p) / p * bound1
+    bound2.is_positive
+    let minbound: Real = min(Real.from_rat(bound1), Real.from_rat(bound2))
+    Real.from_rat(bound1).is_positive
+    Real.from_rat(bound2).is_positive
+    min(Real.from_rat(bound1), Real.from_rat(bound2)).is_positive
+    Real.0 < min(Real.from_rat(bound1), Real.from_rat(bound2))
+    let eps: Rat satisfy {
+        Real.0 < Real.from_rat(eps)
+        and Real.from_rat(eps) < minbound
+    }
+    eps.is_positive
 
-//     // r is an approximation of a
-//     let r: Rat satisfy {
-//         Real.from_rat(r) < a and a < Real.from_rat(r + eps)
-//     }
-//     if r <= Rat.0 {
-//         r + eps <= Rat.0 + eps
-//         r + eps <= eps
-//         Real.from_rat(r + eps) <= Real.from_rat(eps)
-//         Real.from_rat(r + eps) < a
-//         false
-//     }
-//     r.is_positive
+    // r is an approximation of a
+    rat_window(a, eps)
+    let r: Rat satisfy {
+        Real.from_rat(r) < a and a < Real.from_rat(r + eps)
+    }
 
-//     Real.from_rat(p) * a <= Real.from_rat(p) * Real.from_rat(r + eps)
-//     Real.from_rat(r) * Real.from_rat(q) < a * Real.from_rat(q)
-//     Real.from_rat(q) * Real.from_rat(r) < Real.from_rat(q) * a
+    Real.from_rat(eps) < Real.from_rat(bound1)
+    eps < bound1
+    Real.from_rat(eps) < Real.from_rat(bound2)
+    eps < bound2
 
-//     // This is the tricky one. We defined eps in the first place so that this is true.
-//     Real.from_rat(p) * Real.from_rat(r + eps) < Real.from_rat(q) * Real.from_rat(r)
+    // bound1 was set to handle this case
+    if r <= Rat.0 {
+        r + eps <= Rat.0 + eps
+        r + eps <= eps
+        ar / Rat.2 < ar
+        Real.from_rat(bound1) < a
+        Real.from_rat(r + eps) <= Real.from_rat(eps)
+        Real.from_rat(r + eps) < Real.from_rat(bound1)
+        Real.from_rat(r + eps) < a
+        false
+    }
+    r.is_positive
 
-//     Real.from_rat(p) * a < Real.from_rat(q) * Real.from_rat(r)
-// }
+    Real.from_rat(p).is_positive
+    Real.from_rat(p) * a <= Real.from_rat(p) * Real.from_rat(r + eps)
+    p <= q
+    Real.from_rat(r).is_positive
+    Real.from_rat(r) * Real.from_rat(q) < a * Real.from_rat(q)
+    Real.from_rat(q) * Real.from_rat(r) < Real.from_rat(q) * a
+
+    // bound2 was set to handle this case
+    eps < (q - p) / p * bound1
+    Real.from_rat(ar) < Real.from_rat(r + eps)
+    Real.from_rat(r + eps).gt_rat(ar)
+    ar < r + eps
+    eps < ar / Rat.2
+    r + eps < r + ar / Rat.2
+    ar < r + ar / Rat.2
+    ar / Rat.2 + ar / Rat.2 < r + ar / Rat.2
+    bound1 + bound1 < r + bound1
+    bound1 < r
+    (q - p) / p * bound1 < (q - p) / p * r
+    eps < (q - p) / p * r
+    eps < r * (q - p) / p
+    eps * p < r * (q - p) / p * p
+    p != Rat.0
+    r * (q - p) / p * p = r * (q - p)
+    eps * p < r * (q - p)
+    r * (q - p) = r * q - r * p
+    eps * p < r * q - r * p
+    eps * p < q * r - p * r
+    eps * p + p * r < q * r - p * r + p * r
+    eps * p + p * r < q * r
+    p * (r + eps) < q * r
+    Real.from_rat(p) * Real.from_rat(r + eps) < Real.from_rat(q) * Real.from_rat(r)
+
+    lte_lt_trans(Real.from_rat(p) * a,
+                 Real.from_rat(p) * Real.from_rat(r + eps),
+                 Real.from_rat(q) * Real.from_rat(r))
+    Real.from_rat(p) * a < Real.from_rat(q) * Real.from_rat(r)
+}
 
 // plan:
 // handle comparing two pos reals, times a pos real
