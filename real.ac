@@ -2417,6 +2417,12 @@ theorem pos_rat_lt_rat_mul_pos(p: Rat, q: Rat, a: Real) {
     Real.from_rat(p) * a < Real.from_rat(q) * Real.from_rat(r)
 }
 
+theorem pos_rat_gt_rat_mul_pos(p: Rat, q: Rat, a: Real) {
+    q.is_positive and p > q and a.is_positive
+    implies
+    Real.from_rat(p) * a > Real.from_rat(q) * a
+}
+
 // plan:
 // handle comparing two pos reals, times a pos real
 // general interchange of multiplication and comparison
