@@ -2432,6 +2432,14 @@ theorem pos_mul_lt_imp_pos(a: Real, b: Real, c: Real) {
     a * b <= c
 }
 
+// theorem pos_mul_insert_rat(a: Real, b: Real, c: Real) {
+//     a.is_positive and b.is_positive and a * b < c
+//     implies
+//     exists(r: Rat) {
+//         b < Real.from_rat(r) and a * Real.from_rat(r) < c
+//     }
+// }
+
 // plan:
 // handle comparing two pos reals, times a pos real
 // general interchange of multiplication and comparison
