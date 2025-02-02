@@ -1418,6 +1418,8 @@ theorem pos_mul_not_gt(a: Real, b: Real, ra: Rat, rb: Rat) {
             ra * rb <= r1 * r2
         }
         r1 < ra
+        b > Real.from_rat(r2)
+        Real.from_rat(rb).gt_rat(r2)
         r2 < rb
         r1 * r2 < ra * rb
         false
@@ -2213,6 +2215,7 @@ theorem pos_mul_rat_eq_rat_cancel(a: Real, p: Rat, q: Rat) {
         false
     }
     if a > Real.from_rat(p / q) {
+        a * Real.from_rat(q) > Real.from_rat(p / q * q)
         false
     }
 }
@@ -2369,6 +2372,8 @@ theorem pos_rat_lt_rat_mul_pos(p: Rat, q: Rat, a: Real) {
     if r <= Rat.0 {
         r + eps <= Rat.0 + eps
         r + eps <= eps
+        (ar / Rat.2).is_positive
+        ar / Rat.2 < ar / Rat.2 + ar / Rat.2
         ar / Rat.2 < ar
         Real.from_rat(bound1) < a
         Real.from_rat(r + eps) <= Real.from_rat(eps)
@@ -2466,6 +2471,12 @@ theorem rat_dual_upper_bound(a: Real, b: Real) {
 //     let diff: Rat = r2 - r1
 //     let upper: Rat satisfy {
 //         a < Real.from_rat(upper) and b < Real.from_rat(upper)
+//     }
+//     let eps1: Rat satisfy {
+//         eps1.is_positive and eps1 * eps1 < diff / Rat.2
+//     }
+//     let eps: Rat satisfy {
+//         eps * Rat.2 * upper + eps * eps < diff
 //     }
 // }
 
