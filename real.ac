@@ -2432,11 +2432,40 @@ theorem pos_mul_lt_imp_pos(a: Real, b: Real, c: Real) {
     a * b <= c
 }
 
-// theorem pos_mul_insert_rat(a: Real, b: Real, c: Real) {
+theorem rat_dual_upper_bound(a: Real, b: Real) {
+    exists(r: Rat) {
+        a < Real.from_rat(r) and b < Real.from_rat(r)
+    }
+} by {
+    if a < b {
+        let r: Rat satisfy {
+            b < Real.from_rat(r)
+        }
+        a < Real.from_rat(r) and b < Real.from_rat(r)
+    } else {
+        let r: Rat satisfy {
+            a < Real.from_rat(r)
+        }
+        a < Real.from_rat(r) and b < Real.from_rat(r)
+    }
+}
+
+// theorem pos_rat_mul_insert_rat(a: Real, b: Real, c: Real) {
 //     a.is_positive and b.is_positive and a * b < c
 //     implies
 //     exists(r: Rat) {
 //         b < Real.from_rat(r) and a * Real.from_rat(r) < c
+//     }
+// } by {
+//     let r1: Rat satisfy {
+//         a * b < Real.from_rat(r1) and Real.from_rat(r1) < c
+//     }
+//     let r2: Rat satisfy {
+//         Real.from_rat(r1) < Real.from_rat(r2) and Real.from_rat(r2) < c
+//     }
+//     let diff: Rat = r2 - r1
+//     let upper: Rat satisfy {
+//         a < Real.from_rat(upper) and b < Real.from_rat(upper)
 //     }
 // }
 
