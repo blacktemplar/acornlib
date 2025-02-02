@@ -1303,6 +1303,8 @@ theorem rat_window(a: Real, eps: Rat) {
     }
     let r: Rat = top + -eps
     r + eps = top
+    Real.from_rat(r + eps) < a + Real.from_rat(eps)
+    exists(k0: Real) { Real.from_rat(r) + k0 < a + k0 }
     Real.from_rat(r) < a
     a < Real.from_rat(top)
 }
@@ -1417,6 +1419,8 @@ theorem pos_mul_not_gt(a: Real, b: Real, ra: Rat, rb: Rat) {
             r2.is_positive and Real.from_rat(r2) < b and
             ra * rb <= r1 * r2
         }
+        a > Real.from_rat(r1)
+        Real.from_rat(ra).gt_rat(r1)
         r1 < ra
         b > Real.from_rat(r2)
         Real.from_rat(rb).gt_rat(r2)
@@ -2472,12 +2476,23 @@ theorem rat_dual_upper_bound(a: Real, b: Real) {
 //     let upper: Rat satisfy {
 //         a < Real.from_rat(upper) and b < Real.from_rat(upper)
 //     }
+//     r1 < r2
+//     diff.is_positive
+//     (diff / Rat.2).is_positive
 //     let eps1: Rat satisfy {
 //         eps1.is_positive and eps1 * eps1 < diff / Rat.2
 //     }
-//     let eps: Rat satisfy {
-//         eps * Rat.2 * upper + eps * eps < diff
+//     (diff / Rat.2 / Rat.2).is_positive
+//     upper.is_positive
+//     (diff / Rat.2 / Rat.2 / upper).is_positive
+//     rat.smaller_positive(diff / Rat.2 / Rat.2 / upper)
+//     let eps2: Rat satisfy {
+//         eps2.is_positive and eps2 < (diff / Rat.2 / Rat.2 / upper)
 //     }
+//     let eps: Rat satisfy {
+//         eps.is_positive and eps <= eps1 and eps <= eps2
+//     }
+//     eps * Rat.2 * upper + eps * eps < diff
 // }
 
 // plan:
