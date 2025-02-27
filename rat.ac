@@ -1550,3 +1550,21 @@ theorem lt_rhs_div_pos(a: Rat, b: Rat, c: Rat) {
     a * c < b / c * c
     b / c * c = b
 }
+
+define is_close(a: Rat, b: Rat, eps: Rat) -> Bool {
+    (a - b).abs < eps
+}
+
+// Checks the epsilon-delta condition for a particular delta function.
+define eps_delta_condition(f: Rat -> Rat, delta: (Rat, Rat) -> Rat) -> Bool {
+    forall(q: Rat, r: Rat, eps: Rat) {
+        is_close(q, r, eps) implies is_close(f(q), f(r), delta(q, r))
+    }
+}
+
+// liftable functions can be lifted into a continuous function over the reals. 
+define liftable(f: Rat -> Rat) -> Bool {
+    exists(delta: (Rat, Rat) -> Rat) {
+        eps_delta_condition(f, delta)
+    }
+}
