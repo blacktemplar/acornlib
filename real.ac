@@ -2461,7 +2461,17 @@ theorem rat_dual_upper_bound(a: Real, b: Real) {
     }
 }
 
-// theorem pos_rat_mul_insert_rat(a: Real, b: Real, c: Real) {
+// Maybe this plan is wrong, and instead I should prove something more generally about
+// extendable functions over Q. Otherwise I'll have to mess around with epsilon-delta proofs
+// forever.
+
+// plan:
+// handle comparing two pos reals, times a pos real
+// general interchange of multiplication and comparison
+// prove that multiplication is associative
+// prove that multiplication is distributive
+
+// theorem pos_mul_lt_insert_rat(a: Real, b: Real, c: Real) {
 //     a.is_positive and b.is_positive and a * b < c
 //     implies
 //     exists(r: Rat) {
@@ -2503,8 +2513,3 @@ theorem rat_dual_upper_bound(a: Real, b: Real) {
 //     eps * Rat.2 * upper + eps * eps < diff
 // }
 
-// plan:
-// handle comparing two pos reals, times a pos real
-// general interchange of multiplication and comparison
-// prove that multiplication is associative
-// prove that multiplication is distributive
