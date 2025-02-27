@@ -1525,21 +1525,21 @@ theorem smaller_positive(a: Rat) {
     }
 }
 
-// theorem lt_both_pos(a: Rat, b: Rat) {
-//     a.is_positive and b.is_positive implies
-//     exists(r: Rat) {
-//         r.is_positive and r < a and r < b
-//     }
-// } by {
-//     if a < b {
-//         let r: Rat satisfy {
-//             r.is_positive and r < a
-//         }
-//         r.is_positive and r < a and r < b
-//     } else {
-//         let r: Rat satisfy {
-//             r.is_positive and r < b
-//         }
-//         r.is_positive and r < a and r < b
-//     }
-// }
+theorem lt_both_pos(a: Rat, b: Rat) {
+    a.is_positive and b.is_positive implies
+    exists(r: Rat) {
+        r.is_positive and r < a and r < b
+    }
+} by {
+    if a < b {
+        let r: Rat satisfy {
+            r.is_positive and r < a
+        }
+        r.is_positive and r < a and r < b
+    } else {
+        let r: Rat satisfy {
+            r.is_positive and r < b
+        }
+        r.is_positive and r < a and r < b
+    }
+}

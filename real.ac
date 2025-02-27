@@ -2268,6 +2268,8 @@ theorem pos_rat_lte_rat_mul_pos(p: Rat, q: Rat, a: Real) {
         }
         q.is_positive
         (Real.from_rat(q) * a).is_positive
+        Real.from_rat(q) * a <= Real.from_rat(r)
+        r.is_positive
         Real.from_rat(r).is_positive
         r.is_positive
         a < Real.from_rat(r / q)
