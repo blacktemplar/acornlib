@@ -2492,8 +2492,14 @@ theorem rat_dual_upper_bound(a: Real, b: Real) {
 //         eps2.is_positive and eps2 < (diff / Rat.2 / Rat.2 / upper)
 //     }
 //     let eps: Rat satisfy {
-//         eps.is_positive and eps <= eps1 and eps <= eps2
+//         eps.is_positive and eps < eps1 and eps < eps2
 //     }
+//     eps * eps < diff / Rat.2
+//     eps < (diff / Rat.2 / Rat.2 / upper)
+//     eps * upper < diff / Rat.2 / Rat.2
+//     eps * upper * Rat.2 < diff / Rat.2
+//     eps * Rat.2 * upper < diff / Rat.2
+//     eps * Rat.2 * upper + eps * eps < diff / Rat.2 + diff / Rat.2
 //     eps * Rat.2 * upper + eps * eps < diff
 // }
 

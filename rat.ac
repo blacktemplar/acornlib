@@ -1543,3 +1543,10 @@ theorem lt_both_pos(a: Rat, b: Rat) {
         r.is_positive and r < a and r < b
     }
 }
+
+theorem lt_rhs_div_pos(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and a < b / c implies a * c < b
+} by {
+    a * c < b / c * c
+    b / c * c = b
+}
