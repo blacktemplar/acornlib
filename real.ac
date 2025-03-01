@@ -2461,6 +2461,34 @@ theorem rat_dual_upper_bound(a: Real, b: Real) {
     }
 }
 
+// Strategy 1 for multiplication.
+
+// It's a little roundabout to define lifting from rationals to reals
+// before we are capable of defining general metric spaces.
+
+class Real {
+    define is_close(self, other: Real, eps: Real) -> Bool {
+        (self - other).abs < eps
+    }
+}
+
+// Checks the epsilon-delta condition for a particular delta function.
+// Specific to lifting functions on the rationals.
+define rat_eps_delta(f: Rat -> Real, delta: (Rat, Rat) -> Real) -> Bool {
+    forall(q: Rat, r: Rat, eps: Rat) {
+        q.is_close(r, eps) implies f(q).is_close(f(r), delta(q, eps))
+    }
+}
+
+// liftable functions can be lifted into a continuous function over the reals. 
+define liftable(f: Rat -> Real) -> Bool {
+    exists(delta: (Rat, Rat) -> Real) {
+        rat_eps_delta(f, delta)
+    }
+}
+
+// Strategy 2 for multiplication.
+
 // Maybe this plan is wrong, and instead I should prove something more generally about
 // extendable functions over Q. Otherwise I'll have to mess around with epsilon-delta proofs
 // forever.
