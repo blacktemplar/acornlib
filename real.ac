@@ -2487,6 +2487,17 @@ define liftable(f: Rat -> Real) -> Bool {
     }
 }
 
+// Whether f(x) > y, lifting f so that it applies to reals.
+define lift_gt_rat(f: Rat -> Real, x: Real, y: Rat) -> Bool {
+    exists(eps: Real) {
+        eps > Real.0 and forall(q: Rat) {
+            x.is_close(Real.from_rat(q), eps) implies f(q) > Real.from_rat(y)
+        }
+    }
+}
+
+// TODO: prove that if f is liftable, lift_gt_rat is a dedekind cut.
+
 // Strategy 2 for multiplication.
 
 // Maybe this plan is wrong, and instead I should prove something more generally about
