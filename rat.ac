@@ -1556,3 +1556,67 @@ class Rat {
         (self - other).abs < eps
     }
 }
+
+theorem lte_abs(q: Rat) {
+    q <= q.abs
+}
+
+theorem close_comm(a: Rat, b: Rat, eps: Rat) {
+    a.is_close(b, eps) implies b.is_close(a, eps)
+} by {
+    a - b = -(b - a)
+    (a - b).abs = (b - a).abs
+    (a - b).abs < eps
+    (b - a).abs < eps
+}
+
+theorem close_imp_bounds(a: Rat, b: Rat, eps: Rat) {
+    a.is_close(b, eps) implies a < b + eps and a > b - eps
+} by {
+    // Left ineq
+    (a - b).abs < eps
+    a - b <= (a - b).abs
+    a - b < eps
+    a - b + b < eps + b
+    a < eps + b
+    a < b + eps
+
+    // Right ineq
+    (b - a).abs < eps
+    b - a <= (b - a).abs
+    b - a < eps
+    b - a + a < eps + a
+    b - a + a = b
+    b < eps + a
+    eps + a > b
+    a + eps > b
+    a + eps + -eps > b + -eps
+    a > b + -eps
+}
+
+theorem bounds_imp_close(a: Rat, b: Rat, eps: Rat) {
+    a < b + eps and a > b - eps implies a.is_close(b, eps)
+} by {
+    if (a - b).is_negative {
+        (a - b).abs = b - a
+        a > b + -eps
+        a + eps + -eps > b + -eps
+        a + eps > b
+        eps + a > b
+        b < eps + a
+        b - a + a = b
+        b - a + a < eps + a
+        b - a < eps
+        (a - b).abs < eps
+        a.is_close(b, eps)
+    } else {
+        (a - b).abs = a - b
+        a < eps + b
+        a - b + b < eps + b
+        a - b < eps
+        a - b < eps
+        (a - b).abs < eps
+        a.is_close(b, eps)
+    }
+
+}
