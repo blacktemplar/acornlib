@@ -1401,6 +1401,20 @@ theorem sub_moves_sides(a: Real, b: Real, c: Real) {
     a + b = c -> a = c - b
 }
 
+theorem lte_abs(a: Real) {
+    a <= a.abs
+} by {
+    if a.is_negative {
+        a <= Real.0
+        Real.0 <= a.abs
+        a <= a.abs
+    } else {
+        a = a.abs
+        a <= a.abs
+    }
+}
+
+// pos_mul_gt is one possible way of defining multiplication. It's still an experiment though.
 define pos_mul_gt(a: Real, b: Real, r: Rat) -> Bool {
     exists(ra: Rat, rb: Rat) {
         ra.is_positive and Real.from_rat(ra) < a and
@@ -2036,6 +2050,9 @@ theorem pos_mul_both_lte_rat(a: Real, b: Real, p: Rat, q: Rat) {
     q.is_positive
     not pos_mul_gt(a, b, p * q)
     not Real.new(pos_mul_gt(a, b)).gt_rat(p * q)
+    Real.new(pos_mul_gt(a, b)) = a * b
+    not Real.new(pos_mul_gt(a, b)) > Real.from_rat(p * q)
+    not a * b > Real.from_rat(p * q)
 }
 
 theorem pos_lte_rat_mul_pos_rat(a: Real, p: Rat, q: Rat) {
@@ -2463,7 +2480,7 @@ theorem rat_dual_upper_bound(a: Real, b: Real) {
 
 // Strategy 1 for multiplication.
 
-// It's a little roundabout to define lifting from rationals to reals
+// It's a little roundabout, but we can define lifting from rationals to reals
 // before we are capable of defining general metric spaces.
 
 class Real {
@@ -2471,6 +2488,92 @@ class Real {
         (self - other).abs < eps
     }
 }
+
+theorem close_comm(a: Real, b: Real, eps: Real) {
+    a.is_close(b, eps) implies b.is_close(a, eps)
+} by {
+    a - b = -(b - a)
+    (a - b).abs = (b - a).abs
+    (a - b).abs < eps
+    (b - a).abs < eps
+}
+
+theorem close_imp_bounds(a: Real, b: Real, eps: Real) {
+    a.is_close(b, eps) implies a < b + eps and a > b - eps
+} by {
+    // Left ineq
+    (a - b).abs < eps
+    a - b <= (a - b).abs
+    a - b < eps
+    a - b + b < eps + b
+    a < eps + b
+    a < b + eps
+
+    // Right ineq
+    (b - a).abs < eps
+    b - a <= (b - a).abs
+    b - a < eps
+    b - a + a < eps + a
+    b - a + a = b
+    b < eps + a
+    eps + a > b
+    a + eps > b
+    a + eps + -eps > b + -eps
+    a > b + -eps
+}
+
+theorem bounds_imp_close(a: Real, b: Real, eps: Real) {
+    a < b + eps and a > b - eps implies a.is_close(b, eps)
+} by {
+    if (a - b).is_negative {
+        (a - b).abs = b - a
+        a > b + -eps
+        a + eps + -eps > b + -eps
+        a + eps > b
+        eps + a > b
+        b < eps + a
+        b - a + a = b
+        b - a + a < eps + a
+        b - a < eps
+        (a - b).abs < eps
+        a.is_close(b, eps)
+    } else {
+        (a - b).abs = a - b
+        a < eps + b
+        a - b + b < eps + b
+        a - b < eps
+        a - b < eps
+        (a - b).abs < eps
+        a.is_close(b, eps)
+    }
+}
+
+// Closeness is preserved in the real<->rat conversion.
+theorem close_rats_imp_close_reals(q: Rat, r: Rat, eps: Rat) {
+    q.is_close(r, eps) implies Real.from_rat(q).is_close(Real.from_rat(r), Real.from_rat(eps))
+} by {
+    (q - r).abs < eps
+    Real.from_rat((q - r).abs) < Real.from_rat(eps)
+    (Real.from_rat(q) - Real.from_rat(r)).abs < Real.from_rat(eps)
+}
+
+theorem close_reals_imp_close_rats(q: Rat, r: Rat, eps: Rat) {
+    Real.from_rat(q).is_close(Real.from_rat(r), Real.from_rat(eps))
+    implies q.is_close(r, eps)
+} by {
+    (Real.from_rat(q) - Real.from_rat(r)).abs < Real.from_rat(eps)
+    Real.from_rat((q - r).abs) < Real.from_rat(eps)
+    (q - r).abs < eps
+}
+
+// // Statements about close reals always have stricter statements about close rats.
+// theorem reals_have_close_rats(a: Real, eps_a: Real) {
+//     exists(r: Rat, eps_r: Rat) {
+//         forall(x: Real) {
+//             a.is_close(x, eps_a) implies x.is_close(Real.from_rat(r), Real.from_rat(eps_r))
+//         }
+//     }
+// }
 
 // Checks the epsilon-delta condition for a particular delta function.
 // Specific to lifting functions on the rationals.
