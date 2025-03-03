@@ -1908,5 +1908,7 @@ theorem lift_is_cut(f: Rat -> Real, x: Real) {
 }
 
 // TODO:
-// prove that under some constraints, lifting gives us a dedekind cut.
+// prove that lift is lower
+// prove that lift does not have a greatest
+// therefore it's a dedekind cut.
 
