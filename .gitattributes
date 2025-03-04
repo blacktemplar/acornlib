@@ -1,0 +1,2 @@
+# These are sort of readable, but we mark as binary to avoid them showing up in pull requests.
+build/*.yaml binary
