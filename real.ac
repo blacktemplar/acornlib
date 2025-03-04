@@ -1905,6 +1905,21 @@ theorem cauchy_not_gt_everything(q: Nat -> Real) {
     }
 }
 
+theorem cauchy_is_lower(q: Nat -> Real) {
+    is_cauchy(q) implies is_lower(cauchy_gt_rat(q))
+} by {
+    forall(x: Rat, y: Rat) {
+        if cauchy_gt_rat(q, y) and x < y {
+            let (n: Nat, a: Rat) satisfy {
+                a > y and forall(i: Nat) {
+                    n <= i implies q(i) > Real.from_rat(a)
+                }
+            }
+            a > x
+            cauchy_gt_rat(q, x)
+        }
+    }
+}
+
 // TODO, prove:
-// cauchy_gt is_lower
 // cauchy_gt does not have a greatest element
