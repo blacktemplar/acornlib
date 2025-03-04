@@ -1711,6 +1711,10 @@ theorem bounds_imp_close(a: Real, b: Real, eps: Real) {
     }
 }
 
+theorem self_close(a: Real, eps: Real) {
+    eps.is_positive implies a.is_close(a, eps)
+}
+
 // Closeness is preserved in the real<->rat conversion.
 theorem close_rats_imp_close_reals(q: Rat, r: Rat, eps: Rat) {
     q.is_close(r, eps) implies Real.from_rat(q).is_close(Real.from_rat(r), Real.from_rat(eps))
@@ -1952,9 +1956,294 @@ define limit(q: Nat -> Real) -> Real {
     Real.new(cauchy_gt_rat(q))
 }
 
-// TODO: Prove how eventual_lb and limit relate to each other.
+theorem eventual_lb_extends(q: Nat -> Real, lb1: Real, lb2: Real) {
+    eventual_lb(q, lb1) and lb2 < lb1 implies eventual_lb(q, lb2)
+} by {
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies lb1 <= q(i)
+        }
+    }
+    forall(i: Nat) {
+        if n <= i {
+            lb1 <= q(i)
+            lb2 < lb1
+            lb2 <= q(i)
+        }
+    }
+}
 
-// converges_to is the Weierstress definition.
+theorem lt_limit_imp_lb(q: Nat -> Real, lb: Real) {
+    converges(q) and lb < limit(q) implies eventual_lb(q, lb)
+} by {
+    let r: Rat satisfy {
+        lb < Real.from_rat(r) and Real.from_rat(r) < limit(q)
+    }
+    limit(q).gt_rat(r)
+    cauchy_gt_rat(q, r)
+    let lb2: Real satisfy {
+        lb2 > Real.from_rat(r) and eventual_lb(q, lb2)
+    }
+    lb < lb2
+}
+
+theorem lb_lte_limit(q: Nat -> Real, lb: Real) {
+    converges(q) and eventual_lb(q, lb) implies lb <= limit(q)
+}
+
+// The other direction of the lower bound.
+// We can prove basically the same stuff here.
+define eventual_ub(q: Nat -> Real, ub: Real) -> Bool {
+    exists(n: Nat) {
+        forall(i: Nat) {
+            n <= i implies q(i) <= ub
+        }
+    }
+}
+
+theorem eventual_ub_extends(q: Nat -> Real, ub1: Real, ub2: Real) {
+    eventual_ub(q, ub1) and ub1 < ub2 implies eventual_ub(q, ub2)
+} by {
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies q(i) <= ub1
+        }
+    }
+    forall(i: Nat) {
+        if n <= i {
+            q(i) <= ub1
+            q(i) <= ub2
+        }
+    }
+}
+
+define eventual_eq(q: Nat -> Real, a: Real) -> Bool {
+    exists(n: Nat) {
+        forall(i: Nat) {
+            n <= i implies q(i) = a
+        }
+    }
+}
+
+theorem eventual_eq_imp_ub(q: Nat -> Real, a: Real) {
+    eventual_eq(q, a) implies eventual_lb(q, a)
+} by {
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies q(i) = a
+        }
+    }
+    forall(i: Nat) {
+        if n <= i {
+            q(i) = a
+        }
+    }
+}
+
+theorem eventual_eq_imp_lb(q: Nat -> Real, a: Real) {
+    eventual_eq(q, a) implies eventual_ub(q, a)
+} by {
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies q(i) = a
+        }
+    }
+    forall(i: Nat) {
+        if n <= i {
+            q(i) = a
+        }
+    }
+}
+
+theorem eq_converges(q: Nat -> Real, a: Real) {
+    eventual_eq(q, a) implies converges(q)
+} by {
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies q(i) = a
+        }
+    }
+    forall(eps: Real) {
+        if eps.is_positive {
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    q(i) = a
+                    q(j) = a
+                    q(i).is_close(q(j), eps)
+                }
+            }
+            cauchy_condition(q, n, eps)
+        }
+    }
+}
+
+theorem lb_ub_imp_eq(q: Nat -> Real, a: Real) {
+    eventual_lb(q, a) and eventual_ub(q, a) implies eventual_eq(q, a)
+} by {
+    let n1: Nat satisfy {
+        forall(i: Nat) {
+            n1 <= i implies q(i) <= a
+        }
+    }
+    let n2: Nat satisfy {
+        forall(i: Nat) {
+            n2 <= i implies q(i) >= a
+        }
+    }
+    let n: Nat satisfy {
+        n1 <= n and n2 <= n
+    }
+    forall(i: Nat) {
+        if n <= i {
+            q(i) <= a
+            q(i) >= a
+            q(i) = a
+        }
+    }
+}
+
+theorem lb_lte_ub(q: Nat -> Real, lb: Real, ub: Real) {
+    eventual_lb(q, lb) and eventual_ub(q, ub)
+    implies
+    lb <= ub
+} by {
+    let n1: Nat satisfy {
+        forall(i: Nat) {
+            n1 <= i implies lb <= q(i)
+        }
+    }
+    let n2: Nat satisfy {
+        forall(i: Nat) {
+            n2 <= i implies q(i) <= ub
+        }
+    }
+    let n: Nat satisfy {
+        n1 <= n and n2 <= n
+    }
+    lb <= q(n)
+    q(n) <= ub
+}
+
+theorem ub_imp_limit_lte(q: Nat -> Real, ub: Real) {
+    converges(q) and eventual_ub(q, ub) implies limit(q) <= ub
+} by {
+    if limit(q) > ub {
+        let r: Rat satisfy {
+            limit(q) > Real.from_rat(r) and Real.from_rat(r) > ub
+        }
+        limit(q).gt_rat(r)
+        let lb: Real satisfy {
+            lb > Real.from_rat(r) and eventual_lb(q, lb)
+        }
+        lb > ub
+        lb <= ub
+        false
+    }
+}
+
+// Relate the cauchy condition to eventual bounds
+
+theorem cauchy_imp_lb(q: Nat -> Real, n: Nat, eps: Real) {
+    cauchy_condition(q, n, eps) implies eventual_lb(q, q(n) - eps)
+} by {
+    forall(i: Nat) {
+        if n <= i {
+            q(i).is_close(q(n), eps)
+            q(i) >= q(n) - eps
+        }
+    }
+}
+
+theorem cauch_imp_ub(q: Nat -> Real, n: Nat, eps: Real) {
+    cauchy_condition(q, n, eps) implies eventual_ub(q, q(n) + eps)
+} by {
+    forall(i: Nat) {
+        if n <= i {
+            q(i).is_close(q(n), eps)
+            q(i) <= q(n) + eps
+        }
+    }
+}
+
+theorem lt_imp_minus_pos(a: Real, b: Real) {
+    a < b implies (b - a).is_positive
+} by {
+    forall(x0: Real) { a + x0 < b + x0 }
+    (a + -b).is_negative
+    (-(b + -a)).is_negative
+    (-(b - a)).is_negative
+}
+
+theorem from_rat_pos(r: Rat) {
+    r.is_positive implies Real.from_rat(r).is_positive
+}
+
+theorem sub_lte(a: Real, b: Real, c: Real) {
+    a - c <= b implies a <= b + c
+} by {
+    a - c + c <= b + c
+    a <= b + c
+}
+
+theorem limit_lt_imp_ub(q: Nat -> Real, ub: Real) {
+    converges(q) and limit(q) < ub implies eventual_ub(q, ub)
+} by {
+    Real.0 < ub - limit(q)
+    let eps2: Rat satisfy {
+        eps2.is_positive and Real.from_rat(eps2) < (ub - limit(q))
+    }
+    let eps: Real = Real.from_rat(eps2 / Rat.2)
+    (eps2 / Rat.2).is_positive
+    eps.is_positive
+    eps + eps = Real.from_rat(eps2)
+    eps + eps < ub - limit(q)
+    eps + eps + limit(q) < ub - limit(q) + limit(q)
+    eps + eps + limit(q) < ub - limit(q) - -limit(q)
+    eps + eps + limit(q) < ub
+    limit(q) + eps + eps < ub
+
+    let n: Nat satisfy {
+        cauchy_condition(q, n, eps)
+    }
+    eventual_ub(q, q(n) + eps)
+    eventual_lb(q, q(n) - eps)
+    q(n) - eps <= limit(q)
+    q(n) <= limit(q) + eps
+    q(n) + eps <= limit(q) + eps + eps
+    if q(n) + eps = limit(q) + eps + eps {
+        eventual_ub(q, ub)
+    } else {
+        q(n) + eps < limit(q) + eps + eps
+        q(n) + eps < ub
+        eventual_ub(q, ub)
+    }
+}
+
+theorem eq_imp_limit(q: Nat -> Real, a: Real) {
+    eventual_eq(q, a) implies limit(q) = a
+} by {
+    converges(q)
+    eventual_ub(q, a)
+    eventual_lb(q, a)
+    if limit(q) < a {
+        let ub: Real satisfy {
+            limit(q) < ub and ub < a
+        }
+        eventual_ub(q, ub)
+        a < ub
+        false
+    }
+    if limit(q) > a {
+        let lb: Real satisfy {
+            a < lb and lb < limit(q)
+        }
+        eventual_lb(q, lb)
+        a > lb
+        false
+    }
+}
+
+// converges_to is the Weierstrass definition.
 define converges_to(q: Nat -> Real, a: Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(n: Nat) {
