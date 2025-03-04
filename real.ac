@@ -1822,93 +1822,89 @@ define rat_uniform(f: Rat -> Real) -> Bool {
     }
 }
 
-define lift_gt_condition(f: Rat -> Real, b: Rat, delta: Rat, y: Rat) -> Bool {
-    forall(a: Rat) {
-        a.is_close(b, delta) implies f(a) > Real.from_rat(y)
+// The Cauchy condition for the convergence of a sequence.
+define cauchy_condition(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
+    forall(i: Nat, j: Nat) {
+        n <= i and n <= j implies q(i).is_close(q(j), eps)
     }
 }
 
-// Whether f(x) > y, when f is lifted.
-define lift_gt(f: Rat -> Real, x: Real, y: Rat) -> Bool {
-    exists(b: Rat, delta: Rat) {
-        x.is_close(Real.from_rat(b), Real.from_rat(delta))
-        and lift_gt_condition(f, b, delta, y)
+define is_cauchy(q: Nat -> Real) -> Bool {
+    forall(eps: Real) {
+        eps.is_positive implies exists(n: Nat) {
+            cauchy_condition(q, n, eps)
+        }
     }
 }
 
-theorem lift_gt_something(f: Rat -> Real, x: Real) {
-    rat_uniform(f) implies exists(y: Rat) {
-        lift_gt(f, x, y)
+// For demonstrating the equivalent of Cauchy sequences and Dedekind cuts.
+define cauchy_gt_rat(q: Nat -> Real, r: Rat) -> Bool {
+    exists(n: Nat, a: Rat) {
+        a > r and forall(i: Nat) {
+            n <= i implies q(i) > Real.from_rat(a)
+        }
+    }
+}
+
+theorem cauchy_gt_something(q: Nat -> Real) {
+    is_cauchy(q) implies exists(r: Rat) {
+        cauchy_gt_rat(q, r)
     }
 } by {
     let eps: Real = Real.1
-    let delta: Rat satisfy {
-        rat_uniform_condition(f, delta, eps)
+    eps.is_positive
+    let n: Nat satisfy {
+        cauchy_condition(q, n, eps)
     }
-    let b: Rat satisfy {
-        x.is_close(Real.from_rat(b), Real.from_rat(delta))
+    let a: Rat satisfy {
+        Real.from_rat(a) < q(n) - eps
     }
-    let y: Rat satisfy {
-        Real.from_rat(y) < f(b) - eps
+    let r: Rat satisfy {
+        a > r
     }
-    forall(a: Rat) {
-        if a.is_close(b, delta) {
-            f(a).is_close(f(b), eps)
-            f(a) > Real.from_rat(y)
+    forall(i: Nat) {
+        if n <= i {
+            q(n).is_close(q(i), eps)
+            q(i) > q(n) - eps
+            q(i) > Real.from_rat(a)
         }
     }
-    lift_gt_condition(f, b, delta, y)
+    cauchy_gt_rat(q, r)
 }
 
-theorem lift_not_gt_something(f: Rat -> Real, x: Real) {
-    rat_uniform(f) implies exists(y: Rat) {
-        not lift_gt(f, x, y)
+theorem cauchy_not_gt_everything(q: Nat -> Real) {
+    is_cauchy(q) implies exists(r: Rat) {
+        not cauchy_gt_rat(q, r)
     }
 } by {
-    // First we need to find a candidate for a y.
-    // It's an upper bound to some interval containing f(x).
-    let eps1: Real = Real.1
-    let delta1: Rat satisfy {
-        rat_uniform_condition(f, delta1, eps1)
+    let eps: Real = Real.1
+    eps.is_positive
+    let n: Nat satisfy {
+        cauchy_condition(q, n, eps)
     }
-    let b1: Rat satisfy {
-        x.is_close(Real.from_rat(b1), Real.from_rat(delta1))
+    let r: Rat satisfy {
+        Real.from_rat(r) > q(n) + eps
     }
-    let y_lb: Real = f(b1) + eps1
-    let y: Rat satisfy {
-        y_lb < Real.from_rat(y)
-    }
-    forall(a: Rat) {
-        if a.is_close(b1, delta1) {
-            f(a).is_close(f(b1), eps1)
-            f(a) < y_lb
-            f(a) < Real.from_rat(y)
+    if cauchy_gt_rat(q, r) {
+        let (n2: Nat, a: Rat) satisfy {
+            a > r and forall(i: Nat) {
+                n2 <= i implies q(i) > Real.from_rat(a)
+            }
         }
-    }
-
-    if lift_gt(f, x, y) {
-        let (b: Rat, delta: Rat) satisfy {
-            x.is_close(Real.from_rat(b), Real.from_rat(delta))
-            and lift_gt_condition(f, b, delta, y)
+        if n <= n2 {
+            q(n2).is_close(q(n), eps)
+            q(n2) > Real.from_rat(a)
+            q(n2) > Real.from_rat(r)
+            false
+        } else {
+            n2 <= n
+            q(n) > Real.from_rat(a)
+            q(n) > Real.from_rat(r)
+            false
         }
-        forall(a: Rat) {
-            a.is_close(b, delta) implies f(a) > Real.from_rat(y)
-        }
-        let r: Rat satisfy {
-            Real.from_rat(r).is_close(Real.from_rat(b1), Real.from_rat(delta1))
-            and
-            Real.from_rat(r).is_close(Real.from_rat(b), Real.from_rat(delta))
-        }
-        false
     }
 }
 
-theorem lift_is_cut(f: Rat -> Real, x: Real) {
-    rat_uniform(f) implies is_cut(lift_gt(f, x))
-}
-
-// TODO:
-// prove that lift is lower
-// prove that lift does not have a greatest
-// therefore it's a dedekind cut.
-
+// TODO, prove:
+// cauchy_gt is_lower
+// cauchy_gt does not have a greatest element
