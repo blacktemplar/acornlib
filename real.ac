@@ -1814,7 +1814,7 @@ define cauchy_condition(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
     }
 }
 
-define is_cauchy(q: Nat -> Real) -> Bool {
+define converges(q: Nat -> Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(n: Nat) {
             cauchy_condition(q, n, eps)
@@ -1822,17 +1822,24 @@ define is_cauchy(q: Nat -> Real) -> Bool {
     }
 }
 
-// For demonstrating the equivalent of Cauchy sequences and Dedekind cuts.
-define cauchy_gt_rat(q: Nat -> Real, r: Rat) -> Bool {
-    exists(n: Nat, a: Rat) {
-        a > r and forall(i: Nat) {
-            n <= i implies q(i) > Real.from_rat(a)
+// lb is eventually a lower bound of this sequence.
+define eventual_lb(q: Nat -> Real, lb: Real) -> Bool {
+    exists(n: Nat) {
+        forall(i: Nat) {
+            n <= i implies lb <= q(i)
         }
     }
 }
 
+// For demonstrating the equivalent of Cauchy sequences and Dedekind cuts.
+define cauchy_gt_rat(q: Nat -> Real, r: Rat) -> Bool {
+    exists(lb: Real) {
+        lb > Real.from_rat(r) and eventual_lb(q, lb)
+    }
+}
+
 theorem cauchy_gt_something(q: Nat -> Real) {
-    is_cauchy(q) implies exists(r: Rat) {
+    converges(q) implies exists(r: Rat) {
         cauchy_gt_rat(q, r)
     }
 } by {
@@ -1841,24 +1848,26 @@ theorem cauchy_gt_something(q: Nat -> Real) {
     let n: Nat satisfy {
         cauchy_condition(q, n, eps)
     }
-    let a: Rat satisfy {
-        Real.from_rat(a) < q(n) - eps
+    let lb: Real satisfy {
+        lb < q(n) - eps
     }
     let r: Rat satisfy {
-        a > r
+        lb > Real.from_rat(r)
     }
     forall(i: Nat) {
         if n <= i {
             q(n).is_close(q(i), eps)
             q(i) > q(n) - eps
-            q(i) > Real.from_rat(a)
+            q(i) > lb
+            lb <= q(i)
         }
     }
+    eventual_lb(q, lb)
     cauchy_gt_rat(q, r)
 }
 
 theorem cauchy_gt_not_everything(q: Nat -> Real) {
-    is_cauchy(q) implies exists(r: Rat) {
+    converges(q) implies exists(r: Rat) {
         not cauchy_gt_rat(q, r)
     }
 } by {
@@ -1871,19 +1880,27 @@ theorem cauchy_gt_not_everything(q: Nat -> Real) {
         Real.from_rat(r) > q(n) + eps
     }
     if cauchy_gt_rat(q, r) {
-        let (n2: Nat, a: Rat) satisfy {
-            a > r and forall(i: Nat) {
-                n2 <= i implies q(i) > Real.from_rat(a)
+        let lb: Real satisfy {
+            lb > Real.from_rat(r) and eventual_lb(q, lb)
+        }
+        let n2: Nat satisfy {
+            forall(i: Nat) {
+                n2 <= i implies q(i) >= lb
             }
         }
         if n <= n2 {
             q(n2).is_close(q(n), eps)
-            q(n2) > Real.from_rat(a)
+            not Real.from_rat(r) <= q(n) + Real.1
+            not lb < q(n) + Real.1
+            q(n2) > lb
             q(n2) > Real.from_rat(r)
             false
         } else {
             n2 <= n
-            q(n) > Real.from_rat(a)
+            not Real.from_rat(r) <= q(n) + Real.1
+            Real.from_rat(r) < lb + Real.1
+            q(n) != lb
+            q(n) > lb
             q(n) > Real.from_rat(r)
             false
         }
@@ -1891,40 +1908,36 @@ theorem cauchy_gt_not_everything(q: Nat -> Real) {
 }
 
 theorem cauchy_gt_is_cut(q: Nat -> Real) {
-    is_cauchy(q) implies is_cut(cauchy_gt_rat(q))
+    converges(q) implies is_cut(cauchy_gt_rat(q))
 }
 
 theorem cauchy_gt_is_lower(q: Nat -> Real) {
-    is_cauchy(q) implies is_lower(cauchy_gt_rat(q))
+    converges(q) implies is_lower(cauchy_gt_rat(q))
 } by {
     forall(x: Rat, y: Rat) {
         if cauchy_gt_rat(q, y) and x < y {
-            let (n: Nat, a: Rat) satisfy {
-                a > y and forall(i: Nat) {
-                    n <= i implies q(i) > Real.from_rat(a)
-                }
+            let lb: Real satisfy {
+                Real.from_rat(y) < lb and eventual_lb(q, lb)
             }
-            a > x
+            Real.from_rat(x) < lb
             cauchy_gt_rat(q, x)
         }
     }
 }
 
 theorem cauchy_gt_has_no_greatest(q: Nat -> Real) {
-    is_cauchy(q) implies not has_greatest(cauchy_gt_rat(q))
+    converges(q) implies not has_greatest(cauchy_gt_rat(q))
 } by {
     if has_greatest(cauchy_gt_rat(q)) {
         let r: Rat satisfy {
             is_greatest(cauchy_gt_rat(q), r)
         }
         cauchy_gt_rat(q, r)
-        let (n: Nat, a: Rat) satisfy {
-            a > r and forall(i: Nat) {
-                n <= i implies q(i) > Real.from_rat(a)
-            }
+        let lb: Real satisfy {
+            Real.from_rat(r) < lb and eventual_lb(q, lb)
         }
         let b: Rat satisfy {
-            a > b and b > r
+            lb > Real.from_rat(b) and b > r
         }
         cauchy_gt_rat(q, b)
         false
@@ -1932,12 +1945,27 @@ theorem cauchy_gt_has_no_greatest(q: Nat -> Real) {
 }
 
 theorem cauchy_gt_is_dedekind_cut(q: Nat -> Real) {
-    is_cauchy(q) implies is_dedekind_cut(cauchy_gt_rat(q))
+    converges(q) implies is_dedekind_cut(cauchy_gt_rat(q))
 }
 
 define limit(q: Nat -> Real) -> Real {
     Real.new(cauchy_gt_rat(q))
 }
+
+// TODO: Prove how eventual_lb and limit relate to each other.
+
+// converges_to is the Weierstress definition.
+define converges_to(q: Nat -> Real, a: Real) -> Bool {
+    forall(eps: Real) {
+        eps.is_positive implies exists(n: Nat) {
+            forall(i: Nat) {
+                n <= i implies q(i).is_close(a, eps)
+            }
+        }
+    }
+}
+
+// TODO: prove they are equivalent.
 
 // 0.5^n
 define hexp(n: Nat) -> Rat {
