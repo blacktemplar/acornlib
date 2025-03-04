@@ -1807,21 +1807,6 @@ theorem rat_intersect(a: Real, b: Real, c: Real, d: Real, e: Real) {
     Real.from_rat(r).is_close(d, e)
 }
 
-// The epsilon-delta condition for uniform continuity, defined for functions on the rationals.
-define rat_uniform_condition(f: Rat -> Real, delta: Rat, eps: Real) -> Bool {
-    delta.is_positive and forall(a: Rat, b: Rat) {
-        a.is_close(b, delta) implies f(a).is_close(f(b), eps)
-    }
-}
-
-define rat_uniform(f: Rat -> Real) -> Bool {
-    forall(eps: Real) {
-        eps.is_positive implies exists(delta: Rat) {
-            rat_uniform_condition(f, delta, eps)
-        }
-    }
-}
-
 // The Cauchy condition for the convergence of a sequence.
 define cauchy_condition(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
     forall(i: Nat, j: Nat) {
@@ -1872,7 +1857,7 @@ theorem cauchy_gt_something(q: Nat -> Real) {
     cauchy_gt_rat(q, r)
 }
 
-theorem cauchy_not_gt_everything(q: Nat -> Real) {
+theorem cauchy_gt_not_everything(q: Nat -> Real) {
     is_cauchy(q) implies exists(r: Rat) {
         not cauchy_gt_rat(q, r)
     }
@@ -1905,7 +1890,11 @@ theorem cauchy_not_gt_everything(q: Nat -> Real) {
     }
 }
 
-theorem cauchy_is_lower(q: Nat -> Real) {
+theorem cauchy_gt_is_cut(q: Nat -> Real) {
+    is_cauchy(q) implies is_cut(cauchy_gt_rat(q))
+}
+
+theorem cauchy_gt_is_lower(q: Nat -> Real) {
     is_cauchy(q) implies is_lower(cauchy_gt_rat(q))
 } by {
     forall(x: Rat, y: Rat) {
@@ -1921,5 +1910,43 @@ theorem cauchy_is_lower(q: Nat -> Real) {
     }
 }
 
-// TODO, prove:
-// cauchy_gt does not have a greatest element
+theorem cauchy_gt_has_no_greatest(q: Nat -> Real) {
+    is_cauchy(q) implies not has_greatest(cauchy_gt_rat(q))
+} by {
+    if has_greatest(cauchy_gt_rat(q)) {
+        let r: Rat satisfy {
+            is_greatest(cauchy_gt_rat(q), r)
+        }
+        cauchy_gt_rat(q, r)
+        let (n: Nat, a: Rat) satisfy {
+            a > r and forall(i: Nat) {
+                n <= i implies q(i) > Real.from_rat(a)
+            }
+        }
+        let b: Rat satisfy {
+            a > b and b > r
+        }
+        cauchy_gt_rat(q, b)
+        false
+    }
+}
+
+theorem cauchy_gt_is_dedekind_cut(q: Nat -> Real) {
+    is_cauchy(q) implies is_dedekind_cut(cauchy_gt_rat(q))
+}
+
+define limit(q: Nat -> Real) -> Real {
+    Real.new(cauchy_gt_rat(q))
+}
+
+// 0.5^n
+define hexp(n: Nat) -> Rat {
+    match n {
+        Nat.0 {
+            Rat.1
+        }
+        Nat.suc(k) {
+            hexp(k) / Rat.2
+        }
+    }
+}
