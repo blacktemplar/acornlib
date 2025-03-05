@@ -2254,16 +2254,192 @@ define converges_to(q: Nat -> Real, a: Real) -> Bool {
     }
 }
 
-// TODO: prove they are equivalent.
-
-// 0.5^n
-define hexp(n: Nat) -> Rat {
-    match n {
-        Nat.0 {
-            Rat.1
+theorem lt_converges_to_imp_lb(q: Nat -> Real, a: Real, b: Real) {
+    converges_to(q, b) and a < b implies eventual_lb(q, a)
+} by {
+    let eps: Real = b - a
+    eps.is_positive
+    eps + a = b
+    a = b - eps
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies q(i).is_close(b, eps)
         }
-        Nat.suc(k) {
-            hexp(k) / Rat.2
+    }
+    forall(i: Nat) {
+        if n <= i {
+            q(i).is_close(b, eps)
+            q(i) >= b - eps
+            q(i) >= a
         }
     }
 }
+
+theorem gt_converges_to_imp_ub(q: Nat -> Real, a: Real, b: Real) {
+    converges_to(q, b) and a > b implies eventual_ub(q, a)
+} by {
+    let eps: Real = a - b
+    eps.is_positive
+    a = b + eps
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies q(i).is_close(b, eps)
+        }
+    }
+    forall(i: Nat) {
+        if n <= i {
+            q(i).is_close(b, eps)
+            q(i) <= b + eps
+            q(i) <= a
+        }
+    }
+}
+
+theorem eps_lt_half(a: Real) {
+    a.is_positive implies exists(b: Real) {
+        b.is_positive and b + b < a
+    }
+} by {
+    Real.0 < a
+    let c: Rat satisfy {
+        Real.0 < Real.from_rat(c) and Real.from_rat(c) < a
+    }
+    let b: Rat = c / Rat.2
+    b + b = c
+    (Real.from_rat(c) - Real.0).is_positive
+    Real.from_rat(c).gt_rat(Rat.0)
+    Rat.0 < c
+    c.is_positive
+    b.is_positive
+    Real.from_rat(b).is_positive
+    Real.from_rat(b) + Real.from_rat(b) = Real.from_rat(c)
+}
+
+theorem add_gt_imp_gt_sub(a: Real, b: Real, c: Real) {
+    a + b > c implies a > c - b
+} by {
+    a + b > c
+    a + b + -b > c + -b
+    a > c - b
+}
+
+theorem sub_either_order(a: Real, b: Real, c: Real) {
+    a - b - c = a - c - b
+}
+
+theorem sub_both_eq_sub_add(a: Real, b: Real, c: Real) {
+    a - b - c = a - (b + c)
+}
+
+theorem is_close_triangle(a: Real, b: Real, c: Real, ace: Real, bce: Real) {
+    a.is_close(c, ace) and b.is_close(c, bce)
+    implies
+    a.is_close(b, ace + bce)
+} by {
+    // First let's lower-bound a
+    a > c - ace
+    a + ace > c
+    c > b - bce
+    a + ace > b - bce
+    a > b - bce - ace
+    a > b - ace - bce
+    a > b - (ace + bce)
+
+    // Then let's upper-bound a
+    a < c + ace
+    c < b + bce
+    c + ace < b + bce + ace
+    a < b + ace + bce
+
+    a.is_close(b, ace + bce)
+}
+
+// Prove our two definitions of convergence are equivalent.
+
+theorem converges_to_imp_converges(q: Nat -> Real, a: Real) {
+    converges_to(q, a) implies converges(q)
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let eps2: Real satisfy {
+                eps2.is_positive and eps2 + eps2 < eps
+            }
+            let n: Nat satisfy {
+                forall(i: Nat) {
+                    n <= i implies q(i).is_close(a, eps2)
+                }
+            }
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    q(i).is_close(a, eps2)
+                    q(j).is_close(a, eps2)
+                    q(i).is_close(q(j), eps2 + eps2)
+                    q(i).is_close(q(j), eps)
+                }
+            }
+            cauchy_condition(q, n, eps)
+        }
+    }
+}
+
+theorem sub_lt_is_gt(a: Real, b: Real, c: Real) {
+    b < c implies a - b > a - c
+} by {
+    -c < -b
+    a + -c < a + -b
+    a + -b > a - c
+}
+
+theorem converges_imp_converges_to(q: Nat -> Real) {
+    converges(q) implies converges_to(q, limit(q))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let eps2: Real satisfy {
+                eps2.is_positive and eps2 < eps
+            }
+
+            // Find a lower bound
+            let lb: Real = limit(q) - eps2
+            lb < limit(q)
+            limit(q) - eps2 > limit(q) - eps
+            lb > limit(q) - eps
+            eventual_lb(q, lb)
+            let n1: Nat satisfy {
+                forall(i: Nat) {
+                    n1 <= i implies q(i) >= lb
+                }
+            }
+
+            // Find an upper bound
+            let ub: Real = limit(q) + eps2
+            ub > limit(q)
+            limit(q) + eps2 < limit(q) + eps
+            ub < limit(q) + eps
+            eventual_ub(q, ub)
+            let n2: Nat satisfy {
+                forall(i: Nat) {
+                    n2 <= i implies q(i) <= ub
+                }
+            }
+
+            // Once both of those are hit, the Weierstrass condition is ok
+            let n: Nat satisfy {
+                n1 <= n and n2 <= n
+            }
+            forall(i: Nat) {
+                if n <= i {
+                    q(i) >= lb
+                    q(i) > limit(q) - eps
+                    q(i) <= ub
+                    q(i) < limit(q) + eps
+                    q(i).is_close(limit(q), eps)
+                }
+            }            
+        }
+    }
+}
+
+// TODO:
+// every real can be approximated with a sequence of rationals.
+// use this to lift continuous functions?
