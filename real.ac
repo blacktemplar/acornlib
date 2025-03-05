@@ -2440,6 +2440,22 @@ theorem converges_imp_converges_to(q: Nat -> Real) {
     }
 }
 
+// The condition for uniform continuity on the rationals.
+define rat_condition(f: Rat -> Real, delta: Rat, eps: Real) -> Bool {
+    forall(r1: Rat, r2: Rat) {
+        r1.is_close(r2, delta) implies f(r1).is_close(f(r2), eps)
+    }
+}
+
+// The definition of uniform continuity on the rationals.
+define rat_uniform(f: Rat -> Real) -> Bool {
+    forall(eps: Real) {
+        eps.is_positive implies exists(delta: Rat) {
+            delta.is_positive and rat_condition(f, delta, eps)
+        }
+    }
+}
+
 // TODO:
-// every real can be approximated with a sequence of rationals.
-// use this to lift continuous functions?
+// Applying a uniform function to a convergent sequence.
+// Then use it to define multiplication.
