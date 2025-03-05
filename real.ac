@@ -2456,6 +2456,48 @@ define rat_uniform(f: Rat -> Real) -> Bool {
     }
 }
 
+// Probably this should go somewhere else.
+define compose<T, U, V>(f: U -> V, g: T -> U) -> T -> V {
+    function(t: T) {
+        f(g(t))
+    }
+}
+
+// Do we want this?
+define rat_converges(q: Nat -> Rat) -> Bool {
+    converges(compose(Real.from_rat, q))
+}
+
+// Uniform continuity implies sequential continuity.
+theorem uniform_imp_seq(f: Rat -> Real, q: Nat -> Rat) {
+    rat_uniform(f) and converges(compose(Real.from_rat, q))
+    implies
+    converges(compose(f, q))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let delta: Rat satisfy {
+                delta.is_positive and rat_condition(f, delta, eps)
+            }
+            let n: Nat satisfy {
+                cauchy_condition(compose(Real.from_rat, q), n, Real.from_rat(delta))
+            }
+
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    compose(Real.from_rat, q)(i).is_close(compose(Real.from_rat, q)(j), Real.from_rat(delta))
+                    Real.from_rat(q(i)).is_close(Real.from_rat(q(j)), Real.from_rat(delta))
+                    q(i).is_close(q(j), delta)
+                    f(q(i)).is_close(f(q(j)), eps)
+                    compose(f, q)(i).is_close(compose(f, q)(j), eps)
+                }
+            }
+
+            cauchy_condition(compose(f, q), n, eps)
+        }
+    }
+}
+
 // TODO:
-// Applying a uniform function to a convergent sequence.
-// Then use it to define multiplication.
+// Use this to define lifting uniformly continuous functions.
+// multiplication.
