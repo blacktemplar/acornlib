@@ -2516,6 +2516,10 @@ define rat_seq(x: Real, n: Nat) -> Rat {
     rat_approx(x, rat.iop(n))
 }
 
+theorem rat_seq_is_close(x: Real, n: Nat) {
+    x.is_close(Real.from_rat(rat_seq(x, n)), Real.from_rat(rat.iop(n)))
+}
+
 theorem abs_lt_imp_close_to_zero(x: Real, eps: Real) {
     x.abs < eps implies x.is_close(Real.0, eps)
 } by {
@@ -2563,7 +2567,18 @@ theorem iop_limit {
     }
 }
 
-// TODO: prove this to make it convenient to use rat_seq
+define add_seq(a: Nat -> Real, b: Nat -> Real, n: Nat) -> Real {
+    a(n) + b(n)
+}
+
+// TODO: prove these to make it convenient to use rat_seq
+
+// theorem limit_add_seq(a: Nat -> Real, b: Nat -> Real) {
+//     converges(a) and converges(b)
+//     implies
+//     converges_to(add_seq(a, b), limit(a) + limit(b))
+// }
+
 // theorem rat_seq_converges_to(x: Real) {
 //     converges_to(lift_seq(rat_seq(x)), x)
 // }
