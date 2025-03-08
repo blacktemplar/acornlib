@@ -2468,6 +2468,13 @@ define lift_seq(q: Nat -> Rat) -> Nat -> Real {
     compose(Real.from_rat, q)
 }
 
+theorem lift_seq_elt(q: Nat -> Rat, n: Nat) {
+    lift_seq(q)(n) = Real.from_rat(q(n))
+} by {
+    lift_seq(q)(n) = compose(Real.from_rat, q)(n)
+    lift_seq(q)(n) = Real.from_rat(q(n))
+}
+
 // Uniform continuity implies sequential continuity.
 theorem uniform_imp_seq(f: Rat -> Real, q: Nat -> Rat) {
     rat_uniform(f) and converges(lift_seq(q))
@@ -2509,12 +2516,54 @@ define rat_seq(x: Real, n: Nat) -> Rat {
     rat_approx(x, rat.iop(n))
 }
 
-// TODO: prove these to make it convenient to use rat_seq
+theorem abs_lt_imp_close_to_zero(x: Real, eps: Real) {
+    x.abs < eps implies x.is_close(Real.0, eps)
+} by {
+    if x.is_negative {
+        x.abs = -x
+        -x < eps
+        x > -eps
+        x.is_close(Real.0, eps)
+    } else {
+        x.abs = x
+        x < eps
+        x.is_close(Real.0, eps)
+    }
+}
 
-// theorem iop_limit {
-//     converges_to(lift_seq(rat.iop), Real.0)
-// }
+theorem iop_limit {
+    converges_to(lift_seq(rat.iop), Real.0)
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            Real.0 < eps
+            let reps: Rat satisfy {
+                reps.is_positive and Real.from_rat(reps) < eps
+            }
+            let n: Nat satisfy {
+                forall(i: Nat) {
+                    n <= i implies rat.iop(i) < reps
+                }
+            }
 
+            forall(i: Nat) {
+                if n <= i {
+                    rat.iop(i) < reps
+                    rat.iop(i).is_positive
+                    Real.from_rat(rat.iop(i)).is_positive
+                    Real.from_rat(rat.iop(i)).abs = Real.from_rat(rat.iop(i))
+                    Real.from_rat(rat.iop(i)) < eps
+                    Real.from_rat(rat.iop(i)).abs < eps
+                    lift_seq(rat.iop)(i) = Real.from_rat(rat.iop(i))
+                    lift_seq(rat.iop)(i).abs < eps
+                    lift_seq(rat.iop)(i).is_close(Real.0, eps)
+                }
+            }
+        }
+    }
+}
+
+// TODO: prove this to make it convenient to use rat_seq
 // theorem rat_seq_converges_to(x: Real) {
 //     converges_to(lift_seq(rat_seq(x)), x)
 // }

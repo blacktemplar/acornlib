@@ -1720,3 +1720,28 @@ theorem lt_some_nat(a: Rat) {
     i <= Int.from_nat(n)
     Rat.from_int(i) <= Rat.from_nat(n)
 }
+
+theorem iop_gets_lt(eps: Rat) {
+    eps.is_positive implies exists(n: Nat) {
+        forall(i: Nat) {
+            n <= i implies iop(i) < eps
+        }
+    }
+} by {
+    eps.reciprocal.is_positive
+    let n: Nat satisfy {
+        eps.reciprocal < Rat.from_nat(n)
+    }
+    forall(i: Nat) {
+        if n <= i {
+            Rat.from_nat(n) <= Rat.from_nat(i)
+            eps.reciprocal < Rat.from_nat(i)
+            eps.reciprocal * eps < Rat.from_nat(i) * eps
+            Rat.1 < Rat.from_nat(i) * eps
+            Rat.from_nat(i) * iop(i) < Rat.1
+            Rat.from_nat(i) * iop(i) < Rat.from_nat(i) * eps
+            iop(i) < eps
+        }
+    }
+
+}
