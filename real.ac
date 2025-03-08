@@ -1734,7 +1734,7 @@ theorem close_reals_imp_close_rats(q: Rat, r: Rat, eps: Rat) {
 }
 
 // Every real can be approximated by a rational.
-theorem rat_approx(x: Real, eps: Rat) {
+theorem rat_approx_exists(x: Real, eps: Rat) {
     eps.is_positive implies exists(r: Rat) {
         x.is_close(Real.from_rat(r), Real.from_rat(eps))
     }
@@ -2463,14 +2463,14 @@ define compose<T, U, V>(f: U -> V, g: T -> U) -> T -> V {
     }
 }
 
-// Do we want this?
-define rat_converges(q: Nat -> Rat) -> Bool {
-    converges(compose(Real.from_rat, q))
+// Lifting a sequence of rationals to a sequence of reals
+define lift_seq(q: Nat -> Rat) -> Nat -> Real {
+    compose(Real.from_rat, q)
 }
 
 // Uniform continuity implies sequential continuity.
 theorem uniform_imp_seq(f: Rat -> Real, q: Nat -> Rat) {
-    rat_uniform(f) and converges(compose(Real.from_rat, q))
+    rat_uniform(f) and converges(lift_seq(q))
     implies
     converges(compose(f, q))
 } by {
@@ -2480,12 +2480,12 @@ theorem uniform_imp_seq(f: Rat -> Real, q: Nat -> Rat) {
                 delta.is_positive and rat_condition(f, delta, eps)
             }
             let n: Nat satisfy {
-                cauchy_condition(compose(Real.from_rat, q), n, Real.from_rat(delta))
+                cauchy_condition(lift_seq(q), n, Real.from_rat(delta))
             }
 
             forall(i: Nat, j: Nat) {
                 if n <= i and n <= j {
-                    compose(Real.from_rat, q)(i).is_close(compose(Real.from_rat, q)(j), Real.from_rat(delta))
+                    lift_seq(q)(i).is_close(lift_seq(q)(j), Real.from_rat(delta))
                     Real.from_rat(q(i)).is_close(Real.from_rat(q(j)), Real.from_rat(delta))
                     q(i).is_close(q(j), delta)
                     f(q(i)).is_close(f(q(j)), eps)
@@ -2498,6 +2498,28 @@ theorem uniform_imp_seq(f: Rat -> Real, q: Nat -> Rat) {
     }
 }
 
+let rat_approx(x: Real, eps: Rat) -> r: Rat satisfy {
+    eps.is_positive implies
+    x.is_close(Real.from_rat(r), Real.from_rat(eps))
+}
+
+// A sequence of rationals that approximates a real number.
+// Chosen to be easy to calculate with.
+define rat_seq(x: Real, n: Nat) -> Rat {
+    rat_approx(x, rat.iop(n))
+}
+
+// TODO: prove these to make it convenient to use rat_seq
+
+// theorem iop_limit {
+//     converges_to(lift_seq(rat.iop), Real.0)
+// }
+
+// theorem rat_seq_converges_to(x: Real) {
+//     converges_to(lift_seq(rat_seq(x)), x)
+// }
+
 // TODO:
-// Use this to define lifting uniformly continuous functions.
+// Define lifting uniformly continuous functions.
+// Lifting is fixed on rationals.
 // multiplication.
