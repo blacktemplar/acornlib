@@ -2571,6 +2571,12 @@ define add_seq(a: Nat -> Real, b: Nat -> Real, n: Nat) -> Real {
     a(n) + b(n)
 }
 
+theorem half_pos_is_pos(a: Real, b: Real) {
+    b.is_positive and a + a = b
+    implies
+    a.is_positive
+}
+
 // TODO: prove these to make it convenient to use rat_seq
 
 // theorem limit_add_seq(a: Nat -> Real, b: Nat -> Real) {
