@@ -1444,3 +1444,7 @@ theorem exp_eq_one_imp(a: Nat, b: Nat) {
         false
     }
 }
+
+theorem sq_eq_mul(a: Nat) {
+    a.exp(2) = a * a
+}

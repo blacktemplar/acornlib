@@ -2150,3 +2150,39 @@ theorem one_exp(n: Nat) {
     one_exp(Nat.0)
     one_exp(n)
 }
+
+theorem pos_exp(a: Int, n: Nat) {
+    a.is_positive implies a.exp(n).is_positive
+} by {
+    let f: Nat -> Bool = function(x: Nat) {
+        a.exp(x).is_positive
+    }
+    f(Nat.0)
+    f(n)
+}
+
+theorem sq_eq_mul(a: Int) {
+    a * a = a.exp(Nat.2)
+}
+
+theorem sq_pos(a: Int) {
+    a != 0 implies a.exp(Nat.2).is_positive
+}
+
+theorem exp_abs_eq_abs_exp(a: Int, n: Nat) {
+    abs(a.exp(n)) = abs(a).exp(n)
+} by {
+    let f: Nat -> Bool = function(x: Nat) {
+        abs(a.exp(x)) = abs(a).exp(x)
+    }
+    f(Nat.0)
+    forall(x: Nat) {
+        if f(x) {
+            abs(a.exp(x)) = abs(a).exp(x)
+            abs(a.exp(x.suc)) = abs(a).exp(x.suc)
+            f(x.suc)
+        }
+    }
+    f(n)
+}
+
