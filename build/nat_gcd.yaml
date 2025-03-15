@@ -1,2 +1,249 @@
 dependencies: 15745386300596650028
 content: 14397919020653535126
+blocks:
+  all_false_below:
+    nat:
+    - lt_add_suc
+    nat_gcd:
+    - false_below
+  cofactor:
+    nat:
+    - divides
+    - divides_cancel_left
+    - divides_mul
+    - divides_mul_left
+    - mul_comm
+    - mul_to_one
+    nat_gcd:
+    - divides_gcd
+    - gcd_comm
+    - gcd_divides_right
+  divides_both_step:
+    nat:
+    - divides_mod
+    nat_gcd:
+    - divides_both
+    - gcd_step
+    pair:
+    - Pair.first
+    - Pair.second
+  divides_both_unstep:
+    nat:
+    - divides_unmod
+    nat_gcd:
+    - divides_both
+    - gcd_step
+    pair:
+    - Pair.first
+    - Pair.second
+  divides_gcd:
+    nat_gcd:
+    - '215'
+    - divides_both
+    - gcd
+    pair:
+    - Pair.first
+    - Pair.second
+  divides_gcd_pair:
+    nat_gcd:
+    - divides_both
+    - divides_gcd_step_n
+    - gcd_pair
+  divides_gcd_pair_converse:
+    nat:
+    - Nat.mul
+    - divides
+    nat_gcd:
+    - divides_both
+    - divides_gcd_step_n_converse
+    - gcd_pair
+    - num_gcd_steps_terminates
+  divides_gcd_step_n:
+    nat:
+    - Nat.induction
+    nat_gcd:
+    - divides_both_step
+    - gcd_step_n
+  divides_gcd_step_n_converse:
+    nat_gcd:
+    - divides_both_unstep
+    - gcd_step_n
+  dtz_terminates:
+    nat:
+    - lte_imp_not_lt
+    nat_gcd:
+    - '110'
+    - '111'
+    - decreasing_to_zero
+    - no_infinite_decreasing
+  gcd_comm:
+    nat:
+    - divides_symm
+    nat_gcd:
+    - divides_gcd
+    - gcd_divides_left
+    - gcd_divides_right
+  gcd_divides:
+    nat_gcd:
+    - divides_both
+    - divides_gcd_pair_converse
+    - gcd
+    pair:
+    - Pair.first
+    - Pair.second
+  gcd_divides_left:
+    nat:
+    - divides_self
+    nat_gcd:
+    - gcd_divides
+  gcd_divides_right:
+    nat:
+    - divides_self
+    nat_gcd:
+    - gcd_divides
+  gcd_is_gcd:
+    nat:
+    - divides_lte
+    - zero_divides
+    nat_gcd:
+    - divides_gcd
+    - gcd_divides_left
+  gcd_mult_left:
+    nat:
+    - Nat.mul
+    - mod
+    - mod_mul
+    - mul_comm
+    - mul_zero_left
+    nat_gcd:
+    - '426'
+    - '428'
+    - gcd_comm
+    - gcd_mult_left_nonzero
+    - gcd_zero_right
+  gcd_mult_left_nonzero:
+    nat:
+    - divides
+    - divides_cancel_left
+    - divides_mul_left
+    - divides_symm
+    nat_gcd:
+    - divides_gcd
+    - gcd_comm
+    - gcd_divides_left
+    - gcd_divides_right
+  gcd_mult_right:
+    nat:
+    - mul_comm
+    nat_gcd:
+    - gcd_comm
+  gcd_nonzero_left:
+    nat:
+    - zero_divides
+    nat_gcd:
+    - gcd_divides_left
+  gcd_nonzero_right:
+    nat_gcd:
+    - gcd_comm
+    - gcd_nonzero_left
+  gcd_of_prime:
+    nat:
+    - Nat.1
+    - Nat.gt
+    - divides
+    - is_composite
+    - is_prime
+    - lt_suc_right
+    - mul_comm
+    - mul_one_left
+    - mul_zero_left
+    - not_lt_zero
+    - trichotomy
+    nat_gcd:
+    - '467'
+    - '475'
+    - gcd_comm
+    - gcd_divides
+    - gcd_divides_right
+    - gcd_nonzero_left
+  gcd_one_left:
+    nat:
+    - divides
+    - mul_to_one
+    nat_gcd:
+    - gcd_divides_left
+  gcd_one_right:
+    nat:
+    - divides
+    - mul_to_one
+    nat_gcd:
+    - gcd_divides_right
+  gcd_terminates:
+    nat:
+    - mod
+    nat_gcd:
+    - decreasing_to_zero
+    - dtz_terminates
+    - gcd_step
+    - gcd_step_n
+    pair:
+    - Pair.second
+  gcd_zero_left:
+    nat:
+    - divides_symm
+    nat_gcd:
+    - divides_gcd
+    - gcd_divides_left
+    - gcd_divides_right
+    - gcd_zero_right
+  gcd_zero_right:
+    nat:
+    - Nat.mul
+    - divides
+    - divides_symm
+    - mul_one_right
+    nat_gcd:
+    - divides_gcd
+    - gcd_divides_left
+  has_min:
+    nat:
+    - true_below
+    nat_gcd:
+    - false_below
+    - is_min
+  mod_maintains_imp_gcd:
+    nat:
+    - Nat.induction
+    nat_gcd:
+    - gcd
+    - gcd_pair
+    - gcd_step
+    - gcd_step_n
+    - mod_maintains
+    pair:
+    - Pair.first
+    - Pair.second
+  no_infinite_decreasing:
+    nat:
+    - Nat.lte
+    - add_comm
+    - add_suc_left
+    - add_zero_left
+    - lt_add_left
+    - lt_imp_lte_suc
+    - lt_or_lte
+    - lt_suc
+    - lte_imp_not_lt
+    - lte_trans
+    - mod_by_zero
+    - mod_lte
+  num_gcd_steps:
+    nat_gcd:
+    - gcd_terminates
+    - gcd_termination
+    - has_min
+  num_gcd_steps_terminates:
+    nat_gcd:
+    - gcd_termination
+    - is_min
+    - num_gcd_steps

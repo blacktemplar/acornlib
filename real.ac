@@ -2577,13 +2577,71 @@ theorem half_pos_is_pos(a: Real, b: Real) {
     a.is_positive
 }
 
-// TODO: prove these to make it convenient to use rat_seq
+theorem add_close(a1: Real, b1: Real, a2: Real, b2: Real, a_eps: Real, b_eps: Real) {
+    a1.is_close(a2, a_eps) and b1.is_close(b2, b_eps)
+    implies
+    (a1 + b1).is_close(a2 + b2, a_eps + b_eps)
+} by {
+    // The less-than direction
+    a1 < a2 + a_eps
+    b2 < b2 + b_eps
+    a1 + b1 < a2 + a_eps + b2 + b_eps
+    a1 + b1 < (a2 + b2) + (a_eps + b_eps)
 
-// theorem limit_add_seq(a: Nat -> Real, b: Nat -> Real) {
-//     converges(a) and converges(b)
-//     implies
-//     converges_to(add_seq(a, b), limit(a) + limit(b))
-// }
+    // The greater-than direction
+    a1 > a2 - a_eps
+    b2 > b2 - b_eps
+    a1 + b1 > (a2 - a_eps) + (b2 - b_eps)
+    a2 - a_eps + (b2 - b_eps) != a1 + b1
+    max(a1 + b1, a2 - a_eps + (b2 - b_eps)) = a1 + b1
+    max(a1 + b1, a2 + b2 - (a_eps + b_eps)) != a2 + b2 - (a_eps + b_eps)
+    a1 + b1 > (a2 + b2) - (a_eps + b_eps)
+}
+
+theorem limit_add_seq(a: Nat -> Real, b: Nat -> Real) {
+    converges(a) and converges(b)
+    implies
+    converges_to(add_seq(a, b), limit(a) + limit(b))
+} by {
+    let q: Nat -> Real = add_seq(a, b)
+    let ql: Real = limit(a) + limit(b)
+    forall(eps: Real) {
+        if eps.is_positive {
+            let eps2: Real satisfy {
+                eps2.is_positive and eps2 + eps2 < eps
+            }
+
+            let n1: Nat satisfy {
+                forall(i: Nat) {
+                    n1 <= i implies a(i).is_close(limit(a), eps2)
+                }
+            }
+
+            let n2: Nat satisfy {
+                forall(i: Nat) {
+                    n2 <= i implies b(i).is_close(limit(b), eps2)
+                }
+            }
+
+            let n: Nat satisfy {
+                n1 <= n and n2 <= n
+            }
+
+            forall(i: Nat) {
+                if n <= i {
+                    a(i).is_close(limit(a), eps2)
+                    b(i).is_close(limit(b), eps2)
+                    (a(i) + b(i)).is_close(limit(a) + limit(b), eps2 + eps2)
+                    (q(i) - ql).abs < eps
+                    q(i).is_close(ql, eps)
+                }
+            }
+        }
+    }
+    converges_to(q, ql)
+}
+
+// TODO: prove these to make it convenient to use rat_seq
 
 // theorem rat_seq_converges_to(x: Real) {
 //     converges_to(lift_seq(rat_seq(x)), x)

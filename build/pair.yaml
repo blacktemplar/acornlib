@@ -1,2 +1,9 @@
 dependencies: 0
 content: 13039470446646124286
+blocks:
+  swap_swap:
+    pair:
+    - Pair.first
+    - Pair.new
+    - Pair.second
+    - Pair.swap
