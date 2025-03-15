@@ -1,5 +1,5 @@
 dependencies: 7802618515257403739
-content: 11132345041209750763
+content: 2707871660159154513
 blocks:
   Real.constraint:
     real:
@@ -892,6 +892,11 @@ blocks:
     - eventual_lb
     - eventual_ub
     - gte_imp_not_lt
+  lift_rat_seq_close:
+    real:
+    - close_comm
+    - lift_seq_elt
+    - rat_seq_is_close
   lift_seq_elt:
     real:
     - compose

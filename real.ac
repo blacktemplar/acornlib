@@ -2641,7 +2641,9 @@ theorem limit_add_seq(a: Nat -> Real, b: Nat -> Real) {
     converges_to(q, ql)
 }
 
-// TODO: prove these to make it convenient to use rat_seq
+theorem lift_rat_seq_close(x: Real, n: Nat) {
+    lift_seq(rat_seq(x))(n).is_close(x, Real.from_rat(rat.iop(n)))
+}
 
 // theorem rat_seq_converges_to(x: Real) {
 //     converges_to(lift_seq(rat_seq(x)), x)
