@@ -2672,12 +2672,6 @@ theorem rat_seq_converges_to(x: Real) {
     }
 }
 
-// Lifting a uniformly continuous function of rationals
-// to a function over the reals.
-define lift_uc(f: Rat -> Real, x: Real) -> Real {
-    limit(compose(f, rat_seq(x)))
-}
-
 // The condition for uniform continuity on the reals.
 define uniform_condition(f: Real -> Real, delta: Real, eps: Real) -> Bool {
     forall(r1: Real, r2: Real) {
@@ -2719,8 +2713,57 @@ theorem limit_compose_uniform(f: Real -> Real, a: Nat -> Real) {
     }
 }
 
+theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
+    rat_uniform(f)
+    and converges_to(lift_seq(a), Real.from_rat(r))
+    implies
+    converges_to(compose(f, a), f(r))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let delta: Rat satisfy {
+                delta.is_positive and rat_condition(f, delta, eps)
+            }
+            Real.from_rat(delta).is_positive
+            let n: Nat satisfy {
+                forall(i: Nat) {
+                    n <= i implies lift_seq(a)(i).is_close(Real.from_rat(r), Real.from_rat(delta))
+                }
+            }
+
+            forall(i: Nat) {
+                if n <= i {
+                    lift_seq(a)(i).is_close(Real.from_rat(r), Real.from_rat(delta))
+                    a(i).is_close(r, delta)
+                    f(a(i)).is_close(f(r), eps)
+                    compose(f, a)(i).is_close(f(r), eps)
+                }
+            }
+        }
+    }
+}
+
+// Lifting a uniformly continuous function of rationals
+// to a function over the reals.
+define lift_uc(f: Rat -> Real, x: Real) -> Real {
+    limit(compose(f, rat_seq(x)))
+}
+
+// theorem lift_fixes_rats(f: Rat -> Real, r: Rat) {
+//     rat_uniform(f)
+//     implies
+//     lift_uc(f, Real.from_rat(r)) = f(r)
+// }
+
+// theorem lift_uniform_is_uniform(f: Rat -> Real) {
+//     rat_uniform(f)
+//     implies
+//     uniform(lift_uc(f))
+// } by {
+// }
+
 // TODO:
-// Prove that limits swap through uniform functions.
 // Prove that lift_uc(f) is uniform when rat_uniform(f).
-// Prove that this fixes rationals.
+// Prove that lifting fixes rationals.
+// Prove that lifting an increasing function is increasing.
 // multiplication.

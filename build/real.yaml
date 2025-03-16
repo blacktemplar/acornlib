@@ -1,5 +1,5 @@
 dependencies: 7802618515257403739
-content: 17853813291852487417
+content: 3439647223787839244
 blocks:
   Real.constraint:
     real:
@@ -916,6 +916,16 @@ blocks:
     - converges_to
     - eps_lt_half
     - lt_trans
+  limit_compose_rat_uniform:
+    real:
+    - close_imp_eps_pos
+    - close_reals_imp_close_rats
+    - compose
+    - converges_to
+    - lift_seq_elt
+    - rat_approx
+    - rat_condition
+    - rat_uniform
   limit_compose_uniform:
     nat:
     - Nat.lte
