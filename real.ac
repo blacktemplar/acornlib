@@ -2645,9 +2645,32 @@ theorem lift_rat_seq_close(x: Real, n: Nat) {
     lift_seq(rat_seq(x))(n).is_close(x, Real.from_rat(rat.iop(n)))
 }
 
-// theorem rat_seq_converges_to(x: Real) {
-//     converges_to(lift_seq(rat_seq(x)), x)
-// }
+theorem rat_seq_converges_to(x: Real) {
+    converges_to(lift_seq(rat_seq(x)), x)
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            Real.0 < eps
+            let reps: Rat satisfy {
+                Real.from_rat(reps) < eps and reps.is_positive
+            }
+            let n: Nat satisfy {
+                forall(i: Nat) {
+                    n <= i implies rat.iop(i) < reps
+                }
+            }
+
+            forall(i: Nat) {
+                if n <= i {
+                    lift_seq(rat_seq(x))(i).is_close(x, Real.from_rat(rat.iop(i)))
+                    Real.from_rat(rat.iop(i)) < eps
+                    (Real.from_rat(rat_seq(x, i)) - x).abs < eps
+                    lift_seq(rat_seq(x))(i).is_close(x, eps)
+                }
+            }
+        }
+    }
+}
 
 // TODO:
 // Define lifting uniformly continuous functions.

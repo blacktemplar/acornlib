@@ -1,5 +1,5 @@
 dependencies: 7802618515257403739
-content: 2707871660159154513
+content: 10310862172640447363
 blocks:
   Real.constraint:
     real:
@@ -1608,6 +1608,22 @@ blocks:
     - Real.new
     - gte_imp_not_lt
     - lte_or_gte
+  rat_seq_converges_to:
+    rat:
+    - iop_gets_lt
+    real:
+    - Real.gt
+    - Real.is_close
+    - Real.lt
+    - add_rat_eps_between
+    - add_zero_left
+    - converges_to
+    - from_rat_maintains_lt
+    - lift_rat_seq_close
+    - lift_seq_elt
+    - lt_lte_trans
+    - lt_trans
+    - pos_gt_zero
   rat_seq_is_close:
     rat:
     - iop_pos
