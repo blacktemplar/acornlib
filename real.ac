@@ -2672,7 +2672,55 @@ theorem rat_seq_converges_to(x: Real) {
     }
 }
 
+// Lifting a uniformly continuous function of rationals
+// to a function over the reals.
+define lift_uc(f: Rat -> Real, x: Real) -> Real {
+    limit(compose(f, rat_seq(x)))
+}
+
+// The condition for uniform continuity on the reals.
+define uniform_condition(f: Real -> Real, delta: Real, eps: Real) -> Bool {
+    forall(r1: Real, r2: Real) {
+        r1.is_close(r2, delta) implies f(r1).is_close(f(r2), eps)
+    }
+}
+
+// The definition of uniform continuity on the reals.
+define uniform(f: Real -> Real) -> Bool {
+    forall(eps: Real) {
+        eps.is_positive implies exists(delta: Real) {
+            delta.is_positive and uniform_condition(f, delta, eps)
+        }
+    }
+}
+
+theorem limit_compose_uniform(f: Real -> Real, a: Nat -> Real) {
+    uniform(f) and converges(a)
+    implies
+    converges_to(compose(f, a), f(limit(a)))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let delta: Real satisfy {
+                delta.is_positive and uniform_condition(f, delta, eps)
+            }
+            let n: Nat satisfy {
+                forall(i: Nat) {
+                    n <= i implies a(i).is_close(limit(a), delta)
+                }
+            }
+
+            forall(i: Nat) {
+                if n <= i {
+                    compose(f, a)(i).is_close(f(limit(a)), eps)
+                }
+            }
+        }
+    }
+}
+
 // TODO:
-// Define lifting uniformly continuous functions.
-// Lifting is fixed on rationals.
+// Prove that limits swap through uniform functions.
+// Prove that lift_uc(f) is uniform when rat_uniform(f).
+// Prove that this fixes rationals.
 // multiplication.
