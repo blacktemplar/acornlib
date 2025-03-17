@@ -1744,5 +1744,28 @@ theorem iop_gets_lt(eps: Rat) {
             iop(i) < eps
         }
     }
+}
 
+theorem three_is_positive {
+    Rat.3.is_positive
+}
+
+theorem times_three(x: Rat) {
+    Rat.3 * x = x + x + x
+} by {
+    Int.3 = Int.2 + Int.1
+    Rat.3 = Rat.2 + Rat.1
+    Rat.3 * x = (Rat.2 + Rat.1) * x
+    Rat.3 * x = Rat.2 * x + Rat.1 * x
+}
+
+theorem three_thirds(x: Rat) {
+    (x / Rat.3) + (x / Rat.3) + (x / Rat.3) = x
+} by {
+    (x / Rat.3) + (x / Rat.3) + (x / Rat.3) = x / Rat.3 + x / Rat.3 + x / Rat.3
+    (x / Rat.3) + (x / Rat.3) + (x / Rat.3) = (x + x + x) / Rat.3
+    (x / Rat.3) + (x / Rat.3) + (x / Rat.3) = (Rat.3 * x) / Rat.3
+    Rat.3 != Rat.0
+    x * Rat.3 / Rat.3 = x
+    (x / Rat.3) + (x / Rat.3) + (x / Rat.3) = x
 }

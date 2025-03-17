@@ -1,5 +1,5 @@
 dependencies: 4813290060467529564
-content: 16516959608744916130
+content: 8160391876790958408
 blocks:
   Rat.constraint:
     rat:
@@ -1420,6 +1420,45 @@ blocks:
     - from_int_num
     - mul_one_left
     - zero_denom
+  three_is_positive:
+    int:
+    - Int.3
+    - pos_part
+    - pos_part_from
+    nat:
+    - three_neq_zero
+    rat:
+    - Rat.3
+    - Rat.is_positive
+    - from_int_num
+  three_thirds:
+    rat:
+    - Rat.div
+    - mul_assoc
+    - mul_cancels_div_left
+    - mul_div_cancels
+    - pos_ne_zero
+    - three_is_positive
+    - times_three
+  times_three:
+    int:
+    - Int.1
+    - Int.2
+    - Int.3
+    - add_from_nat
+    nat:
+    - Nat.3
+    - add_one_right
+    rat:
+    - Rat.1
+    - Rat.2
+    - Rat.3
+    - add_assoc
+    - add_comm
+    - add_int_eq_int_add
+    - distrib_right
+    - mul_one_left
+    - times_two
   times_two:
     int:
     - mul_one_left

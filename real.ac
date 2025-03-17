@@ -2795,10 +2795,25 @@ theorem lift_fixes_rats(f: Rat -> Real, r: Rat) {
 //     implies
 //     uniform(lift_uc(f))
 // } by {
+//     forall(eps: Real) {
+//         if eps.is_positive {
+//             Real.0 < eps
+//             let reps: Rat satisfy {
+//                 Real.from_rat(reps) < eps and reps.is_positive
+//             }
+//             let eps3: Rat satisfy {
+//                 eps3.is_positive and eps3 + eps3 + eps3 < reps
+//             }
+
+//             let delta: Real satisfy {
+//                 delta.is_positive
+//             }
+//             uniform_condition(lift_uc(f), delta, eps)
+//             delta.is_positive and uniform_condition(lift_uc(f), delta, eps)
+//         }
+//     }
 // }
 
 // TODO:
-// Prove that lift_uc(f) is uniform when rat_uniform(f).
-// Prove that lifting fixes rationals.
 // Prove that lifting an increasing function is increasing.
 // multiplication.
