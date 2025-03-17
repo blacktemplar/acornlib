@@ -1,5 +1,5 @@
 dependencies: 7802618515257403739
-content: 3439647223787839244
+content: 12083458566615463115
 blocks:
   Real.constraint:
     real:
@@ -29,7 +29,7 @@ blocks:
     - pos_gt_zero
   abs_lt_imp_close_to_zero:
     real:
-    - '2530'
+    - '2561'
     - Real.abs
     - Real.gt
     - Real.is_close
@@ -505,6 +505,23 @@ blocks:
     - eps_lt_half
     - is_close_triangle
     - lt_trans
+  converges_to_unique:
+    real:
+    - Real.lt
+    - converges_to_unique_one_way
+    - lte_or_gte
+  converges_to_unique_one_way:
+    real:
+    - Real.gt
+    - Real.gte
+    - converges_to_imp_converges
+    - gt_converges_to_imp_ub
+    - gt_imp_not_lte
+    - lb_lte_limit
+    - lt_converges_to_imp_lb
+    - lte_trans
+    - rat_between_reals
+    - ub_imp_limit_lte
   eps_lt_half:
     rat:
     - Rat.gt
@@ -892,6 +909,14 @@ blocks:
     - eventual_lb
     - eventual_ub
     - gte_imp_not_lt
+  lift_fixes_rats:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - lift_uc
+    - limit_compose_rat_uniform
+    - rat_seq_converges_to
   lift_rat_seq_close:
     real:
     - close_comm

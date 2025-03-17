@@ -2440,6 +2440,37 @@ theorem converges_imp_converges_to(q: Nat -> Real) {
     }
 }
 
+theorem converges_to_unique_one_way(q: Nat -> Real, a: Real, b: Real) {
+    converges_to(q, a) and converges_to(q, b) implies not a < b
+} by {
+    converges(q)
+    if a < b {
+        let r1: Real satisfy {
+            a < r1 and r1 < b
+        }
+        let r2: Real satisfy {
+            r1 < r2 and r2 < b
+        }
+        eventual_ub(q, r1)
+        limit(q) <= r1
+        eventual_lb(q, r2)
+        limit(q) >= r2
+        r2 <= r1
+        false
+    }
+}
+
+theorem converges_to_unique(q: Nat -> Real, a: Real, b: Real) {
+    converges_to(q, a) and converges_to(q, b) implies a = b
+} by {
+    if a < b {
+        false
+    }
+    if b < a {
+        false
+    }
+}
+
 // The condition for uniform continuity on the rationals.
 define rat_condition(f: Rat -> Real, delta: Rat, eps: Real) -> Bool {
     forall(r1: Rat, r2: Rat) {
@@ -2749,11 +2780,15 @@ define lift_uc(f: Rat -> Real, x: Real) -> Real {
     limit(compose(f, rat_seq(x)))
 }
 
-// theorem lift_fixes_rats(f: Rat -> Real, r: Rat) {
-//     rat_uniform(f)
-//     implies
-//     lift_uc(f, Real.from_rat(r)) = f(r)
-// }
+theorem lift_fixes_rats(f: Rat -> Real, r: Rat) {
+    rat_uniform(f)
+    implies
+    lift_uc(f, Real.from_rat(r)) = f(r)
+} by {
+    converges_to(lift_seq(rat_seq(Real.from_rat(r))), Real.from_rat(r))
+    converges_to(compose(f, rat_seq(Real.from_rat(r))), f(r))
+    limit(compose(f, rat_seq(Real.from_rat(r)))) = f(r)
+}
 
 // theorem lift_uniform_is_uniform(f: Rat -> Real) {
 //     rat_uniform(f)
