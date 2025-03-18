@@ -1,5 +1,5 @@
 dependencies: 0
-content: 1289733380227536741
+content: 1316780538737404797
 blocks:
   add_assoc:
     nat:
@@ -354,6 +354,12 @@ blocks:
   factorial_zero:
     nat:
     - factorial
+  gte_each_of_three:
+    nat:
+    - Nat.lt
+    - lt_or_lte
+    - lte_ref
+    - lte_trans
   has_prime_divisor:
     nat:
     - '757'

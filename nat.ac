@@ -1448,3 +1448,17 @@ theorem exp_eq_one_imp(a: Nat, b: Nat) {
 theorem sq_eq_mul(a: Nat) {
     a.exp(2) = a * a
 }
+
+theorem gte_each_of_three(a: Nat, b: Nat, c: Nat) {
+    exists(n: Nat) {
+        a <= n and b <= n and c <= n
+    }
+} by {
+    let n1: Nat satisfy {
+        a <= n1 and b <= n1
+    }
+    let n2: Nat satisfy {
+        n1 <= n2 and c <= n2
+    }
+    a <= n2 and b <= n2 and c <= n2
+}

@@ -1662,7 +1662,7 @@ theorem close_comm(a: Real, b: Real, eps: Real) {
 }
 
 theorem close_imp_bounds(a: Real, b: Real, eps: Real) {
-    a.is_close(b, eps) implies b - eps < a and a < b + eps and a > b - eps
+    a.is_close(b, eps) implies b - eps < a and a < b + eps and a > b - eps and b < a + eps
 } by {
     // Left ineq
     (a - b).abs < eps
@@ -1709,6 +1709,14 @@ theorem bounds_imp_close(a: Real, b: Real, eps: Real) {
         (a - b).abs < eps
         a.is_close(b, eps)
     }
+}
+
+theorem sum_bounds_imp_close(a: Real, b: Real, eps: Real) {
+    b < a + eps and a < b + eps implies a.is_close(b, eps)
+} by {
+    a + eps - eps <= a
+    b + -eps < a
+    b - eps < a
 }
 
 theorem self_close(a: Real, eps: Real) {
@@ -2790,30 +2798,264 @@ theorem lift_fixes_rats(f: Rat -> Real, r: Rat) {
     limit(compose(f, rat_seq(Real.from_rat(r)))) = f(r)
 }
 
-// theorem lift_uniform_is_uniform(f: Rat -> Real) {
-//     rat_uniform(f)
-//     implies
-//     uniform(lift_uc(f))
-// } by {
-//     forall(eps: Real) {
-//         if eps.is_positive {
-//             Real.0 < eps
-//             let reps: Rat satisfy {
-//                 Real.from_rat(reps) < eps and reps.is_positive
-//             }
-//             let eps3: Rat satisfy {
-//                 eps3.is_positive and eps3 + eps3 + eps3 < reps
-//             }
+theorem rat_close_to_both_lt(x: Real, y: Real, eps: Real) {
+    x.is_close(y, eps) and x < y implies
+    exists(r: Rat) {
+        x.is_close(Real.from_rat(r), eps)
+        and
+        y.is_close(Real.from_rat(r), eps)
+    }
+} by {
+    let r: Rat satisfy {
+        x < Real.from_rat(r) and Real.from_rat(r) < y
+    }
+    Real.from_rat(r) < x + eps
+    y < Real.from_rat(r) + eps
+    x.is_close(Real.from_rat(r), eps)
+}
 
-//             let delta: Real satisfy {
-//                 delta.is_positive
-//             }
-//             uniform_condition(lift_uc(f), delta, eps)
-//             delta.is_positive and uniform_condition(lift_uc(f), delta, eps)
-//         }
-//     }
-// }
+theorem rat_close(x: Real, y: Real, eps: Real) {
+    x.is_close(y, eps) implies
+    exists(r: Rat) {
+        x.is_close(Real.from_rat(r), eps)
+        and
+        y.is_close(Real.from_rat(r), eps)
+    }
+} by {
+    y.is_close(x, eps)
+    if x < y {
+        exists(r: Rat) {
+            x.is_close(Real.from_rat(r), eps)
+            and
+            y.is_close(Real.from_rat(r), eps)
+        }
+    } else {
+        if y < x {
+            exists(r: Rat) {
+                x.is_close(Real.from_rat(r), eps)
+                and
+                y.is_close(Real.from_rat(r), eps)
+            }
+        } else {
+            x = y
+            let r1: Rat satisfy {
+                x.is_close(Real.from_rat(r1), eps)
+            }
+            exists(r2: Rat) {
+                x.is_close(Real.from_rat(r2), eps)
+                and
+                y.is_close(Real.from_rat(r2), eps)
+            }
+        }
+    }
+}
+
+theorem lift_rat_seq_converges(x: Real) {
+    converges(lift_seq(rat_seq(x)))
+}
+
+// When two sequences get close to each other eventually.
+define seq_close(a: Nat -> Real, b: Nat -> Real, eps: Real) -> Bool {
+    exists(n: Nat) {
+        forall(i: Nat) {
+            n <= i implies a(i).is_close(b(i), eps)
+        }
+    }
+}
+
+theorem convergent_seqs_get_close(a: Nat -> Real, b: Nat -> Real, eps: Real) {
+    eps.is_positive and converges(a) and converges(b) and limit(a) = limit(b)
+    implies
+    seq_close(a, b, eps)
+} by {
+    let eps2: Real satisfy {
+        eps2.is_positive and eps2 + eps2 < eps
+    }
+    let n1: Nat satisfy {
+        forall(i: Nat) {
+            n1 <= i implies a(i).is_close(limit(a), eps2)
+        }
+    }
+    let n2: Nat satisfy {
+        forall(i: Nat) {
+            n2 <= i implies b(i).is_close(limit(b), eps2)
+        }
+    }
+    let n: Nat satisfy {
+        n1 <= n and n2 <= n
+    }
+    forall(i: Nat) {
+        if n <= i {
+            a(i).is_close(limit(a), eps2)
+            b(i).is_close(limit(b), eps2)
+            a(i).is_close(b(i), eps2 + eps2)
+            (a(i) - b(i)).abs < eps
+            a(i).is_close(b(i), eps)
+        }
+    }
+}
+
+theorem only_abs_zero_eq_zero(x: Real) {
+    x.abs = Real.0 implies x = Real.0
+}
+
+theorem close_limit_imp_seqs_get_close(a: Nat -> Real, b: Nat -> Real, eps: Real) {
+    converges(a) and converges(b) and limit(a).is_close(limit(b), eps)
+    implies
+    seq_close(a, b, eps)
+} by {
+    if limit(a) = limit(b) {
+        seq_close(a, b, eps)
+    } else {
+        limit(a) != limit(b)
+        let diff: Real = (limit(a) - limit(b)).abs
+        (limit(a) - limit(b)) != Real.0
+        diff != Real.0
+        diff.is_positive
+        diff < eps
+        let eps2: Real satisfy {
+            diff < eps2 and eps2 < eps
+        }
+        limit(a).is_close(limit(b), eps2)
+        let eps3: Real satisfy {
+            eps3.is_positive and eps2 + eps3 < eps
+        }
+        let eps4: Real satisfy {
+            eps4.is_positive and eps4 + eps4 < eps3
+        }
+        let n1: Nat satisfy {
+            forall(i: Nat) {
+                n1 <= i implies a(i).is_close(limit(a), eps4)
+            }
+        }
+        let n2: Nat satisfy {
+            forall(i: Nat) {
+                n2 <= i implies b(i).is_close(limit(b), eps4)
+            }
+        }
+        let n: Nat satisfy {
+            n1 <= n and n2 <= n
+        }
+        forall(i: Nat) {
+            if n <= i {
+                n1 <= i
+                n2 <= i
+                a(i).is_close(limit(a), eps4)
+                b(i).is_close(limit(b), eps4)
+                a(i).is_close(limit(b), eps4 + eps2)
+                a(i).is_close(b(i), eps4 + eps2 + eps4)
+                a(i).is_close(b(i), eps4 + eps4 + eps2)
+                eps3 + eps2 < eps
+                eps4 + eps4 + eps2 < eps3 + eps2
+                eps4 + eps4 + eps2 < eps
+                (a(i) - b(i)).abs < eps
+                a(i).is_close(b(i), eps)
+            }
+        }
+        seq_close(a, b, eps)
+    }
+}
+
+theorem close_and_lt_imp_close(x: Real, y: Real, eps1: Real, eps2: Real) {
+    x.is_close(y, eps1) and eps1 < eps2 implies x.is_close(y, eps2)
+}
+
+theorem find_less_than_a_third(x: Real) {
+    x.is_positive implies
+    exists(eps: Real) {
+        eps.is_positive and eps + eps + eps < x
+    }
+} by {
+    Real.0 < x
+    let r: Rat satisfy {
+        r.is_positive and Real.from_rat(r) < x
+    }
+    let reps: Rat = r / Rat.3
+    reps + reps + reps = r
+    Real.from_rat(reps) + Real.from_rat(reps) + Real.from_rat(reps) = Real.from_rat(r)
+    Real.from_rat(reps) + Real.from_rat(reps) + Real.from_rat(reps) < x
+}
+
+theorem lift_uniform_is_uniform(f: Rat -> Real) {
+    rat_uniform(f)
+    implies
+    uniform(lift_uc(f))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            // We split epsilon into three because we have three approximations to combine:
+            // f(a) is close to f(a_i) is close to f(b_i) is close to f(b).
+            let eps3: Real satisfy {
+                eps3.is_positive and eps3 + eps3 + eps3 < eps
+            }
+
+            let delta: Rat satisfy {
+                delta.is_positive and rat_condition(f, delta, eps3)
+            }
+
+            forall(a: Real, b: Real) {
+                if a.is_close(b, Real.from_rat(delta)) {
+                    // f(a_i) is approximately f(a)
+                    let fas: Nat -> Real = compose(f, rat_seq(a))
+                    converges(fas)
+                    converges_to(fas, limit(fas))
+                    let n1: Nat satisfy {
+                        forall(i: Nat) {
+                            n1 <= i implies
+                            fas(i).is_close(limit(fas), eps3)
+                        }
+                    }
+
+                    // f(b_i) is approximately f(b)
+                    let fbs: Nat -> Real = compose(f, rat_seq(b))
+                    converges(fbs)
+                    converges_to(fbs, limit(fbs))
+                    let n2: Nat satisfy {
+                        forall(i: Nat) {
+                            n2 <= i implies
+                            fbs(i).is_close(limit(fbs), eps3)
+                        }
+                    }
+
+                    // f(a_i) and f(b_i) are close
+                    limit(lift_seq(rat_seq(a))) = a
+                    limit(lift_seq(rat_seq(b))) = b
+                    limit(lift_seq(rat_seq(a))).is_close(limit(lift_seq(rat_seq(b))), Real.from_rat(delta))
+                    converges(lift_seq(rat_seq(a)))
+                    converges(lift_seq(rat_seq(b)))
+                    seq_close(lift_seq(rat_seq(a)), lift_seq(rat_seq(b)), Real.from_rat(delta))
+                    let n3: Nat satisfy {
+                        forall(i: Nat) {
+                            n3 <= i implies
+                            lift_seq(rat_seq(a))(i).is_close(lift_seq(rat_seq(b))(i), Real.from_rat(delta))
+                        }
+                    }
+
+                    let n: Nat satisfy {
+                        n1 <= n and n2 <= n and n3 <= n
+                    }
+                    fas(n).is_close(limit(fas), eps3)
+                    fbs(n).is_close(limit(fbs), eps3)
+                    lift_seq(rat_seq(a))(n).is_close(lift_seq(rat_seq(b))(n), Real.from_rat(delta))
+                    rat_seq(a)(n).is_close(rat_seq(b)(n), delta)
+                    f(rat_seq(a)(n)).is_close(f(rat_seq(b)(n)), eps3)
+                    limit(fas).is_close(fas(n), eps3)
+                    fas(n).is_close(fbs(n), eps3)
+                    limit(fas).is_close(fbs(n), eps3 + eps3)
+                    limit(fas).is_close(limit(fbs), eps3 + eps3 + eps3)
+                    limit(fas).is_close(limit(fbs), eps)
+
+                    lift_uc(f)(a).is_close(lift_uc(f)(b), eps)
+                }
+            }
+
+            uniform_condition(lift_uc(f), Real.from_rat(delta), eps)
+            delta.is_positive and uniform_condition(lift_uc(f), Real.from_rat(delta), eps)
+        }
+    }
+}
 
 // TODO:
+// If two functions are uniform, and equal on the rationals, then they are equal.
 // Prove that lifting an increasing function is increasing.
 // multiplication.

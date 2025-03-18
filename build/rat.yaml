@@ -1,4 +1,4 @@
-dependencies: 4813290060467529564
+dependencies: 12676240328438610026
 content: 8160391876790958408
 blocks:
   Rat.constraint:
@@ -189,8 +189,6 @@ blocks:
     - mul_zero_right
     - not_pos_and_neg
     - single_trichotomy
-    - sub_self
-    - sub_zero
   cancel_positivity_right:
     rat:
     - cancel_positivity_left
@@ -368,7 +366,6 @@ blocks:
     - Rat.from_nat
     - Rat.gt
     - Rat.lte
-    - from_int_num
     - nat_lt_imp_rat_lt
   gt_cancel_pos_mul_left:
     rat:
@@ -906,7 +903,6 @@ blocks:
     - neg_num
     - rat_neg_one
     - reduce_idempotent
-    - zero_denom
   mul_neg_pos:
     rat:
     - Rat.lt
@@ -944,7 +940,6 @@ blocks:
     - from_int_num
     - mul_comm
     - reduce_idempotent
-    - zero_denom
   mul_pos_neg:
     rat:
     - mul_comm
@@ -1002,7 +997,6 @@ blocks:
     - mul_comm
     - mul_zero_imp_factor_zero
     - mul_zero_left
-    - mul_zero_right
     rat:
     - Rat.mul
     - cross_eq_imp_reduce_eq
@@ -1162,14 +1156,8 @@ blocks:
     - mul_cancels_div
     - mul_comm
   pos_inverses_lte:
-    int:
-    - zero_not_pos
     rat:
-    - Rat.0
-    - Rat.from_int
-    - Rat.is_positive
     - Rat.lte
-    - from_int_num
     - inverses_eq
     - not_lt_self
     - pos_imp_zero_lt
@@ -1210,7 +1198,6 @@ blocks:
     - from_int_num
     - neg_denom
     - neg_num
-    - reduce_idempotent
   recip_eq_one_div:
     rat:
     - Rat.div
@@ -1337,7 +1324,6 @@ blocks:
     - reduce_zero_num
   smaller_int_reciprocal:
     int:
-    - neg_from_nat
     - non_pos_is_neg_abs
     - zero_not_pos
     rat:

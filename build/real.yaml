@@ -1,5 +1,5 @@
-dependencies: 10194151943408033193
-content: 13872111441210430795
+dependencies: 14119679720709953325
+content: 14738531627475363366
 blocks:
   Real.constraint:
     real:
@@ -29,7 +29,7 @@ blocks:
     - pos_gt_zero
   abs_lt_imp_close_to_zero:
     real:
-    - '2561'
+    - '2569'
     - Real.abs
     - Real.gt
     - Real.is_close
@@ -355,7 +355,7 @@ blocks:
     - lt_or_lte
     - lte_ref
     real:
-    - '1909'
+    - '1917'
     - Real.gt
     - Real.gte
     - Real.lt
@@ -385,7 +385,7 @@ blocks:
     rat:
     - iop_pos
     real:
-    - '1870'
+    - '1878'
     - Real.gt
     - Real.lt
     - add_zero_left
@@ -412,6 +412,10 @@ blocks:
     - cauchy_condition
     - close_imp_bounds
     - eventual_lb
+  close_and_lt_imp_close:
+    real:
+    - Real.is_close
+    - lt_trans
   close_comm:
     real:
     - Real.is_close
@@ -441,6 +445,39 @@ blocks:
     - abs_gte_zero
     - gt_zero_imp_pos
     - lte_lt_trans
+  close_limit_imp_seqs_get_close:
+    nat:
+    - Nat.lte
+    - gte_each_of_three
+    - lte_trans
+    real:
+    - Real.gt
+    - Real.gte
+    - Real.is_close
+    - Real.lt
+    - Real.sub
+    - abs_gte_zero
+    - add_assoc
+    - add_comm
+    - add_rat_eps_between
+    - add_zero_left
+    - close_comm
+    - close_imp_eps_pos
+    - convergent_seqs_get_close
+    - converges_imp_converges_to
+    - converges_to
+    - eps_lt_half
+    - from_rat_pos
+    - gt_zero_imp_pos
+    - is_close_triangle
+    - lt_add_right
+    - lt_lte_trans
+    - lt_trans
+    - neg_neg
+    - only_abs_zero_eq_zero
+    - rat_between_reals
+    - seq_close
+    - sub_moves_sides
   close_rats_imp_close_reals:
     rat:
     - Rat.is_close
@@ -472,6 +509,22 @@ blocks:
     - neg_lt_neg_swap_neg
     - neg_neg
     - not_gt_rat_self
+  convergent_seqs_get_close:
+    nat:
+    - Nat.lt
+    - Nat.lte
+    - lt_or_lte
+    - lte_ref
+    - lte_trans
+    real:
+    - Real.is_close
+    - Real.lt
+    - converges_imp_converges_to
+    - converges_to
+    - eps_lt_half
+    - is_close_triangle
+    - lt_lte_trans
+    - seq_close
   converges_imp_converges_to:
     nat:
     - Nat.lt
@@ -594,6 +647,19 @@ blocks:
     - Real.constraint
     - is_cut
     - is_dedekind_cut
+  find_less_than_a_third:
+    rat:
+    - cancel_positivity_left
+    - three_is_positive
+    - three_thirds
+    - times_three
+    real:
+    - Real.gt
+    - add_from_rat
+    - add_rat_eps_between
+    - add_zero_left
+    - from_rat_pos
+    - pos_gt_zero
   floor:
     real:
     - floor_exists
@@ -922,10 +988,41 @@ blocks:
     - close_comm
     - lift_seq_elt
     - rat_seq_is_close
+  lift_rat_seq_converges:
+    real:
+    - converges_to_imp_converges
+    - rat_seq_converges_to
   lift_seq_elt:
     real:
     - compose
     - lift_seq
+  lift_uniform_is_uniform:
+    nat:
+    - gte_each_of_three
+    real:
+    - Real.is_close
+    - close_and_lt_imp_close
+    - close_comm
+    - close_limit_imp_seqs_get_close
+    - close_reals_imp_close_rats
+    - compose
+    - converges_imp_converges_to
+    - converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - find_less_than_a_third
+    - from_rat_pos
+    - is_close_triangle
+    - lift_rat_seq_converges
+    - lift_seq_elt
+    - lift_uc
+    - rat_condition
+    - rat_seq_converges_to
+    - rat_uniform
+    - seq_close
+    - uniform
+    - uniform_condition
+    - uniform_imp_seq
   limit_add_seq:
     nat:
     - Nat.lt
@@ -1542,6 +1639,11 @@ blocks:
     - Real.lt
     - lte_or_gte
     - lte_self
+  only_abs_zero_eq_zero:
+    real:
+    - Real.abs
+    - neg_neg
+    - neg_zero
   pos_gt_zero:
     real:
     - Real.0
@@ -1609,6 +1711,23 @@ blocks:
     real:
     - Real.gt
     - rat_between_reals
+  rat_close:
+    real:
+    - Real.lt
+    - close_comm
+    - lte_or_gte
+    - rat_close_to_both_lt
+    - rat_intersect
+  rat_close_to_both_lt:
+    real:
+    - Real.lt
+    - bounds_imp_close
+    - close_imp_bounds
+    - lt_add_right
+    - lt_lte_trans
+    - lt_trans
+    - rat_between_reals
+    - sum_bounds_imp_close
   rat_dual_upper_bound:
     rat:
     - iop_pos
@@ -1747,6 +1866,14 @@ blocks:
     - sub_cancels
   sub_moves_sides:
     real:
+    - sub_cancels
+  sum_bounds_imp_close:
+    real:
+    - Real.lte
+    - Real.sub
+    - bounds_imp_close
+    - lt_add_right
+    - lt_lte_trans
     - sub_cancels
   ub_imp_limit_lte:
     real:
