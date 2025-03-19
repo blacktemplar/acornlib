@@ -3055,7 +3055,77 @@ theorem lift_uniform_is_uniform(f: Rat -> Real) {
     }
 }
 
+theorem neq_imp_abs_diff_pos(x: Real, y: Real) {
+    x != y implies (x - y).abs.is_positive
+} by {
+    if x < y {
+        x - y < Real.0
+        (x - y) != Real.0
+        (x - y).abs.is_positive
+    } else {
+        x >= y
+        x > y
+        x - y > Real.0
+        (x - y).abs.is_positive
+    }
+}
+
+theorem eps_smaller_than_both(eps1: Real, eps2: Real) {
+    eps1.is_positive and eps2.is_positive implies
+    exists(eps3: Real) {
+        eps3.is_positive and eps3 < eps1 and eps3 < eps2
+    }
+} by {
+    Real.0 < min(eps1, eps2)
+    let eps3: Real satisfy {
+        Real.0 < eps3 and eps3 < min(eps1, eps2)
+    }
+    eps3.is_positive and eps3 < eps1 and eps3 < eps2
+}
+
+// When two uniform functions are not equal, they differ on some rational number.
+theorem uniform_ne_imp_rat_ne(f: Real -> Real, g: Real -> Real) {
+    uniform(f) and uniform(g) and f != g implies
+    exists(r: Rat) {
+        f(Real.from_rat(r)) != g(Real.from_rat(r))
+    }
+} by {
+    let x: Real satisfy {
+        f(x) != g(x)
+    }
+    let eps: Real = (f(x) - g(x)).abs
+    eps.is_positive
+    not f(x).is_close(g(x), eps)
+    let eps2: Real satisfy {
+        eps2.is_positive and eps2 + eps2 < eps
+    }
+
+    let delta1: Real satisfy {
+        delta1.is_positive and uniform_condition(f, delta1, eps2)
+    }
+    let delta2: Real satisfy {
+        delta2.is_positive and uniform_condition(g, delta2, eps2)
+    }
+    let delta: Real satisfy {
+        delta.is_positive and delta < delta1 and delta < delta2
+    }
+
+    let r: Rat satisfy {
+        Real.from_rat(r).is_close(x, delta)
+    }
+    Real.from_rat(r).is_close(x, delta1)
+    f(Real.from_rat(r)).is_close(f(x), eps2)
+    Real.from_rat(r).is_close(x, delta2)
+    g(Real.from_rat(r)).is_close(g(x), eps2)
+    if f(Real.from_rat(r)) = g(Real.from_rat(r)) {
+        f(x).is_close(f(Real.from_rat(r)), eps2)
+        f(Real.from_rat(r)).is_close(g(x), eps2)
+        f(x).is_close(g(x), eps2 + eps2)
+        f(x).is_close(g(x), eps)
+        false
+    }
+}
+
 // TODO:
-// If two functions are uniform, and equal on the rationals, then they are equal.
 // Prove that lifting an increasing function is increasing.
 // multiplication.

@@ -1,5 +1,5 @@
 dependencies: 14119679720709953325
-content: 14738531627475363366
+content: 17477845013664654742
 blocks:
   Real.constraint:
     real:
@@ -591,6 +591,15 @@ blocks:
     - lt_imp_minus_pos
     - pos_gt_zero
     - rat_approx_exists
+    - rat_between_reals
+  eps_smaller_than_both:
+    real:
+    - Real.gt
+    - gt_zero_imp_pos
+    - lt_both_imp_lt_min
+    - lt_min_imp_lt_left
+    - lt_min_imp_lt_right
+    - pos_gt_zero
     - rat_between_reals
   eq_converges:
     real:
@@ -1622,6 +1631,26 @@ blocks:
     real:
     - Real.0
     - neg_from_rat
+  neq_imp_abs_diff_pos:
+    real:
+    - Real.gt
+    - Real.is_negative
+    - Real.lt
+    - abs_gte_zero
+    - add_gt_imp_gt_sub
+    - add_zero_left
+    - converges_to_unique_one_way
+    - gt_zero_imp_pos
+    - gte_imp_not_lt
+    - iop_limit
+    - lt_imp_minus_pos
+    - lt_lte_trans
+    - lte_abs
+    - neg_lt_zero
+    - not_lt_imp_gte
+    - not_lte_imp_gt
+    - only_abs_zero_eq_zero
+    - pos_gt_zero
   not_gt_rat_self:
     rat:
     - Rat.gt
@@ -1897,6 +1926,22 @@ blocks:
     - lift_seq
     - rat_condition
     - rat_uniform
+  uniform_ne_imp_rat_ne:
+    real:
+    - '3125'
+    - Real.is_close
+    - Real.lt
+    - close_and_lt_imp_close
+    - close_comm
+    - eps_lt_half
+    - eps_smaller_than_both
+    - is_close_triangle
+    - neq_imp_abs_diff_pos
+    - rat_intersect
+    - rat_seq_is_close
+    - self_close
+    - uniform
+    - uniform_condition
   zero_not_positive:
     rat:
     - Rat.gt
