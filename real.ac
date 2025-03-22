@@ -3126,6 +3126,12 @@ theorem uniform_ne_imp_rat_ne(f: Real -> Real, g: Real -> Real) {
     }
 }
 
+define rat_increasing(f: Rat -> Real) -> Bool {
+    forall(r1: Rat, r2: Rat) {
+        r1 < r2 implies f(r1) < f(r2)
+    }
+}
+
 // TODO:
 // Prove that lifting an increasing function is increasing.
 // multiplication.
