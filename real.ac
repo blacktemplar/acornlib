@@ -3132,6 +3132,12 @@ define rat_increasing(f: Rat -> Real) -> Bool {
     }
 }
 
+define increasing(f: Real -> Real) -> Bool {
+    forall(x: Real, y: Real) {
+        x < y implies f(x) < f(y)
+    }
+}
+
 // TODO:
 // Prove that lifting an increasing function is increasing.
 // multiplication.
