@@ -1,5 +1,5 @@
 dependencies: 14119679720709953325
-content: 15214216364309686145
+content: 11660586643842236597
 blocks:
   Real.constraint:
     real:
@@ -1915,6 +1915,23 @@ blocks:
     - lt_lte_trans
     - not_lte_imp_gt
     - rat_between_reals_gt
+  uni_cond_imp_rat_cond:
+    real:
+    - close_rats_imp_close_reals
+    - compose
+    - rat_condition
+    - uniform_condition
+  uniform_imp_rat_uniform:
+    real:
+    - Real.gt
+    - add_rat_eps_between
+    - add_zero_left
+    - close_and_lt_imp_close
+    - pos_gt_zero
+    - rat_uniform
+    - uni_cond_imp_rat_cond
+    - uniform
+    - uniform_condition
   uniform_imp_seq:
     real:
     - Real.is_close

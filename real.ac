@@ -3138,6 +3138,32 @@ define increasing(f: Real -> Real) -> Bool {
     }
 }
 
+theorem uni_cond_imp_rat_cond(f: Real -> Real, delta: Rat, eps: Real) {
+    uniform_condition(f, Real.from_rat(delta), eps)
+    implies
+    rat_condition(compose(f, Real.from_rat), delta, eps)
+}
+
+theorem uniform_imp_rat_uniform(f: Real -> Real) {
+    uniform(f)
+    implies
+    rat_uniform(compose(f, Real.from_rat))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let delta: Real satisfy {
+                delta.is_positive and uniform_condition(f, delta, eps)
+            }
+            Real.0 < delta
+            let rdelta: Rat satisfy {
+                rdelta.is_positive and Real.from_rat(rdelta) < delta
+            }
+            uniform_condition(f, Real.from_rat(rdelta), eps)
+            rdelta.is_positive and rat_condition(compose(f, Real.from_rat), rdelta, eps)
+        }
+    }
+}
+
 // TODO:
 // Prove that lifting an increasing function is increasing.
 // multiplication.
