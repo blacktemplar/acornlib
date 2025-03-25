@@ -3164,6 +3164,121 @@ theorem uniform_imp_rat_uniform(f: Real -> Real) {
     }
 }
 
+theorem tighten_uc(f: Real -> Real, delta1: Real, delta2: Real, eps: Real) {
+    delta1.is_positive and delta2.is_positive and
+    uniform_condition(f, delta1, eps) and delta2 < delta1
+    implies
+    uniform_condition(f, delta2, eps)
+}
+
+theorem lift_inc_is_inc(f: Rat -> Real) {
+    rat_uniform(f) and rat_increasing(f)
+    implies
+    increasing(lift_uc(f))
+} by {
+    let lf: Real -> Real = lift_uc(f)
+    uniform(lf)
+    forall(r: Rat) {
+        lf(Real.from_rat(r)) = f(r)
+    }
+    forall(x: Real, y: Real) {
+        if x < y {
+            let r1: Rat satisfy {
+                x < Real.from_rat(r1) and Real.from_rat(r1) < y
+            }
+            let r2: Rat satisfy {
+                r1 < r2 and Real.from_rat(r2) < y
+            }
+            f(r1) < f(r2)
+            let eps: Real satisfy {
+                eps.is_positive and f(r1) + eps < f(r2)
+            }
+            let eps2: Real satisfy {
+                eps2.is_positive and eps2 + eps2 < eps
+            }
+
+            // Pick delta1 so that f(xr) is close to f(x)
+            let delta1: Real satisfy {
+                delta1.is_positive and
+                uniform_condition(lf, delta1, eps2)
+            }
+
+            // Pick delta2 so that xr is close to x and yr is close to y
+            let delta2a: Real satisfy {
+                delta2a.is_positive and
+                x + delta2a < Real.from_rat(r1)
+            }
+            let delta2b: Real satisfy {
+                delta2b.is_positive and
+                Real.from_rat(r2) + delta2b < y
+            }
+            let delta2: Real satisfy {
+                delta2.is_positive and
+                delta2 < delta2a and
+                delta2 < delta2b
+            }
+
+            // Delta satisfies all these conditions
+            let delta: Real satisfy {
+                delta.is_positive and
+                delta < delta1 and
+                delta < delta2
+            }
+            delta < delta2a
+            delta < delta2b
+
+            let xr: Rat satisfy {
+                Real.from_rat(xr).is_close(x, delta)
+            }
+            Real.from_rat(xr) < x + delta
+            Real.from_rat(xr) < x + delta2a
+            Real.from_rat(xr) < Real.from_rat(r1)
+            xr < r1
+
+            let yr: Rat satisfy {
+                Real.from_rat(yr).is_close(y, delta)
+            }
+            Real.from_rat(r2) + delta < Real.from_rat(r2) + delta2b
+            Real.from_rat(r2) + delta < y
+            y < Real.from_rat(yr) + delta
+            Real.from_rat(r2) + delta < Real.from_rat(yr) + delta
+            Real.from_rat(r2) < Real.from_rat(yr)
+            r2 < yr
+
+            forall(z: Real, zr: Rat) {
+                if Real.from_rat(zr).is_close(z, delta1) {
+                    lf(Real.from_rat(zr)).is_close(lf(z), eps2)
+                    f(zr).is_close(lf(z), eps2)
+                }
+            }
+            Real.from_rat(xr).is_close(x, delta1)
+            f(xr).is_close(lf(x), eps2)
+            Real.from_rat(yr).is_close(y, delta1)
+            f(yr).is_close(lf(y), eps2)
+
+            f(xr) < f(r1)
+            f(r2) < f(yr)
+            f(r1) + eps <= f(r2)
+            f(xr) + eps < f(r1) + eps
+            f(r2) <= f(yr)
+            f(r1) + eps < f(yr)
+            f(xr) + eps < f(yr)
+
+            lf(x) < f(xr) + eps2
+            f(xr) + (eps2 + eps2) < f(xr) + eps
+            f(xr) + eps2 + eps2 < f(xr) + eps
+            f(xr) + eps2 + eps2 < f(yr)
+            lf(x) + eps2 < f(xr) + eps2 + eps2
+            lf(x) + eps2 < f(yr)
+            f(yr) < lf(y) + eps2
+            lf(x) + eps2 < lf(y) + eps2
+            lf(x) < lf(y)
+
+            lift_uc(f)(x) < lift_uc(f)(y)
+        }
+    }
+}
+
 // TODO:
-// Prove that lifting an increasing function is increasing.
+// Prove that lifting a constant function is constant.
 // multiplication.

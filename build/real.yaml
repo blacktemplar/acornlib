@@ -1,5 +1,5 @@
 dependencies: 14119679720709953325
-content: 11660586643842236597
+content: 5797717094307264154
 blocks:
   Real.constraint:
     real:
@@ -992,6 +992,41 @@ blocks:
     - lift_uc
     - limit_compose_rat_uniform
     - rat_seq_converges_to
+  lift_inc_is_inc:
+    rat:
+    - lt_add_pos
+    real:
+    - Real.gt
+    - Real.lt
+    - add_assoc
+    - add_from_rat
+    - add_rat_eps_between
+    - close_and_lt_imp_close
+    - close_imp_bounds
+    - eps_lt_half
+    - eps_smaller_than_both
+    - from_rat_pos
+    - gt_from_rat_imp_gt_rat
+    - gt_imp_not_lte
+    - gt_rat_sorts
+    - increasing
+    - lift_fixes_rats
+    - lift_uniform_is_uniform
+    - lt_add_converse
+    - lt_add_left
+    - lt_add_rat_left
+    - lt_add_right
+    - lt_lte_trans
+    - lte_add_left
+    - lte_or_gte
+    - not_gt_rat_self
+    - rat_between_reals
+    - rat_increasing
+    - rat_intersect
+    - rat_seq_is_close
+    - self_close
+    - uniform
+    - uniform_condition
   lift_rat_seq_close:
     real:
     - close_comm
@@ -1904,6 +1939,10 @@ blocks:
     - lt_add_right
     - lt_lte_trans
     - sub_cancels
+  tighten_uc:
+    real:
+    - close_and_lt_imp_close
+    - uniform_condition
   ub_imp_limit_lte:
     real:
     - Real.gt
