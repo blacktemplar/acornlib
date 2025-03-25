@@ -3279,10 +3279,56 @@ theorem lift_inc_is_inc(f: Rat -> Real) {
     }
 }
 
+define is_constant<T, U>(f: T -> U) -> Bool {
+    exists(y: U) {
+        forall(x: T) {
+            f(x) = y
+        }
+    }
+}
 
+theorem constant_is_rat_uniform(f: Rat -> Real) {
+    is_constant(f)
+    implies
+    rat_uniform(f)
+}
+
+theorem constant_is_uniform(f: Real -> Real) {
+    is_constant(f)
+    implies
+    uniform(f)
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            forall(x: Real, y: Real) {
+                f(x).is_close(f(y), eps)
+            }
+            uniform_condition(f, eps, eps)
+        }
+    }
+}
+
+theorem lift_constant_is_constant(f: Rat -> Real) {
+    is_constant(f)
+    implies
+    is_constant(lift_uc(f))
+} by {
+    rat_uniform(f)
+    let (y: Real) satisfy {
+        forall(r: Rat) {
+            f(r) = y
+        }
+    }
+    forall(x: Real) {
+        forall(n: Nat) {
+            compose(f, rat_seq(x))(n) = y
+        }
+        limit(compose(f, rat_seq(x))) = y 
+        lift_uc(f)(x) = y
+    }
+}
 
 // TODO:
-// Lifting nondecreasing, decreasing, nonincreasing.
 // Prove that lifting a constant function is constant.
 // multiplication.
 // Something about the composition of two uniform functions?

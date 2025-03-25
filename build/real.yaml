@@ -1,5 +1,5 @@
 dependencies: 14119679720709953325
-content: 375081167470064866
+content: 864077343911683231
 blocks:
   Real.constraint:
     real:
@@ -509,6 +509,21 @@ blocks:
     - neg_lt_neg_swap_neg
     - neg_neg
     - not_gt_rat_self
+  constant_is_rat_uniform:
+    rat:
+    - one_is_pos
+    real:
+    - is_constant
+    - rat_condition
+    - rat_uniform
+    - self_close
+  constant_is_uniform:
+    real:
+    - is_constant
+    - neg_neg
+    - self_close
+    - uniform
+    - uniform_condition
   convergent_seqs_get_close:
     nat:
     - Nat.lt
@@ -984,6 +999,14 @@ blocks:
     - eventual_lb
     - eventual_ub
     - gte_imp_not_lt
+  lift_constant_is_constant:
+    real:
+    - compose
+    - constant_is_rat_uniform
+    - eq_imp_limit
+    - eventual_eq
+    - is_constant
+    - lift_uc
   lift_fixes_rats:
     real:
     - converges_imp_converges_to
