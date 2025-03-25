@@ -3279,6 +3279,10 @@ theorem lift_inc_is_inc(f: Rat -> Real) {
     }
 }
 
+
+
 // TODO:
+// Lifting nondecreasing, decreasing, nonincreasing.
 // Prove that lifting a constant function is constant.
 // multiplication.
+// Something about the composition of two uniform functions?
