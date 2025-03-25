@@ -3328,7 +3328,12 @@ theorem lift_constant_is_constant(f: Rat -> Real) {
     }
 }
 
+// theorem compose_uniform(f: Real -> Real, g: Real -> Real) {
+//     uniform(f) and uniform(g)
+//     implies
+//     uniform(compose(f, g))
+// }
+
 // TODO:
-// Prove that lifting a constant function is constant.
+// The composition of two uniform functions is uniform.
 // multiplication.
-// Something about the composition of two uniform functions?
