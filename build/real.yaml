@@ -1,5 +1,5 @@
 dependencies: 14119679720709953325
-content: 8375440304020647850
+content: 13934990772960002381
 blocks:
   Real.constraint:
     real:
@@ -509,6 +509,12 @@ blocks:
     - neg_lt_neg_swap_neg
     - neg_neg
     - not_gt_rat_self
+  compose_uniform:
+    real:
+    - Real.is_close
+    - compose
+    - uniform
+    - uniform_condition
   constant_is_rat_uniform:
     rat:
     - one_is_pos

@@ -3328,12 +3328,32 @@ theorem lift_constant_is_constant(f: Rat -> Real) {
     }
 }
 
-// theorem compose_uniform(f: Real -> Real, g: Real -> Real) {
-//     uniform(f) and uniform(g)
-//     implies
-//     uniform(compose(f, g))
-// }
+theorem compose_uniform(f: Real -> Real, g: Real -> Real) {
+    uniform(f) and uniform(g)
+    implies
+    uniform(compose(f, g))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let delta1: Real satisfy {
+                delta1.is_positive and uniform_condition(f, delta1, eps)
+            }
+            let delta2: Real satisfy {
+                delta2.is_positive and uniform_condition(g, delta2, delta1)
+            }
+
+            forall(x: Real, y: Real) {
+                if x.is_close(y, delta2) {
+                    g(x).is_close(g(y), delta1)
+                    f(g(x)).is_close(f(g(y)), eps)
+                    compose(f, g)(x).is_close(compose(f, g)(y), eps)
+                }
+            }
+
+            delta2.is_positive and uniform_condition(compose(f, g), delta2, eps)
+        }
+    }
+}
 
 // TODO:
-// The composition of two uniform functions is uniform.
 // multiplication.
