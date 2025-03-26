@@ -1769,3 +1769,58 @@ theorem three_thirds(x: Rat) {
     x * Rat.3 / Rat.3 = x
     (x / Rat.3) + (x / Rat.3) + (x / Rat.3) = x
 }
+
+theorem some_mul_lt(a: Rat, b: Rat) {
+    Rat.0 <= a and b.is_positive implies
+    exists(eps: Rat) {
+        eps.is_positive and a * eps < b
+    }
+} by {
+    if a = Rat.0 {
+        let eps: Rat = b
+        eps.is_positive
+        a * eps = Rat.0
+        a * eps < b
+        eps.is_positive and a * eps < b
+    } else {
+        a.is_positive
+        let c: Rat satisfy {
+            c.is_positive and c < b
+        }
+        let eps: Rat = c / a
+        eps.is_positive
+        a * eps = c
+        a * eps < b
+        eps.is_positive and a * eps < b
+    }
+}
+
+theorem close_mul_pos(a: Rat, b: Rat, eps: Rat, r: Rat) {
+    r.is_positive and a.is_close(b, eps)
+    implies
+    (a * r).is_close(b * r, eps * r)
+} by {
+    a < b + eps
+    a * r < (b * r) + (eps * r)
+    b < a + eps
+    b * r < a * r + (eps * r)
+    b - eps < a
+    r * (b - eps) < a * r
+}
+
+theorem close_neg(a: Rat, b: Rat, eps: Rat) {
+    a.is_close(b, eps) implies (-a).is_close(-b, eps)
+}
+
+theorem lte_mul_nonneg(a: Rat, b: Rat, c: Rat) {
+    a <= b and Rat.0 <= c implies a * c <= b * c
+} by {
+    if c = Rat.0 {
+        a * c = Rat.0
+        b * c = Rat.0
+        a * c <= b * c
+    } else {
+        c.is_positive
+        a * c <= b * c
+    }
+}

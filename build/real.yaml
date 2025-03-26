@@ -1,5 +1,5 @@
-dependencies: 14119679720709953325
-content: 13934990772960002381
+dependencies: 6462609830290501876
+content: 2497460573024326490
 blocks:
   Real.constraint:
     real:
@@ -1855,6 +1855,34 @@ blocks:
     - gt_imp_not_lte
     - lte_lt_trans
     - rat_window
+  rat_mul_uniform:
+    nat:
+    - gte_each_of_three
+    rat:
+    - Rat.is_close
+    - Rat.lte
+    - iop_gets_lt
+    - iop_pos
+    - lte_lt_trans
+    - lte_mul_nonneg
+    - lte_trans
+    - mul_comm
+    - mul_two_abs
+    - neg_abs
+    - some_mul_lt
+    - sub_distrib
+    - zero_lte_abs
+    real:
+    - Real.gt
+    - Real.is_close
+    - add_rat_eps_between
+    - add_zero_left
+    - close_and_lt_imp_close
+    - close_rats_imp_close_reals
+    - compose
+    - pos_gt_zero
+    - rat_condition
+    - rat_uniform
   rat_separating:
     real:
     - '503'

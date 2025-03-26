@@ -1,5 +1,5 @@
 dependencies: 12676240328438610026
-content: 8160391876790958408
+content: 8044741218593149269
 blocks:
   Rat.constraint:
     rat:
@@ -210,6 +210,25 @@ blocks:
     - lte_abs
     - lte_lt_trans
     - minus_cancels_plus
+  close_mul_pos:
+    rat:
+    - Rat.gt
+    - bounds_imp_close
+    - close_comm
+    - close_imp_bounds
+    - distrib_right
+    - lt_mul_pos
+    - mul_comm
+    - sub_distrib
+  close_neg:
+    rat:
+    - Rat.is_close
+    - Rat.sub
+    - add_comm
+    - close_comm
+    - neg_sub
+    - sub_zero
+    - zero_minus
   common_denom:
     int:
     - mul_comm
@@ -714,6 +733,12 @@ blocks:
     rat:
     - Rat.lte
     - lt_trans
+  lte_mul_nonneg:
+    rat:
+    - Rat.lte
+    - lte_mul_pos
+    - mul_zero_right
+    - zero_lt_imp_pos
   lte_mul_pos:
     rat:
     - '1011'
@@ -1344,6 +1369,21 @@ blocks:
     - lt_mul_pos
     - mul_one_left
     - mul_pos_pos
+  some_mul_lt:
+    nat:
+    - gte_each_of_three
+    rat:
+    - Rat.div
+    - Rat.lte
+    - iop_gets_lt
+    - iop_pos
+    - mul_cancels_div_left
+    - mul_comm
+    - mul_pos_pos
+    - mul_zero_right
+    - pos_imp_zero_lt
+    - pos_reciprocal
+    - zero_lt_imp_pos
   square_lt_imp_lt:
     rat:
     - Rat.gt
