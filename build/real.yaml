@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 2619309622611034550
+content: 16424891925829978366
 blocks:
   Real.constraint:
     real:
@@ -282,6 +282,12 @@ blocks:
     - lt_lte_trans
     - not_gt_rat_self
     - rat_between_reals
+  add_real_uniform:
+    real:
+    - add_comm
+    - close_add
+    - uniform
+    - uniform_condition
   add_zero_left:
     real:
     - add_comm
@@ -412,6 +418,12 @@ blocks:
     - cauchy_condition
     - close_imp_bounds
     - eventual_lb
+  close_add:
+    real:
+    - Real.is_close
+    - add_comm
+    - sub_both_eq_sub_add
+    - sub_cancels
   close_and_lt_imp_close:
     real:
     - Real.is_close
@@ -509,6 +521,15 @@ blocks:
     - neg_lt_neg_swap_neg
     - neg_neg
     - not_gt_rat_self
+  compose_mul_rat_real:
+    rat:
+    - mul_assoc
+    real:
+    - compose
+    - compose_uniform
+    - mul_rat_real_of_rat
+    - mul_rat_real_uniform_on_real
+    - uniform_ne_imp_rat_ne
   compose_uniform:
     real:
     - Real.is_close
@@ -1537,10 +1558,19 @@ blocks:
     real:
     - '1455'
     - min
+  mul_rat_real_mul_rat:
+    real:
+    - compose
+    - compose_mul_rat_real
   mul_rat_real_of_rat:
     real:
     - compose
     - lift_fixes_rats
+    - mul_rat_real
+    - rat_mul_uniform
+  mul_rat_real_uniform_on_real:
+    real:
+    - lift_uniform_is_uniform
     - mul_rat_real
     - rat_mul_uniform
   mul_real_rat_of_rat:

@@ -3406,6 +3406,57 @@ theorem mul_rat_real_of_rat(r1: Rat, r2: Rat) {
     lift_uc(f)(Real.from_rat(r2)) = f(r2)
 }
 
+theorem mul_rat_real_uniform_on_real(r: Rat) {
+    uniform(mul_rat_real(r))
+} by {
+    let f: Rat -> Real = compose(Real.from_rat, r.mul)
+    mul_rat_real(r) = lift_uc(compose(Real.from_rat, r.mul))
+    rat_uniform(f)
+    uniform(lift_uc(f))
+}
+
+theorem compose_mul_rat_real(q: Rat, r: Rat) {
+    compose(mul_rat_real(q), mul_rat_real(r)) = mul_rat_real(q * r)
+} by {
+    uniform(compose(mul_rat_real(q), mul_rat_real(r)))
+}
+
+theorem mul_rat_real_mul_rat(q: Rat, r: Rat, x: Real) {
+    mul_rat_real(q * r, x) = mul_rat_real(q, mul_rat_real(r, x))
+} by {
+    mul_rat_real(q * r)(x) = compose(mul_rat_real(q), mul_rat_real(r))(x)
+}
+
+theorem close_add(a: Real, b: Real, c: Real, eps: Real) {
+    a.is_close(b, eps)
+    implies
+    (a + c).is_close(b + c, eps)
+} by {
+    (a - b).abs < eps
+    (a + c - (c + b)).abs < eps
+    (a + c - (b + c)).abs < eps
+}
+
+theorem add_real_uniform(x: Real) {
+    uniform(x.add)
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            forall(a: Real, b: Real) {
+                if a.is_close(b, eps) {
+                    (x + a).is_close(x + b, eps)
+                    x.add(a).is_close(x.add(b), eps)
+                }
+            }
+            uniform_condition(x.add, eps, eps)
+        }
+    }
+}
+
+// TODO: prove useful stuff about mul_rat_real.
+// negating the rational
+// distributing
+
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {
     mul_rat_real(r, x)
