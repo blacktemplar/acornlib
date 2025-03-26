@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 17400849062109581689
+content: 2619309622611034550
 blocks:
   Real.constraint:
     real:
@@ -1537,6 +1537,18 @@ blocks:
     real:
     - '1455'
     - min
+  mul_rat_real_of_rat:
+    real:
+    - compose
+    - lift_fixes_rats
+    - mul_rat_real
+    - rat_mul_uniform
+  mul_real_rat_of_rat:
+    rat:
+    - mul_comm
+    real:
+    - mul_rat_real_of_rat
+    - mul_real_rat
   neg_distrib:
     real:
     - add_assoc

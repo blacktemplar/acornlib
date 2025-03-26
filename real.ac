@@ -3399,10 +3399,41 @@ define mul_rat_real(r: Rat) -> (Real -> Real) {
     lift_uc(compose(Real.from_rat, r.mul))
 }
 
+theorem mul_rat_real_of_rat(r1: Rat, r2: Rat) {
+    mul_rat_real(r1, Real.from_rat(r2)) = Real.from_rat(r1 * r2)
+} by {
+    let f: Rat -> Real = compose(Real.from_rat, r1.mul)
+    lift_uc(f)(Real.from_rat(r2)) = f(r2)
+}
+
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {
     mul_rat_real(r, x)
 }
+
+theorem mul_real_rat_of_rat(r1: Rat, r2: Rat) {
+    mul_real_rat(Real.from_rat(r1), r2) = Real.from_rat(r1 * r2)
+}
+
+// theorem mul_real_rat_uniform(a: Real) {
+//     rat_uniform(mul_real_rat(a))
+// } by {
+//     forall(eps: Real) {
+//         if eps.is_positive {
+//             let delta: Rat satisfy {
+//                 delta.is_positive
+//             }
+
+//             forall(r1: Rat, r2: Rat) {
+//                 if r1.is_close(r2, delta) {
+//                     mul_real_rat(a, r1).is_close(mul_real_rat(a, r2), eps)
+//                 }
+//             }
+
+//             delta.is_positive and rat_condition(mul_real_rat(a), delta, eps)
+//         }
+//     }
+// }
 
 class Real {
     define mul(self, other: Real) -> Real {
