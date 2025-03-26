@@ -3479,8 +3479,98 @@ theorem neg_mul_rat_real(r: Rat, x: Real) {
     mul_rat_real(-r, x) = -mul_rat_real(r, x)
 }
 
-// TODO: prove useful stuff about mul_rat_real.
-// distributing
+define add_fns<T>(f: T -> Real, g: T -> Real, t: T) -> Real {
+    f(t) + g(t)
+}
+
+theorem add_fns_uniform(f: Real -> Real, g: Real -> Real) {
+    uniform(f) and uniform(g)
+    implies
+    uniform(add_fns(f, g))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let eps2: Real satisfy {
+                eps2.is_positive and eps2 + eps2 < eps
+            }
+            let delta1: Real satisfy {
+                delta1.is_positive and uniform_condition(f, delta1, eps2)
+            }
+            let delta2: Real satisfy {
+                delta2.is_positive and uniform_condition(g, delta2, eps2)
+            }
+            let delta: Real satisfy {
+                delta.is_positive and delta < delta1 and delta < delta2
+            }
+
+            forall(x: Real, y: Real) {
+                if x.is_close(y, delta) {
+                    x.is_close(y, delta1)
+                    f(x).is_close(f(y), eps2)
+                    x.is_close(y, delta2)
+                    g(x).is_close(g(y), eps2)
+                    (f(x) + g(x)).is_close(f(y) + g(y), eps2 + eps2)
+                    (f(x) + g(x)).is_close(f(y) + g(y), eps)
+                    add_fns(f, g, x).is_close(add_fns(f, g, y), eps)
+                }
+            }
+
+            delta.is_positive and uniform_condition(add_fns(f, g), delta, eps)
+        }
+    }
+}
+
+theorem mul_rat_distributes_left_functional(q: Rat, r: Rat) {
+    mul_rat_real(q + r) = add_fns(mul_rat_real(q), mul_rat_real(r))
+} by {
+    uniform(mul_rat_real(q + r))
+    uniform(add_fns(mul_rat_real(q), mul_rat_real(r)))
+    if mul_rat_real(q + r) != add_fns(mul_rat_real(q), mul_rat_real(r)) {
+        let p: Rat satisfy {
+            mul_rat_real(q + r)(Real.from_rat(p)) != add_fns(mul_rat_real(q), mul_rat_real(r))(Real.from_rat(p))
+        }
+        false
+    }
+}
+
+theorem mul_rat_real_distributes_left(q: Rat, r: Rat, x: Real) {
+    mul_rat_real(q + r, x) = mul_rat_real(q, x) + mul_rat_real(r, x)
+} by {
+    add_fns(mul_rat_real(q), mul_rat_real(r))(x) = mul_rat_real(q, x) + mul_rat_real(r, x)
+}
+
+// The strategy is to find a counterexample in rationals.
+theorem mul_rat_real_distributes_right(r: Rat, x: Real, y: Real) {
+    mul_rat_real(r, x + y) = mul_rat_real(r, x) + mul_rat_real(r, y)
+} by {
+    let f: Real -> Real = compose(mul_rat_real(r), x.add)
+    f(y) = mul_rat_real(r, x + y)
+    uniform(f)
+    let g: Real -> Real = compose(mul_rat_real(r, x).add, mul_rat_real(r))
+    uniform(g)
+    g(y) = mul_rat_real(r, x) + mul_rat_real(r, y)
+    if f != g {
+        let yr: Rat satisfy {
+            f(Real.from_rat(yr)) != g(Real.from_rat(yr))
+        }
+        f(Real.from_rat(yr)) = mul_rat_real(r, x + Real.from_rat(yr))
+        g(Real.from_rat(yr)) = mul_rat_real(r, x) + mul_rat_real(r, Real.from_rat(yr))
+        let f2: Real -> Real = compose(mul_rat_real(r), Real.from_rat(yr).add)
+        f2(x) = f(Real.from_rat(yr))
+        let g2: Real -> Real = compose(mul_rat_real(r, Real.from_rat(yr)).add, mul_rat_real(r))
+        g2(x) = g(Real.from_rat(yr))
+        f2(x) != g2(x)
+        f2 != g2
+        uniform(f2)
+        uniform(g2)
+        let xr: Rat satisfy {
+            f2(Real.from_rat(xr)) != g2(Real.from_rat(xr))
+        }
+        mul_rat_real(r, x + Real.from_rat(yr)) != mul_rat_real(r, Real.from_rat(xr)) + mul_rat_real(r, Real.from_rat(yr))
+        false
+    }
+    f(y) = g(y)
+}
 
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {

@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 4984385968224747806
+content: 1057134205976068327
 blocks:
   Real.constraint:
     real:
@@ -83,6 +83,16 @@ blocks:
     - '415'
     - Real.add
     - add_gt_symm
+  add_fns_uniform:
+    real:
+    - Real.is_close
+    - add_close
+    - add_fns
+    - close_and_lt_imp_close
+    - eps_lt_half
+    - eps_smaller_than_both
+    - uniform
+    - uniform_condition
   add_from_int:
     rat:
     - add_int_eq_int_add
@@ -1567,6 +1577,34 @@ blocks:
     - mul_rat_real_uniform_on_real
     - neg_from_rat
     - neg_uniform
+    - uniform_ne_imp_rat_ne
+  mul_rat_distributes_left_functional:
+    rat:
+    - distrib_right
+    real:
+    - add_fns
+    - add_fns_uniform
+    - add_from_rat
+    - mul_rat_real_of_rat
+    - mul_rat_real_uniform_on_real
+    - uniform_ne_imp_rat_ne
+  mul_rat_real_distributes_left:
+    real:
+    - add_fns
+    - mul_rat_distributes_left_functional
+  mul_rat_real_distributes_right:
+    rat:
+    - add_comm
+    - distrib_left
+    real:
+    - '3562'
+    - add_comm
+    - add_from_rat
+    - add_real_uniform
+    - compose
+    - compose_uniform
+    - mul_rat_real_of_rat
+    - mul_rat_real_uniform_on_real
     - uniform_ne_imp_rat_ne
   mul_rat_real_mul_rat:
     real:
