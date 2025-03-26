@@ -3395,9 +3395,20 @@ theorem rat_mul_uniform(r: Rat) {
 }
 
 // Real-rat multiplication.
-define mul_rat(r: Rat) -> (Real -> Real) {
+define mul_rat_real(r: Rat) -> (Real -> Real) {
     lift_uc(compose(Real.from_rat, r.mul))
 }
 
+// Swap args
+define mul_real_rat(x: Real, r: Rat) -> Real {
+    mul_rat_real(r, x)
+}
+
+class Real {
+    define mul(self, other: Real) -> Real {
+        lift_uc(mul_real_rat(self), other)
+    }
+}
+
 // TODO:
-// multiplication.
+// prove the standard theorems for multiplication.
