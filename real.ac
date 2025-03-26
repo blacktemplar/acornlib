@@ -3453,8 +3453,33 @@ theorem add_real_uniform(x: Real) {
     }
 }
 
+theorem neg_uniform {
+    uniform(Real.neg)
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            forall(x: Real, y: Real) {
+                if x.is_close(y, eps) {
+                    (-x).is_close(-y, eps)
+                    Real.neg(x).is_close(Real.neg(y), eps)
+                }
+            }
+            uniform_condition(Real.neg, eps, eps)
+        }
+    }
+}
+
+theorem mul_neg_one_real {
+    mul_rat_real(-Rat.1) = Real.neg
+} by {
+    uniform(mul_rat_real(-Rat.1))
+}
+
+theorem neg_mul_rat_real(r: Rat, x: Real) {
+    mul_rat_real(-r, x) = -mul_rat_real(r, x)
+}
+
 // TODO: prove useful stuff about mul_rat_real.
-// negating the rational
 // distributing
 
 // Swap args

@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 16424891925829978366
+content: 4984385968224747806
 blocks:
   Real.constraint:
     real:
@@ -1558,6 +1558,16 @@ blocks:
     real:
     - '1455'
     - min
+  mul_neg_one_real:
+    rat:
+    - mul_neg_one_left
+    - rat_neg_one
+    real:
+    - mul_rat_real_of_rat
+    - mul_rat_real_uniform_on_real
+    - neg_from_rat
+    - neg_uniform
+    - uniform_ne_imp_rat_ne
   mul_rat_real_mul_rat:
     real:
     - compose
@@ -1707,6 +1717,12 @@ blocks:
     - Real.lte
     - gt_zero_imp_pos
     - lte_or_gte
+  neg_mul_rat_real:
+    rat:
+    - mul_neg_one_left
+    real:
+    - mul_neg_one_real
+    - mul_rat_real_mul_rat
   neg_neg:
     real:
     - Real.gt
@@ -1729,6 +1745,15 @@ blocks:
     - neg_lt_swap_neg
     - neg_zero
     - pos_gt_zero
+  neg_uniform:
+    real:
+    - Real.gt
+    - Real.is_close
+    - Real.sub
+    - abs_neg
+    - neg_distrib
+    - uniform
+    - uniform_condition
   neg_zero:
     rat:
     - Rat.0
