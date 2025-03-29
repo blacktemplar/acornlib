@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 1057134205976068327
+content: 18138639761652812016
 blocks:
   Real.constraint:
     real:
@@ -1571,7 +1571,6 @@ blocks:
   mul_neg_one_real:
     rat:
     - mul_neg_one_left
-    - rat_neg_one
     real:
     - mul_rat_real_of_rat
     - mul_rat_real_uniform_on_real
@@ -1588,6 +1587,17 @@ blocks:
     - mul_rat_real_of_rat
     - mul_rat_real_uniform_on_real
     - uniform_ne_imp_rat_ne
+  mul_rat_real_abs_right:
+    rat:
+    - mul_neg_one_right
+    real:
+    - Real.abs
+    - abs_neg
+    - lt_zero_imp_neg
+    - mul_neg_one_real
+    - mul_rat_real_mul_rat
+    - neg_lt_zero
+    - neg_mul_rat_real
   mul_rat_real_distributes_left:
     real:
     - add_fns

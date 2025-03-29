@@ -3572,6 +3572,18 @@ theorem mul_rat_real_distributes_right(r: Rat, x: Real, y: Real) {
     f(y) = g(y)
 }
 
+theorem mul_rat_real_abs_right(r: Rat, x: Real) {
+    mul_rat_real(r, x.abs).abs = mul_rat_real(r, x).abs
+} by {
+    if x < Real.0 {
+        x.abs = -x
+        mul_rat_real(r, x.abs).abs = mul_rat_real(r, x).abs
+    } else {
+        x.abs = x
+        mul_rat_real(r, x.abs).abs = mul_rat_real(r, x).abs
+    }
+}
+
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {
     mul_rat_real(r, x)
@@ -3586,12 +3598,18 @@ theorem mul_real_rat_of_rat(r1: Rat, r2: Rat) {
 // } by {
 //     forall(eps: Real) {
 //         if eps.is_positive {
+//             let ar: Rat satisfy {
+//                 a.abs < Real.from_rat(ar)
+//             }
 //             let delta: Rat satisfy {
 //                 delta.is_positive
 //             }
 
 //             forall(r1: Rat, r2: Rat) {
 //                 if r1.is_close(r2, delta) {
+//                     (r1 - r2).abs < delta
+//                     mul_rat_real(r1 - r2, a).abs < eps
+//                     mul_rat_real(r1, a).is_close(mul_rat_real(r2, a), eps)
 //                     mul_real_rat(a, r1).is_close(mul_real_rat(a, r2), eps)
 //                 }
 //             }
