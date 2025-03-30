@@ -3584,6 +3584,12 @@ theorem mul_rat_real_abs_right(r: Rat, x: Real) {
     }
 }
 
+theorem mul_rat_real_abs_left(r: Rat, x: Real) {
+    mul_rat_real(r.abs, x).abs = mul_rat_real(r, x).abs
+}
+
+// TODO: prove you can keep a less-than if you multiply by a pos real
+
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {
     mul_rat_real(r, x)
@@ -3608,6 +3614,7 @@ theorem mul_real_rat_of_rat(r1: Rat, r2: Rat) {
 //             forall(r1: Rat, r2: Rat) {
 //                 if r1.is_close(r2, delta) {
 //                     (r1 - r2).abs < delta
+//                     mul_rat_real(r1 - r2, a.abs) < mul_rat_real(delta, a.abs)
 //                     mul_rat_real(r1 - r2, a).abs < eps
 //                     mul_rat_real(r1, a).is_close(mul_rat_real(r2, a), eps)
 //                     mul_real_rat(a, r1).is_close(mul_real_rat(a, r2), eps)
