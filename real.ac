@@ -3588,7 +3588,21 @@ theorem mul_rat_real_abs_left(r: Rat, x: Real) {
     mul_rat_real(r.abs, x).abs = mul_rat_real(r, x).abs
 }
 
-// TODO: prove you can keep a less-than if you multiply by a pos real
+theorem mul_rat_zero_real(x: Real) {
+    mul_rat_real(Rat.0, x) = Real.0
+} by {
+    mul_rat_real(Rat.0, x) + mul_rat_real(Rat.0, x) = mul_rat_real(Rat.0, x)
+}
+
+theorem mul_rat_real_zero(r: Rat) {
+    mul_rat_real(r, Real.0) = Real.0
+} by {
+    mul_rat_real(r, Real.0) + mul_rat_real(r, Real.0) = mul_rat_real(r, Real.0)
+}
+
+// TODO:
+// prove the various positive and negative multiplication theorems
+// prove you can keep a less-than if you multiply by a pos real
 
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {
