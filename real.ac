@@ -3600,8 +3600,59 @@ theorem mul_rat_real_zero(r: Rat) {
     mul_rat_real(r, Real.0) + mul_rat_real(r, Real.0) = mul_rat_real(r, Real.0)
 }
 
+theorem mul_rat_real_pos_pos(r: Rat, x: Real) {
+    r.is_positive and x.is_positive implies
+    mul_rat_real(r, x).is_positive
+} by {
+    Real.0 < x
+    let lb: Rat satisfy {
+        Real.0 < Real.from_rat(lb) and Real.from_rat(lb) < x
+    }
+    let delta1: Real satisfy {
+        delta1.is_positive and Real.from_rat(lb) + delta1 < x
+    }
+    Real.from_rat(lb).is_positive
+    lb.is_positive
+    Real.0 < Real.from_rat(r * lb)
+    let eps: Real satisfy {
+        Real.0 < eps and eps < Real.from_rat(r * lb)
+    }
+    eps.is_positive
+    let mr: Real -> Real = mul_rat_real(r)
+    let delta2: Real satisfy {
+        delta2.is_positive and uniform_condition(mul_rat_real(r), delta2, eps)
+    }
+    uniform_condition(mr, delta2, eps)
+    let delta: Real satisfy {
+        delta.is_positive and delta < delta1 and delta < delta2
+    }
+    let rx: Rat satisfy {
+        Real.from_rat(rx).is_close(x, delta)
+    }
+    uniform_condition(mr, delta, eps)
+    mr(Real.from_rat(rx)).is_close(mr(x), eps)
+    Real.from_rat(r * rx).is_close(mr(x), eps)
+    Real.from_rat(r * rx) - eps < mr(x)
+    Real.from_rat(lb) + delta < Real.from_rat(lb) + delta1
+    Real.from_rat(lb) + delta < x
+    Real.from_rat(lb) + delta <= x
+    Real.from_rat(lb) + delta != x
+    not x - delta <= Real.from_rat(lb)
+    Real.from_rat(lb) < x - delta
+    x - delta < Real.from_rat(rx)
+    Real.from_rat(lb) < Real.from_rat(rx)
+    lb < rx
+    r * lb < r * rx
+    Real.from_rat(r * lb) < Real.from_rat(r * rx)
+    eps < Real.from_rat(r * rx)
+    Real.0 < Real.from_rat(r * rx) - eps
+    Real.0 < mul_rat_real(r, x)
+}
+
 // TODO:
-// prove the various positive and negative multiplication theorems
+// prove that when you mul_rat_real to zero, one must be zero
+// positive times positive is positive
+// the other theorems about positive and negative
 // prove you can keep a less-than if you multiply by a pos real
 
 // Swap args
