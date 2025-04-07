@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 4942568857986940666
+content: 7080124905872524058
 blocks:
   Real.constraint:
     real:
@@ -1633,6 +1633,19 @@ blocks:
     - lift_fixes_rats
     - mul_rat_real
     - rat_mul_uniform
+  mul_rat_real_pos_neg:
+    rat:
+    - mul_neg_one_right
+    real:
+    - Real.is_positive
+    - Real.neg
+    - mul_neg_one_real
+    - mul_rat_real_mul_rat
+    - mul_rat_real_pos_pos
+    - neg_mul_rat_real
+    - neg_neg
+    - neg_neg_is_pos
+    - neg_pos_is_neg
   mul_rat_real_pos_pos:
     rat:
     - Rat.gt
