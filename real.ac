@@ -3658,6 +3658,15 @@ theorem mul_rat_real_pos_neg(r: Rat, x: Real) {
     (-mul_rat_real(r, x)).is_positive
 }
 
+theorem mul_rat_real_neg_pos(r: Rat, x: Real) {
+    r.is_negative and x.is_positive implies
+    mul_rat_real(r, x).is_negative
+} by {
+    (-r).is_positive
+    mul_rat_real(-r, x).is_positive
+    (-mul_rat_real(r, x)).is_positive
+}
+
 // TODO:
 // prove that when you mul_rat_real to zero, one must be zero
 // positive times positive is positive
