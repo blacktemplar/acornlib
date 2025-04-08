@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 9957064121415588170
+content: 13406726240610288737
 blocks:
   Real.constraint:
     real:
@@ -1627,6 +1627,16 @@ blocks:
     real:
     - compose
     - compose_mul_rat_real
+  mul_rat_real_neg_neg:
+    rat:
+    - neg_neg_is_pos
+    real:
+    - mul_rat_real_neg_pos
+    - mul_rat_real_pos_neg
+    - mul_rat_real_pos_pos
+    - neg_mul_rat_real
+    - neg_neg
+    - neg_neg_is_pos
   mul_rat_real_neg_pos:
     rat:
     - Rat.lt
