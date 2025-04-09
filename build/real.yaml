@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 13406726240610288737
+content: 8254425793441927741
 blocks:
   Real.constraint:
     real:
@@ -1722,6 +1722,16 @@ blocks:
     - add_zero_left
     - mul_rat_real_distributes_right
     - mul_rat_real_of_rat
+  mul_rat_real_zero_imp_zero:
+    rat:
+    - single_trichotomy
+    real:
+    - Real.is_negative
+    - mul_rat_real_neg_neg
+    - mul_rat_real_neg_pos
+    - mul_rat_real_pos_neg
+    - mul_rat_real_pos_pos
+    - zero_not_positive
   mul_rat_zero_real:
     rat:
     - add_cancels_sub

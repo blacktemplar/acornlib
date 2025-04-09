@@ -3676,6 +3676,26 @@ theorem mul_rat_real_neg_neg(r: Rat, x: Real) {
     (-mul_rat_real(r, -x)).is_positive
 }
 
+theorem mul_rat_real_zero_imp_zero(r: Rat, x: Real) {
+    mul_rat_real(r, x) = Real.0
+    implies
+    r = Rat.0 or x = Real.0
+} by {
+    if r != Rat.0 and x != Real.0 {
+        if r.is_positive {
+            if x.is_positive {
+                false
+            } else {
+                x.is_negative
+                false
+            }
+        } else {
+            r.is_negative
+            false
+        }
+    }
+}
+
 // TODO:
 // prove that when you mul_rat_real to zero, one must be zero
 // prove you can keep a less-than if you multiply by a pos real
