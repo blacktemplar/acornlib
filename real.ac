@@ -3696,9 +3696,23 @@ theorem mul_rat_real_zero_imp_zero(r: Rat, x: Real) {
     }
 }
 
-// TODO:
-// prove that when you mul_rat_real to zero, one must be zero
-// prove you can keep a less-than if you multiply by a pos real
+theorem mul_rat_real_sub_distrib_right(r: Rat, x: Real, y: Real) {
+    mul_rat_real(r, x - y) = mul_rat_real(r, x) - mul_rat_real(r, y)
+} by {
+    mul_rat_real(r, x - y) = mul_rat_real(r, x) + mul_rat_real(-r, y)
+}
+
+// TODO: sub_distrib_left
+
+// theorem lt_mul_rat_real_pos_rat(r: Rat, a: Real, b: Real) {
+//     r.is_positive and a < b implies
+//     mul_rat_real(r, a) < mul_rat_real(r, b)
+// } by {
+//     (b - a).is_positive
+//     mul_rat_real(r, b - a).is_positive
+//     mul_rat_real(r, b - a) = mul_rat_real(r, b) - mul_rat_real(r, a)
+//     (mul_rat_real(r, b) - mul_rat_real(r, a)).is_positive
+// }
 
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {

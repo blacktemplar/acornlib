@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 8254425793441927741
+content: 7692998116983449221
 blocks:
   Real.constraint:
     real:
@@ -1709,6 +1709,15 @@ blocks:
     - tighten_uc
     - uniform
     - uniform_condition
+  mul_rat_real_sub_distrib_right:
+    rat:
+    - mul_neg_one_right
+    real:
+    - Real.sub
+    - mul_neg_one_real
+    - mul_rat_real_distributes_right
+    - mul_rat_real_mul_rat
+    - neg_mul_rat_real
   mul_rat_real_uniform_on_real:
     real:
     - lift_uniform_is_uniform
