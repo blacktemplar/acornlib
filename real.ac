@@ -3776,36 +3776,51 @@ theorem mul_rat_real_abs_abs(r: Rat, x: Real) {
     mul_rat_real(r.abs, x.abs).abs = mul_rat_real(r.abs, x.abs)
 }
 
-// theorem mul_real_rat_nonzero_uniform(a: Real) {
-//     a != Real.0 implies
-//     rat_uniform(mul_real_rat(a))
-// } by {
-//     forall(eps: Real) {
-//         if eps.is_positive {
-//             let ar: Rat satisfy {
-//                 a.abs < Real.from_rat(ar)
-//             }
-//             let delta: Rat satisfy {
-//                 delta.is_positive and mul_rat_real(delta, a.abs) < eps
-//             }
+theorem mul_real_rat_nonzero_uniform(a: Real) {
+    a != Real.0 implies
+    rat_uniform(mul_real_rat(a))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let ar: Rat satisfy {
+                a.abs < Real.from_rat(ar)
+            }
+            Real.0 < eps
+            let reps: Rat satisfy {
+                reps.is_positive and Real.from_rat(reps) < eps
+            }
+            Real.0 <= a.abs
+            Real.0 < Real.from_rat(ar)
+            Rat.0 < ar
+            ar.is_positive
+            (reps / ar).is_positive
+            let delta: Rat satisfy {
+                delta.is_positive and delta < reps / ar
+            }
+            delta * ar < reps
+            Real.from_rat(delta * ar) < eps
+            mul_rat_real(delta, a.abs) < Real.from_rat(delta * ar)
+            mul_rat_real(delta, a.abs) < eps
 
-//             forall(r1: Rat, r2: Rat) {
-//                 if r1.is_close(r2, delta) {
-//                     (r1 - r2).abs < delta
-//                     a.abs.is_positive
-//                     mul_rat_real((r1 - r2).abs, a.abs) < mul_rat_real(delta, a.abs)
-//                     mul_rat_real((r1 - r2).abs, a.abs) < eps
-//                     mul_rat_real((r1 - r2).abs, a.abs) = mul_rat_real((r1 - r2).abs, a.abs).abs
-//                     mul_rat_real((r1 - r2).abs, a).abs < eps
-//                     mul_rat_real(r1, a).is_close(mul_rat_real(r2, a), eps)
-//                     mul_real_rat(a, r1).is_close(mul_real_rat(a, r2), eps)
-//                 }
-//             }
+            forall(r1: Rat, r2: Rat) {
+                if r1.is_close(r2, delta) {
+                    (r1 - r2).abs < delta
+                    a.abs.is_positive
+                    (delta - (r1 - r2).abs).is_positive
+                    (mul_rat_real(delta, a.abs) - mul_rat_real((r1 - r2).abs, a.abs)).is_positive
+                    mul_rat_real((r1 - r2).abs, a.abs) < mul_rat_real(delta, a.abs)
+                    mul_rat_real((r1 - r2).abs, a.abs) < eps
+                    mul_rat_real((r1 - r2).abs, a.abs) = mul_rat_real((r1 - r2).abs, a.abs).abs
+                    mul_rat_real((r1 - r2).abs, a).abs < eps
+                    mul_rat_real(r1, a).is_close(mul_rat_real(r2, a), eps)
+                    mul_real_rat(a, r1).is_close(mul_real_rat(a, r2), eps)
+                }
+            }
 
-//             delta.is_positive and rat_condition(mul_real_rat(a), delta, eps)
-//         }
-//     }
-// }
+            delta.is_positive and rat_condition(mul_real_rat(a), delta, eps)
+        }
+    }
+}
 
 class Real {
     define mul(self, other: Real) -> Real {
