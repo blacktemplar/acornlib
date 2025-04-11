@@ -3708,17 +3708,24 @@ theorem mul_rat_real_sub_distrib_left(p: Rat, q: Rat, x: Real) {
     mul_rat_real(p - q, x) = mul_rat_real(p, x) + mul_rat_real(-q, x)
 }
 
-// TODO: sub_distrib_left
+theorem diff_pos_imp_lt(a: Real, b: Real) {
+    (b - a).is_positive implies a < b
+} by {
+    (b + -a).is_positive
+    b + -a > Real.0
+    Real.0 - -a < b
+    Real.0 + a < b
+}
 
-// theorem lt_mul_rat_real_pos_rat(r: Rat, a: Real, b: Real) {
-//     r.is_positive and a < b implies
-//     mul_rat_real(r, a) < mul_rat_real(r, b)
-// } by {
-//     (b - a).is_positive
-//     mul_rat_real(r, b - a).is_positive
-//     mul_rat_real(r, b - a) = mul_rat_real(r, b) - mul_rat_real(r, a)
-//     (mul_rat_real(r, b) - mul_rat_real(r, a)).is_positive
-// }
+theorem lt_mul_rat_real_pos_rat(r: Rat, a: Real, b: Real) {
+    r.is_positive and a < b implies
+    mul_rat_real(r, a) < mul_rat_real(r, b)
+} by {
+    (b - a).is_positive
+    mul_rat_real(r, b - a).is_positive
+    mul_rat_real(r, b - a) = mul_rat_real(r, b) - mul_rat_real(r, a)
+    (mul_rat_real(r, b) - mul_rat_real(r, a)).is_positive
+}
 
 // Swap args
 define mul_real_rat(x: Real, r: Rat) -> Real {

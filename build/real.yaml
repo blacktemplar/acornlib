@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 14828224989335091124
+content: 9047681253757739220
 blocks:
   Real.constraint:
     real:
@@ -29,7 +29,6 @@ blocks:
     - pos_gt_zero
   abs_lt_imp_close_to_zero:
     real:
-    - '2569'
     - Real.abs
     - Real.gt
     - Real.is_close
@@ -42,7 +41,6 @@ blocks:
     - neg_zero
   abs_neg:
     real:
-    - '1421'
     - Real.abs
     - Real.is_negative
     - neg_neg
@@ -80,7 +78,6 @@ blocks:
     - sub_either_order
   add_comm:
     real:
-    - '415'
     - Real.add
     - add_gt_symm
   add_fns_uniform:
@@ -371,7 +368,6 @@ blocks:
     - lt_or_lte
     - lte_ref
     real:
-    - '1917'
     - Real.gt
     - Real.gte
     - Real.lt
@@ -401,7 +397,6 @@ blocks:
     rat:
     - iop_pos
     real:
-    - '1878'
     - Real.gt
     - Real.lt
     - add_zero_left
@@ -627,6 +622,15 @@ blocks:
     - lte_trans
     - rat_between_reals
     - ub_imp_limit_lte
+  diff_pos_imp_lt:
+    real:
+    - Real.gt
+    - Real.sub
+    - add_comm
+    - add_gt_imp_gt_sub
+    - add_zero_left
+    - neg_neg
+    - pos_gt_zero
   eps_lt_half:
     rat:
     - Rat.gt
@@ -1198,7 +1202,6 @@ blocks:
     - iop_pos
     - neg_pos_is_neg
     real:
-    - '1086'
     - Real.from_int
     - floor
     - from_rat_maintains_lt
@@ -1404,6 +1407,12 @@ blocks:
     real:
     - lt_lte_trans
     - min_lte_right
+  lt_mul_rat_real_pos_rat:
+    real:
+    - diff_pos_imp_lt
+    - lt_imp_minus_pos
+    - mul_rat_real_pos_pos
+    - mul_rat_real_sub_distrib_right
   lt_neg_swap_neg:
     real:
     - Real.gt
@@ -1423,7 +1432,6 @@ blocks:
     rat:
     - floor
     real:
-    - '821'
     - Real.from_int
     - from_rat_maintains_lt
     - lt_some_rat
@@ -1447,7 +1455,6 @@ blocks:
     - lt_add_pos
     - one_is_pos
     real:
-    - '773'
     - from_rat_maintains_lt
     - lte_lt_trans
     - lte_some_rat
@@ -1518,7 +1525,6 @@ blocks:
     rat:
     - not_lt_both_ways
     real:
-    - '197'
     - Real.lte
     - gt_rat_sorts
   lte_self:
@@ -1534,7 +1540,6 @@ blocks:
     - Real.lte
   max_gte_left:
     real:
-    - '1493'
     - Real.gt
     - max
     - not_lt_imp_gte
@@ -1549,7 +1554,6 @@ blocks:
     - rat_separating
   max_pos_pos:
     real:
-    - '1469'
     - max
   min_lte_left:
     real:
@@ -1566,7 +1570,6 @@ blocks:
     - min
   min_pos_pos:
     real:
-    - '1455'
     - min
   mul_neg_one_real:
     rat:
@@ -1614,7 +1617,6 @@ blocks:
     - add_comm
     - distrib_left
     real:
-    - '3562'
     - add_comm
     - add_from_rat
     - add_real_uniform
@@ -1658,7 +1660,6 @@ blocks:
     - mul_neg_one_right
     real:
     - Real.is_positive
-    - Real.neg
     - mul_neg_one_real
     - mul_rat_real_mul_rat
     - mul_rat_real_pos_pos
@@ -2125,8 +2126,6 @@ blocks:
     - rat_uniform
   rat_separating:
     real:
-    - '503'
-    - '504'
     - Real.gte
     - Real.lt
     - Real.lte
@@ -2281,7 +2280,6 @@ blocks:
     - rat_uniform
   uniform_ne_imp_rat_ne:
     real:
-    - '3125'
     - Real.is_close
     - Real.lt
     - close_and_lt_imp_close
