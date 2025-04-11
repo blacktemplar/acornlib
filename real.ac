@@ -3822,6 +3822,22 @@ theorem mul_real_rat_nonzero_uniform(a: Real) {
     }
 }
 
+theorem mul_real_rat_zero_uniform {
+    rat_uniform(mul_real_rat(Real.0))
+} by {
+    is_constant(mul_real_rat(Real.0))
+}
+
+theorem mul_real_rat_uniform(x: Real) {
+    rat_uniform(mul_real_rat(x))
+} by {
+    if x = Real.0 {
+        rat_uniform(mul_real_rat(x))
+    } else {
+        rat_uniform(mul_real_rat(x))
+    }
+}
+
 class Real {
     define mul(self, other: Real) -> Real {
         lift_uc(mul_real_rat(self), other)
