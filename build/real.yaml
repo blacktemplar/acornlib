@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 9047681253757739220
+content: 2866529887091218700
 blocks:
   Real.constraint:
     real:
@@ -1590,6 +1590,25 @@ blocks:
     - mul_rat_real_of_rat
     - mul_rat_real_uniform_on_real
     - uniform_ne_imp_rat_ne
+  mul_rat_real_abs_abs:
+    rat:
+    - Rat.abs
+    - Rat.lt
+    - abs_mul_abs
+    - mul_one_left
+    - neg_abs
+    - neg_imp_lt_zero
+    - not_pos_and_neg
+    - sub_zero
+    - zero_minus
+    real:
+    - Real.abs
+    - abs_gte_zero
+    - gte_imp_not_lt
+    - mul_rat_real_abs_left
+    - mul_rat_real_abs_right
+    - mul_rat_real_nonneg_nonneg
+    - neg_lt_zero
   mul_rat_real_abs_left:
     rat:
     - Rat.abs
@@ -1649,6 +1668,14 @@ blocks:
     - neg_mul_rat_real
     - neg_neg
     - neg_pos_is_neg
+  mul_rat_real_nonneg_nonneg:
+    rat:
+    - single_trichotomy
+    real:
+    - Real.is_negative
+    - mul_rat_real_pos_pos
+    - mul_rat_real_zero
+    - mul_rat_zero_real
   mul_rat_real_of_rat:
     real:
     - compose
@@ -1710,6 +1737,12 @@ blocks:
     - tighten_uc
     - uniform
     - uniform_condition
+  mul_rat_real_pos_unk_pos:
+    real:
+    - Real.is_negative
+    - mul_rat_real_pos_neg
+    - mul_rat_real_zero
+    - zero_not_positive
   mul_rat_real_sub_distrib_left:
     rat:
     - Rat.sub
