@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 2019091048281981434
+content: 11949403500768641989
 blocks:
   Real.constraint:
     real:
@@ -1571,6 +1571,10 @@ blocks:
   min_pos_pos:
     real:
     - min
+  mul_lift:
+    real:
+    - mul_real_rat_lifts
+    - mul_real_rat_of_rat
   mul_neg_one_real:
     rat:
     - mul_neg_one_left
