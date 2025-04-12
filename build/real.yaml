@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 15906966424755181262
+content: 2019091048281981434
 blocks:
   Real.constraint:
     real:
@@ -1790,6 +1790,12 @@ blocks:
     - add_zero_left
     - lt_add_cancel_right
     - mul_rat_real_distributes_left
+  mul_real_rat_lifts:
+    real:
+    - Real.mul
+    - lift_fixes_rats
+    - mul_real_rat_nonzero_uniform
+    - mul_real_rat_zero_uniform
   mul_real_rat_nonzero_uniform:
     nat:
     - lte_ref
