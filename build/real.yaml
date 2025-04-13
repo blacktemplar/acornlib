@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 8793915817720744677
+content: 4355475940272684987
 blocks:
   Real.constraint:
     real:
@@ -1862,6 +1862,11 @@ blocks:
     - mul_rat_real_zero
     - mul_real_rat
     - only_abs_zero_eq_zero
+  mul_uniform:
+    real:
+    - Real.mul
+    - lift_uniform_is_uniform
+    - mul_real_rat_uniform
   neg_distrib:
     real:
     - add_assoc

@@ -3854,6 +3854,12 @@ theorem mul_lift(p: Rat, q: Rat) {
     Real.from_rat(p * q) = Real.from_rat(p) * Real.from_rat(q)
 }
 
+theorem mul_uniform(x: Real) {
+    uniform(x.mul)
+} by {
+    x.mul = lift_uc(mul_real_rat(x))
+}
+
 // TODO: prove basic theorems for multiplication.
 // Some sort of general approximation by rationals.
 // commutative
