@@ -3861,7 +3861,7 @@ theorem mul_uniform(x: Real) {
 }
 
 // TODO: prove basic theorems for multiplication.
-// Some sort of general approximation by rationals.
+// Some sort of 2d continuity.
 // commutative
 // associative
 // distributive
