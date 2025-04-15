@@ -3905,7 +3905,6 @@ theorem add_continuous {
 }
 
 // TODO: prove basic theorems for multiplication.
-// Addition is continuous.
 // Multiplication is continuous.
 // commutative
 // associative
