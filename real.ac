@@ -3882,6 +3882,7 @@ define continuous2(f: (Real, Real) -> Real) -> Bool {
     }
 }
 
+// Addition is continuous.
 theorem add_continuous {
     continuous2(Real.add)
 } by {
@@ -3901,6 +3902,51 @@ theorem add_continuous {
             }
         }
         continuous2_at(Real.add, x, y)
+    }
+}
+
+define continuous_condition(f: Real -> Real, x: Real, delta: Real, eps: Real) -> Bool {
+    forall(x1: Real) {
+        x1.is_close(x, delta) implies
+        f(x1).is_close(f(x), eps)
+    }
+}
+
+define continuous_at(f: Real -> Real, x: Real) -> Bool {
+    forall(eps: Real) {
+        eps.is_positive implies exists(delta: Real) {
+            delta.is_positive and continuous_condition(f, x, delta, eps)
+        }
+    }
+}
+
+define continuous(f: Real -> Real) -> Bool {
+    forall(x: Real) {
+        continuous_at(f, x)
+    }
+}
+
+theorem uniform_imp_continuous(f: Real -> Real) {
+    uniform(f)
+    implies
+    continuous(f)
+} by {
+    forall(x: Real) {
+        forall(eps: Real) {
+            if eps.is_positive {
+                let delta: Real satisfy {
+                    delta.is_positive and uniform_condition(f, delta, eps)
+                }
+                forall(x1: Real) {
+                    if x1.is_close(x, delta) {
+                        f(x1).is_close(f(x), eps)
+                    }
+                }
+                continuous_condition(f, x, delta, eps)
+                delta.is_positive and continuous_condition(f, x, delta, eps)
+            }
+        }
+        continuous_at(f, x)
     }
 }
 

@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 1192335542919604265
+content: 15624872991497037986
 blocks:
   abs_from_rat:
     rat:
@@ -2364,6 +2364,13 @@ blocks:
     - close_rats_imp_close_reals
     - compose
     - rat_condition
+    - uniform_condition
+  uniform_imp_continuous:
+    real:
+    - continuous
+    - continuous_at
+    - continuous_condition
+    - uniform
     - uniform_condition
   uniform_imp_rat_uniform:
     real:
