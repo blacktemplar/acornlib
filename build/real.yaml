@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 15687981366818118596
+content: 14609074471069332286
 blocks:
   abs_from_rat:
     rat:
@@ -308,6 +308,7 @@ blocks:
     - converges_to
     - eps_lt_half
     - lift_seq_elt
+    - limit_rat
   add_real_uniform:
     real:
     - add_comm
@@ -1143,6 +1144,7 @@ blocks:
     - lift_rat_seq_converges
     - lift_seq_elt
     - lift_uc
+    - limit_rat
     - rat_condition
     - rat_seq_converges_to
     - rat_uniform
@@ -2344,6 +2346,7 @@ blocks:
     - converges_imp_converges_to
     - converges_to_imp_converges
     - converges_to_unique
+    - limit_rat
     - seq_eq
   sub_both_eq_sub_add:
     real:

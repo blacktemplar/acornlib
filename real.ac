@@ -2976,6 +2976,10 @@ theorem find_less_than_a_third(x: Real) {
     Real.from_rat(reps) + Real.from_rat(reps) + Real.from_rat(reps) < x
 }
 
+define limit_rat(a: Nat -> Rat) -> Real {
+    limit(lift_seq(a))
+}
+
 theorem lift_uniform_is_uniform(f: Rat -> Real) {
     rat_uniform(f)
     implies
@@ -3019,8 +3023,10 @@ theorem lift_uniform_is_uniform(f: Rat -> Real) {
 
                     // f(a_i) and f(b_i) are close
                     limit(lift_seq(rat_seq(a))) = a
+                    limit_rat(rat_seq(a)) = a
                     limit(lift_seq(rat_seq(b))) = b
-                    limit(lift_seq(rat_seq(a))).is_close(limit(lift_seq(rat_seq(b))), Real.from_rat(delta))
+                    limit_rat(rat_seq(b)) = b
+                    limit_rat(rat_seq(a)).is_close(limit_rat(rat_seq(b)), Real.from_rat(delta))
                     converges(lift_seq(rat_seq(a)))
                     converges(lift_seq(rat_seq(b)))
                     seq_close(lift_seq(rat_seq(a)), lift_seq(rat_seq(b)), Real.from_rat(delta))
@@ -3481,18 +3487,18 @@ theorem add_fns_uniform(f: Real -> Real, g: Real -> Real) {
 
 // Equivalence classes between Cauchy sequences.
 define seq_eq(a: Nat -> Rat, b: Nat -> Rat) -> Bool {
-    converges(lift_seq(a)) and converges_to(lift_seq(b), limit(lift_seq(a)))
+    converges(lift_seq(a)) and converges_to(lift_seq(b), limit_rat(a))
 }
 
 theorem seq_eq_symm(a: Nat -> Rat, b: Nat -> Rat) {
     seq_eq(a, b) implies seq_eq(b, a)
 } by {
-    converges_to(lift_seq(b), limit(lift_seq(a)))
-    converges_to(lift_seq(b), limit(lift_seq(b)))
-    limit(lift_seq(b)) = limit(lift_seq(a))
+    converges_to(lift_seq(b), limit_rat(a))
+    converges_to(lift_seq(b), limit_rat(b))
+    limit_rat(b) = limit_rat(a)
     converges(lift_seq(a))
-    converges_to(lift_seq(a), limit(lift_seq(a)))
-    converges_to(lift_seq(a), limit(lift_seq(b)))
+    converges_to(lift_seq(a), limit_rat(a))
+    converges_to(lift_seq(a), limit_rat(b))
 }
 
 define add_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
@@ -3502,10 +3508,10 @@ define add_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
 theorem add_rat_seq_is_add(a: Nat -> Rat, b: Nat -> Rat) {
     converges(lift_seq(a)) and converges(lift_seq(b))
     implies
-    converges_to(lift_seq(add_rat_seq(a, b)), limit(lift_seq(a)) + limit(lift_seq(b)))
+    converges_to(lift_seq(add_rat_seq(a, b)), limit_rat(a) + limit_rat(b))
 } by {
     let seq: Nat -> Real = lift_seq(add_rat_seq(a, b))
-    let target: Real = limit(lift_seq(a)) + limit(lift_seq(b))
+    let target: Real = limit_rat(a) + limit_rat(b)
     forall(eps: Real) {
         if eps.is_positive {
             let delta: Real satisfy {
@@ -3513,12 +3519,12 @@ theorem add_rat_seq_is_add(a: Nat -> Rat, b: Nat -> Rat) {
             }
             let n1: Nat satisfy {
                 forall(i: Nat) {
-                    n1 <= i implies lift_seq(a)(i).is_close(limit(lift_seq(a)), delta)
+                    n1 <= i implies lift_seq(a)(i).is_close(limit_rat(a), delta)
                 }
             }
             let n2: Nat satisfy {
                 forall(i: Nat) {
-                    n2 <= i implies lift_seq(b)(i).is_close(limit(lift_seq(b)), delta)
+                    n2 <= i implies lift_seq(b)(i).is_close(limit_rat(b), delta)
                 }
             }
             let n: Nat satisfy {
@@ -3526,9 +3532,9 @@ theorem add_rat_seq_is_add(a: Nat -> Rat, b: Nat -> Rat) {
             }
             forall(i: Nat) {
                 if n <= i {
-                    lift_seq(a)(i).is_close(limit(lift_seq(a)), delta)
-                    lift_seq(b)(i).is_close(limit(lift_seq(b)), delta)
-                    (lift_seq(a, i) + lift_seq(b, i)).is_close(limit(lift_seq(a)) + limit(lift_seq(b)), delta + delta)
+                    lift_seq(a)(i).is_close(limit_rat(a), delta)
+                    lift_seq(b)(i).is_close(limit_rat(b), delta)
+                    (lift_seq(a, i) + lift_seq(b, i)).is_close(limit_rat(a) + limit_rat(b), delta + delta)
                     seq(i).is_close(target, delta + delta)
                     seq(i).is_close(target, eps)
                 }
@@ -3541,6 +3547,15 @@ theorem add_rat_seq_is_add(a: Nat -> Rat, b: Nat -> Rat) {
 define mul_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
     a(n) * b(n)
 }
+
+// TODO: prove that we can multiply convergent sequences.
+// TODO: prove that multiplying equivalent sequences gives equivalent things.
+
+// theorem mul_rat_seq_converges(a: Nat -> Rat, b: Nat -> Rat) {
+//     converges(lift_seq(a)) and converges(lift_seq(b))
+//     implies
+//     converges(lift_seq(mul_rat_seq(a, b)))
+// }
 
 // TODO: the mul_rat_real approach might be too complicated.
 // Instead, perhaps we can prove multiplication is well-defined between Cauchy sequences.
@@ -4048,7 +4063,7 @@ theorem mul_rat_commutes(r: Rat, x: Real) {
     }
 }
 
-// TODO: prove basic theorems for multiplication.
+// The next main goal is to prove basic theorems for multiplication.
 // commutative
 // associative
 // distributive
