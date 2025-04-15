@@ -3860,8 +3860,53 @@ theorem mul_uniform(x: Real) {
     x.mul = lift_uc(mul_real_rat(x))
 }
 
+define continuous2_condition(f: (Real, Real) -> Real, x: Real, y: Real, delta: Real, eps: Real) -> Bool {
+    forall(x1: Real, y1: Real) {
+        x1.is_close(x, delta) and y1.is_close(y, delta) implies
+        f(x1, y1).is_close(f(x, y), eps)
+    }
+}
+
+define continuous2_at(f: (Real, Real) -> Real, x: Real, y: Real) -> Bool {
+    forall(eps: Real) {
+        eps.is_positive implies exists(delta: Real) {
+            delta.is_positive and
+            continuous2_condition(f, x, y, delta, eps)
+        }
+    }
+}
+
+define continuous2(f: (Real, Real) -> Real) -> Bool {
+    forall(x: Real, y: Real) {
+        continuous2_at(f, x, y)
+    }
+}
+
+theorem add_continuous {
+    continuous2(Real.add)
+} by {
+    forall(x: Real, y: Real) {
+        forall(eps: Real) {
+            if eps.is_positive {
+                let delta: Real satisfy {
+                    delta.is_positive and delta + delta < eps
+                }
+                forall(x1: Real, y1: Real) {
+                    if x1.is_close(x, delta) and y1.is_close(y, delta) {
+                        Real.add(x1, y1).is_close(Real.add(x, y), eps)
+                    }
+                }
+                continuous2_condition(Real.add, x, y, delta, eps)
+                delta.is_positive and continuous2_condition(Real.add, x, y, delta, eps)
+            }
+        }
+        continuous2_at(Real.add, x, y)
+    }
+}
+
 // TODO: prove basic theorems for multiplication.
-// Some sort of 2d continuity.
+// Addition is continuous.
+// Multiplication is continuous.
 // commutative
 // associative
 // distributive

@@ -1,9 +1,6 @@
 dependencies: 6462609830290501876
-content: 12560993471519289047
+content: 1477070518729517722
 blocks:
-  Real.constraint:
-    real:
-    - gt_is_dedekind_cut
   abs_from_rat:
     rat:
     - Rat.abs
@@ -80,6 +77,14 @@ blocks:
     real:
     - Real.add
     - add_gt_symm
+  add_continuous:
+    real:
+    - add_close
+    - close_and_lt_imp_close
+    - continuous2
+    - continuous2_at
+    - continuous2_condition
+    - eps_lt_half
   add_fns_uniform:
     real:
     - Real.is_close
