@@ -3394,39 +3394,6 @@ theorem rat_mul_uniform(r: Rat) {
     rat_uniform(mul_r)
 }
 
-// Real-rat multiplication.
-define mul_rat_real(r: Rat) -> (Real -> Real) {
-    lift_uc(compose(Real.from_rat, r.mul))
-}
-
-theorem mul_rat_real_of_rat(r1: Rat, r2: Rat) {
-    mul_rat_real(r1, Real.from_rat(r2)) = Real.from_rat(r1 * r2)
-} by {
-    let f: Rat -> Real = compose(Real.from_rat, r1.mul)
-    lift_uc(f)(Real.from_rat(r2)) = f(r2)
-}
-
-theorem mul_rat_real_uniform_on_real(r: Rat) {
-    uniform(mul_rat_real(r))
-} by {
-    let f: Rat -> Real = compose(Real.from_rat, r.mul)
-    mul_rat_real(r) = lift_uc(compose(Real.from_rat, r.mul))
-    rat_uniform(f)
-    uniform(lift_uc(f))
-}
-
-theorem compose_mul_rat_real(q: Rat, r: Rat) {
-    compose(mul_rat_real(q), mul_rat_real(r)) = mul_rat_real(q * r)
-} by {
-    uniform(compose(mul_rat_real(q), mul_rat_real(r)))
-}
-
-theorem mul_rat_real_mul_rat(q: Rat, r: Rat, x: Real) {
-    mul_rat_real(q * r, x) = mul_rat_real(q, mul_rat_real(r, x))
-} by {
-    mul_rat_real(q * r)(x) = compose(mul_rat_real(q), mul_rat_real(r))(x)
-}
-
 theorem close_add(a: Real, b: Real, c: Real, eps: Real) {
     a.is_close(b, eps)
     implies
@@ -3469,15 +3436,7 @@ theorem neg_uniform {
     }
 }
 
-theorem mul_neg_one_real {
-    mul_rat_real(-Rat.1) = Real.neg
-} by {
-    uniform(mul_rat_real(-Rat.1))
-}
 
-theorem neg_mul_rat_real(r: Rat, x: Real) {
-    mul_rat_real(-r, x) = -mul_rat_real(r, x)
-}
 
 define add_fns<T>(f: T -> Real, g: T -> Real, t: T) -> Real {
     f(t) + g(t)
@@ -3518,6 +3477,116 @@ theorem add_fns_uniform(f: Real -> Real, g: Real -> Real) {
             delta.is_positive and uniform_condition(add_fns(f, g), delta, eps)
         }
     }
+}
+
+// Equivalence classes between Cauchy sequences.
+define seq_eq(a: Nat -> Rat, b: Nat -> Rat) -> Bool {
+    converges(lift_seq(a)) and converges_to(lift_seq(b), limit(lift_seq(a)))
+}
+
+theorem seq_eq_symm(a: Nat -> Rat, b: Nat -> Rat) {
+    seq_eq(a, b) implies seq_eq(b, a)
+} by {
+    converges_to(lift_seq(b), limit(lift_seq(a)))
+    converges_to(lift_seq(b), limit(lift_seq(b)))
+    limit(lift_seq(b)) = limit(lift_seq(a))
+    converges(lift_seq(a))
+    converges_to(lift_seq(a), limit(lift_seq(a)))
+    converges_to(lift_seq(a), limit(lift_seq(b)))
+}
+
+define add_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
+    a(n) + b(n)
+}
+
+theorem add_rat_seq_is_add(a: Nat -> Rat, b: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b))
+    implies
+    converges_to(lift_seq(add_rat_seq(a, b)), limit(lift_seq(a)) + limit(lift_seq(b)))
+} by {
+    let seq: Nat -> Real = lift_seq(add_rat_seq(a, b))
+    let target: Real = limit(lift_seq(a)) + limit(lift_seq(b))
+    forall(eps: Real) {
+        if eps.is_positive {
+            let delta: Real satisfy {
+                delta.is_positive and delta + delta < eps
+            }
+            let n1: Nat satisfy {
+                forall(i: Nat) {
+                    n1 <= i implies lift_seq(a)(i).is_close(limit(lift_seq(a)), delta)
+                }
+            }
+            let n2: Nat satisfy {
+                forall(i: Nat) {
+                    n2 <= i implies lift_seq(b)(i).is_close(limit(lift_seq(b)), delta)
+                }
+            }
+            let n: Nat satisfy {
+                n1 <= n and n2 <= n
+            }
+            forall(i: Nat) {
+                if n <= i {
+                    lift_seq(a)(i).is_close(limit(lift_seq(a)), delta)
+                    lift_seq(b)(i).is_close(limit(lift_seq(b)), delta)
+                    (lift_seq(a, i) + lift_seq(b, i)).is_close(limit(lift_seq(a)) + limit(lift_seq(b)), delta + delta)
+                    seq(i).is_close(target, delta + delta)
+                    seq(i).is_close(target, eps)
+                }
+            }
+        }
+    }
+    converges_to(seq, target)
+}
+
+define mul_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
+    a(n) * b(n)
+}
+
+// TODO: the mul_rat_real approach might be too complicated.
+// Instead, perhaps we can prove multiplication is well-defined between Cauchy sequences.
+// If this works, clean up below this line to deprecate mul_rat_real.
+
+// Real-rat multiplication.
+define mul_rat_real(r: Rat) -> (Real -> Real) {
+    lift_uc(compose(Real.from_rat, r.mul))
+}
+
+theorem mul_rat_real_of_rat(r1: Rat, r2: Rat) {
+    mul_rat_real(r1, Real.from_rat(r2)) = Real.from_rat(r1 * r2)
+} by {
+    let f: Rat -> Real = compose(Real.from_rat, r1.mul)
+    lift_uc(f)(Real.from_rat(r2)) = f(r2)
+}
+
+theorem mul_rat_real_uniform_on_real(r: Rat) {
+    uniform(mul_rat_real(r))
+} by {
+    let f: Rat -> Real = compose(Real.from_rat, r.mul)
+    mul_rat_real(r) = lift_uc(compose(Real.from_rat, r.mul))
+    rat_uniform(f)
+    uniform(lift_uc(f))
+}
+
+theorem compose_mul_rat_real(q: Rat, r: Rat) {
+    compose(mul_rat_real(q), mul_rat_real(r)) = mul_rat_real(q * r)
+} by {
+    uniform(compose(mul_rat_real(q), mul_rat_real(r)))
+}
+
+theorem mul_neg_one_real {
+    mul_rat_real(-Rat.1) = Real.neg
+} by {
+    uniform(mul_rat_real(-Rat.1))
+}
+
+theorem mul_rat_real_mul_rat(q: Rat, r: Rat, x: Real) {
+    mul_rat_real(q * r, x) = mul_rat_real(q, mul_rat_real(r, x))
+} by {
+    mul_rat_real(q * r)(x) = compose(mul_rat_real(q), mul_rat_real(r))(x)
+}
+
+theorem neg_mul_rat_real(r: Rat, x: Real) {
+    mul_rat_real(-r, x) = -mul_rat_real(r, x)
 }
 
 theorem mul_rat_distributes_left_functional(q: Rat, r: Rat) {
@@ -3883,7 +3952,7 @@ define continuous2(f: (Real, Real) -> Real) -> Bool {
 }
 
 // Addition is continuous.
-theorem add_continuous {
+theorem add_continuous2 {
     continuous2(Real.add)
 } by {
     forall(x: Real, y: Real) {
@@ -3950,8 +4019,36 @@ theorem uniform_imp_continuous(f: Real -> Real) {
     }
 }
 
+theorem mul_left_continuous(x: Real) {
+    continuous(x.mul)
+}
+
+define mul_swap(x: Real, y: Real) -> Real {
+    y * x
+}
+
+// Multiplying on the right by a rational number is uniformly continuous.
+theorem mul_swap_rat_uniform(r: Rat) {
+    uniform(mul_swap(Real.from_rat(r)))
+} by {
+    mul_swap(Real.from_rat(r)) = mul_rat_real(r)
+}
+
+// Multiplying a real and rational number commutes.
+theorem mul_rat_commutes(r: Rat, x: Real) {
+    Real.from_rat(r) * x = x * Real.from_rat(r)
+} by {
+    uniform(mul_swap(Real.from_rat(r)))
+    uniform(Real.from_rat(r).mul)
+    if mul_swap(Real.from_rat(r)) != Real.from_rat(r).mul {
+        let p: Rat satisfy {
+            mul_swap(Real.from_rat(r))(Real.from_rat(p)) != Real.from_rat(r).mul(Real.from_rat(p))
+        }
+        false
+    }
+}
+
 // TODO: prove basic theorems for multiplication.
-// Multiplication is continuous.
 // commutative
 // associative
 // distributive

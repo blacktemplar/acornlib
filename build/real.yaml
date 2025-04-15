@@ -1,5 +1,5 @@
 dependencies: 6462609830290501876
-content: 15624872991497037986
+content: 15687981366818118596
 blocks:
   abs_from_rat:
     rat:
@@ -77,7 +77,7 @@ blocks:
     real:
     - Real.add
     - add_gt_symm
-  add_continuous:
+  add_continuous2:
     real:
     - add_close
     - close_and_lt_imp_close
@@ -294,6 +294,20 @@ blocks:
     - lt_lte_trans
     - not_gt_rat_self
     - rat_between_reals
+  add_rat_seq_is_add:
+    nat:
+    - gte_each_of_three
+    - lte_trans
+    real:
+    - Real.is_close
+    - add_close
+    - add_from_rat
+    - add_rat_seq
+    - close_and_lt_imp_close
+    - converges_imp_converges_to
+    - converges_to
+    - eps_lt_half
+    - lift_seq_elt
   add_real_uniform:
     real:
     - add_comm
@@ -1576,6 +1590,10 @@ blocks:
   min_pos_pos:
     real:
     - min
+  mul_left_continuous:
+    real:
+    - mul_uniform
+    - uniform_imp_continuous
   mul_lift:
     real:
     - mul_real_rat_lifts
@@ -1588,6 +1606,15 @@ blocks:
     - mul_rat_real_uniform_on_real
     - neg_from_rat
     - neg_uniform
+    - uniform_ne_imp_rat_ne
+  mul_rat_commutes:
+    rat:
+    - mul_comm
+    real:
+    - mul_lift
+    - mul_swap
+    - mul_swap_rat_uniform
+    - mul_uniform
     - uniform_ne_imp_rat_ne
   mul_rat_distributes_left_functional:
     rat:
@@ -1867,6 +1894,14 @@ blocks:
     - mul_rat_real_zero
     - mul_real_rat
     - only_abs_zero_eq_zero
+  mul_swap_rat_uniform:
+    rat:
+    - add_zero_right
+    real:
+    - mul_rat_real_uniform_on_real
+    - mul_real_rat
+    - mul_real_rat_lifts
+    - mul_swap
   mul_uniform:
     real:
     - Real.mul
@@ -2304,6 +2339,12 @@ blocks:
     - gt_add_neg
     - lt_add_pos
     - neg_pos_is_neg
+  seq_eq_symm:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - seq_eq
   sub_both_eq_sub_add:
     real:
     - Real.sub
