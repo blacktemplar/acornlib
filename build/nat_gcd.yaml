@@ -1,4 +1,4 @@
-dependencies: 15745386300596650028
+dependencies: 672987558059742460
 content: 14397919020653535126
 blocks:
   all_false_below:
@@ -38,7 +38,6 @@ blocks:
     - Pair.second
   divides_gcd:
     nat_gcd:
-    - '215'
     - divides_both
     - gcd
     pair:
@@ -72,8 +71,6 @@ blocks:
     nat:
     - lte_imp_not_lt
     nat_gcd:
-    - '110'
-    - '111'
     - decreasing_to_zero
     - no_infinite_decreasing
   gcd_comm:
@@ -116,8 +113,6 @@ blocks:
     - mul_comm
     - mul_zero_left
     nat_gcd:
-    - '426'
-    - '428'
     - gcd_comm
     - gcd_mult_left_nonzero
     - gcd_zero_right
@@ -160,8 +155,6 @@ blocks:
     - not_lt_zero
     - trichotomy
     nat_gcd:
-    - '467'
-    - '475'
     - gcd_comm
     - gcd_divides
     - gcd_divides_right

@@ -1,4 +1,4 @@
-dependencies: 2068192697243548410
+dependencies: 15099933977911157619
 content: 13415059842572310638
 blocks:
   abs_add_nonneg:
@@ -155,9 +155,7 @@ blocks:
   add_neg_nonpos:
     int:
     - Int.is_positive
-    - add_comm
     - add_pos_nonneg
-    - add_zero_left
     - add_zero_right
     - neg_distrib
     - neg_neg
@@ -168,7 +166,6 @@ blocks:
     - sub_nat_parts
   add_nonneg_nonneg:
     int:
-    - '726'
     - add_comm
     - add_pos_nonneg
     - add_zero_right
@@ -176,7 +173,6 @@ blocks:
     - pos_is_not_neg
   add_nonpos_nonpos:
     int:
-    - '737'
     - add_comm
     - add_neg_nonpos
     - add_zero_right
@@ -213,7 +209,6 @@ blocks:
     - add_part_sub_nat
     - add_sub_nat_left
     - sub_nat_eq
-    - sub_nat_imp_add_eq
     nat:
     - add_assoc
     - add_comm
@@ -231,7 +226,6 @@ blocks:
     - add_assoc
   add_sub_nat_left:
     int:
-    - '619'
     - Int.is_negative
     - add_sub_nat_left_neg
     - add_sub_nat_left_pos
@@ -255,9 +249,7 @@ blocks:
     - neg_part_from
     - neg_sub_nat
     - pos_part_from
-    - sub_nat_add_cancel_left
     - sub_nat_eq
-    - sub_nat_imp_add_eq
     nat:
     - add_assoc
     - add_comm
@@ -304,7 +296,6 @@ blocks:
     - neg_zero
     nat_gcd:
     - cofactor
-    - gcd_nonzero_right
   div_abs:
     int:
     - abs_alt_decomp
@@ -406,7 +397,6 @@ blocks:
     - spans_gcd
   euclids_lemma_prime:
     int:
-    - '1983'
     - euclids_lemma
     - gcd_of_prime
   exp_abs_eq_abs_exp:
@@ -453,7 +443,6 @@ blocks:
     - Int.exp
   fix_neg:
     int:
-    - '141'
     - Int.0
     - Int.Int.neg_suc
     - Int.neg
@@ -522,9 +511,6 @@ blocks:
     - gcd_nonzero_left
   gcd_of_prime:
     int:
-    - '1949'
-    - '1951'
-    - '1954'
     - Int.1
     - div_abs_imp_div
     - gcd
@@ -560,7 +546,6 @@ blocks:
     - sub_add_cancel_left
   lt_and_lte:
     int:
-    - '1473'
     - Int.lte
     - lt_trans
   lt_cancel_mul:
@@ -627,7 +612,6 @@ blocks:
     - sub_add_cancel_right
   lte_abs:
     int:
-    - '1339'
     - Int.is_negative
     - Int.is_positive
     - Int.lte
@@ -648,7 +632,6 @@ blocks:
     - lt_add_left
   lte_and_lt:
     int:
-    - '1481'
     - Int.lte
     - lt_trans
   lte_cancel_mul:
@@ -784,7 +767,6 @@ blocks:
     - sub_eq_zero
   mul_nat_from_nat_left:
     int:
-    - '906'
     - Int.0
     - Int.is_negative
     - abs
@@ -806,7 +788,6 @@ blocks:
     - mul_zero_left
   mul_nat_from_nat_right:
     int:
-    - '937'
     - Int.0
     - Int.mul
     - abs_from_nat
@@ -816,7 +797,6 @@ blocks:
     - non_pos_is_neg_abs
   mul_nat_negate_left:
     int:
-    - '847'
     - Int.is_positive
     - abs_neg
     - mul_nat
@@ -877,7 +857,6 @@ blocks:
     - mul_zero_left
   mul_nat_zero_right:
     int:
-    - '818'
     - Int.0
     - mul_nat
     - sub_nat_self
@@ -899,9 +878,6 @@ blocks:
     - mul_neg_cancel_left
   mul_neg_left:
     int:
-    - '1062'
-    - '1065'
-    - '1070'
     - Int.mul
     - mul_comm
     - mul_nat_from_nat_right
@@ -945,7 +921,6 @@ blocks:
     - Int.is_negative
     - Int.mul
     - mul_nat_from_nat_left
-    - sub_zero_left
   mul_nonneg_nonpos_nonpos:
     int:
     - Int.is_positive
@@ -987,10 +962,7 @@ blocks:
     - mul_nat_from_nat_left
     - mul_nat_negate_left
     - neg_neg
-    - neg_sub_nat
     - non_pos_is_neg_abs
-    - sub_nat_zero_left
-    - sub_nat_zero_right
   mul_nonpos_nonpos_nonneg:
     int:
     - Int.is_negative
@@ -1035,7 +1007,6 @@ blocks:
     - neg_neg
   mul_pos_pos:
     int:
-    - '1197'
     - mul_nonneg_nonneg_nonneg
     - mul_zero_imp_factor_zero
     - nonzero_pos_or_neg
@@ -1059,8 +1030,6 @@ blocks:
     - mul_one_left
   mul_zero_imp_factor_zero:
     int:
-    - '1175'
-    - '1177'
     - abs_mul
     - abs_zero
     - abs_zero_imp_zero
@@ -1068,7 +1037,6 @@ blocks:
     - mul_to_zero
   mul_zero_left:
     int:
-    - '1010'
     - Int.mul
     - mul_nat_zero_left
     - mul_nonneg_nonpos_nonpos
@@ -1150,14 +1118,12 @@ blocks:
     - Int.neg
   neg_or_pos:
     int:
-    - '166'
     - abs
     - abs_neg_nat
     - neg_from_nat
     - neg_nat_suc
   neg_part_from:
     int:
-    - '494'
     - abs
     - neg_part
     - pos_part
@@ -1213,7 +1179,6 @@ blocks:
     - sub_add_left
     - sub_add_right
     - sub_negate_imp_add
-    - sub_zero_left
     - sub_zero_right
     - zero_not_pos
   non_pos_is_neg_abs:
@@ -1236,7 +1201,6 @@ blocks:
     - nonzero_pos_or_neg
   nonzero_pos_or_neg:
     int:
-    - '427'
     - Int.is_negative
     - Int.is_positive
     - abs_neg
@@ -1287,8 +1251,6 @@ blocks:
     - sub_nat_parts
   plus_abs_gte_zero:
     int:
-    - '2071'
-    - '2074'
     - Int.gte
     - Int.is_negative
     - Int.is_positive
@@ -1584,7 +1546,6 @@ blocks:
     - add_comm
   sub_nat_imp_add:
     int:
-    - '283'
     - Int.Int.from_nat
     - from_eq_neg_from
     - sub_nat_add_right
@@ -1634,7 +1595,6 @@ blocks:
     - lt_or_lte
   sub_nat_parts:
     int:
-    - '459'
     - Int.is_negative
     - neg_part
     - neg_sub_nat
@@ -1652,7 +1612,6 @@ blocks:
     - sub_self
   sub_nat_zero_left:
     int:
-    - '214'
     - Int.0
     - neg_zero
     - sub_nat
@@ -1741,8 +1700,6 @@ blocks:
     - add_sub
   two_units:
     int:
-    - '1514'
-    - '1516'
     - Int.1
     - is_unit
     - neg_or_pos
@@ -1755,7 +1712,6 @@ blocks:
     - unit_sign
   unit_squared:
     int:
-    - '1522'
     - mul_comm
     - mul_neg_right
     - mul_one_left
