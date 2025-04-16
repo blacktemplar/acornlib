@@ -4312,8 +4312,20 @@ theorem mul_one_left(x: Real) {
     Real.1 * x = x
 }
 
+theorem mul_zero_right(x: Real) {
+    x * Real.0 = Real.0
+} by {
+    limit_rat(rat_seq(x)) * limit_rat(zero_rat_seq) = limit_rat(mul_rat_seq(rat_seq(x), zero_rat_seq))
+    mul_rat_seq(rat_seq(x), zero_rat_seq) = zero_rat_seq
+}
+
+theorem mul_zero_left(x: Real) {
+    Real.0 * x = Real.0
+}
+
 // Prove the basic theorems for multiplication.
 // negation is mul -1
+// negation and multiplication
 // subtraction is distributive
 // how multiplication passes along positive and negative
 // maintaining order

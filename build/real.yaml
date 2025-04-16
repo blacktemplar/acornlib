@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 769923471112246980
+content: 10000569393991742368
 blocks:
   abs_from_rat:
     rat:
@@ -1834,6 +1834,10 @@ blocks:
     - mul_assoc
     real:
     - mul_rat_seq
+  mul_zero_left:
+    real:
+    - mul_comm
+    - mul_zero_right
   mul_zero_rat_seq:
     rat:
     - Rat.div
@@ -1865,6 +1869,22 @@ blocks:
     - seq_eq_zero_imp_converges_to_zero
     - smaller_rat_eps
     - sub_cancels
+  mul_zero_right:
+    rat:
+    - mul_zero_right
+    real:
+    - Real.0
+    - const_rat_seq
+    - converges_to_zero_imp_seq_eq_zero
+    - lift_rat_seq_converges
+    - limit_rat_const_rat_seq
+    - limit_rat_mul_rat_seq
+    - limit_rat_rat_seq
+    - mul_comm
+    - mul_rat_seq
+    - seq_eq
+    - zero_rat_seq
+    - zero_rat_seq_is_zero
   neg_distrib:
     real:
     - add_assoc
