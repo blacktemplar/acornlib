@@ -1,10 +1,8 @@
-dependencies: 12676240328438610026
-content: 17692118376755356818
+dependencies: 7247526963788339526
+content: 6853919567169728882
 blocks:
   abs_mul_abs:
     rat:
-    - '1345'
-    - '1350'
     - abs_non_neg
     - abs_non_pos
     - mul_comm
@@ -20,6 +18,25 @@ blocks:
     - single_trichotomy
     - sub_self
     - zero_minus
+  abs_reduce_left:
+    int:
+    - Int.abs
+    - abs_decomp
+    - member_abs_neg
+    - member_abs_nonneg
+    - unit_sign
+    rat:
+    - mul_neg_one_left
+    - mul_reduced_int_left
+    - neg_abs
+    - rat_neg_one
+  abs_reduce_right:
+    int:
+    - member_abs_neg
+    - member_abs_nonneg
+    rat:
+    - neg_abs
+    - reduce_neg_denom
   abs_zero_imp_zero:
     rat:
     - Rat.abs
@@ -133,7 +150,6 @@ blocks:
     - mul_comm
     - mul_distrib_right
     rat:
-    - '545'
     - add_reduced
     - add_zero_left
     - reduce
@@ -440,7 +456,6 @@ blocks:
     - lte_from_int
   gte_some_int:
     rat:
-    - '1175'
     - Rat.gte
     - floor
   half_is_pos:
@@ -757,7 +772,6 @@ blocks:
     - zero_lt_imp_pos
   lte_mul_pos:
     rat:
-    - '1011'
     - Rat.lte
     - lt_mul_pos
   lte_trans:
@@ -997,7 +1011,6 @@ blocks:
     int:
     - mul_zero_left
     rat:
-    - '462'
     - mul_comm
     - mul_reduced_degen
     - mul_reduced_nondegen
@@ -1073,7 +1086,6 @@ blocks:
     - lt_from_int
   neg_abs:
     rat:
-    - '1318'
     - Rat.abs
     - Rat.new
     - neg_neg_is_pos
@@ -1280,7 +1292,6 @@ blocks:
     - unit_sign_is_unit
     - zero_not_pos
     rat:
-    - '118'
     - Rat.denom
     - Rat.num
     - cross_equals
@@ -1296,7 +1307,6 @@ blocks:
     int:
     - mul_assoc
     - mul_comm
-    - mul_one_left
     - mul_zero_imp_factor_zero
     - mul_zero_left
     rat:
@@ -1314,6 +1324,35 @@ blocks:
     - cross_eq_imp_eq
     - denom_nonzero
     - reduce
+  reduce_neg_denom:
+    int:
+    - add_eq_zero
+    - add_neg
+    - mul_neg_left
+    - mul_one_left
+    - neg_neg
+    - neg_zero
+    rat:
+    - Rat.0
+    - Rat.1
+    - Rat.from_int
+    - from_int_num
+    - mul_neg_one_left
+    - mul_one_left
+    - mul_reduced
+    - mul_reduced_int_left
+    - rat_neg_one
+    - reduce_cancels_left
+    - reduce_idempotent
+    - zero_denom
+  reduce_neg_num:
+    int:
+    - mul_neg_left
+    - mul_one_left
+    rat:
+    - mul_neg_one_left
+    - mul_reduced_int_left
+    - rat_neg_one
   reduce_pos_pos:
     int:
     - mul_nonneg_nonpos_nonpos
@@ -1357,8 +1396,6 @@ blocks:
     int:
     - nonzero_pos_or_neg
     rat:
-    - '891'
-    - '897'
     - Rat.is_negative
     - Rat.is_positive
     - reduce_idempotent
@@ -1512,8 +1549,6 @@ blocks:
     - reduce_idempotent
   trichotomy:
     rat:
-    - '906'
-    - '913'
     - Rat.gt
     - Rat.lt
     - add_cancels_sub

@@ -1,5 +1,5 @@
 dependencies: 15099933977911157619
-content: 13415059842572310638
+content: 1028794824119697519
 blocks:
   abs_add_nonneg:
     int:
@@ -675,6 +675,32 @@ blocks:
     int:
     - Int.lte
     - lt_trans
+  member_abs_neg:
+    int:
+    - Int.abs
+    - neg_neg
+    - non_pos_is_neg_abs
+    - pos_is_not_neg
+  member_abs_nonneg:
+    int:
+    - Int.abs
+    - Int.is_negative
+  member_abs_nonpos:
+    int:
+    - Int.abs
+    - neg_neg
+    - non_pos_is_neg_abs
+  member_abs_pos:
+    int:
+    - member_abs_nonneg
+    - pos_is_not_neg
+  member_triangle:
+    int:
+    - Int.abs
+    - abs_from_nat
+    - add_from_nat
+    - lte_from_nat
+    - triangle_ineq
   mul_assoc:
     int:
     - Int.is_negative

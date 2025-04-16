@@ -2186,3 +2186,30 @@ theorem exp_abs_eq_abs_exp(a: Int, n: Nat) {
     f(n)
 }
 
+class Int {
+    define abs(self) -> Int {
+        Int.from_nat(abs(self))
+    }
+}
+
+theorem member_abs_neg(a: Int) {
+    a.is_negative implies a.abs = -a
+}
+
+theorem member_abs_nonneg(a: Int) {
+    not a.is_negative implies a.abs = a
+}
+
+theorem member_abs_pos(a: Int) {
+    a.is_positive implies a.abs = a
+}
+
+theorem member_abs_nonpos(a: Int) {
+    not a.is_positive implies a.abs = -a
+}
+
+theorem member_triangle(a: Int, b: Int) {
+    (a + b).abs <= a.abs + b.abs
+} by {
+    abs(a + b) <= abs(a) + abs(b)
+}

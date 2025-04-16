@@ -3664,6 +3664,24 @@ theorem converges_imp_abs_bounded(a: Nat -> Rat) {
     }
 }
 
+theorem diff_pos_imp_lt(a: Real, b: Real) {
+    (b - a).is_positive implies a < b
+} by {
+    (b + -a).is_positive
+    b + -a > Real.0
+    Real.0 - -a < b
+    Real.0 + a < b
+}
+
+theorem smaller_rat_eps(eps: Real) {
+    eps.is_positive implies
+    exists(reps: Rat) {
+        reps.is_positive and Real.from_rat(reps) < eps
+    }
+} by {
+    Real.0 < eps
+}
+
 // Prove that multiplying convergent sequences gives you a convergent sequence.
 // theorem mul_rat_seq_converges(a: Nat -> Rat, b: Nat -> Rat) {
 //     converges(lift_seq(a)) and converges(lift_seq(b))
@@ -3672,7 +3690,59 @@ theorem converges_imp_abs_bounded(a: Nat -> Rat) {
 // } by {
 //     let a_ub: Rat satisfy {
 //         forall(i: Nat) {
-//             a(i) < a_ub
+//             a(i).abs < a_ub
+//         }
+//     }
+//     let b_ub: Rat satisfy {
+//         forall(i: Nat) {
+//             b(i).abs < b_ub
+//         }
+//     }
+//     let ub: Rat satisfy {
+//         a_ub < ub and b_ub < ub
+//     }
+//     ub.is_positive
+//     let seq: Nat -> Real = lift_seq(mul_rat_seq(a, b))
+//     forall(eps: Real) {
+//         if eps.is_positive {
+//             let reps: Rat satisfy {
+//                 reps.is_positive and Real.from_rat(reps) < eps
+//             }
+//             let reps2: Rat = reps / (ub + ub)
+//             (ub + ub).is_positive
+//             reps2.is_positive
+//             let eps2: Real = Real.from_rat(reps2)
+//             eps2.is_positive
+//             let n_a: Nat satisfy {
+//                 forall(i: Nat, j: Nat) {
+//                     n_a <= i and n_a <= j implies
+//                     lift_seq(a)(i).is_close(lift_seq(a)(j), eps2)
+//                 }
+//             }
+//             let n_b: Nat satisfy {
+//                 forall(i: Nat, j: Nat) {
+//                     n_b <= i and n_b <= j implies
+//                     lift_seq(b)(i).is_close(lift_seq(b)(j), eps2)
+//                 }
+//             }
+//             let n: Nat satisfy {
+//                 n_a <= n and n_b <= n
+//             }
+//             forall(i: Nat, j: Nat) {
+//                 if n <= i and n <= j {
+//                     n_a <= i
+//                     n_a <= j
+//                     lift_seq(a)(i).is_close(lift_seq(a)(j), eps2)
+//                     a(i).is_close(a(j), reps2)
+//                     n_b <= i
+//                     n_b <= j
+//                     lift_seq(b)(i).is_close(lift_seq(b)(j), eps2)
+//                     b(i).is_close(b(j), reps2)
+//                     seq(i).is_close(seq(j), eps)
+//                 }
+//             }
+//             cauchy_condition(seq, n, eps)
+//             cauchy_condition(lift_seq(mul_rat_seq(a, b)), n, eps)
 //         }
 //     }
 // }
@@ -3911,15 +3981,6 @@ theorem mul_rat_real_sub_distrib_left(p: Rat, q: Rat, x: Real) {
     mul_rat_real(p - q, x) = mul_rat_real(p, x) - mul_rat_real(q, x)
 } by {
     mul_rat_real(p - q, x) = mul_rat_real(p, x) + mul_rat_real(-q, x)
-}
-
-theorem diff_pos_imp_lt(a: Real, b: Real) {
-    (b - a).is_positive implies a < b
-} by {
-    (b + -a).is_positive
-    b + -a > Real.0
-    Real.0 - -a < b
-    Real.0 + a < b
 }
 
 theorem lt_mul_rat_real_pos_rat(r: Rat, a: Real, b: Real) {
