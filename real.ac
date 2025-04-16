@@ -3548,7 +3548,121 @@ define mul_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
     a(n) * b(n)
 }
 
-// TODO: prove that convergent sequences can have their absolute value bounded. 
+define neg_seq(a: Nat -> Rat, n: Nat) -> Rat {
+    -a(n)
+}
+
+theorem neg_is_close(x: Real, y: Real, eps: Real) {
+    x.is_close(y, eps) implies
+    (-x).is_close(-y, eps)
+} by {
+    (x - y).abs < eps
+    (-x + y).abs < eps
+}
+
+theorem neg_seq_converges(a: Nat -> Rat) {
+    converges(lift_seq(a)) implies
+    converges_to(lift_seq(neg_seq(a)), -limit_rat(a))
+} by {
+    let seq: Nat -> Real = lift_seq(neg_seq(a))
+    let target: Real = -limit_rat(a)
+    forall(eps: Real) {
+        if eps.is_positive {
+            let delta: Real satisfy {
+                delta.is_positive and delta < eps
+            }
+            let n1: Nat satisfy {
+                forall(i: Nat) {
+                    n1 <= i implies lift_seq(a)(i).is_close(limit_rat(a), delta)
+                }
+            }
+            let n: Nat satisfy {
+                n1 <= n
+            }
+            forall(i: Nat) {
+                if n <= i {
+                    lift_seq(a)(i).is_close(limit_rat(a), delta)
+                    (-lift_seq(a, i)).is_close(-limit_rat(a), delta)
+                    seq(i).is_close(target, delta)
+                    seq(i).is_close(target, eps)
+                }
+            }
+        }
+    }
+    converges_to(seq, target)
+}
+
+// Prove that convergent sequences can be bounded.
+theorem converges_imp_bounded(a: Nat -> Rat) {
+    converges(lift_seq(a))
+    implies
+    exists(b: Rat) {
+        forall(i: Nat) {
+            a(i) < b
+        }
+    }
+} by {
+    let eventual: Real satisfy {
+        eventual_ub(lift_seq(a), eventual)
+    }
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies lift_seq(a)(i) <= eventual
+        }
+    }
+    let finite: Rat satisfy {
+        forall(i: Nat) {
+            i <= n implies a(i) < finite
+        }
+    }
+    let bound: Rat satisfy {
+        eventual < Real.from_rat(bound) and finite < bound
+    }
+    forall(i: Nat) {
+        if n <= i {
+            Real.from_rat(a(i)) <= eventual
+            Real.from_rat(bound) > Real.from_rat(a(i))
+            Real.from_rat(bound).gt_rat(a(i))
+            a(i) < bound
+        } else {
+            i <= n
+            a(i) < bound
+        }
+    }
+}
+
+// Prove that convergent sequences can have their absolute value bounded. 
+theorem converges_imp_abs_bounded(a: Nat -> Rat) {
+    converges(lift_seq(a))
+    implies
+    exists(b: Rat) {
+        forall(i: Nat) {
+            a(i).abs < b
+        }
+    }
+} by {
+    let pos_bound: Rat satisfy {
+        forall(i: Nat) {
+            a(i) < pos_bound
+        }
+    }
+    converges(lift_seq(neg_seq(a)))
+    let neg_bound: Rat satisfy {
+        forall(i: Nat) {
+            neg_seq(a)(i) < neg_bound
+        }
+    }
+    let bound: Rat satisfy {
+        pos_bound < bound and neg_bound < bound
+    }
+    forall(i: Nat) {
+        if a(i).is_negative {
+            a(i).abs < bound
+        } else {
+            a(i).abs < bound
+        }
+    }
+}
 
 // Prove that multiplying convergent sequences gives you a convergent sequence.
 // theorem mul_rat_seq_converges(a: Nat -> Rat, b: Nat -> Rat) {

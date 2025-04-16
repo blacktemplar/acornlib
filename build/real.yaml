@@ -1,5 +1,5 @@
 dependencies: 9595866082367293215
-content: 7326141977168839413
+content: 378304216583858432
 blocks:
   abs_from_rat:
     rat:
@@ -592,6 +592,48 @@ blocks:
     - is_close_triangle
     - lt_lte_trans
     - seq_close
+  converges_imp_abs_bounded:
+    rat:
+    - Rat.abs
+    - Rat.lte
+    - abs_non_neg
+    - bounding_both
+    - lt_trans
+    - lte_lt_trans
+    real:
+    - converges_imp_bounded
+    - converges_to_imp_converges
+    - neg_seq
+    - neg_seq_converges
+  converges_imp_bounded:
+    nat:
+    - Nat.lte
+    - lt_diff
+    - lt_or_lte
+    rat:
+    - Rat.gt
+    - Rat.lte
+    - finite_seq_abs_bounded
+    - iop_pos
+    - lt_lte_trans
+    - lt_trans
+    - lte_abs
+    - lte_lt_trans
+    - no_greatest
+    - trichotomy
+    real:
+    - Real.gt
+    - cauch_imp_ub
+    - converges
+    - eventual_ub
+    - from_rat_gt_imp_gt
+    - from_rat_maintains_lt
+    - from_rat_pos
+    - gt_from_rat_imp_gt_rat
+    - lift_seq_elt
+    - lt_some_rat
+    - lt_trans
+    - lte_lt_trans
   converges_imp_converges_to:
     nat:
     - Nat.lt
@@ -2001,6 +2043,13 @@ blocks:
     - gt_from_rat_imp_gt_rat
     - neg_gt
     - neg_gt_is_dedekind_cut
+  neg_is_close:
+    real:
+    - Real.is_close
+    - Real.sub
+    - add_comm
+    - close_comm
+    - neg_neg
   neg_lt_neg_swap_neg:
     real:
     - lt_neg_swap_neg
@@ -2065,6 +2114,21 @@ blocks:
     - neg_lt_swap_neg
     - neg_zero
     - pos_gt_zero
+  neg_seq_converges:
+    nat:
+    - lte_trans
+    real:
+    - Real.is_close
+    - close_and_lt_imp_close
+    - converges_imp_converges_to
+    - converges_to
+    - converges_to_unique_one_way
+    - eps_smaller_than_both
+    - lift_seq_elt
+    - limit_rat
+    - neg_from_rat
+    - neg_is_close
+    - neg_seq
   neg_uniform:
     real:
     - Real.gt
