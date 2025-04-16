@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 7046728370721580384
+content: 1511716859605912324
 blocks:
   abs_from_rat:
     rat:
@@ -306,30 +306,18 @@ blocks:
     - add_comm
     real:
     - add_rat_seq
-    - add_rat_seq_is_add
-    - converges_imp_converges_to
-    - converges_to_imp_converges
-    - limit_rat
-    - seq_eq
   add_rat_seq_distributes_left:
     rat:
-    - add_comm
+    - distrib_right
     real:
     - add_rat_seq
-    - add_rat_seq_comm
-    - converges_to_imp_converges
-    - self_eq
-    - seq_eq
+    - mul_rat_seq
   add_rat_seq_distributes_right:
     rat:
     - distrib_left
     real:
     - add_rat_seq
-    - add_rat_seq_comm
     - mul_rat_seq
-    - mul_rat_seq_converges
-    - self_eq
-    - seq_eq
   add_rat_seq_is_add:
     nat:
     - gte_each_of_three
@@ -1697,6 +1685,10 @@ blocks:
     real:
     - mul_uniform
     - uniform_imp_continuous
+  mul_left_well_def:
+    real:
+    - mul_rat_seq_comm
+    - mul_right_well_def
   mul_lift:
     real:
     - mul_real_rat_lifts
@@ -1925,11 +1917,7 @@ blocks:
     rat:
     - mul_comm
     real:
-    - converges_imp_converges_to
-    - limit_rat
     - mul_rat_seq
-    - mul_rat_seq_converges
-    - seq_eq
   mul_rat_seq_converges:
     nat:
     - gte_each_of_three
@@ -1966,6 +1954,13 @@ blocks:
     - lift_seq_elt
     - mul_rat_seq
     - smaller_rat_eps
+  mul_rat_seq_eq:
+    real:
+    - mul_left_well_def
+    - mul_right_well_def
+    - seq_eq
+    - seq_eq_symm
+    - seq_eq_trans
   mul_rat_zero_real:
     rat:
     - add_cancels_sub
@@ -2042,6 +2037,18 @@ blocks:
     - mul_rat_real_zero
     - mul_real_rat
     - only_abs_zero_eq_zero
+  mul_right_well_def:
+    real:
+    - converges_to_imp_converges
+    - mul_rat_seq_converges
+    - mul_zero_rat_seq
+    - self_eq
+    - seq_eq
+    - seq_eq_symm
+    - sub_eq_zero_imp_eq
+    - sub_rat_eq_imp_sub_zero
+    - sub_rat_seq_distributes_right
+    - sub_rat_seq_is_sub
   mul_swap_rat_uniform:
     rat:
     - add_zero_right
@@ -2572,6 +2579,12 @@ blocks:
     - converges_to_unique
     - limit_rat
     - seq_eq
+  seq_eq_trans:
+    real:
+    - converges_to_unique
+    - self_eq
+    - seq_eq
+    - seq_eq_symm
   seq_eq_zero_imp_converges_to_zero:
     real:
     - converges_imp_converges_to
@@ -2629,6 +2642,30 @@ blocks:
   sub_moves_sides:
     real:
     - sub_cancels
+  sub_rat_eq_imp_sub_zero:
+    real:
+    - add_zero_left
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - converges_to_zero_imp_seq_eq_zero
+    - limit_rat
+    - seq_eq
+    - seq_eq_symm
+    - sub_cancels
+    - sub_rat_seq_is_sub
+    - zero_rat_seq_is_zero
+  sub_rat_seq_distributes_left:
+    real:
+    - mul_rat_seq_comm
+    - sub_rat_seq
+    - sub_rat_seq_distributes_right
+  sub_rat_seq_distributes_right:
+    rat:
+    - sub_distrib
+    real:
+    - mul_rat_seq
+    - sub_rat_seq
   sub_rat_seq_is_sub:
     real:
     - Real.sub
@@ -2649,6 +2686,17 @@ blocks:
     - seq_eq
     - seq_eq_symm
     - sub_rat_seq_is_sub
+  sub_rat_sub_zero_imp_eq:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - seq_eq_zero_imp_converges_to_zero
+    - sub_eq_zero_imp_eq
+    - sub_rat_seq_is_sub
+    - sub_zero_imp_eq
+    - zero_rat_seq_is_zero
   sub_zero_imp_eq:
     real:
     - Real.sub
