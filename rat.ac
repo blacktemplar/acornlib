@@ -1920,15 +1920,82 @@ theorem abs_reduce_right(a: Int, b: Int) {
     }
 }
 
-// theorem triangle_ineq(a: Rat, b: Rat) {
-//     (a + b).abs <= a.abs + b.abs
-// } by {
-//     let (an: Int, bn: Int, c: Int) satisfy {
-//         a = reduce(an, c) and b = reduce(bn, c)
-//     }
-//     a + b = reduce(an + bn, c)
-//     (a + b).abs = reduce((an + bn).abs, c.abs)
-// }
+theorem reduce_nonneg(a: Int, b: Int) {
+    not a.is_negative and not b.is_negative
+    implies
+    not reduce(a, b).is_negative
+} by {
+    if a = Int.0 {
+        not reduce(a, b).is_negative
+    } else {
+        if b = Int.0 {
+            not reduce(a, b).is_negative
+        } else {
+            a.is_positive
+            b.is_positive
+            reduce(a, b).is_positive
+            not reduce(a, b).is_negative
+        }
+    }
+}
+
+theorem reduce_abs(a: Int, b: Int) {
+    reduce(a.abs, b.abs) = reduce(a, b).abs
+} by {
+    not a.abs.is_negative
+    not b.abs.is_negative
+    not reduce(a.abs, b.abs).is_negative
+}
+
+theorem lte_cancel_mul_pos(p: Rat, q: Rat, r: Rat) {
+    r.is_positive and p * r <= q * r
+    implies
+    p <= q
+} by {
+    if p * r = q * r {
+        p = q
+        p <= q
+    } else {
+        p * r < q * r
+        p < q
+        p <= q
+    }
+}
+
+theorem reduce_lte(a: Int, b: Int, c: Int) {
+    not c.is_negative and a <= b implies
+    reduce(a, c) <= reduce(b, c)
+} by {
+    if c = Int.0 {
+        reduce(a, c) = reduce(b, c)
+        reduce(a, c) <= reduce(b, c)
+    } else {
+        c.is_positive
+        reduce(a, c) * Rat.from_int(c) = Rat.from_int(a)
+        reduce(b, c) * Rat.from_int(c) = Rat.from_int(b)
+        Rat.from_int(a) <= Rat.from_int(b)
+        reduce(a, c) * Rat.from_int(c) <= reduce(b, c) * Rat.from_int(c)
+        Rat.from_int(c).is_positive
+        reduce(a, c) <= reduce(b, c)
+    }
+}
+
+theorem triangle_ineq(a: Rat, b: Rat) {
+    (a + b).abs <= a.abs + b.abs
+} by {
+    let (an: Int, bn: Int, c: Int) satisfy {
+        a = reduce(an, c) and b = reduce(bn, c)
+    }
+    a + b = reduce(an + bn, c)
+    (a + b).abs = reduce((an + bn).abs, c.abs)
+    (an + bn).abs <= an.abs + bn.abs
+    Int.from_nat(int.abs(c.abs)) = c.abs
+    not c.abs.is_negative
+    reduce((an + bn).abs, c.abs) <= reduce(an.abs + bn.abs, c.abs)
+    (a + b).abs <= reduce(an.abs + bn.abs, c.abs)
+    reduce(an.abs + bn.abs, c.abs) = reduce(an, c).abs + reduce(bn, c).abs
+    reduce(an.abs + bn.abs, c.abs) = a.abs + b.abs
+}
 
 // theorem diff_mul_bound(a0: Rat, b0: Rat, a1: Rat, b1: Rat) {
 //     (a0 * b0 - a1 * b1).abs <= a0.abs * (b0 - b1).abs + b1.abs * (a0 - a1).abs

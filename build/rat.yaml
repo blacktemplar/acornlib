@@ -1,5 +1,5 @@
 dependencies: 7247526963788339526
-content: 6853919567169728882
+content: 4028916396328341498
 blocks:
   abs_mul_abs:
     rat:
@@ -736,6 +736,12 @@ blocks:
     - lte_trans
     - neg_imp_lt_zero
     - zero_lte_abs
+  lte_cancel_mul_pos:
+    rat:
+    - Rat.lte
+    - lt_cancel_pos_mul_right
+    - mul_cancels_right
+    - pos_ne_zero
   lte_div_pos:
     rat:
     - Rat.div
@@ -1297,6 +1303,17 @@ blocks:
     - cross_equals
     - cross_equals_trans
     - is_reduced
+  reduce_abs:
+    int:
+    - Int.abs
+    - Int.is_negative
+    - abs_from_nat
+    - sub_nat_zero_right
+    rat:
+    - abs_non_neg
+    - abs_reduce_left
+    - abs_reduce_right
+    - reduce_nonneg
   reduce_cancels_left:
     int:
     - mul_comm
@@ -1324,6 +1341,21 @@ blocks:
     - cross_eq_imp_eq
     - denom_nonzero
     - reduce
+  reduce_lte:
+    int:
+    - nonzero_pos_or_neg
+    rat:
+    - Rat.is_positive
+    - Rat.lte
+    - from_int_num
+    - lte_cancel_mul_pos
+    - lte_from_int
+    - mul_comm
+    - mul_one_left
+    - mul_reduced_int_left
+    - mul_reduced_int_right
+    - reduce
+    - reduce_self
   reduce_neg_denom:
     int:
     - add_eq_zero
@@ -1353,6 +1385,23 @@ blocks:
     - mul_neg_one_left
     - mul_reduced_int_left
     - rat_neg_one
+  reduce_nonneg:
+    int:
+    - neg_sub
+    - nonzero_pos_or_neg
+    - sub_zero_right
+    rat:
+    - Rat.is_positive
+    - neg_imp_lt_zero
+    - neg_neg_is_pos
+    - not_lt_both_ways
+    - not_pos_and_neg
+    - pos_imp_zero_lt
+    - reduce_neg_denom
+    - reduce_pos_pos
+    - reduce_zero_num
+    - sub_zero
+    - zero_minus
   reduce_pos_pos:
     int:
     - mul_nonneg_nonpos_nonpos
@@ -1547,6 +1596,17 @@ blocks:
     - add_reduced_same_denom
     - mul_int_left
     - reduce_idempotent
+  triangle_ineq:
+    int:
+    - Int.abs
+    - Int.is_negative
+    - abs_from_nat
+    - member_triangle
+    rat:
+    - add_reduced_same_denom
+    - common_denom
+    - reduce_abs
+    - reduce_lte
   trichotomy:
     rat:
     - Rat.gt
