@@ -3548,7 +3548,7 @@ define mul_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
     a(n) * b(n)
 }
 
-define neg_seq(a: Nat -> Rat, n: Nat) -> Rat {
+define neg_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
     -a(n)
 }
 
@@ -3562,9 +3562,9 @@ theorem neg_is_close(x: Real, y: Real, eps: Real) {
 
 theorem neg_seq_converges(a: Nat -> Rat) {
     converges(lift_seq(a)) implies
-    converges_to(lift_seq(neg_seq(a)), -limit_rat(a))
+    converges_to(lift_seq(neg_rat_seq(a)), -limit_rat(a))
 } by {
-    let seq: Nat -> Real = lift_seq(neg_seq(a))
+    let seq: Nat -> Real = lift_seq(neg_rat_seq(a))
     let target: Real = -limit_rat(a)
     forall(eps: Real) {
         if eps.is_positive {
@@ -3646,10 +3646,10 @@ theorem converges_imp_abs_bounded(a: Nat -> Rat) {
             a(i) < pos_bound
         }
     }
-    converges(lift_seq(neg_seq(a)))
+    converges(lift_seq(neg_rat_seq(a)))
     let neg_bound: Rat satisfy {
         forall(i: Nat) {
-            neg_seq(a)(i) < neg_bound
+            neg_rat_seq(a)(i) < neg_bound
         }
     }
     let bound: Rat satisfy {
@@ -3766,7 +3766,124 @@ theorem mul_rat_seq_converges(a: Nat -> Rat, b: Nat -> Rat) {
     }
 }
 
+define sub_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
+    a(n) - b(n)
+}
+
+theorem add_neg_is_sub(a: Nat -> Rat, b: Nat -> Rat) {
+    add_rat_seq(a, neg_rat_seq(b)) = sub_rat_seq(a, b)
+}
+
+define const_rat_seq(a: Rat, n: Nat) -> Rat {
+    a
+}
+
+theorem const_rat_converges_to_rat(a: Rat) {
+    converges_to(lift_seq(const_rat_seq(a)), Real.from_rat(a))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            forall(i: Nat) {
+                lift_seq(const_rat_seq(a))(i).is_close(Real.from_rat(a), eps)
+            }
+        }
+    }
+}
+
+let zero_rat_seq: Nat -> Rat = const_rat_seq(Rat.0)
+
+theorem zero_rat_seq_is_zero {
+    converges_to(lift_seq(zero_rat_seq), Real.0)
+}
+
+theorem neg_is_zero_sub(a: Nat -> Rat) {
+    neg_rat_seq(a) = sub_rat_seq(zero_rat_seq, a)
+}
+
+// Negating is well-defined with respect to seq_eq
+theorem neg_rat_seq_well_def(a: Nat -> Rat, b: Nat -> Rat) {
+    seq_eq(a, b) implies
+    seq_eq(neg_rat_seq(a), neg_rat_seq(b))
+} by {
+    converges_to(lift_seq(neg_rat_seq(a)), -limit_rat(a))
+    converges_to(lift_seq(neg_rat_seq(b)), -limit_rat(b))
+    limit_rat(a) = limit_rat(b)
+    converges(lift_seq(neg_rat_seq(a)))
+    converges_to(lift_seq(neg_rat_seq(a)), -limit_rat(b))
+    converges_to(lift_seq(neg_rat_seq(a)), limit(lift_seq(neg_rat_seq(a))))
+    limit(lift_seq(neg_rat_seq(a))) = -limit_rat(b)
+    converges_to(lift_seq(neg_rat_seq(b)), limit(lift_seq(neg_rat_seq(a))))
+    converges_to(lift_seq(neg_rat_seq(b)), limit_rat(neg_rat_seq(a)))
+}
+
+// Addition is well-defined with respect to seq_eq
+theorem add_rat_seq_well_def(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat, d: Nat -> Rat) {
+    seq_eq(a, c) and seq_eq(b, d)
+    implies
+    seq_eq(add_rat_seq(a, b), add_rat_seq(c, d))
+} by {
+    converges_to(lift_seq(add_rat_seq(a, b)), limit_rat(a) + limit_rat(b))
+    converges_to(lift_seq(add_rat_seq(c, d)), limit_rat(c) + limit_rat(d))
+    limit_rat(a) = limit_rat(c)
+    limit_rat(b) = limit_rat(d)
+    limit_rat(a) + limit_rat(b) = limit_rat(c) + limit_rat(d)
+    limit_rat(add_rat_seq(a, b)) = limit_rat(a) + limit_rat(b)
+    limit_rat(add_rat_seq(c, d)) = limit_rat(c) + limit_rat(d)
+}
+
+theorem sub_rat_seq_is_sub(a: Nat -> Rat, b: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b))
+    implies
+    converges_to(lift_seq(sub_rat_seq(a, b)), limit_rat(a) - limit_rat(b))
+} by {
+    converges_to(lift_seq(neg_rat_seq(b)), -limit_rat(b))
+    converges(lift_seq(neg_rat_seq(b)))
+    converges_to(lift_seq(neg_rat_seq(b)), limit(lift_seq(neg_rat_seq(b))))
+    limit(lift_seq(neg_rat_seq(b))) = -limit_rat(b)
+    converges_to(lift_seq(add_rat_seq(a, neg_rat_seq(b))), limit_rat(a) + limit_rat(neg_rat_seq(b)))
+    converges_to(lift_seq(add_rat_seq(a, neg_rat_seq(b))), limit_rat(a) + -limit_rat(b))
+    converges_to(lift_seq(add_rat_seq(a, neg_rat_seq(b))), limit_rat(a) - limit_rat(b))
+    add_rat_seq(a, neg_rat_seq(b)) = sub_rat_seq(a, b)
+}
+
+// Subtraction is well-defined with respect to seq_eq
+theorem sub_rat_seq_well_def(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat, d: Nat -> Rat) {
+    seq_eq(a, c) and seq_eq(b, d)
+    implies
+    seq_eq(sub_rat_seq(a, b), sub_rat_seq(c, d))
+} by {
+    converges_to(lift_seq(sub_rat_seq(a, b)), limit_rat(a) - limit_rat(b))
+    converges_to(lift_seq(sub_rat_seq(c, d)), limit_rat(c) - limit_rat(d))
+    limit_rat(a) = limit_rat(c)
+    limit_rat(b) = limit_rat(d)
+    limit_rat(a) - limit_rat(b) = limit_rat(c) - limit_rat(d)
+    limit_rat(sub_rat_seq(a, b)) = limit_rat(a) - limit_rat(b)
+    limit_rat(sub_rat_seq(c, d)) = limit_rat(c) - limit_rat(d)
+}
+
+theorem sub_zero_imp_eq(x: Real, y: Real) {
+    x - y = Real.0 implies x = y
+}
+
+// If two convergent sequences subtract to a zero-equivalent sequence, they are equal.
+theorem sub_eq_zero_imp_eq(a: Nat -> Rat, b: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b)) and seq_eq(sub_rat_seq(a, b), zero_rat_seq) implies
+    seq_eq(a, b)
+} by {
+    limit_rat(sub_rat_seq(a, b)) = limit_rat(zero_rat_seq)
+    limit_rat(sub_rat_seq(a, b)) = limit_rat(a) - limit_rat(b)
+    limit_rat(a) - limit_rat(b) = limit_rat(zero_rat_seq)
+    limit_rat(a) - limit_rat(b) = Real.0
+    limit_rat(a) = limit_rat(b)
+}
+
 // TODO: prove that multiplying equivalent sequences gives equivalent things.
+// theorem mul_rat_seq_eq(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat, d: Nat -> Rat) {
+//     seq_eq(a, c) and seq_eq(b, d)
+//     implies
+//     seq_eq(mul_rat_seq(a, b), mul_rat_seq(c, d))
+// }
+
 // TODO: the mul_rat_real approach might be too complicated.
 // Instead, perhaps we can prove multiplication is well-defined between Cauchy sequences.
 // If this works, clean up below this line to deprecate mul_rat_real.

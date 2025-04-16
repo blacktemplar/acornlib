@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 14261436774926014091
+content: 11764082627959314529
 blocks:
   abs_from_rat:
     rat:
@@ -257,6 +257,13 @@ blocks:
     - rat_between_reals
     - rat_window
     - real_neg_imp_rat_neg
+  add_neg_is_sub:
+    rat:
+    - Rat.sub
+    real:
+    - add_rat_seq
+    - neg_rat_seq
+    - sub_rat_seq
   add_neg_lte_zero:
     rat:
     - Rat.gt
@@ -309,6 +316,15 @@ blocks:
     - eps_lt_half
     - lift_seq_elt
     - limit_rat
+  add_rat_seq_well_def:
+    real:
+    - add_rat_seq_is_add
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - seq_eq
+    - seq_eq_symm
   add_real_uniform:
     real:
     - add_comm
@@ -561,6 +577,12 @@ blocks:
     - compose
     - uniform
     - uniform_condition
+  const_rat_converges_to_rat:
+    real:
+    - const_rat_seq
+    - converges_to
+    - lift_seq_elt
+    - self_close
   constant_is_rat_uniform:
     rat:
     - one_is_pos
@@ -595,13 +617,15 @@ blocks:
   converges_imp_abs_bounded:
     rat:
     - Rat.abs
+    - Rat.lte
     - abs_non_neg
     - bounding_both
     - lt_trans
+    - lte_lt_trans
     real:
     - converges_imp_bounded
     - converges_to_imp_converges
-    - neg_seq
+    - neg_rat_seq
     - neg_seq_converges
   converges_imp_bounded:
     nat:
@@ -2084,6 +2108,17 @@ blocks:
     - add_comm
     - close_comm
     - neg_neg
+  neg_is_zero_sub:
+    rat:
+    - Rat.sub
+    - neg_sub
+    - sub_zero
+    - zero_minus
+    real:
+    - const_rat_seq
+    - neg_rat_seq
+    - sub_rat_seq
+    - zero_rat_seq
   neg_lt_neg_swap_neg:
     real:
     - lt_neg_swap_neg
@@ -2148,6 +2183,15 @@ blocks:
     - neg_lt_swap_neg
     - neg_zero
     - pos_gt_zero
+  neg_rat_seq_well_def:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - neg_seq_converges
+    - seq_eq
+    - seq_eq_symm
   neg_seq_converges:
     nat:
     - lte_trans
@@ -2162,7 +2206,7 @@ blocks:
     - limit_rat
     - neg_from_rat
     - neg_is_close
-    - neg_seq
+    - neg_rat_seq
   neg_uniform:
     real:
     - Real.gt
@@ -2469,6 +2513,17 @@ blocks:
     - Real.sub
     - add_assoc
     - add_comm
+  sub_eq_zero_imp_eq:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - seq_eq
+    - seq_eq_symm
+    - sub_rat_seq_is_sub
+    - sub_zero_imp_eq
+    - zero_rat_seq_is_zero
   sub_lt_is_gt:
     real:
     - Real.gt
@@ -2484,6 +2539,32 @@ blocks:
   sub_moves_sides:
     real:
     - sub_cancels
+  sub_rat_seq_is_sub:
+    real:
+    - Real.sub
+    - add_comm
+    - add_neg_is_sub
+    - add_rat_seq_is_add
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - neg_seq_converges
+  sub_rat_seq_well_def:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - seq_eq
+    - seq_eq_symm
+    - sub_rat_seq_is_sub
+  sub_zero_imp_eq:
+    real:
+    - Real.sub
+    - add_zero_left
+    - neg_neg
+    - sub_moves_sides
   sum_bounds_imp_close:
     real:
     - Real.lte
@@ -2565,3 +2646,8 @@ blocks:
     - Real.0
     - Real.is_positive
     - from_rat_gt_imp_gt
+  zero_rat_seq_is_zero:
+    real:
+    - Real.0
+    - const_rat_converges_to_rat
+    - zero_rat_seq
