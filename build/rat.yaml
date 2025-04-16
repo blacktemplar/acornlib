@@ -1,5 +1,5 @@
 dependencies: 7247526963788339526
-content: 4028916396328341498
+content: 11314950297252643464
 blocks:
   abs_mul_abs:
     rat:
@@ -318,6 +318,16 @@ blocks:
     rat:
     - Rat.constraint
     - is_reduced
+  diff_mul_bound:
+    rat:
+    - Rat.add
+    - Rat.sub
+    - add_assoc
+    - add_cancels_sub
+    - mul_comm
+    - mul_two_abs
+    - sub_distrib
+    - triangle_ineq
   distrib_left:
     int:
     - mul_distrib_left
@@ -672,6 +682,17 @@ blocks:
     - pos_imp_zero_lt
     - sub_zero
     - zero_minus
+  lt_pos_mul_lt_pos:
+    rat:
+    - Rat.abs
+    - Rat.lt
+    - Rat.lte
+    - lt_trans
+    - lte_mul_nonneg
+    - mul_pos_pos
+    - nonneg_lt_imp_pos
+    - sub_distrib
+    - zero_lte_abs
   lt_pos_reciprocal:
     int:
     - zero_not_pos
@@ -1158,6 +1179,12 @@ blocks:
     rat:
     - half_is_pos
     - lt_add_pos
+  nonneg_lt_imp_pos:
+    rat:
+    - Rat.abs
+    - lte_lt_trans
+    - zero_lt_imp_pos
+    - zero_lte_abs
   not_lt_both_ways:
     rat:
     - lt_trans

@@ -1997,11 +1997,27 @@ theorem triangle_ineq(a: Rat, b: Rat) {
     reduce(an.abs + bn.abs, c.abs) = a.abs + b.abs
 }
 
-// theorem diff_mul_bound(a0: Rat, b0: Rat, a1: Rat, b1: Rat) {
-//     (a0 * b0 - a1 * b1).abs <= a0.abs * (b0 - b1).abs + b1.abs * (a0 - a1).abs
-// } by {
-//     a0 * (b0 - b1) + b1 * (a0 - a1) = a0 * b0 - a0 * b1 + b1 * a0 - b1 * a1
-//     a0 * (b0 - b1) + b1 * (a0 - a1) = a0 * b0 - a1 * b1
-//     (a0 * b0 - a1 * b1).abs = (a0 * (b0 - b1) + b1 * (a0 - a1)).abs
-//     (a0 * (b0 - b1) + b1 * (a0 - a1)).abs <= (a0 * (b0 - b1)).abs + (b1 * (a0 - a1)).abs
-// }
+// Not all that generally useful.
+theorem diff_mul_bound(a0: Rat, b0: Rat, a1: Rat, b1: Rat) {
+    (a0 * b0 - a1 * b1).abs <= a0.abs * (b0 - b1).abs + b1.abs * (a0 - a1).abs
+} by {
+    a0 * (b0 - b1) + b1 * (a0 - a1) = a0 * b0 - a0 * b1 + b1 * a0 - b1 * a1
+    a0 * (b0 - b1) + b1 * (a0 - a1) = a0 * b0 - a1 * b1
+    (a0 * b0 - a1 * b1).abs = (a0 * (b0 - b1) + b1 * (a0 - a1)).abs
+    (a0 * (b0 - b1) + b1 * (a0 - a1)).abs <= (a0 * (b0 - b1)).abs + (b1 * (a0 - a1)).abs
+}
+
+theorem nonneg_lt_imp_pos(a: Rat, b: Rat) {
+    not a.is_negative and a < b implies
+    b.is_positive
+}
+
+theorem lt_pos_mul_lt_pos(a: Rat, b: Rat, c: Rat, d: Rat) {
+    not a.is_negative and not c.is_negative and a < b and c < d
+    implies
+    a * c < b * d
+} by {
+    a * c <= b * c
+    b.is_positive
+    b * c < b * d
+}

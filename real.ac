@@ -3738,6 +3738,11 @@ theorem smaller_rat_eps(eps: Real) {
 //                     n_b <= j
 //                     lift_seq(b)(i).is_close(lift_seq(b)(j), eps2)
 //                     b(i).is_close(b(j), reps2)
+//                     (a(i) * b(i) - a(j) * b(j)).abs <= a(i).abs * (b(i) - b(j)).abs + b(j).abs * (a(i) - a(j)).abs
+//                     a(i).abs < ub
+//                     (b(i) - b(j)).abs < reps2
+//                     a(i).abs * (b(i) - b(j)).abs < ub * reps2
+//                     b(j).abs < ub
 //                     seq(i).is_close(seq(j), eps)
 //                 }
 //             }
