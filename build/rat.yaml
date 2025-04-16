@@ -1,5 +1,5 @@
 dependencies: 7247526963788339526
-content: 15683752054284611303
+content: 6233666885474471588
 blocks:
   abs_mul_abs:
     rat:
@@ -802,6 +802,19 @@ blocks:
     rat:
     - Rat.lte
     - lt_trans
+  lte_mul_lte:
+    rat:
+    - Rat.lte
+    - lt_lte_trans
+    - lt_pos_mul_lt_pos
+    - lte_mul_nonneg
+    - lte_mul_pos
+    - mul_comm
+    - neg_imp_lt_zero
+    - not_lt_self
+    - not_pos_and_neg
+    - pos_lte
+    - single_trichotomy
   lte_mul_nonneg:
     rat:
     - Rat.lte

@@ -2025,3 +2025,25 @@ theorem lt_pos_mul_lt_pos(a: Rat, b: Rat, c: Rat, d: Rat) {
 theorem abs_nonneg(a: Rat) {
     not a.abs.is_negative
 }
+
+theorem lte_mul_lte(a: Rat, b: Rat, c: Rat, d: Rat) {
+    not a.is_negative and not c.is_negative and a <= b and c <= d
+    implies
+    a * c <= b * d
+} by {
+    not b.is_negative
+    not d.is_negative
+    if a = b {
+        c * b <= d * b
+        a * c <= b * d
+    } else {
+        a < b
+        if c = d {
+            a * c <= b * d
+        } else {
+            c < d
+            a * c < b * d
+            a * c <= b * d
+        }
+    }
+}

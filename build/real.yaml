@@ -1,5 +1,5 @@
-dependencies: 9836715923889939717
-content: 7901112445413775037
+dependencies: 17251207739864069338
+content: 1460485349474131179
 blocks:
   abs_from_rat:
     rat:
@@ -625,11 +625,9 @@ blocks:
   converges_imp_abs_bounded:
     rat:
     - Rat.abs
-    - Rat.lte
     - abs_non_neg
     - bounding_both
     - lt_trans
-    - lte_lt_trans
     real:
     - converges_imp_bounded
     - converges_to_imp_converges
@@ -1791,6 +1789,30 @@ blocks:
     - limit_rat_mul_rat_seq
     - limit_rat_rat_seq
     - mul_rat_seq
+  mul_pos_pos:
+    nat:
+    - gte_each_of_three
+    - lte_trans
+    rat:
+    - lte_mul_lte
+    - mul_pos_pos
+    - not_pos_and_neg
+    real:
+    - Real.mul
+    - eventual_lb
+    - from_rat_maintains_lte
+    - from_rat_pos
+    - lb_lte_limit
+    - lift_rat_seq_converges
+    - lift_seq_elt
+    - limit_rat
+    - limit_rat_rat_seq
+    - lt_limit_imp_lb
+    - mul_rat_seq
+    - mul_rat_seq_converges
+    - pos_lte_imp_pos
+    - real_lte_imp_rat_lte
+    - smaller_rat_eps
   mul_rat_seq_comm:
     rat:
     - mul_comm
@@ -2172,6 +2194,10 @@ blocks:
     - Real.0
     - Real.is_positive
     - gt_rat_imp_gt_from_rat
+  pos_lte_imp_pos:
+    real:
+    - Real.is_positive
+    - Real.lte
   rat_add_gt_imp_add_gt_from_rat:
     rat:
     - Rat.div
@@ -2366,6 +2392,14 @@ blocks:
     - lt_add_converse
     - lt_add_pos_rat
     - rat_between_reals
+  real_lte_imp_rat_lte:
+    rat:
+    - Rat.lte
+    - trichotomy
+    real:
+    - Real.lte
+    - gt_imp_from_rat_gt
+    - not_gt_rat_self
   real_neg_imp_rat_neg:
     rat:
     - lt_zero_imp_neg

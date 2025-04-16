@@ -4351,6 +4351,65 @@ theorem mul_sub_distrib_left(x: Real, y: Real, z: Real) {
     (x - y) * z = x * z - y * z
 }
 
+theorem real_lte_imp_rat_lte(p: Rat, q: Rat) {
+    Real.from_rat(p) <= Real.from_rat(q) implies
+    p <= q
+}
+
+theorem pos_lte_imp_pos(x: Real, y: Real) {
+    x.is_positive and x <= y implies
+    y.is_positive
+}
+
+theorem mul_pos_pos(x: Real, y: Real) {
+    x.is_positive and y.is_positive
+    implies
+    (x * y).is_positive
+} by {
+    let x_lb: Rat satisfy {
+        x_lb.is_positive and Real.from_rat(x_lb) < x
+    }
+    eventual_lb(lift_seq(rat_seq(x)), Real.from_rat(x_lb))
+    let nx: Nat satisfy {
+        forall(i: Nat) {
+            nx <= i implies
+            Real.from_rat(x_lb) <= lift_seq(rat_seq(x))(i)
+        }
+    }
+    let y_lb: Rat satisfy {
+        y_lb.is_positive and Real.from_rat(y_lb) < y
+    }
+    eventual_lb(lift_seq(rat_seq(y)), Real.from_rat(y_lb))
+    let ny: Nat satisfy {
+        forall(i: Nat) {
+            ny <= i implies
+            Real.from_rat(y_lb) <= lift_seq(rat_seq(y))(i)
+        }
+    }
+    let n: Nat satisfy {
+        nx <= n and ny <= n
+    }
+    forall(i: Nat) {
+        if n <= i {
+            nx <= i
+            Real.from_rat(x_lb) <= lift_seq(rat_seq(x))(i)
+            Real.from_rat(x_lb) <= Real.from_rat(rat_seq(x)(i))
+            x_lb <= rat_seq(x)(i)
+            ny <= i
+            Real.from_rat(y_lb) <= lift_seq(rat_seq(y))(i)
+            y_lb <= rat_seq(y)(i)
+            x_lb * y_lb <= rat_seq(x)(i) * rat_seq(y)(i)
+            x_lb * y_lb <= mul_rat_seq(rat_seq(x), rat_seq(y))(i)
+            Real.from_rat(x_lb * y_lb) <= lift_seq(mul_rat_seq(rat_seq(x), rat_seq(y)))(i)
+        }
+    }
+    eventual_lb(lift_seq(mul_rat_seq(rat_seq(x), rat_seq(y))), Real.from_rat(x_lb * y_lb))
+    Real.from_rat(x_lb * y_lb) <= limit_rat(mul_rat_seq(rat_seq(x), rat_seq(y)))
+    Real.from_rat(x_lb * y_lb) <= x * y
+    (x_lb * y_lb).is_positive
+    Real.from_rat(x_lb * y_lb).is_positive
+}
+
 // Prove the basic theorems for multiplication.
-// how multiplication passes along positive and negative
+// how multiplication passes along negatives
 // maintaining order
