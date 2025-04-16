@@ -1,14 +1,40 @@
-// This isn't the ideal way to define groups - we need something like typeclasses.
-// But for now it should work.
-type Group: axiom
+typeclass G: Group {
+    // The identity
+    e: G
 
-class Group {
-    let id: Group = axiom
-    define mul(self, other: Group) -> Group {
-        axiom
+    // The group operation
+    mul: (G, G) -> G
+
+    // The inverse operation
+    inverse: G -> G
+
+    // Groups must be associative
+    associative(a: G, b: G, c: G) {
+        (a * b) * c = a * (b * c)
+    }
+  
+    // The identity element must satisfy the identity property
+    identity_right(a: G) {
+        a * G.e = a
+    }
+  
+    // Other direction of the identity property
+    identity_left(a: G) {
+        G.e * a = a
+    }
+
+    // We only need right-inverse, we can prove left-inverse from it.
+    inverse_right(a: G) {
+        a * a.inverse = G.e
     }
 }
 
-axiom associativity(a: Group, b: Group, c: Group) {
-    (a * b) * c = a * (b * c)
+// This direction is proven rather than assumed
+theorem inverse_left<G: Group>(a: G) {
+    a.inverse * a = G.e
+} by {
+    (a.inverse * a) * a.inverse = a.inverse
+    (a.inverse * a) * a.inverse * a.inverse.inverse = a.inverse * a.inverse.inverse
+    (a.inverse * a) * (a.inverse * a.inverse.inverse) = a.inverse * a.inverse.inverse
+    (a.inverse * a) * G.e = G.e
 }
