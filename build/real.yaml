@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 10000569393991742368
+content: 7901112445413775037
 blocks:
   abs_from_rat:
     rat:
@@ -1752,6 +1752,28 @@ blocks:
     real:
     - mul_rat_seq_comm
     - mul_right_well_def
+  mul_neg_left:
+    real:
+    - mul_assoc
+    - mul_neg_one_left
+  mul_neg_one_left:
+    real:
+    - Real.sub
+    - add_comm
+    - add_neg_eq_zero
+    - add_zero_left
+    - mul_distrib_left
+    - mul_one_left
+    - mul_zero_left
+    - sub_moves_sides
+  mul_neg_one_right:
+    real:
+    - mul_comm
+    - mul_neg_one_left
+  mul_neg_right:
+    real:
+    - mul_comm
+    - mul_neg_left
   mul_one_left:
     real:
     - mul_comm
@@ -1834,6 +1856,15 @@ blocks:
     - mul_assoc
     real:
     - mul_rat_seq
+  mul_sub_distrib_left:
+    real:
+    - mul_comm
+    - mul_sub_distrib_right
+  mul_sub_distrib_right:
+    real:
+    - Real.sub
+    - mul_distrib_right
+    - mul_neg_right
   mul_zero_left:
     real:
     - mul_comm

@@ -4323,9 +4323,34 @@ theorem mul_zero_left(x: Real) {
     Real.0 * x = Real.0
 }
 
+theorem mul_neg_one_left(x: Real) {
+    -Real.1 * x = -x
+} by {
+    (Real.1 + -Real.1) * x = Real.0
+    Real.1 * x + -Real.1 * x = Real.0
+    x + -Real.1 * x = Real.0
+}
+
+theorem mul_neg_one_right(x: Real) {
+    x * -Real.1 = -x
+}
+
+theorem mul_neg_left(x: Real, y: Real) {
+    -x * y = -(x * y)
+}
+
+theorem mul_neg_right(x: Real, y: Real) {
+    x * -y = -(x * y)
+}
+
+theorem mul_sub_distrib_right(x: Real, y: Real, z: Real) {
+    x * (y - z) = x * y - x * z
+}
+
+theorem mul_sub_distrib_left(x: Real, y: Real, z: Real) {
+    (x - y) * z = x * z - y * z
+}
+
 // Prove the basic theorems for multiplication.
-// negation is mul -1
-// negation and multiplication
-// subtraction is distributive
 // how multiplication passes along positive and negative
 // maintaining order
