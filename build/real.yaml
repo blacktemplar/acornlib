@@ -1,5 +1,5 @@
-dependencies: 11173563982865904950
-content: 4698186877810172547
+dependencies: 9836715923889939717
+content: 14261436774926014091
 blocks:
   abs_from_rat:
     rat:
@@ -1860,6 +1860,42 @@ blocks:
     - mul_rat_real_pos_neg
     - mul_rat_real_pos_pos
     - zero_not_positive
+  mul_rat_seq_converges:
+    nat:
+    - gte_each_of_three
+    - lte_trans
+    rat:
+    - Rat.div
+    - Rat.is_close
+    - abs_nonneg
+    - add_pos_pos
+    - adding_lts
+    - bounding_both
+    - diff_mul_bound
+    - distrib_right
+    - lt_pos_mul_lt_pos
+    - lt_trans
+    - lte_lt_trans
+    - mul_cancels_div_left
+    - mul_pos_pos
+    - neg_abs
+    - nonneg_lt_imp_pos
+    - not_lt_both_ways
+    - not_pos_and_neg
+    - pos_imp_zero_lt
+    - pos_reciprocal
+    - smaller_positive
+    real:
+    - cauchy_condition
+    - close_and_lt_imp_close
+    - close_rats_imp_close_reals
+    - close_reals_imp_close_rats
+    - converges
+    - converges_imp_abs_bounded
+    - from_rat_pos
+    - lift_seq_elt
+    - mul_rat_seq
+    - smaller_rat_eps
   mul_rat_zero_real:
     rat:
     - add_cancels_sub

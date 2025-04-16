@@ -2021,3 +2021,7 @@ theorem lt_pos_mul_lt_pos(a: Rat, b: Rat, c: Rat, d: Rat) {
     b.is_positive
     b * c < b * d
 }
+
+theorem abs_nonneg(a: Rat) {
+    not a.abs.is_negative
+}

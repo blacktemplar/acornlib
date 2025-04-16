@@ -1,5 +1,5 @@
 dependencies: 7247526963788339526
-content: 11314950297252643464
+content: 15683752054284611303
 blocks:
   abs_mul_abs:
     rat:
@@ -17,6 +17,17 @@ blocks:
     - Rat.abs
     - single_trichotomy
     - sub_self
+    - zero_minus
+  abs_nonneg:
+    rat:
+    - Rat.abs
+    - Rat.lt
+    - abs_mul_abs
+    - mul_one_left
+    - neg_abs
+    - neg_imp_lt_zero
+    - not_pos_and_neg
+    - sub_zero
     - zero_minus
   abs_reduce_left:
     int:
