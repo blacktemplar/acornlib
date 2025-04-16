@@ -1,5 +1,5 @@
 dependencies: 17251207739864069338
-content: 1460485349474131179
+content: 17112522080216177989
 blocks:
   abs_from_rat:
     rat:
@@ -1548,6 +1548,22 @@ blocks:
     real:
     - lt_lte_trans
     - min_lte_right
+  lt_mul_neg_right:
+    real:
+    - Real.gte
+    - Real.is_negative
+    - Real.lt
+    - diff_pos_imp_lt
+    - gte_imp_not_lt
+    - mul_neg_neg
+    - mul_sub_distrib_left
+    - sub_zero_imp_eq
+  lt_mul_pos_right:
+    real:
+    - diff_pos_imp_lt
+    - lt_imp_minus_pos
+    - mul_pos_pos
+    - mul_sub_distrib_left
   lt_neg_swap_neg:
     real:
     - Real.gt
@@ -1656,6 +1672,14 @@ blocks:
     - gte_imp_not_lt
     - lt_lte_trans
     - not_lt_imp_gte
+  lte_mul_nonneg_right:
+    real:
+    - Real.is_negative
+    - Real.lt
+    - Real.lte
+    - lt_mul_pos_right
+    - mul_comm
+    - mul_zero_left
   lte_or_gte:
     rat:
     - not_lt_both_ways
@@ -1754,6 +1778,12 @@ blocks:
     real:
     - mul_assoc
     - mul_neg_one_left
+  mul_neg_neg:
+    real:
+    - mul_neg_left
+    - mul_pos_neg
+    - neg_neg
+    - neg_neg_is_pos
   mul_neg_one_left:
     real:
     - Real.sub
@@ -1768,10 +1798,23 @@ blocks:
     real:
     - mul_comm
     - mul_neg_one_left
+  mul_neg_pos:
+    real:
+    - mul_neg_left
+    - mul_pos_pos
+    - neg_neg
+    - neg_neg_is_pos
+    - neg_pos_is_neg
   mul_neg_right:
     real:
     - mul_comm
     - mul_neg_left
+  mul_nonneg_nonneg:
+    real:
+    - Real.is_negative
+    - mul_comm
+    - mul_pos_pos
+    - mul_zero_left
   mul_one_left:
     real:
     - mul_comm
@@ -1789,6 +1832,10 @@ blocks:
     - limit_rat_mul_rat_seq
     - limit_rat_rat_seq
     - mul_rat_seq
+  mul_pos_neg:
+    real:
+    - mul_comm
+    - mul_neg_pos
   mul_pos_pos:
     nat:
     - gte_each_of_three

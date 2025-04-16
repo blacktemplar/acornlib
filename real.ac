@@ -4410,6 +4410,79 @@ theorem mul_pos_pos(x: Real, y: Real) {
     Real.from_rat(x_lb * y_lb).is_positive
 }
 
-// Prove the basic theorems for multiplication.
-// how multiplication passes along negatives
-// maintaining order
+theorem mul_neg_pos(x: Real, y: Real) {
+    x.is_negative and y.is_positive
+    implies
+    (x * y).is_negative
+}
+
+theorem mul_pos_neg(x: Real, y: Real) {
+    x.is_positive and y.is_negative
+    implies
+    (x * y).is_negative
+}
+
+theorem mul_neg_neg(x: Real, y: Real) {
+    x.is_negative and y.is_negative
+    implies
+    (x * y).is_positive
+}
+
+theorem mul_nonneg_nonneg(x: Real, y: Real) {
+    not x.is_negative and not y.is_negative
+    implies
+    not (x * y).is_negative
+} by {
+    if x = Real.0 {
+        x * y = Real.0
+        not (x * y).is_negative
+    } else {
+        x.is_positive
+        if y = Real.0 {
+            x * y = Real.0
+            not (x * y).is_negative
+        } else {
+            (x * y).is_positive
+            not (x * y).is_negative
+        }
+    }
+}
+
+theorem lt_mul_pos_right(x: Real, y: Real, z: Real) {
+    z.is_positive and x < y implies
+    x * z < y * z
+}
+
+theorem lte_mul_nonneg_right(x: Real, y: Real, z: Real) {
+    not z.is_negative and x <= y implies
+    x * z <= y * z
+} by {
+    if z = Real.0 {
+        x * z = Real.0
+        y * z = Real.0
+        x * z = y * z
+        x * z <= y * z
+    } else {
+        z.is_positive
+        if x = y {
+            x * z = y * z
+            x * z <= y * z
+        } else {
+            x < y
+            x * z < y * z
+            x * z <= y * z
+        }
+    }
+}
+
+theorem lt_mul_neg_right(x: Real, y: Real, z: Real) {
+    z.is_negative and x < y implies
+    y * z < x * z
+} by {
+    not y < x
+    y != x
+    x - y != Real.0
+    (x - y).is_negative
+    ((x - y) * z).is_positive
+}
+
