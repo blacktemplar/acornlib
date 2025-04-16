@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 17061494359391504114
+content: 769923471112246980
 blocks:
   abs_from_rat:
     rat:
@@ -1314,6 +1314,24 @@ blocks:
     - limit_rat_rat_seq
     - seq_eq
     - seq_eq_imp_limit_rat_eq
+  limit_rat_const_rat_seq:
+    real:
+    - const_rat_converges_to_rat
+    - lift_rat_seq_converges
+    - limit_rat_rat_seq
+    - seq_eq
+    - seq_eq_imp_limit_rat_eq
+  limit_rat_mul_rat_seq:
+    real:
+    - Real.mul
+    - converges_imp_converges_to
+    - converges_to_unique
+    - limit_rat
+    - mul_rat_seq_converges
+    - mul_rat_seq_eq
+    - seq_eq
+    - seq_eq_rat_seq_limit
+    - seq_eq_symm
   limit_rat_rat_seq:
     real:
     - converges_to_unique
@@ -1734,6 +1752,23 @@ blocks:
     real:
     - mul_rat_seq_comm
     - mul_right_well_def
+  mul_one_left:
+    real:
+    - mul_comm
+    - mul_one_right
+  mul_one_right:
+    rat:
+    - mul_one_right
+    real:
+    - Real.1
+    - const_rat_converges_to_rat
+    - const_rat_seq
+    - converges_to_imp_converges
+    - lift_rat_seq_converges
+    - limit_rat_const_rat_seq
+    - limit_rat_mul_rat_seq
+    - limit_rat_rat_seq
+    - mul_rat_seq
   mul_rat_seq_comm:
     rat:
     - mul_comm

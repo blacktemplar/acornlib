@@ -4279,8 +4279,40 @@ theorem mul_distrib_left(x: Real, y: Real, z: Real) {
     (x + y) * z = x * z + y * z
 }
 
+theorem limit_rat_mul_rat_seq(a: Nat -> Rat, b: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b))
+    implies
+    limit_rat(mul_rat_seq(a, b)) = limit_rat(a) * limit_rat(b)
+} by {
+    converges_to(lift_seq(mul_rat_seq(a, b)), limit_rat(a) * limit_rat(b))
+    converges_to(lift_seq(mul_rat_seq(a, b)), limit(lift_seq(mul_rat_seq(a, b))))
+    limit(lift_seq(mul_rat_seq(a, b))) = limit_rat(a) * limit_rat(b)
+}
+
+theorem limit_rat_const_rat_seq(r: Rat) {
+    limit_rat(const_rat_seq(r)) = Real.from_rat(r)
+} by {
+    converges_to(lift_seq(const_rat_seq(r)), limit_rat(rat_seq(Real.from_rat(r))))
+    seq_eq(rat_seq(Real.from_rat(r)), const_rat_seq(r))
+    limit_rat(rat_seq(Real.from_rat(r))) = limit_rat(const_rat_seq(r))
+}
+
+theorem mul_one_right(x: Real) {
+    x * Real.1 = x
+} by {
+    converges(lift_seq(const_rat_seq(Rat.1)))
+    limit_rat(rat_seq(x)) * limit_rat(const_rat_seq(Rat.1)) = limit_rat(mul_rat_seq(rat_seq(x), const_rat_seq(Rat.1)))
+    mul_rat_seq(rat_seq(x), const_rat_seq(Rat.1)) = rat_seq(x)
+    limit_rat(rat_seq(x)) = x
+    x * limit_rat(const_rat_seq(Rat.1)) = x
+    limit_rat(const_rat_seq(Rat.1)) = Real.from_rat(Rat.1)
+}
+
+theorem mul_one_left(x: Real) {
+    Real.1 * x = x
+}
+
 // Prove the basic theorems for multiplication.
-// identity is 1
 // negation is mul -1
 // subtraction is distributive
 // how multiplication passes along positive and negative
