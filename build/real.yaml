@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 10681385549637830214
+content: 1520574145309409293
 blocks:
   abs_from_rat:
     rat:
@@ -1267,6 +1267,16 @@ blocks:
     - converges_to
     - uniform
     - uniform_condition
+  limit_definition_of_add:
+    real:
+    - add_rat_seq_is_add
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - lift_rat_seq_converges
+    - limit_rat
+    - limit_rat_rat_seq
+    - rat_seq_converges_to
   limit_lt_imp_ub:
     rat:
     - Rat.div
@@ -1297,6 +1307,20 @@ blocks:
     - pos_gt_zero
     - sub_cancels
     - sub_lte
+  limit_rat_add:
+    real:
+    - add_rat_seq_is_add
+    - lift_rat_seq_converges
+    - limit_rat_rat_seq
+    - seq_eq
+    - seq_eq_imp_limit_rat_eq
+  limit_rat_rat_seq:
+    real:
+    - converges_to_unique
+    - lift_rat_seq_converges
+    - rat_seq_converges_to
+    - self_eq
+    - seq_eq
   lower_rat:
     rat:
     - add_neg_lt
@@ -1666,6 +1690,42 @@ blocks:
   min_pos_pos:
     real:
     - min
+  mul3_as_seq:
+    real:
+    - Real.mul
+    - converges_imp_converges_to
+    - converges_to_unique
+    - lift_rat_seq_converges
+    - limit_rat
+    - mul_left_well_def
+    - mul_rat_seq_converges
+    - rat_seq_converges_to
+    - seq_eq
+    - seq_eq_symm
+  mul_assoc:
+    real:
+    - mul3_as_seq
+    - mul_comm
+    - mul_rat_seq_comm
+    - mul_seq_assoc
+  mul_comm:
+    real:
+    - Real.mul
+    - mul_rat_seq_comm
+  mul_distrib_right:
+    real:
+    - Real.mul
+    - add_rat_seq_distributes_right
+    - add_rat_seq_is_add
+    - converges_to_imp_converges
+    - lift_rat_seq_converges
+    - limit_definition_of_add
+    - limit_rat_add
+    - mul_rat_seq_converges
+    - mul_right_well_def
+    - seq_eq_imp_limit_rat_eq
+    - seq_eq_rat_seq_limit
+    - seq_eq_symm
   mul_left_well_def:
     real:
     - mul_rat_seq_comm
@@ -1730,6 +1790,11 @@ blocks:
     - sub_rat_eq_imp_sub_zero
     - sub_rat_seq_distributes_right
     - sub_rat_seq_is_sub
+  mul_seq_assoc:
+    rat:
+    - mul_assoc
+    real:
+    - mul_rat_seq
   mul_zero_rat_seq:
     rat:
     - Rat.div
@@ -2233,6 +2298,19 @@ blocks:
     real:
     - converges_imp_converges_to
     - limit_rat
+    - seq_eq
+  seq_eq_imp_limit_rat_eq:
+    real:
+    - converges_to_unique
+    - seq_eq
+    - seq_eq_symm
+    - seq_eq_trans
+  seq_eq_rat_seq_limit:
+    real:
+    - limit_rat
+    - limit_rat_rat_seq
+    - rat_seq_converges_to
+    - self_eq
     - seq_eq
   seq_eq_symm:
     real:

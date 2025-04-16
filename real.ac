@@ -4173,11 +4173,112 @@ class Real {
     }
 }
 
+theorem mul_comm(x: Real, y: Real) {
+    x * y = y * x
+} by {
+    x * y = limit_rat(mul_rat_seq(rat_seq(x), rat_seq(y)))
+    y * x = limit_rat(mul_rat_seq(rat_seq(y), rat_seq(x)))
+    mul_rat_seq(rat_seq(x), rat_seq(y)) = mul_rat_seq(rat_seq(y), rat_seq(x))
+}
+
+theorem mul3_as_seq(x: Real, y: Real, z: Real) {
+    x * y * z = limit_rat(mul_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), rat_seq(z)))
+} by {
+    x * y * z = limit_rat(mul_rat_seq(rat_seq(x * y), rat_seq(z)))
+    seq_eq(rat_seq(x * y), mul_rat_seq(rat_seq(x), rat_seq(y)))
+    seq_eq(mul_rat_seq(rat_seq(x * y), rat_seq(z)), mul_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), rat_seq(z)))
+    converges(lift_seq(mul_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), rat_seq(z))))
+    converges_to(lift_seq(mul_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), rat_seq(z))), x * y * z)
+    limit(lift_seq(mul_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), rat_seq(z)))) = x * y * z
+}
+
+theorem mul_seq_assoc(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat) {
+    mul_rat_seq(mul_rat_seq(a, b), c) = mul_rat_seq(a, mul_rat_seq(b, c))
+}
+
+theorem mul_assoc(x: Real, y: Real, z: Real) {
+    x * (y * z) = (x * y) * z
+} by {
+    mul_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), rat_seq(z)) = mul_rat_seq(rat_seq(x), mul_rat_seq(rat_seq(y), rat_seq(z)))
+    (x * y) * z = limit_rat(mul_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), rat_seq(z)))
+    (x * y) * z = limit_rat(mul_rat_seq(rat_seq(x), mul_rat_seq(rat_seq(y), rat_seq(z))))
+    (y * z) * x = limit_rat(mul_rat_seq(mul_rat_seq(rat_seq(y), rat_seq(z)), rat_seq(x)))
+    mul_rat_seq(rat_seq(x), mul_rat_seq(rat_seq(y), rat_seq(z))) = mul_rat_seq(mul_rat_seq(rat_seq(y), rat_seq(z)), rat_seq(x))
+    x * y * z = y * z * x
+}
+
+theorem limit_rat_rat_seq(x: Real) {
+    x = limit_rat(rat_seq(x))
+}
+
+theorem limit_definition_of_add(x: Real, y: Real) {
+    x + y = limit_rat(add_rat_seq(rat_seq(x), rat_seq(y)))
+} by {
+    converges_to(lift_seq(rat_seq(x)), x)
+    converges_to(lift_seq(rat_seq(y)), y)
+    converges_to(lift_seq(add_rat_seq(rat_seq(x), rat_seq(y))), limit_rat(rat_seq(x)) + limit_rat(rat_seq(y)))
+    converges_to(lift_seq(add_rat_seq(rat_seq(x), rat_seq(y))), limit_rat(rat_seq(x)) + y)
+    converges_to(lift_seq(add_rat_seq(rat_seq(x), rat_seq(y))), x + y)
+}
+
+theorem seq_eq_rat_seq_limit(a: Nat -> Rat) {
+    converges(lift_seq(a)) implies
+    seq_eq(a, rat_seq(limit_rat(a)))
+} by {
+    converges_to(lift_seq(a), limit_rat(a))
+    converges_to(lift_seq(rat_seq(limit_rat(a))), limit_rat(a))
+    limit(lift_seq(a)) = limit(lift_seq(rat_seq(limit_rat(a))))
+    converges_to(lift_seq(rat_seq(limit_rat(a))), limit(lift_seq(rat_seq(limit_rat(a)))))
+}
+
+theorem seq_eq_imp_limit_rat_eq(a: Nat -> Rat, b: Nat -> Rat) {
+    seq_eq(a, b) implies
+    limit_rat(a) = limit_rat(b)
+}
+
+theorem limit_rat_add(a: Nat -> Rat, b: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b))
+    implies
+    limit_rat(add_rat_seq(a, b)) = limit_rat(a) + limit_rat(b)
+}
+
+theorem mul_distrib_right(x: Real, y: Real, z: Real) {
+    x * (y + z) = x * y + x * z
+} by {
+    // Reduce the lhs to sequence form.
+    y + z = limit_rat(add_rat_seq(rat_seq(y), rat_seq(z)))
+    x * (y + z) = limit_rat(mul_rat_seq(rat_seq(x), rat_seq(y + z)))
+    let syz: Nat -> Rat = add_rat_seq(rat_seq(y), rat_seq(z))
+    y + z = limit_rat(syz)
+    converges(lift_seq(add_rat_seq(rat_seq(y), rat_seq(z))))
+    converges(lift_seq(syz))
+    seq_eq(syz, rat_seq(y + z))
+    seq_eq(add_rat_seq(rat_seq(y), rat_seq(z)), rat_seq(y + z))
+    seq_eq(rat_seq(y + z), add_rat_seq(rat_seq(y), rat_seq(z)))
+    seq_eq(mul_rat_seq(rat_seq(x), add_rat_seq(rat_seq(y), rat_seq(z))), mul_rat_seq(rat_seq(x), rat_seq(y + z)))
+    limit_rat(mul_rat_seq(rat_seq(x), add_rat_seq(rat_seq(y), rat_seq(z)))) = limit_rat(mul_rat_seq(rat_seq(x), rat_seq(y + z)))
+    x * (y + z) = limit_rat(mul_rat_seq(rat_seq(x), add_rat_seq(rat_seq(y), rat_seq(z))))
+
+    // Reduce the rhs to sequence form.
+    x * y = limit_rat(mul_rat_seq(rat_seq(x), rat_seq(y)))
+    x * z = limit_rat(mul_rat_seq(rat_seq(x), rat_seq(z)))
+    let s1: Nat -> Rat = mul_rat_seq(rat_seq(x), rat_seq(y))
+    let s2: Nat -> Rat = mul_rat_seq(rat_seq(x), rat_seq(z))
+    x * y = limit_rat(s1)
+    x * z = limit_rat(s2)
+    converges(lift_seq(s1))
+    converges(lift_seq(s2))
+    limit_rat(s1) + limit_rat(s2) = limit_rat(add_rat_seq(s1, s2))
+    x * y + x * z = limit_rat(add_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), mul_rat_seq(rat_seq(x), rat_seq(z))))
+
+    // Now observe that the sequences themselves are equal.
+    mul_rat_seq(rat_seq(x), add_rat_seq(rat_seq(y), rat_seq(z))) = add_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), mul_rat_seq(rat_seq(x), rat_seq(z)))
+}
+
 // Prove the basic theorems for multiplication.
-// commutative
-// associative
-// distributive (addition and subtraction)
+// addition is distributive
 // identity is 1
 // negation is mul -1
+// subtraction is distributive
 // how multiplication passes along positive and negative
 // maintaining order
