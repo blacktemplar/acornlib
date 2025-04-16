@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 11764082627959314529
+content: 7046728370721580384
 blocks:
   abs_from_rat:
     rat:
@@ -301,6 +301,35 @@ blocks:
     - lt_lte_trans
     - not_gt_rat_self
     - rat_between_reals
+  add_rat_seq_comm:
+    rat:
+    - add_comm
+    real:
+    - add_rat_seq
+    - add_rat_seq_is_add
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - limit_rat
+    - seq_eq
+  add_rat_seq_distributes_left:
+    rat:
+    - add_comm
+    real:
+    - add_rat_seq
+    - add_rat_seq_comm
+    - converges_to_imp_converges
+    - self_eq
+    - seq_eq
+  add_rat_seq_distributes_right:
+    rat:
+    - distrib_left
+    real:
+    - add_rat_seq
+    - add_rat_seq_comm
+    - mul_rat_seq
+    - mul_rat_seq_converges
+    - self_eq
+    - seq_eq
   add_rat_seq_is_add:
     nat:
     - gte_each_of_three
@@ -706,6 +735,14 @@ blocks:
     - lte_trans
     - rat_between_reals
     - ub_imp_limit_lte
+  converges_to_zero_imp_seq_eq_zero:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - seq_eq
+    - zero_rat_seq_is_zero
   diff_pos_imp_lt:
     real:
     - Real.gt
@@ -1884,6 +1921,15 @@ blocks:
     - mul_rat_real_pos_neg
     - mul_rat_real_pos_pos
     - zero_not_positive
+  mul_rat_seq_comm:
+    rat:
+    - mul_comm
+    real:
+    - converges_imp_converges_to
+    - limit_rat
+    - mul_rat_seq
+    - mul_rat_seq_converges
+    - seq_eq
   mul_rat_seq_converges:
     nat:
     - gte_each_of_three
@@ -2009,6 +2055,37 @@ blocks:
     - Real.mul
     - lift_uniform_is_uniform
     - mul_real_rat_uniform
+  mul_zero_rat_seq:
+    rat:
+    - Rat.div
+    - abs_nonneg
+    - lt_pos_mul_lt_pos
+    - mul_cancels_div_left
+    - mul_pos_pos
+    - mul_two_abs
+    - nonneg_lt_imp_pos
+    - pos_ne_zero
+    - pos_reciprocal
+    real:
+    - Real.gt
+    - Real.is_close
+    - abs_from_rat
+    - abs_lt_imp_close_to_zero
+    - add_from_rat_zero
+    - converges_imp_abs_bounded
+    - converges_to
+    - converges_to_zero_imp_seq_eq_zero
+    - from_rat_maintains_lt
+    - from_rat_pos
+    - gt_from_rat_imp_gt_rat
+    - gt_rat_sorts
+    - lift_seq_elt
+    - lt_trans
+    - mul_rat_seq
+    - not_gt_rat_self
+    - seq_eq_zero_imp_converges_to_zero
+    - smaller_rat_eps
+    - sub_cancels
   neg_distrib:
     real:
     - add_assoc
@@ -2483,6 +2560,11 @@ blocks:
     - gt_add_neg
     - lt_add_pos
     - neg_pos_is_neg
+  self_eq:
+    real:
+    - converges_imp_converges_to
+    - limit_rat
+    - seq_eq
   seq_eq_symm:
     real:
     - converges_imp_converges_to
@@ -2490,6 +2572,14 @@ blocks:
     - converges_to_unique
     - limit_rat
     - seq_eq
+  seq_eq_zero_imp_converges_to_zero:
+    real:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - seq_eq
+    - zero_rat_seq_is_zero
   smaller_rat_eps:
     real:
     - Real.gt

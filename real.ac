@@ -3877,6 +3877,163 @@ theorem sub_eq_zero_imp_eq(a: Nat -> Rat, b: Nat -> Rat) {
     limit_rat(a) = limit_rat(b)
 }
 
+theorem self_eq(a: Nat -> Rat) {
+    converges(lift_seq(a)) implies
+    seq_eq(a, a)
+} by {
+    converges_to(lift_seq(a), limit_rat(a))
+    converges_to(lift_seq(a), limit(lift_seq(a)))
+    limit(lift_seq(a)) = limit_rat(a)
+}
+
+// Addition of sequences is commutative because the sequences themselves are identical
+theorem add_rat_seq_comm(a: Nat -> Rat, b: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b))
+    implies
+    seq_eq(add_rat_seq(a, b), add_rat_seq(b, a))
+} by {
+    add_rat_seq(a, b) = add_rat_seq(b, a)
+}
+
+// Multiplication of sequences is commutative because the sequences themselves are identical
+theorem mul_rat_seq_comm(a: Nat -> Rat, b: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b))
+    implies
+    seq_eq(mul_rat_seq(a, b), mul_rat_seq(b, a))
+} by {
+    mul_rat_seq(a, b) = mul_rat_seq(b, a)
+}
+
+// Right-distributive property follows from sequence identity
+theorem add_rat_seq_distributes_right(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b)) and converges(lift_seq(c))
+    implies
+    seq_eq(mul_rat_seq(a, add_rat_seq(b, c)), add_rat_seq(mul_rat_seq(a, b), mul_rat_seq(a, c)))
+} by {
+    let lhs: Nat -> Rat = mul_rat_seq(a, add_rat_seq(b, c))
+    converges(lift_seq(add_rat_seq(b, c)))
+    converges(lift_seq(lhs))
+    let rhs: Nat -> Rat = add_rat_seq(mul_rat_seq(a, b), mul_rat_seq(a, c))
+    converges(lift_seq(mul_rat_seq(a, b)))
+    converges(lift_seq(mul_rat_seq(a, c)))
+    converges(lift_seq(add_rat_seq(mul_rat_seq(a, b), mul_rat_seq(a, c))))
+    converges(lift_seq(rhs))
+    forall(i: Nat) {
+        lhs(i) = a(i) * (b(i) + c(i))
+        rhs(i) = a(i) * b(i) + a(i) * c(i)
+        lhs(i) = rhs(i)
+    }
+    lhs = rhs
+    seq_eq(lhs, rhs)
+}
+
+theorem add_rat_seq_distributes_left(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat) {
+    converges(lift_seq(a)) and converges(lift_seq(b)) and converges(lift_seq(c))
+    implies
+    seq_eq(add_rat_seq(a, b), add_rat_seq(b, a))
+} by {
+    let lhs: Nat -> Rat = add_rat_seq(a, b)
+    converges(lift_seq(lhs))
+    let rhs: Nat -> Rat = add_rat_seq(b, a)
+    converges(lift_seq(rhs))
+    forall(i: Nat) {
+        lhs(i) = a(i) + b(i)
+        rhs(i) = b(i) + a(i)
+        lhs(i) = rhs(i)
+    }
+    lhs = rhs
+    seq_eq(lhs, rhs)
+}
+
+theorem converges_to_zero_imp_seq_eq_zero(a: Nat -> Rat) {
+    converges_to(lift_seq(a), Real.0)
+    implies
+    seq_eq(a, zero_rat_seq)
+} by {
+    converges(lift_seq(a))
+    converges_to(lift_seq(a), limit(lift_seq(a)))
+    limit(lift_seq(a)) = Real.0
+    converges_to(lift_seq(zero_rat_seq), Real.0)
+    limit(lift_seq(zero_rat_seq)) = Real.0
+    seq_eq(a, zero_rat_seq)
+}
+
+theorem seq_eq_zero_imp_converges_to_zero(a: Nat -> Rat) {
+    seq_eq(a, zero_rat_seq)
+    implies
+    converges_to(lift_seq(a), Real.0)
+} by {
+    converges(lift_seq(a))
+    converges_to(lift_seq(a), limit(lift_seq(a)))
+    limit(lift_seq(a)) = Real.0
+    converges_to(lift_seq(zero_rat_seq), Real.0)
+    limit(lift_seq(zero_rat_seq)) = Real.0
+}
+
+// Multiplying by a null sequence gives a null sequence.
+theorem mul_zero_rat_seq(a: Nat -> Rat, z: Nat -> Rat) {
+    converges(lift_seq(a)) and seq_eq(z, zero_rat_seq)
+    implies
+    seq_eq(mul_rat_seq(a, z), zero_rat_seq)
+} by {
+    let ub: Rat satisfy {
+        forall(i: Nat) {
+            a(i).abs < ub
+        }
+    }
+    let mul_seq: Nat -> Real = lift_seq(mul_rat_seq(a, z))
+    forall(eps: Real) {
+        if eps.is_positive {
+            let reps: Rat satisfy {
+                reps.is_positive and Real.from_rat(reps) < eps
+            }
+            let reps2: Rat = reps / ub
+            ub.is_positive
+            reps2.is_positive
+            let eps2: Real = Real.from_rat(reps2)
+            eps2.is_positive
+            converges_to(lift_seq(z), Real.0)
+            let n: Nat satisfy {
+                forall(i: Nat) {
+                    n <= i implies lift_seq(z)(i).is_close(Real.0, eps2)
+                }
+            }
+            forall(i: Nat) {
+                if n <= i {
+                    a(i).abs < ub
+                    lift_seq(z)(i).is_close(Real.0, eps2)
+                    (lift_seq(z, i) + Real.0).is_close(Real.0, eps2)
+                    lift_seq(z, i).abs < eps2
+                    Real.from_rat(z(i).abs) < Real.from_rat(reps2)
+                    z(i).abs < reps2
+                    (a(i) * z(i)).abs < ub * reps2
+                    ub * reps2 = reps
+                    (a(i) * z(i)).abs < reps
+                    mul_rat_seq(a, z)(i).abs < reps
+                    Real.from_rat(mul_rat_seq(a, z)(i).abs) < Real.from_rat(reps)
+                    lift_seq(mul_rat_seq(a, z))(i).abs < eps
+                    mul_seq(i).is_close(Real.0, eps)
+                }
+            }
+        }
+    }
+    converges_to(mul_seq, Real.0)
+    converges_to(lift_seq(mul_rat_seq(a, z)), Real.0)
+}
+
+// Prove that multiplying by a single convergent sequence is well-defined
+// theorem mul_right_well_def(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat) {
+//     seq_eq(a, b) and converges(lift_seq(c))
+//     implies
+//     seq_eq(mul_rat_seq(a, b), mul_rat_seq(a, c))
+// } by {
+//     let diff: Nat -> Rat = sub_rat_seq(mul_rat_seq(a, b), mul_rat_seq(a, c))
+//     converges(lift_seq(diff))
+//     seq_eq(diff, mul_rat_seq(a, sub_rat_seq(b, c)))
+//     seq_eq(sub_rat_seq(b, c), zero_rat_seq)
+//     seq_eq(diff, zero_rat_seq)
+// }
+
 // TODO: prove that multiplying equivalent sequences gives equivalent things.
 // theorem mul_rat_seq_eq(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat, d: Nat -> Rat) {
 //     seq_eq(a, c) and seq_eq(b, d)
