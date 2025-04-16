@@ -3548,15 +3548,22 @@ define mul_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
     a(n) * b(n)
 }
 
-// TODO: prove that we can multiply convergent sequences.
-// TODO: prove that multiplying equivalent sequences gives equivalent things.
+// TODO: prove that convergent sequences can have their absolute value bounded. 
 
+// Prove that multiplying convergent sequences gives you a convergent sequence.
 // theorem mul_rat_seq_converges(a: Nat -> Rat, b: Nat -> Rat) {
 //     converges(lift_seq(a)) and converges(lift_seq(b))
 //     implies
 //     converges(lift_seq(mul_rat_seq(a, b)))
+// } by {
+//     let a_ub: Rat satisfy {
+//         forall(i: Nat) {
+//             a(i) < a_ub
+//         }
+//     }
 // }
 
+// TODO: prove that multiplying equivalent sequences gives equivalent things.
 // TODO: the mul_rat_real approach might be too complicated.
 // Instead, perhaps we can prove multiplication is well-defined between Cauchy sequences.
 // If this works, clean up below this line to deprecate mul_rat_real.

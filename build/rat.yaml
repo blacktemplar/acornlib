@@ -1,9 +1,6 @@
 dependencies: 12676240328438610026
-content: 8044741218593149269
+content: 17692118376755356818
 blocks:
-  Rat.constraint:
-    rat:
-    - denom_one_is_reduced
   abs_mul_abs:
     rat:
     - '1345'
@@ -171,6 +168,14 @@ blocks:
     - add_comm
     - lt_add_right
     - lt_trans
+  bounding_both:
+    rat:
+    - Rat.gt
+    - Rat.lte
+    - floor_exists
+    - lt_trans
+    - lte_lt_trans
+    - trichotomy
   bounds_imp_close:
     rat:
     - Rat.abs
@@ -324,6 +329,17 @@ blocks:
     - mul_reduced
     - mul_reduced_int_right
     - reduce_idempotent
+  finite_seq_abs_bounded:
+    nat:
+    - Nat.induction
+    - Nat.lt
+    - lt_imp_lte_suc
+    - lte_cancel_suc
+    - only_zero_lte_zero
+    rat:
+    - bounding_both
+    - floor
+    - lt_trans
   floor:
     rat:
     - floor_exists

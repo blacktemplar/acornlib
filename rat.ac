@@ -1824,3 +1824,63 @@ theorem lte_mul_nonneg(a: Rat, b: Rat, c: Rat) {
         a * c <= b * c
     }
 }
+
+theorem bounding_both(a: Rat, b: Rat) {
+    exists(c: Rat) {
+        a < c and b < c
+    }
+} by {
+    if not exists(k0: Rat) { a < k0 and b < k0 } {
+        not b < a
+        not a <= b
+        b != a
+        not a < b
+        false
+    }
+}
+
+theorem finite_seq_abs_bounded(a: Nat -> Rat, n: Nat) {
+    exists(bound: Rat) {
+        forall(i: Nat) {
+            i <= n implies a(i).abs < bound
+        }
+    }
+} by {
+    let f: Nat -> Bool = finite_seq_abs_bounded(a)
+    let zero_bound: Rat satisfy {
+        a(Nat.0).abs < zero_bound
+    }
+    forall(i: Nat) {
+        i <= Nat.0 implies a(i).abs < zero_bound
+    }
+    finite_seq_abs_bounded(a, Nat.0)
+    f(Nat.0)
+    forall(k: Nat) {
+        if f(k) {
+            let base_bound: Rat satisfy {
+                forall(i: Nat) {
+                    i <= k implies a(i).abs < base_bound
+                }
+            }
+            let extra_bound: Rat satisfy {
+                a(k.suc).abs < extra_bound
+            }
+            let bound: Rat satisfy {
+                base_bound < bound and extra_bound < bound
+            }
+            forall(i: Nat) {
+                if i <= k.suc {
+                    if i <= k {
+                        a(i).abs < bound
+                    } else {
+                        i = k.suc
+                        a(i).abs < extra_bound
+                        a(i).abs < bound
+                    }
+                }
+            }
+            finite_seq_abs_bounded(a, k.suc)
+            f(k.suc)
+        }
+    }
+}
