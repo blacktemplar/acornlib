@@ -1,5 +1,5 @@
 dependencies: 9836715923889939717
-content: 1520574145309409293
+content: 17061494359391504114
 blocks:
   abs_from_rat:
     rat:
@@ -1712,6 +1712,10 @@ blocks:
     real:
     - Real.mul
     - mul_rat_seq_comm
+  mul_distrib_left:
+    real:
+    - mul_comm
+    - mul_distrib_right
   mul_distrib_right:
     real:
     - Real.mul

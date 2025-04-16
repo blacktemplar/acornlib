@@ -4275,8 +4275,11 @@ theorem mul_distrib_right(x: Real, y: Real, z: Real) {
     mul_rat_seq(rat_seq(x), add_rat_seq(rat_seq(y), rat_seq(z))) = add_rat_seq(mul_rat_seq(rat_seq(x), rat_seq(y)), mul_rat_seq(rat_seq(x), rat_seq(z)))
 }
 
+theorem mul_distrib_left(x: Real, y: Real, z: Real) {
+    (x + y) * z = x * z + y * z
+}
+
 // Prove the basic theorems for multiplication.
-// addition is distributive
 // identity is 1
 // negation is mul -1
 // subtraction is distributive
