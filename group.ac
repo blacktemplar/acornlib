@@ -84,18 +84,32 @@ define inverse_constraint<G: Group>(contains: G -> Bool) -> Bool {
     }
 }
 
+define subgroup_constraint<G: Group>(contains: G -> Bool) -> Bool {
+    identity_constraint(contains) and closure_constraint(contains) and inverse_constraint(contains)
+}
+
 define is_identity<G: Group>(g: G) -> Bool {
     g = G.e
+}
+
+theorem identity_subgroup_constraint<G: Group> {
+    subgroup_constraint(is_identity<G>)
+} by {
+    identity_constraint(is_identity<G>)
+    closure_constraint(is_identity<G>)
+    inverse_constraint(is_identity<G>)
 }
 
 structure Subgroup<G: Group> {
     contains: G -> Bool
 } constraint {
-    identity_constraint(contains) and closure_constraint(contains) and inverse_constraint(contains)
-} by {
-    // We need to prove the constrained type is inhabited.
-    // "Only the identity" is a subgroup of any group.
-    identity_constraint(is_identity<G>)
-    closure_constraint(is_identity<G>)
-    inverse_constraint(is_identity<G>)
+    subgroup_constraint(contains)
 }
+
+// TODO: this syntax requires 0.0.11.
+
+// let identity_subgroup<G: Group>: Subgroup<G> = Subgroup.new(is_identity<G>)
+
+// theorem identity_subgroup_only_has_identity<G: Group>(g: G) {
+//     identity_subgroup<G>.contains(g) implies g = G.e
+// }
