@@ -38,3 +38,10 @@ theorem inverse_left<G: Group>(a: G) {
     (a.inverse * a) * (a.inverse * a.inverse.inverse) = a.inverse * a.inverse.inverse
     (a.inverse * a) * G.e = G.e
 }
+
+theorem inverse_inverse<G: Group>(a: G) {
+    a.inverse.inverse = a
+} by {
+    a * a.inverse = G.e
+    a * a.inverse * a.inverse.inverse = a.inverse.inverse
+}

@@ -1,6 +1,12 @@
 dependencies: 0
-content: 6364633587157753200
+content: 3787114295300359120
 blocks:
+  inverse_inverse:
+    group:
+    - Group.associative
+    - Group.identity_left
+    - Group.identity_right
+    - Group.inverse_right
   inverse_left:
     group:
     - Group.associative
