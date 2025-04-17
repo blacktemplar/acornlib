@@ -45,3 +45,57 @@ theorem inverse_inverse<G: Group>(a: G) {
     a * a.inverse = G.e
     a * a.inverse * a.inverse.inverse = a.inverse.inverse
 }
+
+theorem left_cancel<G: Group>(a: G, b: G, c: G) {
+    a * b = a * c implies b = c
+} by {
+    a.inverse * (a * b) = a.inverse * (a * c)
+}
+
+theorem right_cancel<G: Group>(a: G, b: G, c: G) {
+    b * a = c * a implies b = c
+} by {
+    (b * a) * a.inverse = (c * a) * a.inverse
+}
+
+theorem inverse_mul<G: Group>(a: G, b: G) {
+    (a * b).inverse = b.inverse * a.inverse
+} by {
+    (a * b).inverse * (a * b) = G.e
+    (a * b).inverse * a = b.inverse
+}
+
+// We define subgroups with the "bundled subgroups" technique, so a subgroup "carries along"
+// its group.
+
+define identity_constraint<G: Group>(contains: G -> Bool) -> Bool {
+    contains(G.e)
+}
+
+define closure_constraint<G: Group>(contains: G -> Bool) -> Bool {
+    forall(a: G, b: G) {
+        contains(a) and contains(b) implies contains(a * b)
+    }
+}
+
+define inverse_constraint<G: Group>(contains: G -> Bool) -> Bool {
+    forall(a: G) {
+        contains(a) implies contains(a.inverse)
+    }
+}
+
+define is_identity<G: Group>(g: G) -> Bool {
+    g = G.e
+}
+
+structure Subgroup<G: Group> {
+    contains: G -> Bool
+} constraint {
+    identity_constraint(contains) and closure_constraint(contains) and inverse_constraint(contains)
+} by {
+    // We need to prove the constrained type is inhabited.
+    // "Only the identity" is a subgroup of any group.
+    identity_constraint(is_identity<G>)
+    closure_constraint(is_identity<G>)
+    inverse_constraint(is_identity<G>)
+}
