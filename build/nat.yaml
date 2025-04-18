@@ -1,5 +1,5 @@
 dependencies: 0
-content: 1316780538737404797
+content: 6838701049075242633
 blocks:
   add_assoc:
     nat:
@@ -8,7 +8,6 @@ blocks:
     - add_zero_left
   add_cancels_left:
     nat:
-    - '484'
     - Nat.Nat.suc
     - Nat.induction
     - add_suc_left
@@ -37,8 +36,6 @@ blocks:
     - sub_add
   add_mod:
     nat:
-    - '1084'
-    - '1087'
     - Nat.mul
     - add_zero_left
     - mod
@@ -80,7 +77,6 @@ blocks:
     - Nat.add
   bounded_sub:
     nat:
-    - '1034'
     - Nat.lte
     - add_comm
     - lt_or_lte
@@ -93,10 +89,8 @@ blocks:
   distrib_left:
     nat:
     - Nat.induction
-    - Nat.mul
     - add_comm
     - add_comm_4
-    - mul_comm
     - mul_suc_left
     - mul_suc_right
     - mul_zero_left
@@ -140,8 +134,6 @@ blocks:
     - mul_comm
   divides_factorial:
     nat:
-    - '815'
-    - '828'
     - Nat.induction
     - Nat.lt
     - Nat.lte
@@ -154,7 +146,6 @@ blocks:
     - mul_comm
   divides_lte:
     nat:
-    - '981'
     - Nat.mul
     - divides
     - lte_mul
@@ -193,7 +184,6 @@ blocks:
     - sub_right_distrib
   divides_suc:
     nat:
-    - '910'
     - Nat.Nat.suc
     - Nat.lte
     - add_cancels_left
@@ -237,7 +227,6 @@ blocks:
     - lt_suc_left
     - mul_comm
     - mul_suc_left
-    - mul_suc_right
   divisor_lt:
     nat:
     - Nat.lt
@@ -249,13 +238,11 @@ blocks:
     - mul_to_zero
   exists_infinite_primes:
     nat:
-    - '941'
     - Nat.lt
     - divides_suc
     - has_prime_divisor
     - is_prime
     - lt_imp_lt_suc
-    - lt_not_symm
     - lt_or_lte
     - lt_suc
     - lte_one_factorial
@@ -362,8 +349,6 @@ blocks:
     - lte_trans
   has_prime_divisor:
     nat:
-    - '757'
-    - '772'
     - Nat.lt
     - divides
     - divides_trans
@@ -452,8 +437,6 @@ blocks:
     - Nat.lt
   lt_not_symm:
     nat:
-    - '381'
-    - '382'
     - Nat.induction
     - Nat.lt
     - lt_cancel_suc
@@ -461,7 +444,6 @@ blocks:
     - only_zero_lte_zero
   lt_or_lte:
     nat:
-    - '599'
     - Nat.lt
     - lte_ref
     - trichotomy
@@ -474,8 +456,6 @@ blocks:
     - lt_add_suc
   lt_suc_left:
     nat:
-    - '528'
-    - '534'
     - Nat.lt
     - Nat.lte
     - add_comm
@@ -489,7 +469,6 @@ blocks:
     - zero_or_suc
   lt_suc_right:
     nat:
-    - '542'
     - Nat.Nat.suc
     - lt_cancel_suc
     - lt_suc_left
@@ -566,7 +545,6 @@ blocks:
     - add_to_zero
   mod:
     nat:
-    - '1072'
     - add_to_zero
     - bounded_sub
     - division_theorem
@@ -652,10 +630,8 @@ blocks:
     - Nat.gt
     - Nat.lt
     - Nat.mul
-    - add_one_left
     - add_one_right
     - add_zero_left
-    - add_zero_right
     - lt_imp_lte_suc
     - lt_mul_both
     - lt_suc
@@ -669,7 +645,6 @@ blocks:
     - trichotomy
   mul_to_zero:
     nat:
-    - '669'
     - add_to_zero
     - mul_suc_left
     - zero_or_suc
@@ -703,7 +678,6 @@ blocks:
     - add_to_zero
   small_mod:
     nat:
-    - '1193'
     - Nat.lt
     - Nat.lte
     - add_comm
@@ -725,8 +699,6 @@ blocks:
     - one_plus_one
   strong_induction:
     nat:
-    - '717'
-    - '721'
     - Nat.induction
     - lt_suc_right
     - not_lt_zero
@@ -739,8 +711,6 @@ blocks:
     - add_sub
   sub_left_distrib:
     nat:
-    - '1133'
-    - '1139'
     - Nat.mul
     - Nat.sub
     - add_imp_sub
@@ -783,10 +753,6 @@ blocks:
     - two_neq_zero
   trichotomy:
     nat:
-    - '568'
-    - '573'
-    - '581'
-    - '587'
     - Nat.induction
     - Nat.lte
     - add_identity_right

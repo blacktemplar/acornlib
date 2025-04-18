@@ -59,7 +59,7 @@ define cross_equals(a: Int, b: Int, c: Int, d: Int) -> Bool {
 }
 
 theorem cross_equals_trans(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) {
-    cross_equals(a, b, c, d) and cross_equals(c, d, e, f) -> cross_equals(a, b, e, f)
+    cross_equals(a, b, c, d) and cross_equals(c, d, e, f) implies cross_equals(a, b, e, f)
 } by {
     a * d = b * c
     c * f = d * e
@@ -120,7 +120,7 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
 }
 
 theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
-    cross_equals(r1.num, r1.denom, r2.num, r2.denom) -> r1 = r2
+    cross_equals(r1.num, r1.denom, r2.num, r2.denom) implies r1 = r2
 } by {
     // The r1 fields divide into the r2 ones
     gcd(r1.num, r1.denom) = Int.1
@@ -248,7 +248,7 @@ theorem add_comm(a: Rat, b: Rat) {
 }
 
 theorem from_int_cancel(a: Int, b: Int) {
-    Rat.from_int(a) = Rat.from_int(b) -> a = b
+    Rat.from_int(a) = Rat.from_int(b) implies a = b
 }
 
 theorem mul_comm(a: Rat, b: Rat) {
@@ -287,7 +287,7 @@ theorem mul_int_eq_int_mul(a: Int, b: Int) {
 }
 
 theorem unreduce_right(a: Int, b: Int) {
-    b != Int.0 -> exists(d: Int) {
+    b != Int.0 implies exists(d: Int) {
         reduce(a, b).num * d = a and reduce(a, b).denom * d = b
     }
 } by {
@@ -306,7 +306,7 @@ theorem unreduce_right(a: Int, b: Int) {
 }
 
 theorem unreduce_left(a: Int, b: Int) {
-    b != Int.0 -> exists(d: Int) {
+    b != Int.0 implies exists(d: Int) {
         d * reduce(a, b).num = a and d * reduce(a, b).denom = b
     }
 } by {
@@ -326,7 +326,7 @@ theorem mul_int_left(n: Int, r: Rat) {
 }
 
 theorem cross_eq_imp_reduce_eq(a: Int, b: Int, c: Int, d: Int) {
-    cross_equals(a, b, c, d) -> reduce(a, b) = reduce(c, d)
+    cross_equals(a, b, c, d) implies reduce(a, b) = reduce(c, d)
 } by {
     b != Int.0
     d != Int.0
@@ -343,7 +343,7 @@ theorem cross_eq_imp_reduce_eq(a: Int, b: Int, c: Int, d: Int) {
 
 theorem reduce_eq_imp_cross_eq(a: Int, b: Int, c: Int, d: Int) {
     b != Int.0 and d != Int.0 and reduce(a, b) = reduce(c, d)
-        -> cross_equals(a, b, c, d)
+        implies cross_equals(a, b, c, d)
 } by {
     cross_equals(reduce(a, b).num, reduce(a, b).denom, a, b)
     cross_equals(reduce(c, d).num, reduce(c, d).denom, c, d)
@@ -372,7 +372,7 @@ theorem mul_reduced_int_left(a: Int, b: Int, c: Int) {
 }
 
 theorem mul_int_right_cancel(r1: Rat, r2: Rat, n: Int) {
-    n != Int.0 and r1 * Rat.from_int(n) = r2 * Rat.from_int(n) -> r1 = r2
+    n != Int.0 and r1 * Rat.from_int(n) = r2 * Rat.from_int(n) implies r1 = r2
 } by {
     r1 * Rat.from_int(n) = reduce(r1.num * n, r1.denom)
     r2 * Rat.from_int(n) = reduce(r2.num * n, r2.denom)
@@ -383,11 +383,11 @@ theorem mul_int_right_cancel(r1: Rat, r2: Rat, n: Int) {
 }
 
 theorem mul_int_left_cancel(r1: Rat, r2: Rat, n: Int) {
-    n != Int.0 and Rat.from_int(n) * r1 = Rat.from_int(n) * r2 -> r1 = r2
+    n != Int.0 and Rat.from_int(n) * r1 = Rat.from_int(n) * r2 implies r1 = r2
 }
 
 theorem mul_reduced_nondegen(a: Int, b: Int, c: Int, d: Int) {
-    b != Int.0 and d != Int.0 ->
+    b != Int.0 and d != Int.0 implies
         reduce(a, b) * reduce(c, d) = reduce(a * c, b * d)
 } by {
     let e: Int satisfy {
@@ -483,7 +483,7 @@ theorem add_int_eq_int_add(a: Int, b: Int) {
 }
 
 theorem reduce_cancels_right(a: Int, b: Int, c: Int) {
-    c != Int.0 -> reduce(a, b) = reduce(a * c, b * c)
+    c != Int.0 implies reduce(a, b) = reduce(a * c, b * c)
 } by {
     if b = Int.0 {
         reduce(a, b) = Rat.0
@@ -497,11 +497,11 @@ theorem reduce_cancels_right(a: Int, b: Int, c: Int) {
 }
 
 theorem reduce_cancels_left(a: Int, b: Int, c: Int) {
-    c != Int.0 -> reduce(a, b) = reduce(c * a, c * b)
+    c != Int.0 implies reduce(a, b) = reduce(c * a, c * b)
 }
 
 theorem add_reduce_right(r: Rat, a: Int, b: Int) {
-    b != Int.0 -> r + reduce(a, b) = reduce(r.num * b + a * r.denom, r.denom * b)
+    b != Int.0 implies r + reduce(a, b) = reduce(r.num * b + a * r.denom, r.denom * b)
 } by {
     let c: Int satisfy {
         reduce(a, b).num * c = a and reduce(a, b).denom * c = b
@@ -517,7 +517,7 @@ theorem add_reduce_right(r: Rat, a: Int, b: Int) {
 }
 
 theorem add_reduced(a: Int, b: Int, c: Int, d: Int) {
-    b != Int.0 and d != Int.0 -> reduce(a, b) + reduce(c, d) = reduce(a * d + b * c, b * d)
+    b != Int.0 and d != Int.0 implies reduce(a, b) + reduce(c, d) = reduce(a * d + b * c, b * d)
 } by {
     reduce(a, b) + reduce(c, d) = reduce(reduce(a, b).num * d + c * reduce(a, b).denom,
                                          reduce(a, b).denom * d)
@@ -637,7 +637,7 @@ theorem sub_self(a: Rat) {
 }
 
 theorem reduce_self(n: Int) {
-    n != Int.0 -> reduce(n, n) = Rat.1
+    n != Int.0 implies reduce(n, n) = Rat.1
 } by {
     Rat.1 = Rat.new(Int.1, Int.1)
     cross_equals(Int.1, Int.1, n, n)
@@ -645,7 +645,7 @@ theorem reduce_self(n: Int) {
 }
 
 theorem mul_inv_cancels_right(a: Rat) {
-    a != Rat.0 -> a * a.reciprocal = Rat.1
+    a != Rat.0 implies a * a.reciprocal = Rat.1
 } by {
     a * a.reciprocal = reduce(a.num * a.denom, a.denom * a.num)
     a * a.reciprocal = reduce(a.num * a.denom, a.num * a.denom)
@@ -654,7 +654,7 @@ theorem mul_inv_cancels_right(a: Rat) {
 }
 
 theorem mul_inv_cancels_left(a: Rat) {
-    a != Rat.0 -> a.reciprocal * a = Rat.1
+    a != Rat.0 implies a.reciprocal * a = Rat.1
 }
 
 theorem sub_zero(a: Rat) {
@@ -662,24 +662,24 @@ theorem sub_zero(a: Rat) {
 }
 
 theorem pos_imp_zero_lt(a: Rat) {
-    a.is_positive -> Rat.0 < a
+    a.is_positive implies Rat.0 < a
 } by {
     (a - Rat.0).is_positive
 }
 
 theorem zero_lt_imp_pos(a: Rat) {
-    Rat.0 < a -> a.is_positive
+    Rat.0 < a implies a.is_positive
 } by {
     a - Rat.0 = a
     a.is_positive
 }
 
 theorem not_pos_and_neg(a: Rat) {
-    a.is_positive -> not a.is_negative
+    a.is_positive implies not a.is_negative
 }
 
 theorem reduce_pos_pos(a: Int, b: Int) {
-    a.is_positive and b.is_positive -> reduce(a, b).is_positive
+    a.is_positive and b.is_positive implies reduce(a, b).is_positive
 } by {
     b != Int.0
     let d: Int satisfy {
@@ -690,7 +690,7 @@ theorem reduce_pos_pos(a: Int, b: Int) {
 }
 
 theorem add_pos_pos(a: Rat, b: Rat) {
-    a.is_positive and b.is_positive -> (a + b).is_positive
+    a.is_positive and b.is_positive implies (a + b).is_positive
 } by {
     a + b = reduce(a.num * b.denom + b.num * a.denom, a.denom * b.denom)
     (a.num * b.denom).is_positive
@@ -700,7 +700,7 @@ theorem add_pos_pos(a: Rat, b: Rat) {
 }
 
 theorem mul_pos_pos(a: Rat, b: Rat) {
-    a.is_positive and b.is_positive -> (a * b).is_positive
+    a.is_positive and b.is_positive implies (a * b).is_positive
 } by {
     a * b = reduce(a.num * b.num, a.denom * b.denom)
     (a.num * b.num).is_positive
@@ -708,7 +708,7 @@ theorem mul_pos_pos(a: Rat, b: Rat) {
 }
 
 theorem pos_reciprocal(a: Rat) {
-    a.is_positive -> a.reciprocal.is_positive
+    a.is_positive implies a.reciprocal.is_positive
 } by {
     a.reciprocal = reduce(a.denom, a.num)
     a.denom.is_positive
@@ -723,7 +723,7 @@ theorem add_cancels_sub(a: Rat, b: Rat) {
 }
 
 theorem lt_trans(a: Rat, b: Rat, c: Rat) {
-    a < b and b < c -> a < c
+    a < b and b < c implies a < c
 } by {
     (b - a).is_positive
     (c - b).is_positive
@@ -733,11 +733,11 @@ theorem lt_trans(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem neg_neg_is_pos(a: Rat) {
-    a.is_negative -> (-a).is_positive
+    a.is_negative implies (-a).is_positive
 }
 
 theorem neg_pos_is_neg(a: Rat) {
-    a.is_positive -> (-a).is_negative
+    a.is_positive implies (-a).is_negative
 }
 
 theorem zero_minus(a: Rat) {
@@ -745,21 +745,21 @@ theorem zero_minus(a: Rat) {
 }
 
 theorem neg_imp_lt_zero(a: Rat) {
-    a.is_negative -> a < Rat.0
+    a.is_negative implies a < Rat.0
 } by {
     (-a).is_positive
     (Rat.0 - a).is_positive
 }
 
 theorem lt_zero_imp_neg(a: Rat) {
-    a < Rat.0 -> a.is_negative
+    a < Rat.0 implies a.is_negative
 } by {
     (Rat.0 - a).is_positive
     (-a).is_positive
 }
 
 theorem mul_cancels_div(a: Rat, b: Rat) {
-    b != Rat.0 -> (a / b) * b = a
+    b != Rat.0 implies (a / b) * b = a
 } by {
     (a / b) * b = a * b.reciprocal * b
     (a / b) * b = a * (b.reciprocal * b)
@@ -783,7 +783,7 @@ theorem times_two(r: Rat) {
 }
 
 theorem mul_cancels_right(a: Rat, b: Rat, c: Rat) {
-    c != Rat.0 and a * c = b * c -> a = b
+    c != Rat.0 and a * c = b * c implies a = b
 } by {
     a * c * c.reciprocal = b * c * c.reciprocal
     a * (c * c.reciprocal) = b * (c * c.reciprocal)
@@ -805,7 +805,7 @@ theorem neg_mul(a: Rat, b: Rat) {
 }
 
 theorem mul_neg_pos(a: Rat, b: Rat) {
-    a.is_negative and b.is_positive -> (a * b).is_negative
+    a.is_negative and b.is_positive implies (a * b).is_negative
 } by {
     (-a).is_positive
     (-a * b).is_positive
@@ -814,11 +814,11 @@ theorem mul_neg_pos(a: Rat, b: Rat) {
 }
 
 theorem mul_pos_neg(a: Rat, b: Rat) {
-    a.is_positive and b.is_negative -> (a * b).is_negative
+    a.is_positive and b.is_negative implies (a * b).is_negative
 }
 
 theorem mul_neg_neg(a: Rat, b: Rat) {
-    a.is_negative and b.is_negative -> (a * b).is_positive
+    a.is_negative and b.is_negative implies (a * b).is_positive
 } by {
     (-b).is_positive
     (-b * a).is_negative
@@ -852,11 +852,11 @@ theorem not_lt_self(a: Rat) {
 }
 
 theorem not_lt_both_ways(a: Rat, b: Rat) {
-    a < b -> not b < a
+    a < b implies not b < a
 }
 
 theorem lt_add_pos(a: Rat, b: Rat) {
-    b.is_positive -> a < a + b
+    b.is_positive implies a < a + b
 } by {
     (a + b) - a = (a + b) + -a
     (a + b) - a = -a + (a + b)
@@ -916,7 +916,7 @@ theorem trichotomy(a: Rat, b: Rat) {
 }
 
 theorem lt_add_right(a: Rat, b: Rat, c: Rat) {
-    a < b -> a + c < b + c
+    a < b implies a + c < b + c
 } by {
     (b - a).is_positive
     (b + c) - (a + c) = (b + c) + (-a + -c)
@@ -927,11 +927,11 @@ theorem lt_add_right(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem add_neg_lt(a: Rat, b: Rat) {
-    a.is_negative -> b + a < b
+    a.is_negative implies b + a < b
 }
 
 theorem adding_lts(a: Rat, b: Rat, c: Rat, d: Rat) {
-    a < b and c < d -> a + c < b + d
+    a < b and c < d implies a + c < b + d
 } by {
     a + c < b + c
     b + c < b + d
@@ -947,7 +947,7 @@ theorem minus_cancels_plus(a: Rat, b: Rat) {
 }
 
 theorem gt_minus_pos(a: Rat, b: Rat) {
-    b.is_positive -> a > a - b
+    b.is_positive implies a > a - b
 } by {
     a - (a - b) = b
     (a - (a - b)).is_positive
@@ -978,25 +978,25 @@ theorem sub_from_int(a: Int, b: Int) {
 }
 
 theorem lt_from_int(a: Int, b: Int) {
-    a < b -> Rat.from_int(a) < Rat.from_int(b)
+    a < b implies Rat.from_int(a) < Rat.from_int(b)
 } by {
     Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)
 }
 
 theorem lte_from_int(a: Int, b: Int) {
-    a <= b -> Rat.from_int(a) <= Rat.from_int(b)
+    a <= b implies Rat.from_int(a) <= Rat.from_int(b)
 }
 
 theorem gt_from_int(a: Int, b: Int) {
-    a > b -> Rat.from_int(a) > Rat.from_int(b)
+    a > b implies Rat.from_int(a) > Rat.from_int(b)
 }
 
 theorem gte_from_int(a: Int, b: Int) {
-    a >= b -> Rat.from_int(a) >= Rat.from_int(b)
+    a >= b implies Rat.from_int(a) >= Rat.from_int(b)
 }
 
 theorem lt_mul_pos(a: Rat, b: Rat, c: Rat) {
-    a < b and c.is_positive -> a * c < b * c
+    a < b and c.is_positive implies a * c < b * c
 } by {
     b - a > Rat.0
     c > Rat.0
@@ -1006,28 +1006,28 @@ theorem lt_mul_pos(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem lte_mul_pos(a: Rat, b: Rat, c: Rat) {
-    a <= b and c.is_positive -> a * c <= b * c
+    a <= b and c.is_positive implies a * c <= b * c
 } by {
     a < b or a = b
     a * c < b * c or a * c = b * c
 }
 
 theorem lt_div_pos(a: Rat, b: Rat, c: Rat) {
-    c.is_positive and a < b -> a / c < b / c
+    c.is_positive and a < b implies a / c < b / c
 } by {
     c.reciprocal.is_positive
     a * c.reciprocal < b * c.reciprocal
 }
 
 theorem lte_div_pos(a: Rat, b: Rat, c: Rat) {
-    c.is_positive and a <= b -> a / c <= b / c
+    c.is_positive and a <= b implies a / c <= b / c
 } by {
     c.reciprocal.is_positive
     a * c.reciprocal <= b * c.reciprocal
 }
 
 theorem mul_div_cancels(a: Rat, b: Rat) {
-    b != Rat.0 -> (a * b) / b = a
+    b != Rat.0 implies (a * b) / b = a
 } by {
     (a * b) / b = a * (b / b)
     (a * b) / b = a * Rat.1
@@ -1040,7 +1040,7 @@ theorem div_from_int(a: Rat) {
 }
 
 theorem lt_from_int_mul_denom(a: Rat, n: Int) {
-    a.num < n * a.denom -> a < Rat.from_int(n)
+    a.num < n * a.denom implies a < Rat.from_int(n)
 } by {
     Rat.from_int(a.num) < Rat.from_int(n * a.denom)
     Rat.from_int(a.num) < Rat.from_int(n) * Rat.from_int(a.denom)
@@ -1051,7 +1051,7 @@ theorem lt_from_int_mul_denom(a: Rat, n: Int) {
 }
 
 theorem lte_from_int_mul_denom(a: Rat, n: Int) {
-    a.num <= n * a.denom -> a <= Rat.from_int(n)
+    a.num <= n * a.denom implies a <= Rat.from_int(n)
 } by {
     if a.num = n * a.denom {
         a = Rat.from_int(n)
@@ -1096,7 +1096,7 @@ let floor(a: Rat) -> q: Int satisfy {
 }
 
 theorem mul_lt_lt(a: Rat, b: Rat, c: Rat, d: Rat) {
-    a.is_positive and c.is_positive and a < b and c < d -> a * c < b * d
+    a.is_positive and c.is_positive and a < b and c < d implies a * c < b * d
 } by {
     a * c < b * c
     b.is_positive
@@ -1104,7 +1104,7 @@ theorem mul_lt_lt(a: Rat, b: Rat, c: Rat, d: Rat) {
 }
 
 theorem mul_lt_lte(a: Rat, b: Rat, c: Rat, d: Rat) {
-    a.is_positive and c.is_positive and a < b and c <= d -> a * c < b * d
+    a.is_positive and c.is_positive and a < b and c <= d implies a * c < b * d
 } by {
     a * c < b * c
     b.is_positive
@@ -1112,7 +1112,7 @@ theorem mul_lt_lte(a: Rat, b: Rat, c: Rat, d: Rat) {
 }
 
 theorem pos_lte(a: Rat, b: Rat) {
-    a.is_positive and a <= b -> b.is_positive
+    a.is_positive and a <= b implies b.is_positive
 } by {
     if a = b {
         b.is_positive
@@ -1123,7 +1123,7 @@ theorem pos_lte(a: Rat, b: Rat) {
 }
 
 theorem mul_lte_lt(a: Rat, b: Rat, c: Rat, d: Rat) {
-    a.is_positive and c.is_positive and a <= b and c < d -> a * c < b * d
+    a.is_positive and c.is_positive and a <= b and c < d implies a * c < b * d
 } by {
     a * c <= b * c
     b.is_positive
@@ -1131,7 +1131,7 @@ theorem mul_lte_lt(a: Rat, b: Rat, c: Rat, d: Rat) {
 }
 
 theorem lt_pos_reciprocal(a: Rat, b: Rat) {
-    a.is_positive and a < b -> b.reciprocal < a.reciprocal
+    a.is_positive and a < b implies b.reciprocal < a.reciprocal
 } by {
     if a.reciprocal <= b.reciprocal {
         a.reciprocal * a < b.reciprocal * b
@@ -1143,7 +1143,7 @@ theorem lt_pos_reciprocal(a: Rat, b: Rat) {
 }
 
 theorem reciprocal_inverts(a: Rat) {
-    a != Rat.0 -> a.reciprocal.reciprocal = a
+    a != Rat.0 implies a.reciprocal.reciprocal = a
 } by {
     a * a.reciprocal = Rat.1
     Rat.new(a.reciprocal.num, a.reciprocal.denom) / a * a = Rat.new(a.reciprocal.num, a.reciprocal.denom)
@@ -1153,7 +1153,7 @@ theorem reciprocal_inverts(a: Rat) {
 }
 
 theorem smaller_int_reciprocal(a: Rat) {
-    a.is_positive -> exists(n: Int) {
+    a.is_positive implies exists(n: Int) {
         n.is_positive and Rat.from_int(n).reciprocal < a
     }
 } by {
@@ -1184,7 +1184,7 @@ theorem mul_denom(r: Rat) {
 }
 
 theorem half_pos(r: Rat) {
-    r.is_positive -> (r / Rat.2).is_positive
+    r.is_positive implies (r / Rat.2).is_positive
 }
 
 theorem add_half_half(r: Rat) {
@@ -1197,14 +1197,14 @@ theorem add_half_half(r: Rat) {
 }
 
 theorem lt_neg(p: Rat, q: Rat) {
-    p < q -> -q < -p
+    p < q implies -q < -p
 } by {
     q + -p > Rat.0
     --q + -p > Rat.0
 }
 
 theorem lt_lte_trans(a: Rat, b: Rat, c: Rat) {
-    a < b and b <= c -> a < c
+    a < b and b <= c implies a < c
 } by {
     if b = c {
         a < c
@@ -1215,7 +1215,7 @@ theorem lt_lte_trans(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem lte_lt_trans(a: Rat, b: Rat, c: Rat) {
-    a <= b and b < c -> a < c
+    a <= b and b < c implies a < c
 } by {
     if a = b {
         a < c
@@ -1226,7 +1226,7 @@ theorem lte_lt_trans(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem lt_imp_rat_between(a: Rat, b: Rat) {
-    a < b -> exists(c: Rat) {
+    a < b implies exists(c: Rat) {
         a < c and c < b
     }
 } by {
@@ -1236,7 +1236,7 @@ theorem lt_imp_rat_between(a: Rat, b: Rat) {
 }
 
 theorem gt_imp_rat_between(a: Rat, b: Rat) {
-    a > b -> exists(c: Rat) {
+    a > b implies exists(c: Rat) {
         a > c and c > b
     }
 } by {
@@ -1249,7 +1249,7 @@ theorem gt_imp_rat_between(a: Rat, b: Rat) {
 }
 
 theorem lt_cancel_pos_mul_right(a: Rat, b: Rat, c: Rat) {
-    c.is_positive and a * c < b * c -> a < b
+    c.is_positive and a * c < b * c implies a < b
 } by {
     not b * c < a * c
     b != a
@@ -1257,7 +1257,7 @@ theorem lt_cancel_pos_mul_right(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem lt_cancel_pos_mul_left(a: Rat, b: Rat, c: Rat) {
-    c.is_positive and c * a < c * b -> a < b
+    c.is_positive and c * a < c * b implies a < b
 } by {
     not c * b < c * a
     b != a
@@ -1265,7 +1265,7 @@ theorem lt_cancel_pos_mul_left(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem gt_cancel_pos_mul_right(a: Rat, b: Rat, c: Rat) {
-    c.is_positive and a * c > b * c -> a > b
+    c.is_positive and a * c > b * c implies a > b
 } by {
     not b * c > a * c
     b != a
@@ -1273,7 +1273,7 @@ theorem gt_cancel_pos_mul_right(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem gt_cancel_pos_mul_left(a: Rat, b: Rat, c: Rat) {
-    c.is_positive and c * a > c * b -> a > b
+    c.is_positive and c * a > c * b implies a > b
 } by {
     not c * b > c * a
     b != a
@@ -1281,7 +1281,7 @@ theorem gt_cancel_pos_mul_left(a: Rat, b: Rat, c: Rat) {
 }
 
 theorem cancel_positivity_left(a: Rat, b: Rat) {
-    a.is_positive and (a * b).is_positive -> b.is_positive
+    a.is_positive and (a * b).is_positive implies b.is_positive
 } by {
     if b.is_negative {
         (a * b).is_negative
@@ -1290,15 +1290,15 @@ theorem cancel_positivity_left(a: Rat, b: Rat) {
 }
 
 theorem cancel_positivity_right(a: Rat, b: Rat) {
-    b.is_positive and (a * b).is_positive -> a.is_positive
+    b.is_positive and (a * b).is_positive implies a.is_positive
 }
 
 theorem mul_cancels_div_left(a: Rat, b: Rat) {
-    b != Rat.0 -> b * (a / b) = a
+    b != Rat.0 implies b * (a / b) = a
 }
 
 theorem lte_trans(a: Rat, b: Rat, c: Rat) {
-    a <= b and b <= c -> a <= c
+    a <= b and b <= c implies a <= c
 } by {
     if not a <= c {
         not c < b
@@ -1330,11 +1330,11 @@ theorem neg_abs(a: Rat) {
 }
 
 theorem abs_non_pos(a: Rat) {
-    not a.is_positive -> a.abs = -a
+    not a.is_positive implies a.abs = -a
 }
 
 theorem abs_non_neg(a: Rat) {
-    not a.is_negative -> a.abs = a
+    not a.is_negative implies a.abs = a
 }
 
 theorem abs_mul_abs(a: Rat, b: Rat) {
@@ -1352,7 +1352,7 @@ theorem abs_mul_abs(a: Rat, b: Rat) {
 }
 
 theorem mul_non_neg(a: Rat, b: Rat) {
-    not a.is_negative and not b.is_negative -> not (a * b).is_negative
+    not a.is_negative and not b.is_negative implies not (a * b).is_negative
 } by {
     if a = Rat.0 {
         not (a * b).is_negative

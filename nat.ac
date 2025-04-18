@@ -316,7 +316,7 @@ theorem lt_not_ref(a: Nat) { not (a < a) }
 
 theorem lte_ref(a: Nat) { a <= a }
 
-theorem add_to_zero(a: Nat, b: Nat) { a + b = 0 -> a = 0 and b = 0 } by {
+theorem add_to_zero(a: Nat, b: Nat) { a + b = 0 implies a = 0 and b = 0 } by {
     define f(x: Nat) -> Bool { add_to_zero(x, b) }
     if not add_to_zero(0, b) {
         0 + b = 0
@@ -334,7 +334,7 @@ theorem add_to_zero(a: Nat, b: Nat) { a + b = 0 -> a = 0 and b = 0 } by {
 }
 
 theorem only_zero_lte_zero(a: Nat) {
-    a <= 0 -> a = 0
+    a <= 0 implies a = 0
 } by {
     exists(k0: Nat) { a + k0 = 0 }
 }
@@ -352,7 +352,7 @@ theorem zero_or_suc(a: Nat) {
     a = 0 or exists(b: Nat) { a = b.suc }
 }
 
-theorem lte_cancel_suc(a: Nat, b: Nat) { a.suc <= b.suc -> a <= b } by {
+theorem lte_cancel_suc(a: Nat, b: Nat) { a.suc <= b.suc implies a <= b } by {
     let c: Nat satisfy { a.suc + c = b.suc }
     a.suc + c = b.suc
     (a + c).suc = b.suc
@@ -361,14 +361,14 @@ theorem lte_cancel_suc(a: Nat, b: Nat) { a.suc <= b.suc -> a <= b } by {
 }
 
 theorem lt_cancel_suc(a: Nat, b: Nat) {
-    a.suc < b.suc -> a < b
+    a.suc < b.suc implies a < b
 } by {
     a.suc <= b.suc
     b.suc != a.suc
     a <= b and b != a
 }
 
-theorem lt_not_symm(a: Nat, b: Nat) { a < b -> not b < a } by {
+theorem lt_not_symm(a: Nat, b: Nat) { a < b implies not b < a } by {
     define f(x: Nat) -> Bool {
         forall(y: Nat) { lt_not_symm(x, y) }
     }
@@ -402,7 +402,7 @@ theorem lt_not_symm(a: Nat, b: Nat) { a < b -> not b < a } by {
 }
 
 theorem lt_diff(a: Nat, b: Nat) {
-    a < b -> exists(c: Nat) { a + c = b and c != 0 }
+    a < b implies exists(c: Nat) { a + c = b and c != 0 }
 } by {
     a <= b
     let (c: Nat) satisfy { a + c = b }
@@ -410,7 +410,7 @@ theorem lt_diff(a: Nat, b: Nat) {
     c != 0
 }
 
-theorem lte_trans(a: Nat, b: Nat, c: Nat) { a <= b and b <= c -> a <= c } by {
+theorem lte_trans(a: Nat, b: Nat, c: Nat) { a <= b and b <= c implies a <= c } by {
     define f(z: Nat) -> Bool {
         forall(x: Nat, y: Nat) { lte_trans(x, y, z) }
     }
@@ -440,7 +440,7 @@ theorem lte_trans(a: Nat, b: Nat, c: Nat) { a <= b and b <= c -> a <= c } by {
     f(c)
 }
 
-theorem lt_and_lte(a: Nat, b: Nat, c: Nat) { a < b and b <= c -> a < c } by {
+theorem lt_and_lte(a: Nat, b: Nat, c: Nat) { a < b and b <= c implies a < c } by {
     a <= b
     a <= c
     if a = c {
@@ -452,7 +452,7 @@ theorem lt_and_lte(a: Nat, b: Nat, c: Nat) { a < b and b <= c -> a < c } by {
     a < c
 }
 
-theorem lte_and_lt(a: Nat, b: Nat, c: Nat) { a <= b and b < c -> a < c } by {
+theorem lte_and_lt(a: Nat, b: Nat, c: Nat) { a <= b and b < c implies a < c } by {
     b <= c
     a <= c
     if a = c {
@@ -462,11 +462,11 @@ theorem lte_and_lt(a: Nat, b: Nat, c: Nat) { a <= b and b < c -> a < c } by {
     a < c
 }
 
-theorem lt_trans(a: Nat, b: Nat, c: Nat) { a < b and b < c -> a < c } by {
+theorem lt_trans(a: Nat, b: Nat, c: Nat) { a < b and b < c implies a < c } by {
     a <= b
 }
 
-theorem add_cancels_left(a: Nat, b: Nat, c: Nat) { a + b = a + c -> b = c } by {
+theorem add_cancels_left(a: Nat, b: Nat, c: Nat) { a + b = a + c implies b = c } by {
     define f(x: Nat) -> Bool { add_cancels_left(x, b, c) }
     if not add_cancels_left(0, b, c) {
         0 + c = 0 + b
@@ -483,7 +483,7 @@ theorem add_cancels_left(a: Nat, b: Nat, c: Nat) { a + b = a + c -> b = c } by {
                 add_cancels_left(x, b, c)
                 b = c
             }
-            x.suc + b = x.suc + c -> b = c
+            x.suc + b = x.suc + c implies b = c
             if not add_cancels_left(x.suc, b, c) {
                 x.suc + c = x.suc + b
                 c != b
@@ -495,13 +495,13 @@ theorem add_cancels_left(a: Nat, b: Nat, c: Nat) { a + b = a + c -> b = c } by {
     f(a)
 }
 
-theorem add_cancels_right(a: Nat, b: Nat, c: Nat) { b + a = c + a -> b = c } by {
+theorem add_cancels_right(a: Nat, b: Nat, c: Nat) { b + a = c + a implies b = c } by {
     a + b = a + c
     b = c
 }
 
 theorem add_identity_right(a: Nat, b: Nat) {
-    a + b = a -> b = 0
+    a + b = a implies b = 0
 } by {
     exists(k0: Nat) { k0 + b = k0 + 0 }
 }
@@ -520,7 +520,7 @@ theorem lt_suc(a: Nat) { a < a.suc } by {
     a.suc = a + 0.suc
 }
 
-theorem lt_suc_left(a: Nat, b: Nat) { a < b -> a.suc = b or a.suc < b } by {
+theorem lt_suc_left(a: Nat, b: Nat) { a < b implies a.suc = b or a.suc < b } by {
     let (c: Nat) satisfy { a + c = b and c != 0 }
     let (d: Nat) satisfy { d.suc = c }
     if d = 0 {
@@ -535,7 +535,7 @@ theorem lt_suc_left(a: Nat, b: Nat) { a < b -> a.suc = b or a.suc < b } by {
     }
 }
 
-theorem lt_suc_right(a: Nat, b: Nat) { a < b.suc -> a = b or a < b } by {
+theorem lt_suc_right(a: Nat, b: Nat) { a < b.suc implies a = b or a < b } by {
     if a != b {
         b.suc != a.suc
         a.suc < b.suc
@@ -543,7 +543,7 @@ theorem lt_suc_right(a: Nat, b: Nat) { a < b.suc -> a = b or a < b } by {
     }
 }
 
-theorem lt_add_left(a: Nat, b: Nat, c: Nat) { b < c -> a + b < a + c } by {
+theorem lt_add_left(a: Nat, b: Nat, c: Nat) { b < c implies a + b < a + c } by {
     let (d: Nat) satisfy { b + d = c }
     c != b
     d != 0
@@ -600,7 +600,7 @@ theorem lt_or_lte(a: Nat, b: Nat) { a < b or b <= a } by {
     }
 }
 
-theorem lt_imp_lte_suc(a: Nat, b: Nat) { a < b -> a.suc <= b } by {
+theorem lt_imp_lte_suc(a: Nat, b: Nat) { a < b implies a.suc <= b } by {
     if not (a.suc <= b) {
         not a.suc < b
         a.suc = b
@@ -608,7 +608,7 @@ theorem lt_imp_lte_suc(a: Nat, b: Nat) { a < b -> a.suc <= b } by {
     }
 }
 
-theorem lte_imp_not_lt(a: Nat, b: Nat) { a <= b -> not (b < a) } by {
+theorem lte_imp_not_lt(a: Nat, b: Nat) { a <= b implies not (b < a) } by {
     if a = b {
         not (b < a)
     } else {
@@ -618,7 +618,7 @@ theorem lte_imp_not_lt(a: Nat, b: Nat) { a <= b -> not (b < a) } by {
 }
 
 theorem division_theorem(m: Nat, n: Nat) {
-    0 < n -> exists(q: Nat, r: Nat) {
+    0 < n implies exists(q: Nat, r: Nat) {
         r < n and m = q * n + r
     }
 } by {
@@ -661,7 +661,7 @@ define is_composite(a: Nat) -> Bool {
     }
 }
 
-theorem mul_to_zero(a: Nat, b: Nat) { a * b = 0 -> a = 0 or b = 0 } by {
+theorem mul_to_zero(a: Nat, b: Nat) { a * b = 0 implies a = 0 or b = 0 } by {
     if a != 0 and b != 0 {
         let (pred_a: Nat) satisfy { pred_a.suc = a }
         pred_a.suc * b = 0
@@ -671,7 +671,7 @@ theorem mul_to_zero(a: Nat, b: Nat) { a * b = 0 -> a = 0 or b = 0 } by {
 }
 
 theorem divisor_lt(a: Nat, b: Nat, c: Nat) {
-    a != 0 and 1 < b and a * b = c -> a < c
+    a != 0 and 1 < b and a * b = c implies a < c
 } by {
     let (d: Nat) satisfy { 1 + d = b and d != 0 }
     a * (1 + d) = c
@@ -694,13 +694,13 @@ define divides(a: Nat, b: Nat) -> Bool {
 theorem divides_self(a: Nat) { divides(a, a) }
 
 define true_below(f: Nat -> Bool, n: Nat) -> Bool {
-    forall(x: Nat) { x < n -> f(x) }
+    forall(x: Nat) { x < n implies f(x) }
 }
 
 theorem strong_induction(f: Nat -> Bool) {
     forall(k: Nat) {
-        true_below(f, k) -> f(k)
-    } -> forall(n: Nat) { f(n) }
+        true_below(f, k) implies f(k)
+    } implies forall(n: Nat) { f(n) }
 } by {
     define g(x: Nat) -> Bool {
         true_below(f, x)
@@ -738,7 +738,7 @@ theorem strong_induction(f: Nat -> Bool) {
 }
 
 theorem divides_trans(a: Nat, b: Nat, c: Nat) {
-    divides(a, b) and divides(b, c) -> divides(a, c)
+    divides(a, b) and divides(b, c) implies divides(a, c)
 } by {
     let (d: Nat) satisfy { a * d = b }
     let (e: Nat) satisfy { b * e = c }
@@ -746,7 +746,7 @@ theorem divides_trans(a: Nat, b: Nat, c: Nat) {
 }
 
 theorem has_prime_divisor(n: Nat) {
-    1 < n -> exists(p: Nat) {
+    1 < n implies exists(p: Nat) {
         is_prime(p) and divides(p, n)
     }
 } by {
@@ -801,7 +801,7 @@ theorem factorial_step(n: Nat) {
 }
 
 theorem divides_factorial(k: Nat, n: Nat) {
-    k != 0 and k <= n -> divides(k, factorial(n))
+    k != 0 and k <= n implies divides(k, factorial(n))
 } by {
     define f(x: Nat) -> Bool {
         divides_factorial(k, x)
@@ -812,7 +812,7 @@ theorem divides_factorial(k: Nat, n: Nat) {
     forall(x: Nat) {
         if f(x) {
             divides_factorial(k, x)
-            k <= x -> divides(k, factorial(x))
+            k <= x implies divides(k, factorial(x))
             if k <= x.suc {
                 if k = x.suc {
                     divides(x.suc, factorial(x.suc))
@@ -851,20 +851,20 @@ theorem lte_one_factorial(a: Nat) { 1 <= factorial(a) } by {
     }
 }
 
-theorem lt_imp_lt_suc(a: Nat, b: Nat) { a < b -> a < b.suc } by {
+theorem lt_imp_lt_suc(a: Nat, b: Nat) { a < b implies a < b.suc } by {
     let (c: Nat) satisfy { a + c = b and c != 0 }
     a + c.suc = b.suc
     c.suc != 0
 }
 
-theorem lte_mul_both(a: Nat, b: Nat, c: Nat) { b <= c -> a * b <= a * c } by {
+theorem lte_mul_both(a: Nat, b: Nat, c: Nat) { b <= c implies a * b <= a * c } by {
     let (d: Nat) satisfy { b + d = c }
     a * (b + d) = a * c
     a * b + a * d = a * c
     a * b <= a * c
 }
 
-theorem lt_mul_both(a: Nat, b: Nat, c: Nat) { a != 0 and b < c -> a * b < a * c } by {
+theorem lt_mul_both(a: Nat, b: Nat, c: Nat) { a != 0 and b < c implies a * b < a * c } by {
     let (d: Nat) satisfy { b + d = c }
     c != b
     d != 0
@@ -882,7 +882,7 @@ theorem lt_mul_both(a: Nat, b: Nat, c: Nat) { a != 0 and b < c -> a * b < a * c 
     a * b < a * c
 }
 
-theorem lt_cancel_mul(a: Nat, b: Nat, c: Nat) { a != 0 and a * b < a * c -> b < c } by {
+theorem lt_cancel_mul(a: Nat, b: Nat, c: Nat) { a != 0 and a * b < a * c implies b < c } by {
     if c <= b {
         a * c <= a * b
         false
@@ -890,7 +890,7 @@ theorem lt_cancel_mul(a: Nat, b: Nat, c: Nat) { a != 0 and a * b < a * c -> b < 
     c != b
 }
 
-theorem mul_to_one(a: Nat, b: Nat) { a * b = 1 -> a = 1 } by {
+theorem mul_to_one(a: Nat, b: Nat) { a * b = 1 implies a = 1 } by {
     1 != 0
     a != 0
     not a < 0.suc
@@ -906,7 +906,7 @@ theorem mul_to_one(a: Nat, b: Nat) { a * b = 1 -> a = 1 } by {
     }
 }
 
-theorem divides_suc(a: Nat, b: Nat) { divides(a, b) and divides(a, b.suc) -> a = 1 } by {
+theorem divides_suc(a: Nat, b: Nat) { divides(a, b) and divides(a, b.suc) implies a = 1 } by {
     let (k0: Nat) satisfy { a * k0 = b.suc }
     a != 0
     let (c: Nat) satisfy { a * c = b }
@@ -953,23 +953,23 @@ theorem divides_zero(a: Nat) {
     exists(k0: Nat) { a * k0 = 0 }
 }
 
-theorem zero_divides(a: Nat) { divides(0, a) -> a = 0 }
+theorem zero_divides(a: Nat) { divides(0, a) implies a = 0 }
 
-theorem divides_mul(a: Nat, b: Nat, d: Nat) { divides(d, a) -> divides(d, a * b) } by {
+theorem divides_mul(a: Nat, b: Nat, d: Nat) { divides(d, a) implies divides(d, a * b) } by {
     let (q: Nat) satisfy { q * d = a }
     q * d * b = a * b
     d * q * b = a * b
     d * (q * b) = a * b
 }
 
-theorem lte_mul(a: Nat, b: Nat) { b != 0 -> a <= a * b } by {
+theorem lte_mul(a: Nat, b: Nat) { b != 0 implies a <= a * b } by {
     not b < 0.suc
     not (b < 1)
     1 <= b
     a * 1 <= a * b
 }
 
-theorem divides_lte(a: Nat, b: Nat) { divides(a, b) -> b = 0 or a <= b } by {
+theorem divides_lte(a: Nat, b: Nat) { divides(a, b) implies b = 0 or a <= b } by {
     if b != 0 {
         let (q: Nat) satisfy { q * a = b }
         if q = 0 {
@@ -983,7 +983,7 @@ theorem divides_lte(a: Nat, b: Nat) { divides(a, b) -> b = 0 or a <= b } by {
 }
 
 theorem divides_add(a: Nat, b: Nat, d: Nat) {
-    divides(d, a) and divides(d, b) -> divides(d, a + b)
+    divides(d, a) and divides(d, b) implies divides(d, a + b)
 } by {
     let (qa: Nat) satisfy { qa * d = a }
     let (qb: Nat) satisfy { qb * d = b }
@@ -993,7 +993,7 @@ theorem divides_add(a: Nat, b: Nat, d: Nat) {
 }
 
 
-theorem divides_symm(a: Nat, b: Nat) { divides(a, b) and divides(b, a) -> a = b } by {
+theorem divides_symm(a: Nat, b: Nat) { divides(a, b) and divides(b, a) implies a = b } by {
     if a = 0 {
         divides(0, b)
         b = 0
@@ -1011,7 +1011,7 @@ theorem divides_symm(a: Nat, b: Nat) { divides(a, b) and divides(b, a) -> a = b 
     }
 }
 
-theorem cross_sum_lte(a: Nat, b: Nat, c: Nat, d: Nat) { a + b = c + d and a <= c -> d <= b } by {
+theorem cross_sum_lte(a: Nat, b: Nat, c: Nat, d: Nat) { a + b = c + d and a <= c implies d <= b } by {
     let (e: Nat) satisfy { a + e = c }
     a + b = a + e + d
     a + b = a + (e + d)
@@ -1039,10 +1039,10 @@ class Nat {
     define sub(self, b: Nat) -> Nat { bounded_sub(self, b) }
 }
 
-theorem sub_lt(a: Nat, b: Nat) { a < b -> a - b = 0 }
+theorem sub_lt(a: Nat, b: Nat) { a < b implies a - b = 0 }
 
 theorem add_sub(a: Nat, b: Nat) {
-    b <= a -> a - b + b = a
+    b <= a implies a - b + b = a
 } by {
     not a < b
 }
@@ -1056,7 +1056,7 @@ theorem sub_self(a: Nat) { a - a = 0 }
 
 theorem sub_zero(a: Nat) { a - 0 = a }
 
-theorem add_imp_sub(a: Nat, b: Nat, c: Nat) { a + b = c -> c - b = a }
+theorem add_imp_sub(a: Nat, b: Nat, c: Nat) { a + b = c implies c - b = a }
 
 let mod(a: Nat, m: Nat) -> r: Nat satisfy {
     if m != 0 {
@@ -1151,7 +1151,7 @@ theorem sub_right_distrib(a: Nat, b: Nat, c: Nat) {
 }
 
 theorem divides_sub(a: Nat, b: Nat, d: Nat) {
-    divides(d, a) and divides(d, b) -> divides(d, a - b)
+    divides(d, a) and divides(d, b) implies divides(d, a - b)
 } by {
     let qa: Nat satisfy { qa * d = a }
     let qb: Nat satisfy { qb * d = b }
@@ -1162,7 +1162,7 @@ theorem divides_sub(a: Nat, b: Nat, d: Nat) {
 }
 
 theorem divides_mod(a: Nat, m: Nat, d: Nat) {
-    divides(d, a) and divides(d, m) -> divides(d, mod(a, m))
+    divides(d, a) and divides(d, m) implies divides(d, mod(a, m))
 } by {
     let (q: Nat) satisfy { q * m + mod(a, m) = a }
     mod(a, m) + q * m = a
@@ -1172,7 +1172,7 @@ theorem divides_mod(a: Nat, m: Nat, d: Nat) {
     divides(d, mod(a, m))
 }
 
-theorem div_imp_mod(a: Nat, m: Nat) { divides(m, a) -> mod(a, m) = 0 } by {
+theorem div_imp_mod(a: Nat, m: Nat) { divides(m, a) implies mod(a, m) = 0 } by {
     if m != 0 {
         divides(m, m)
         divides(m, mod(a, m))
@@ -1186,7 +1186,7 @@ theorem div_imp_mod(a: Nat, m: Nat) { divides(m, a) -> mod(a, m) = 0 } by {
     mod(a, m) = 0
 }
 
-theorem small_mod(a: Nat, m: Nat) { a < m -> mod(a, m) = a } by {
+theorem small_mod(a: Nat, m: Nat) { a < m implies mod(a, m) = a } by {
     let (q: Nat) satisfy { q * m + mod(a, m) = a }
     if q = 0 {
         0 + mod(a, m) = a
@@ -1218,11 +1218,11 @@ theorem mod_mul(m: Nat, q: Nat) { mod(q * m, m) = 0 } by {
 }
 
 theorem divides_add_copy(a: Nat, b: Nat, d: Nat) {
-    divides(d, a) and divides(d, b) -> divides(d, a + b)
+    divides(d, a) and divides(d, b) implies divides(d, a + b)
 }
 
 theorem divides_unmod(d: Nat, a: Nat, m: Nat) {
-    divides(d, m) and divides(d, mod(a, m)) -> divides(d, a)
+    divides(d, m) and divides(d, mod(a, m)) implies divides(d, a)
 } by {
     let (q: Nat) satisfy { q * m + mod(a, m) = a }
     divides(m, q * m)
@@ -1237,7 +1237,7 @@ theorem divides_unmod(d: Nat, a: Nat, m: Nat) {
 }
 
 theorem mul_cancel_left(a: Nat, b: Nat, c: Nat) {
-    a != 0 and a * b = a * c -> b = c
+    a != 0 and a * b = a * c implies b = c
 } by {
     not a * c < a * b
     not a * b < a * c
@@ -1245,11 +1245,11 @@ theorem mul_cancel_left(a: Nat, b: Nat, c: Nat) {
 }
 
 theorem mul_cancel_right(a: Nat, b: Nat, c: Nat) {
-    a != 0 and b * a = c * a -> b = c
+    a != 0 and b * a = c * a implies b = c
 }
 
 theorem divides_cancel_left(a: Nat, b: Nat, c: Nat) {
-    a != 0 and divides(a * b, a * c) -> divides(b, c)
+    a != 0 and divides(a * b, a * c) implies divides(b, c)
 } by {
     let d: Nat satisfy {
         a * b * d = a * c
@@ -1259,11 +1259,11 @@ theorem divides_cancel_left(a: Nat, b: Nat, c: Nat) {
 }
 
 theorem divides_cancel_right(a: Nat, b: Nat, c: Nat) {
-    a != 0 and divides(b * a, c * a) -> divides(b, c)
+    a != 0 and divides(b * a, c * a) implies divides(b, c)
 }
 
 theorem divides_mul_left(a: Nat, b: Nat, m: Nat) {
-    divides(a, b) -> divides(m * a, m * b)
+    divides(a, b) implies divides(m * a, m * b)
 } by {
     let d: Nat satisfy {
         a * d = b
@@ -1272,7 +1272,7 @@ theorem divides_mul_left(a: Nat, b: Nat, m: Nat) {
 }
 
 theorem divides_mul_right(a: Nat, b: Nat, m: Nat) {
-    divides(a, b) -> divides(a * m, b * m)
+    divides(a, b) implies divides(a * m, b * m)
 }
 
 // Misc helpers

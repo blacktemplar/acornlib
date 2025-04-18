@@ -1,5 +1,5 @@
-dependencies: 15099933977911157619
-content: 1028794824119697519
+dependencies: 11073053364780659202
+content: 11079756643831104039
 blocks:
   abs_add_nonneg:
     int:
@@ -1310,9 +1310,6 @@ blocks:
     - from_eq_neg_from
     - non_pos_is_neg_abs
     - pos_part
-    - sub_nat_self
-    - sub_nat_zero_right
-    - zero_not_pos
   pos_part_neg:
     int:
     - Int.is_positive

@@ -23,10 +23,10 @@ define gcd_step_n(p: Pair<Nat, Nat>, n: Nat) -> Pair<Nat, Nat> {
     }
 }
 
-define false_below(f: Nat -> Bool, n: Nat) -> Bool { forall(x: Nat) { x < n -> not f(x) } }
+define false_below(f: Nat -> Bool, n: Nat) -> Bool { forall(x: Nat) { x < n implies not f(x) } }
 
 theorem all_false_below(f: Nat -> Bool) {
-    forall(x: Nat) { false_below(f, x) } -> forall(x: Nat) { not f(x) }
+    forall(x: Nat) { false_below(f, x) } implies forall(x: Nat) { not f(x) }
 }
 
 // is_min(f, m) tells you whether m is the smallest value for which f is true.
@@ -36,7 +36,7 @@ define is_min(f: Nat -> Bool, m: Nat) -> Bool {
 
 // If f is true anywhere on the naturals, it has a min.
 theorem has_min(f: Nat -> Bool, n: Nat) {
-    f(n) -> exists(m: Nat) { is_min(f, m) }
+    f(n) implies exists(m: Nat) { is_min(f, m) }
 } by {
     define g(x: Nat) -> Bool { has_min(f, x) }
     nat.strong_induction(g)
@@ -104,7 +104,7 @@ theorem no_infinite_decreasing(f: Nat -> Nat) {
 }
 
 theorem dtz_terminates(f: Nat -> Nat) {
-    decreasing_to_zero(f) -> exists(n: Nat) { f(n) = 0 }
+    decreasing_to_zero(f) implies exists(n: Nat) { f(n) = 0 }
 } by {
     let (n: Nat) satisfy { f(n) <= f(n.suc) }
     f(n) = 0 or f(n.suc) < f(n)
@@ -164,7 +164,7 @@ define divides_both(a: Nat, p: Pair<Nat, Nat>) -> Bool {
 }
 
 theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
-    divides_both(a, p) -> divides_both(a, gcd_step(p))
+    divides_both(a, p) implies divides_both(a, gcd_step(p))
 } by {
     divides(a, p.first)
     divides(a, p.second)
@@ -183,7 +183,7 @@ theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
 }
 
 theorem divides_gcd_step_n(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
-    divides_both(d, p) -> divides_both(d, gcd_step_n(p, n))
+    divides_both(d, p) implies divides_both(d, gcd_step_n(p, n))
 } by {
     let f: Nat -> Bool = function(x: Nat) { divides_both(d, gcd_step_n(p, x)) }
     divides_both(d, gcd_step_n(p, 0))
@@ -200,14 +200,14 @@ theorem divides_gcd_step_n(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
 }
 
 theorem divides_gcd_pair(d: Nat, p: Pair<Nat, Nat>) {
-    divides_both(d, p) -> divides(d, gcd_pair(p))
+    divides_both(d, p) implies divides(d, gcd_pair(p))
 } by {
     divides_both(d, gcd_step_n(p, num_gcd_steps(p)))
     divides(d, gcd_step_n(p, num_gcd_steps(p)).first)
 }
 
 theorem divides_gcd(d: Nat, a: Nat, b: Nat) {
-    divides(d, a) and divides(d, b) -> divides(d, gcd(a, b))
+    divides(d, a) and divides(d, b) implies divides(d, gcd(a, b))
 } by {
     divides(d, Pair<Nat, Nat>.new(a, b).first)
     divides(d, Pair<Nat, Nat>.new(a, b).second)
@@ -219,7 +219,7 @@ theorem divides_gcd(d: Nat, a: Nat, b: Nat) {
 }
 
 theorem divides_both_unstep(a: Nat, p: Pair<Nat, Nat>) {
-    divides_both(a, gcd_step(p)) -> divides_both(a, p)
+    divides_both(a, gcd_step(p)) implies divides_both(a, p)
 } by {
     if p.second = 0 {
         p = gcd_step(p)
@@ -238,7 +238,7 @@ theorem divides_both_unstep(a: Nat, p: Pair<Nat, Nat>) {
 }
 
 theorem divides_gcd_step_n_converse(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
-    divides_both(d, gcd_step_n(p, n)) -> divides_both(d, p)
+    divides_both(d, gcd_step_n(p, n)) implies divides_both(d, p)
 } by {
     let f: Nat -> Bool = function(x: Nat) {
         divides_gcd_step_n_converse(d, p, x)
@@ -263,7 +263,7 @@ theorem divides_gcd_step_n_converse(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
 }
 
 theorem divides_gcd_pair_converse(d: Nat, p: Pair<Nat, Nat>) {
-    divides(d, gcd_pair(p)) -> divides_both(d, p)
+    divides(d, gcd_pair(p)) implies divides_both(d, p)
 } by {
     gcd_pair(p) = gcd_step_n(p, num_gcd_steps(p)).first
     0 = gcd_step_n(p, num_gcd_steps(p)).second
@@ -274,7 +274,7 @@ theorem divides_gcd_pair_converse(d: Nat, p: Pair<Nat, Nat>) {
 }
 
 theorem gcd_divides(d: Nat, a: Nat, b: Nat) {
-    divides(d, gcd(a, b)) -> divides(d, a) and divides(d, b)
+    divides(d, gcd(a, b)) implies divides(d, a) and divides(d, b)
 } by {
     let p: Pair<Nat, Nat> = Pair<Nat, Nat>.new(a, b)
     p.first = a
@@ -301,7 +301,7 @@ theorem gcd_divides_right(a: Nat, b: Nat) {
 }
 
 theorem gcd_is_gcd(a: Nat, b: Nat, d: Nat) {
-    a != 0 and b != 0 and divides(d, a) and divides(d, b) -> d <= gcd(a, b)
+    a != 0 and b != 0 and divides(d, a) and divides(d, b) implies d <= gcd(a, b)
 } by {
     not divides(0, a)
     gcd(a, b) != 0
@@ -310,7 +310,7 @@ theorem gcd_is_gcd(a: Nat, b: Nat, d: Nat) {
 }
 
 theorem gcd_nonzero_left(a: Nat, b: Nat) {
-    a != 0 -> gcd(a, b) != 0
+    a != 0 implies gcd(a, b) != 0
 } by {
     if gcd(a, b) = 0 {
         divides(0, a)
@@ -337,14 +337,14 @@ theorem gcd_comm(a: Nat, b: Nat) { gcd(a, b) = gcd(b, a) } by {
     divides(gcd(a, b), gcd(b, a))
 }
 
-theorem gcd_nonzero_right(a: Nat, b: Nat) { b != 0 -> gcd(a, b) != 0 }
+theorem gcd_nonzero_right(a: Nat, b: Nat) { b != 0 implies gcd(a, b) != 0 }
 
 define mod_maintains(f: Nat -> Bool) -> Bool {
-    forall(a: Nat, b: Nat) { f(a) and f(b) -> f(mod(a, b)) }
+    forall(a: Nat, b: Nat) { f(a) and f(b) implies f(mod(a, b)) }
 }
 
 theorem mod_maintains_imp_gcd(f: Nat -> Bool, a: Nat, b: Nat) {
-    mod_maintains(f) and f(a) and f(b) -> f(gcd(a, b))
+    mod_maintains(f) and f(a) and f(b) implies f(gcd(a, b))
 } by {
     let p: Pair<Nat, Nat> = Pair<Nat, Nat>.new(a, b)
     let g: Nat -> Bool = function(n: Nat) {
@@ -393,7 +393,7 @@ theorem gcd_one_left(a: Nat) {
 }
 
 theorem gcd_mult_left_nonzero(a: Nat, b: Nat, m: Nat) {
-    m != 0 -> m * gcd(a, b) = gcd(m * a, m * b)
+    m != 0 implies m * gcd(a, b) = gcd(m * a, m * b)
 } by {
     divides(m, m * a)
     divides(m, m * b)
@@ -442,7 +442,7 @@ theorem cofactor(a: Nat, b: Nat, af: Nat, bf: Nat) {
         gcd(a, b) != 0 and
         af * gcd(a, b) = a and
         bf * gcd(a, b) = b
-    ) -> gcd(af, bf) = 1
+    ) implies gcd(af, bf) = 1
 } by {
     divides(gcd(af, bf), af)
     divides(gcd(a, b) * gcd(af, bf), a)
@@ -455,7 +455,7 @@ theorem cofactor(a: Nat, b: Nat, af: Nat, bf: Nat) {
 }
 
 theorem gcd_of_prime(p: Nat, n: Nat) {
-    nat.is_prime(p) -> gcd(p, n) = 1 or divides(p, n)
+    nat.is_prime(p) implies gcd(p, n) = 1 or divides(p, n)
 } by {
     divides(gcd(p, n), p)
     let d: Nat satisfy {

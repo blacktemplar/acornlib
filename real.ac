@@ -14,13 +14,13 @@ define is_cut(f: Rat -> Bool) -> Bool {
 
 define is_lower(f: Rat -> Bool) -> Bool {
     forall(x: Rat, y: Rat) {
-        f(y) and x < y -> f(x)
+        f(y) and x < y implies f(x)
     }
 }
 
 define is_greatest(f: Rat -> Bool, x: Rat) -> Bool {
     f(x) and forall(y: Rat) {
-        f(y) -> y <= x
+        f(y) implies y <= x
     }
 }
 
@@ -118,7 +118,7 @@ class Real {
     // For reals, <= is the comparison operator by which the others are defined. 
     define lte(self, other: Real) -> Bool {
         forall(r: Rat) {
-            self.gt_rat(r) -> other.gt_rat(r)
+            self.gt_rat(r) implies other.gt_rat(r)
         }
     }
 
@@ -136,11 +136,11 @@ class Real {
 }
 
 theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
-    r1 > r2 -> Real.from_rat(r1).gt_rat(r2)
+    r1 > r2 implies Real.from_rat(r1).gt_rat(r2)
 }
 
 theorem from_rat_gt_imp_gt(r1: Rat, r2: Rat) {
-    Real.from_rat(r1).gt_rat(r2) -> r1 > r2
+    Real.from_rat(r1).gt_rat(r2) implies r1 > r2
 }
 
 theorem not_gt_rat_self(r: Rat) {
@@ -164,11 +164,11 @@ theorem gte_self(r: Real) {
 }
 
 theorem lte_trans(a: Real, b: Real, c: Real) {
-    a <= b and b <= c -> a <= c
+    a <= b and b <= c implies a <= c
 }
 
 theorem gt_rat_sorts(z: Real, r1: Rat, r2: Rat) {
-    z.gt_rat(r1) and not z.gt_rat(r2) -> r1 < r2
+    z.gt_rat(r1) and not z.gt_rat(r2) implies r1 < r2
 } by {
     if r2 < r1 {
         is_lower(z.gt_rat)
@@ -199,7 +199,7 @@ theorem lte_or_gte(a: Real, b: Real) {
 }
 
 theorem lte_both_ways_imp_eq(a: Real, b: Real) {
-    a <= b and b <= a -> a = b
+    a <= b and b <= a implies a = b
 } by {
     forall(r: Rat) {
         if a.gt_rat(r) {
@@ -216,7 +216,7 @@ theorem lte_both_ways_imp_eq(a: Real, b: Real) {
 }
 
 theorem gt_rat_imp_gt_from_rat(a: Real, r: Rat) {
-    a.gt_rat(r) -> a > Real.from_rat(r)
+    a.gt_rat(r) implies a > Real.from_rat(r)
 } by {
     if not Real.from_rat(r) <= a {
         let r2: Rat satisfy {
@@ -232,7 +232,7 @@ theorem gt_rat_imp_gt_from_rat(a: Real, r: Rat) {
 }
 
 theorem gt_from_rat_imp_gt_rat(a: Real, r: Rat) {
-    a > Real.from_rat(r) -> a.gt_rat(r)
+    a > Real.from_rat(r) implies a.gt_rat(r)
 } by {
     not a <= Real.from_rat(r)
     let r2: Rat satisfy {
@@ -241,7 +241,7 @@ theorem gt_from_rat_imp_gt_rat(a: Real, r: Rat) {
 }
 
 theorem pos_gt_zero(a: Real) {
-    a.is_positive -> a > Real.0
+    a.is_positive implies a > Real.0
 } by {
     a.is_positive
     a.gt_rat(Rat.0)
@@ -249,7 +249,7 @@ theorem pos_gt_zero(a: Real) {
 }
 
 theorem gt_zero_imp_pos(a: Real) {
-    a > Real.0 -> a.is_positive
+    a > Real.0 implies a.is_positive
 } by {
     a > Real.0
     a > Real.from_rat(Rat.0)
@@ -258,7 +258,7 @@ theorem gt_zero_imp_pos(a: Real) {
 }
 
 theorem neg_lt_zero(a: Real) {
-    a.is_negative -> a < Real.0
+    a.is_negative implies a < Real.0
 } by {
     if not a < Real.0 {
         Real.0 <= a
@@ -273,7 +273,7 @@ theorem neg_lt_zero(a: Real) {
 }
 
 theorem lt_zero_imp_neg(a: Real) {
-    a < Real.0 -> a.is_negative
+    a < Real.0 implies a.is_negative
 } by {
     if not a.is_negative {
         a.is_positive
@@ -292,7 +292,7 @@ define add_gt(z1: Real, z2: Real, r: Rat) -> Bool {
 }
 
 theorem add_gt_symm(z1: Real, z2: Real, r: Rat) {
-    add_gt(z1, z2, r) -> add_gt(z2, z1, r)
+    add_gt(z1, z2, r) implies add_gt(z2, z1, r)
 } by {
     let (r1: Rat, r2: Rat) satisfy {
         z1.gt_rat(r1) and z2.gt_rat(r2) and r = r1 + r2
@@ -403,7 +403,7 @@ class Real {
 }
 
 theorem add_gt_rat(z1: Real, z2: Real, r1: Rat, r2: Rat) {
-    z1.gt_rat(r1) and z2.gt_rat(r2) -> (z1 + z2).gt_rat(r1 + r2)
+    z1.gt_rat(r1) and z2.gt_rat(r2) implies (z1 + z2).gt_rat(r1 + r2)
 }
 
 theorem add_comm(a: Real, b: Real) {
@@ -423,7 +423,7 @@ theorem add_comm(a: Real, b: Real) {
 }
 
 theorem gt_rat_adding_three(z1: Real, z2: Real, z3: Real, q: Rat) {
-    (z1 + z2 + z3).gt_rat(q) -> exists(r1: Rat, r2: Rat, r3: Rat) {
+    (z1 + z2 + z3).gt_rat(q) implies exists(r1: Rat, r2: Rat, r3: Rat) {
         z1.gt_rat(r1) and z2.gt_rat(r2) and z3.gt_rat(r3) and q = r1 + r2 + r3
     }
 } by {
@@ -440,7 +440,7 @@ theorem gt_rat_adding_three(z1: Real, z2: Real, z3: Real, q: Rat) {
 theorem gt_rat_adding_three_converse(z1: Real, z2: Real, z3: Real, q: Rat) {
     exists(r1: Rat, r2: Rat, r3: Rat) {
         z1.gt_rat(r1) and z2.gt_rat(r2) and z3.gt_rat(r3) and q = r1 + r2 + r3
-    } -> (z1 + z2 + z3).gt_rat(q)
+    } implies (z1 + z2 + z3).gt_rat(q)
 } by {
     let (r1: Rat, r2: Rat, r3: Rat) satisfy {
         z1.gt_rat(r1) and z2.gt_rat(r2) and z3.gt_rat(r3) and q = r1 + r2 + r3
@@ -479,23 +479,23 @@ theorem add_assoc(a: Real, b: Real, c: Real) {
 }
 
 theorem gt_imp_not_lte(a: Real, b: Real) {
-    a > b -> not a <= b
+    a > b implies not a <= b
 }
 
 theorem not_lte_imp_gt(a: Real, b: Real) {
-    not a <= b -> a > b
+    not a <= b implies a > b
 }
 
 theorem gte_imp_not_lt(a: Real, b: Real) {
-    a >= b -> not a < b
+    a >= b implies not a < b
 }
 
 theorem not_lt_imp_gte(a: Real, b: Real) {
-    not a < b -> a >= b
+    not a < b implies a >= b
 }
 
 theorem rat_separating(a: Real, b: Real) {
-    a < b -> exists(r: Rat) {
+    a < b implies exists(r: Rat) {
         b.gt_rat(r) and not a.gt_rat(r)
     }
 } by {
@@ -513,7 +513,7 @@ theorem rat_separating(a: Real, b: Real) {
 }
 
 theorem rat_between_rat_and_real(z: Real, r1: Rat) {
-    z.gt_rat(r1) -> exists(r2: Rat) {
+    z.gt_rat(r1) implies exists(r2: Rat) {
         z.gt_rat(r2) and r1 < r2
     }
 } by {
@@ -525,7 +525,7 @@ theorem rat_between_rat_and_real(z: Real, r1: Rat) {
 
 // Strict version of rat_separating.
 theorem rat_between_reals(a: Real, b: Real) {
-    a < b -> exists(r: Rat) {
+    a < b implies exists(r: Rat) {
         a < Real.from_rat(r) and Real.from_rat(r) < b
     }
 } by {
@@ -556,46 +556,46 @@ theorem rat_between_reals_gt(a: Real, b: Real) {
 }
 
 theorem add_gt_trans(z1: Real, z2: Real, r1: Rat, r2: Rat) {
-    add_gt(z1, z2, r1) and r1 > r2 -> add_gt(z1, z2, r2)
+    add_gt(z1, z2, r1) and r1 > r2 implies add_gt(z1, z2, r2)
 }
 
 theorem add_gt_imp_gt_from_rat(z1: Real, z2: Real, r: Rat) {
-    add_gt(z1, z2, r) -> z1 + z2 > Real.from_rat(r)
+    add_gt(z1, z2, r) implies z1 + z2 > Real.from_rat(r)
 } by {
     Real.new(add_gt(z1, z2)).gt_rat(r)
     Real.new(add_gt(z1, z2)) > Real.from_rat(r)
 }
 
 theorem gt_from_rat_imp_add_gt(z1: Real, z2: Real, r: Rat) {
-    z1 + z2 > Real.from_rat(r) -> add_gt(z1, z2, r)
+    z1 + z2 > Real.from_rat(r) implies add_gt(z1, z2, r)
 } by {
     Real.new(add_gt(z1, z2)) > Real.from_rat(r)
     Real.new(add_gt(z1, z2)).gt_rat(r)
 }
 
 theorem lt_lte_trans(a: Real, b: Real, c: Real) {
-    a < b and b <= c -> a < c
+    a < b and b <= c implies a < c
 } by {
     not b <= a
     not c <= a
 }
 
 theorem lte_lt_trans(a: Real, b: Real, c: Real) {
-    a <= b and b < c -> a < c
+    a <= b and b < c implies a < c
 } by {
     not b < a
     not c < a
 }
 
 theorem lt_trans(a: Real, b: Real, c: Real) {
-    a < b and b < c -> a < c
+    a < b and b < c implies a < c
 } by {
     not b < a
     not c < b
 }
 
 theorem add_gt_from_rat_imp_rat_add_gt(p: Rat, q: Rat, r: Rat) {
-    add_gt(Real.from_rat(p), Real.from_rat(q), r) -> p + q > r
+    add_gt(Real.from_rat(p), Real.from_rat(q), r) implies p + q > r
 } by {
     let (rp: Rat, rq: Rat) satisfy {
         Real.from_rat(p).gt_rat(rp) and Real.from_rat(q).gt_rat(rq) and r = rp + rq
@@ -607,7 +607,7 @@ theorem add_gt_from_rat_imp_rat_add_gt(p: Rat, q: Rat, r: Rat) {
 }
 
 theorem rat_add_gt_imp_add_gt_from_rat(p: Rat, q: Rat, r: Rat) {
-    p + q > r -> add_gt(Real.from_rat(p), Real.from_rat(q), r)
+    p + q > r implies add_gt(Real.from_rat(p), Real.from_rat(q), r)
 } by {
     let d: Rat = p + q - r
     d.is_positive
@@ -654,7 +654,7 @@ theorem add_from_rat(p: Rat, q: Rat) {
 }
 
 theorem lte_add_right(a: Real, b: Real, c: Real) {
-    a <= b -> a + c <= b + c
+    a <= b implies a + c <= b + c
 } by {
     forall(r: Rat) {
         if (a + c).gt_rat(r) {
@@ -669,11 +669,11 @@ theorem lte_add_right(a: Real, b: Real, c: Real) {
 }
 
 theorem lte_add_left(a: Real, b: Real, c: Real) {
-    a <= b -> c + a <= c + b
+    a <= b implies c + a <= c + b
 }
 
 theorem lt_add_converse(a: Real, b: Real, c: Real) {
-    a + c < b + c -> a < b
+    a + c < b + c implies a < b
 }
 
 theorem add_from_rat_zero(r: Rat) {
@@ -708,11 +708,11 @@ theorem add_zero_left(a: Real) {
 }
 
 theorem from_rat_maintains_lt(p: Rat, q: Rat) {
-    p < q -> Real.from_rat(p) < Real.from_rat(q)
+    p < q implies Real.from_rat(p) < Real.from_rat(q)
 }
 
 theorem add_lt_lt(a: Real, b: Real, c: Real, d: Real) {
-    a < b and c < d -> a + c < b + d
+    a < b and c < d implies a + c < b + d
 } by {
     // Find two rationals between each pair of real numbers
     let rab1: Rat satisfy {
@@ -786,7 +786,7 @@ class Real {
 }
 
 theorem from_rat_maintains_lte(p: Rat, q: Rat) {
-    p <= q -> Real.from_rat(p) <= Real.from_rat(q)
+    p <= q implies Real.from_rat(p) <= Real.from_rat(q)
 } by {
     if p < q {
         Real.from_rat(p) < Real.from_rat(q)
@@ -822,7 +822,7 @@ theorem lt_some_int(a: Real) {
 }
 
 theorem real_neg_imp_rat_neg(r: Rat) {
-    Real.from_rat(r).is_negative -> r.is_negative
+    Real.from_rat(r).is_negative implies r.is_negative
 } by {
     Real.from_rat(r) < Real.0
     Real.0.gt_rat(r)
@@ -830,7 +830,7 @@ theorem real_neg_imp_rat_neg(r: Rat) {
 }
 
 theorem lt_some_int_cancel(m: Int, n: Int) {
-    Real.from_int(m) < Real.from_int(n) -> m < n
+    Real.from_int(m) < Real.from_int(n) implies m < n
 } by {
     Real.from_rat(Rat.from_int(m)) < Real.from_rat(Rat.from_int(n))
     Rat.from_int(m) < Rat.from_int(n)
@@ -925,7 +925,7 @@ theorem lt_add_one(a: Real) {
 }
 
 theorem lt_add_pos_int(a: Real, n: Int) {
-    n.is_positive -> a < a + Real.from_int(n)
+    n.is_positive implies a < a + Real.from_int(n)
 } by {
     Int.1 <= n
     Real.1 <= Real.from_int(n)
@@ -934,7 +934,7 @@ theorem lt_add_pos_int(a: Real, n: Int) {
 }
 
 theorem lt_add_pos_rat(a: Real, r: Rat) {
-    r.is_positive -> a < a + Real.from_rat(r)
+    r.is_positive implies a < a + Real.from_rat(r)
 } by {
     Real.0 <= Real.from_rat(r)
     a <= a + Real.from_rat(r)
@@ -981,7 +981,7 @@ theorem lt_add_pos_rat(a: Real, r: Rat) {
 }
 
 theorem lt_add_pos(a: Real, b: Real) {
-    b.is_positive -> a < a + b
+    b.is_positive implies a < a + b
 } by {
     Real.0 < b
     let r: Rat satisfy {
@@ -995,7 +995,7 @@ theorem lt_add_pos(a: Real, b: Real) {
 }
 
 theorem lt_add_rat_right(a: Real, b: Real, r: Rat) {
-    a < b -> a + Real.from_rat(r) < b + Real.from_rat(r)
+    a < b implies a + Real.from_rat(r) < b + Real.from_rat(r)
 } by {
   a + Real.0 < b + Real.0
   a + (Real.from_rat(r) + Real.from_rat(-r)) < b + (Real.from_rat(r) + Real.from_rat(-r))
@@ -1003,11 +1003,11 @@ theorem lt_add_rat_right(a: Real, b: Real, r: Rat) {
 }
 
 theorem lt_add_rat_left(a: Real, b: Real, r: Rat) {
-    a < b -> Real.from_rat(r) + a < Real.from_rat(r) + b
+    a < b implies Real.from_rat(r) + a < Real.from_rat(r) + b
 }
 
 theorem add_rat_eps_between(a: Real, b: Real) {
-    a < b -> exists(eps: Rat) {
+    a < b implies exists(eps: Rat) {
         eps.is_positive and a + Real.from_rat(eps) < b
     }
 } by {
@@ -1032,7 +1032,7 @@ theorem add_rat_eps_between(a: Real, b: Real) {
 }
 
 theorem lt_add_right(a: Real, b: Real, c: Real) {
-    a < b -> a + c < b + c
+    a < b implies a + c < b + c
 } by {
     let r: Rat satisfy {
         r.is_positive and a + Real.from_rat(r) < b
@@ -1050,11 +1050,11 @@ theorem lt_add_right(a: Real, b: Real, c: Real) {
 }
 
 theorem lt_add_left(a: Real, b: Real, c: Real) {
-    a < b -> c + a < c + b
+    a < b implies c + a < c + b
 }
 
 theorem lt_add_cancel_right(a: Real, b: Real, c: Real) {
-    a + c = b + c -> a = b
+    a + c = b + c implies a = b
 } by {
     not a + c < b + c
     not b + c < a + c
@@ -1063,7 +1063,7 @@ theorem lt_add_cancel_right(a: Real, b: Real, c: Real) {
 }
 
 theorem lt_add_cancel_left(a: Real, b: Real, c: Real) {
-    c + a = c + b -> a = b
+    c + a = c + b implies a = b
 }
 
 // Whether -a > r. Which is just a < -r.
@@ -1154,7 +1154,7 @@ class Real {
 }
 
 theorem lt_rat_neg(a: Real, r: Rat) {
-    a < Real.from_rat(-r) -> -a > Real.from_rat(r)
+    a < Real.from_rat(-r) implies -a > Real.from_rat(r)
 } by {
     Real.new(neg_gt(a)).gt_rat(r)
     Real.new(neg_gt(a)) > Real.from_rat(r)
@@ -1185,14 +1185,14 @@ theorem neg_from_rat(r: Rat) {
 }
 
 theorem neg_gt_rat(a: Real, r: Rat) {
-    -a > Real.from_rat(r) -> a < Real.from_rat(-r)
+    -a > Real.from_rat(r) implies a < Real.from_rat(-r)
 } by {
     Real.new(neg_gt(a)) > Real.from_rat(r)
     Real.new(neg_gt(a)).gt_rat(r)
 }
 
 theorem gt_rat_neg(a: Real, r: Rat) {
-    a > Real.from_rat(-r) -> -a < Real.from_rat(r)
+    a > Real.from_rat(-r) implies -a < Real.from_rat(r)
 } by {
     if -a > Real.from_rat(r) {
         a < Real.from_rat(-r)
@@ -1209,7 +1209,7 @@ theorem gt_rat_neg(a: Real, r: Rat) {
 }
 
 theorem neg_lt_rat(a: Real, r: Rat) {
-    -a < Real.from_rat(r) -> a > Real.from_rat(-r)
+    -a < Real.from_rat(r) implies a > Real.from_rat(-r)
 } by {
     if a < Real.from_rat(-r) {
         -a > Real.from_rat(r)
@@ -1228,7 +1228,7 @@ theorem neg_lt_rat(a: Real, r: Rat) {
 }
 
 theorem lt_swap_neg(a: Real, b: Real) {
-    a < b -> -b < -a
+    a < b implies -b < -a
 } by {
     let r: Rat satisfy {
         a < Real.from_rat(r) and Real.from_rat(r) < b
@@ -1240,7 +1240,7 @@ theorem lt_swap_neg(a: Real, b: Real) {
 }
 
 theorem lt_neg_swap_neg(a: Real, b: Real) {
-    a < -b -> b < -a
+    a < -b implies b < -a
 } by {
     let r: Rat satisfy {
         a < Real.from_rat(r) and Real.from_rat(r) < -b
@@ -1248,7 +1248,7 @@ theorem lt_neg_swap_neg(a: Real, b: Real) {
 }
 
 theorem neg_lt_swap_neg(a: Real, b: Real) {
-    -a < b -> -b < a
+    -a < b implies -b < a
 } by {
     let r: Rat satisfy {
         -a < Real.from_rat(r) and Real.from_rat(r) < b
@@ -1256,7 +1256,7 @@ theorem neg_lt_swap_neg(a: Real, b: Real) {
 }
 
 theorem neg_lt_neg_swap_neg(a: Real, b: Real) {
-    -a < -b -> b < a
+    -a < -b implies b < a
 } by {
     let r: Rat satisfy {
         -a < Real.from_rat(r) and Real.from_rat(r) < -b
@@ -1281,19 +1281,19 @@ theorem neg_zero {
 }
 
 theorem neg_pos_is_neg(a: Real) {
-    a.is_positive -> (-a).is_negative
+    a.is_positive implies (-a).is_negative
 }
 
 theorem neg_neg_is_pos(a: Real) {
-    (-a).is_negative -> a.is_positive
+    (-a).is_negative implies a.is_positive
 }
 
 theorem gt_add_neg(a: Real, b: Real) {
-    b.is_negative -> a > a + b
+    b.is_negative implies a > a + b
 }
 
 theorem rat_window(a: Real, eps: Rat) {
-    eps.is_positive -> exists(r: Rat) {
+    eps.is_positive implies exists(r: Rat) {
         Real.from_rat(r) < a and a < Real.from_rat(r + eps)
     }
 } by {
@@ -1398,7 +1398,7 @@ theorem sub_cancels(a: Real, b: Real) {
 }
 
 theorem sub_moves_sides(a: Real, b: Real, c: Real) {
-    a + b = c -> a = c - b
+    a + b = c implies a = c - b
 }
 
 theorem lte_abs(a: Real) {
