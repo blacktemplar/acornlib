@@ -1,4 +1,4 @@
-import nat
+from nat import Nat
 from int import Int
 numerals Int
 
@@ -56,7 +56,10 @@ problem {
     solve 2 + 2 by {
         2 + 2 = 2 + (1 + 1)
         2 + 2 = (2 + 1) + 1
+        2 + 1 = 3
         2 + 2 = 3 + 1
+        Nat.3 + Nat.1 = Nat.4
+        3 + 1 = 4
         2 + 2 = 4
     }
 }
