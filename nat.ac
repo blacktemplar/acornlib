@@ -1462,3 +1462,8 @@ theorem gte_each_of_three(a: Nat, b: Nat, c: Nat) {
     }
     a <= n2 and b <= n2 and c <= n2
 }
+
+// Single-digit addition facts should probably just be theorems.
+theorem one_plus_two {
+    1 + 2 = 3
+}

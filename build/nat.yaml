@@ -1,5 +1,5 @@
 dependencies: 0
-content: 6838701049075242633
+content: 12535673811309252926
 blocks:
   add_assoc:
     nat:
@@ -672,6 +672,10 @@ blocks:
     - Nat.2
     - Nat.add
     - add_zero_right
+  one_plus_two:
+    nat:
+    - Nat.3
+    - add_one_left
   only_zero_lte_zero:
     nat:
     - Nat.lte
