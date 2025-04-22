@@ -1,6 +1,9 @@
-dependencies: 4944698170913138176
-content: 11977994612647130910
+dependencies: 8087292944887251398
+content: 12954894476698353882
 blocks:
+  '96':
+    real:
+    - gt_is_dedekind_cut
   abs_from_rat:
     rat:
     - Rat.abs

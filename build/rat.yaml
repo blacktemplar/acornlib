@@ -1,6 +1,9 @@
 dependencies: 4010927591389591207
-content: 9842054486008935584
+content: 5691231226345018766
 blocks:
+  '11':
+    rat:
+    - denom_one_is_reduced
   abs_mul_abs:
     rat:
     - abs_non_neg

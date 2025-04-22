@@ -5,7 +5,7 @@ define is_reduced(a: Int, b: Int) -> Bool {
     b > Int.0 and gcd(a, b) = Int.1
 }
 
-theorem denom_one_is_reduced(a: Int) {
+theorem denom_one_is_reduced(a: Int) { 
     is_reduced(a, Int.1)
 }
 

@@ -4,7 +4,7 @@ from rat import Rat
 
 // Using the Dedekind cut definition of reals.
 
-define is_cut(f: Rat -> Bool) -> Bool {
+define is_cut(f: Rat -> Bool) -> Bool { 
     exists(x: Rat) {
         f(x)
     } and exists(x: Rat) {
@@ -4485,4 +4485,3 @@ theorem lt_mul_neg_right(x: Real, y: Real, z: Real) {
     (x - y).is_negative
     ((x - y) * z).is_positive
 }
-

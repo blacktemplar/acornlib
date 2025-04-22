@@ -1,4 +1,4 @@
-typeclass G: Group {
+typeclass G: Group { 
     // The identity
     e: G
 
