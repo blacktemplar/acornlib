@@ -1,0 +1,51 @@
+inductive List<T> {
+    nil
+    cons(T, List<T>)
+}
+
+class List<T> {
+    // Adding two lists concatenates them
+    define add(self, other: List<T>) -> List<T> {
+        match self {
+            List.nil {
+                other
+            }
+            List.cons(head, tail) {
+                List.cons(head, tail.add(other))
+            }
+        }
+    }
+
+    define contains(self, item: T) -> Bool {
+        match self {
+            List.nil {
+                false
+            }
+            List.cons(head, tail) {
+                if head = item {
+                    true
+                } else {
+                    tail.contains(item)
+                }
+            }
+        }
+    }
+}
+
+theorem add_nil<T>(list: List<T>) {
+    list + List.nil<T> = list
+}
+
+theorem add_contains_left<T>(left: List<T>, right: List<T>, item: T) {
+    left.contains(item) implies (left + right).contains(item)
+} by {
+    define f(x: List<T>) -> Bool {
+        x.contains(item) implies (x + right).contains(item)
+    }
+    f(List.nil)
+    forall(head: T, tail: List<T>) {
+        if f(tail) {
+            f(List.cons(head, tail))
+        }
+    }
+}
