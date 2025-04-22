@@ -1,5 +1,5 @@
 dependencies: 0
-content: 4991702906591949126
+content: 6236719728428186430
 blocks:
   identity_subgroup_constraint:
     group:
@@ -11,6 +11,12 @@ blocks:
     - inverse_constraint
     - is_identity
     - subgroup_constraint
+  identity_subgroup_only_has_identity:
+    group:
+    - Subgroup.contains
+    - identity_subgroup
+    - identity_subgroup_constraint
+    - is_identity
   inverse_inverse:
     group:
     - Group.associative

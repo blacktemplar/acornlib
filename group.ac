@@ -106,10 +106,8 @@ structure Subgroup<G: Group> {
     subgroup_constraint(contains)
 }
 
-// TODO: this syntax requires 0.0.11.
+let identity_subgroup<G: Group>: Subgroup<G> = Subgroup.new(is_identity<G>)
 
-// let identity_subgroup<G: Group>: Subgroup<G> = Subgroup.new(is_identity<G>)
-
-// theorem identity_subgroup_only_has_identity<G: Group>(g: G) {
-//     identity_subgroup<G>.contains(g) implies g = G.e
-// }
+theorem identity_subgroup_only_has_identity<G: Group>(g: G) {
+    identity_subgroup<G>.contains(g) implies g = G.e
+}
