@@ -16,6 +16,7 @@ class List<T> {
         }
     }
 
+    // Whether this list contains a particular item.
     define contains(self, item: T) -> Bool {
         match self {
             List.nil {
@@ -64,6 +65,14 @@ theorem add_contains_right<T>(left: List<T>, right: List<T>, item: T) {
     forall(head: T, tail: List<T>) {
         if f(tail) {
             f(List.cons(head, tail))
+        }
+    }
+}
+
+class List<T> {
+    define contains_every(self) -> Bool {
+        forall(x: T) {
+            self.contains(x)
         }
     }
 }
