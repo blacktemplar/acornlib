@@ -36,6 +36,10 @@ theorem add_nil<T>(list: List<T>) {
     list + List.nil<T> = list
 }
 
+theorem nil_add<T>(list: List<T>) {
+    List.nil<T> + list = list
+}
+
 theorem add_contains_left<T>(left: List<T>, right: List<T>, item: T) {
     left.contains(item) implies (left + right).contains(item)
 } by {
