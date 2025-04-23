@@ -49,3 +49,17 @@ theorem add_contains_left<T>(left: List<T>, right: List<T>, item: T) {
         }
     }
 }
+
+theorem add_contains_right<T>(left: List<T>, right: List<T>, item: T) {
+    right.contains(item) implies (left + right).contains(item)
+} by {
+    define f(x: List<T>) -> Bool {
+        (x + right).contains(item)
+    }
+    f(List.nil)
+    forall(head: T, tail: List<T>) {
+        if f(tail) {
+            f(List.cons(head, tail))
+        }
+    }
+}

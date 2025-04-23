@@ -1,7 +1,12 @@
 dependencies: 0
-content: 16123097419350807534
+content: 14817275732024230415
 blocks:
   add_contains_left:
+    list:
+    - List.add
+    - List.contains
+    - List.induction
+  add_contains_right:
     list:
     - List.add
     - List.contains
