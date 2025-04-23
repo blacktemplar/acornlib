@@ -103,3 +103,9 @@ theorem add_length<T>(left: List<T>, right: List<T>) {
         }
     }
 }
+
+class List<T> {
+    let singleton: T -> List<T> = function(x: T) {
+        List.cons(x, List.nil<T>)
+    }
+}

@@ -1,0 +1,24 @@
+from list import List
+
+define const_false<T>(x: T) -> Bool {
+    false
+}
+
+define finite_constraint<T>(contains: T -> Bool) -> Bool {
+    exists(superset: List<T>) {
+        forall(x: T) {
+            contains(x) implies superset.contains(x)
+        }
+    }
+}
+
+theorem const_false_satisfies_finite_constraint<T> {
+    finite_constraint(const_false<T>)
+}
+
+// Finite sets
+structure Finset<T> {
+    contains: T -> Bool
+} constraint {
+    finite_constraint(contains)
+}
