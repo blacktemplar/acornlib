@@ -16,8 +16,7 @@ theorem const_false_satisfies_finite_constraint<T> {
     finite_constraint(const_false<T>)
 }
 
-// Finite sets
-structure Finset<T> {
+structure FiniteSet<T> {
     contains: T -> Bool
 } constraint {
     finite_constraint(contains)
