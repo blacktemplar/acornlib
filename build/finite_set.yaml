@@ -1,10 +1,80 @@
 dependencies: 13696155559129271546
-content: 10873161489816857385
+content: 14674066480787510467
 blocks:
-  '19':
+  '47':
     finite_set:
     - const_false_satisfies_finite_constraint
   const_false_satisfies_finite_constraint:
     finite_set:
     - const_false
     - finite_constraint
+  functional_insert_satisfies_finite_constraint:
+    finite_set:
+    - finite_constraint
+    - functional_insert
+    list:
+    - List.contains
+  functional_remove_satisfies_finite_constraint:
+    finite_set:
+    - finite_constraint
+    - functional_remove
+  insert_contains:
+    finite_set:
+    - FiniteSet.constraint
+    - FiniteSet.contains
+    - FiniteSet.insert
+    - functional_insert
+    - functional_insert_satisfies_finite_constraint
+  insert_other_contains_eq:
+    finite_set:
+    - insert_other_contains_imp_contains
+    - insert_other_still_contains
+  insert_other_contains_imp_contains:
+    finite_set:
+    - FiniteSet.constraint
+    - FiniteSet.contains
+    - FiniteSet.insert
+    - functional_insert
+    - functional_insert_satisfies_finite_constraint
+  insert_other_still_contains:
+    finite_set:
+    - FiniteSet.constraint
+    - FiniteSet.contains
+    - FiniteSet.insert
+    - functional_insert
+    - functional_insert_satisfies_finite_constraint
+  list_contains_satisfies_finite_constraint:
+    finite_set:
+    - finite_constraint
+  remove_does_not_contain:
+    finite_set:
+    - FiniteSet.constraint
+    - FiniteSet.contains
+    - FiniteSet.remove
+    - functional_remove
+    - functional_remove_satisfies_finite_constraint
+  remove_other_contains_eq:
+    finite_set:
+    - remove_other_contains_imp_contains
+    - remove_other_still_contains
+  remove_other_contains_imp_contains:
+    finite_set:
+    - FiniteSet.constraint
+    - FiniteSet.contains
+    - FiniteSet.remove
+    - functional_remove
+    - functional_remove_satisfies_finite_constraint
+  remove_other_still_contains:
+    finite_set:
+    - FiniteSet.constraint
+    - FiniteSet.contains
+    - FiniteSet.remove
+    - functional_remove
+    - functional_remove_satisfies_finite_constraint
+  remove_then_insert:
+    finite_set:
+    - FiniteSet.new
+    - insert_contains
+    - insert_other_contains_eq
+    - insert_other_contains_imp_contains
+    - remove_other_contains_eq
