@@ -1,0 +1,35 @@
+from nat import Nat
+numerals Nat
+
+structure Multiset<T> {
+    multiplicity: T -> Nat
+}
+
+class Multiset<T> {
+    define contains(self, item: T) -> Bool {
+        self.multiplicity(item) != 0
+    }
+
+    define insert(self, item: T) -> Multiset<T> {
+        Multiset.new(function(x: T) {
+            if x = item {
+                self.multiplicity(x).suc
+            } else {
+                self.multiplicity(x)
+            }
+        })
+    }
+
+    define is_empty(self) -> Bool {
+        forall(x: T) {
+            self.multiplicity(x) = 0
+        }
+    }
+
+    define has_duplicates(self) -> Bool {
+        exists(x: T) {
+            self.multiplicity(x) > 1
+        }
+    }
+}
+
