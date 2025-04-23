@@ -1,4 +1,5 @@
 from list import List
+from monoid import AddComm, MulComm
 
 define const_false<T>(x: T) -> Bool {
     false
