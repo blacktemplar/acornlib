@@ -1,3 +1,5 @@
+from nat import Nat
+
 inductive List<T> {
     nil
     cons(T, List<T>)
@@ -73,6 +75,31 @@ class List<T> {
     define contains_every(self) -> Bool {
         forall(x: T) {
             self.contains(x)
+        }
+    }
+
+    define length(self) -> Nat {
+        match self {
+            List.nil {
+                Nat.0
+            }
+            List.cons(_, tail) {
+                tail.length.suc
+            }
+        }
+    }
+}
+
+theorem add_length<T>(left: List<T>, right: List<T>) {
+    left.length + right.length = (left + right).length
+} by {
+    define f(x: List<T>) -> Bool {
+        x.length + right.length = (x + right).length
+    }
+    f(List.nil)
+    forall(head: T, tail: List<T>) {
+        if f(tail) {
+            f(List.cons(head, tail))
         }
     }
 }
