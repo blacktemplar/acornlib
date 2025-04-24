@@ -155,3 +155,26 @@ theorem remove_then_insert<T>(set: FiniteSet<T>, item: T) {
         }
     }
 }
+
+theorem insert_then_remove<T>(set: FiniteSet<T>, item: T) {
+    not set.contains(item) implies set.insert(item).remove(item) = set
+} by {
+    if set.insert(item).remove(item) != set {
+        set.insert(item).remove(item).contains != set.contains
+        let t: T satisfy {
+            set.insert(item).remove(item).contains(t) != set.contains(t)
+        }
+        if item != t {
+            if set.contains(t) {
+                false
+            } else {
+                set.insert(item).contains(t)
+                false
+            }
+        } else {
+            item = t
+            not set.contains(t)
+            false
+        }
+    }
+}

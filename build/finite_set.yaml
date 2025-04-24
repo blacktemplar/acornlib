@@ -1,5 +1,5 @@
 dependencies: 13696155559129271546
-content: 14674066480787510467
+content: 7193134655723951062
 blocks:
   '47':
     finite_set:
@@ -43,6 +43,14 @@ blocks:
     - FiniteSet.insert
     - functional_insert
     - functional_insert_satisfies_finite_constraint
+  insert_then_remove:
+    finite_set:
+    - FiniteSet.new
+    - insert_other_contains_eq
+    - insert_other_still_contains
+    - remove_does_not_contain
+    - remove_other_contains_eq
+    - remove_other_still_contains
   list_contains_satisfies_finite_constraint:
     finite_set:
     - finite_constraint
