@@ -109,20 +109,40 @@ class List<T> {
         List.cons(x, List.nil<T>)
     }
 
-    // // Remove all the duplicates in the list.
-    // // The last one is kept, to make the implementation simpler.
-    // define unique(self) -> List<T> {
-    //     match self {
-    //         List.nil {
-    //             List.nil<T>
-    //         }
-    //         List.cons(head, tail) {
-    //             if tail.contains(head) {
-    //                 tail.unique
-    //             } else {
-    //                 List.cons(head, tail.unique)
-    //             }
-    //         }
-    //     }
-    // }
+    // Remove all the duplicates in the list.
+    // The last one is kept, to make the implementation simpler.
+    define unique(self) -> List<T> {
+        match self {
+            List.nil {
+                List.nil<T>
+            }
+            List.cons(head, tail) {
+                if tail.contains(head) {
+                    tail.unique
+                } else {
+                    List.cons(head, tail.unique)
+                }
+            }
+        }
+    }
+}
+
+theorem unique_length<T>(list: List<T>) {
+    list.unique.length <= list.length
+} by {
+    define f(x: List<T>) -> Bool {
+        x.unique.length <= x.length
+    }
+    f(List.nil)
+    forall(head: T, tail: List<T>) {
+        if f(tail) {
+            tail.unique.length <= tail.length
+            if tail.contains(head) {
+                List.cons(head, tail).unique.length <= List.cons(head, tail).length
+            } else {
+                List.cons(head, tail).unique.length <= List.cons(head, tail).length
+            }
+            f(List.cons(head, tail))
+        }
+    }
 }

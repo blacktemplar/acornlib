@@ -1,5 +1,5 @@
 dependencies: 10777783356166550806
-content: 12817937785899593885
+content: 16274425180661531117
 blocks:
   add_contains_left:
     list:
@@ -27,3 +27,14 @@ blocks:
   nil_add:
     list:
     - List.add
+  unique_length:
+    list:
+    - List.induction
+    - List.length
+    - List.unique
+    nat:
+    - Nat.lt
+    - lt_imp_lte_suc
+    - lt_suc
+    - lte_and_lt
+    - lte_ref
