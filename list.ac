@@ -108,4 +108,21 @@ class List<T> {
     let singleton: T -> List<T> = function(x: T) {
         List.cons(x, List.nil<T>)
     }
+
+    // // Remove all the duplicates in the list.
+    // // The last one is kept, to make the implementation simpler.
+    // define unique(self) -> List<T> {
+    //     match self {
+    //         List.nil {
+    //             List.nil<T>
+    //         }
+    //         List.cons(head, tail) {
+    //             if tail.contains(head) {
+    //                 tail.unique
+    //             } else {
+    //                 List.cons(head, tail.unique)
+    //             }
+    //         }
+    //     }
+    // }
 }
