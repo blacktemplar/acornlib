@@ -84,27 +84,6 @@ inductive Color {
     blue
 }
 
-// TODO: this works, but it looks very weird. The prover should be handling all this stuff.
 instance Color: MetricSpace {
     let distance: (Color, Color) -> Real = discrete
-} by {
-    forall(a: Color) {
-        discrete(a, a) = 0
-        MetricSpace.distance<Color>(a, a) = 0
-    }
-
-    forall(a: Color, b: Color) {
-        discrete(a, b) = 0 implies a = b
-        MetricSpace.distance<Color>(a, b) = 0 implies a = b
-    }
-
-    forall(a: Color, b: Color) {
-        discrete(a, b) = discrete(b, a)
-        MetricSpace.distance<Color>(a, b) = MetricSpace.distance<Color>(b, a)
-    }
-
-    forall(a: Color, b: Color, c: Color) {
-        discrete(a, c) <= discrete(a, b) + discrete(b, c)
-        MetricSpace.distance<Color>(a, c) <= MetricSpace.distance<Color>(a, b) + MetricSpace.distance<Color>(b, c)
-    }
 }
