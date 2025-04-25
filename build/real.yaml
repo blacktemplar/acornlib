@@ -1,5 +1,5 @@
 dependencies: 8087292944887251398
-content: 12954894476698353882
+content: 5363848902074945288
 blocks:
   '96':
     real:
@@ -289,6 +289,12 @@ blocks:
     - not_lte_imp_gt
     - rat_between_reals
     - rat_window
+  add_neg_neg:
+    real:
+    - add_lt_lt
+    - add_zero_right
+    - lt_zero_imp_neg
+    - neg_lt_zero
   add_rat_eps_between:
     rat:
     - Rat.lt
@@ -2217,6 +2223,11 @@ blocks:
     - not_lte_imp_gt
     - only_abs_zero_eq_zero
     - pos_gt_zero
+  non_neg_imp_zero_lte:
+    real:
+    - Real.gt
+    - lt_zero_imp_neg
+    - not_lte_imp_gt
   not_gt_rat_self:
     rat:
     - Rat.gt
@@ -2690,6 +2701,11 @@ blocks:
     - self_close
     - uniform
     - uniform_condition
+  zero_lte_imp_non_neg:
+    real:
+    - Real.gt
+    - gt_imp_not_lte
+    - neg_lt_zero
   zero_not_positive:
     rat:
     - Rat.gt

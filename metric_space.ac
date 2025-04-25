@@ -1,0 +1,110 @@
+from real import Real
+numerals Real
+
+typeclass M: MetricSpace {
+    // Every metric space must have a distance function
+    distance: (M, M) -> Real
+
+    // Rule: the distance from a point to itself is zero
+    self_distance_is_zero(x: M) {
+        x.distance(x) = 0
+    }
+
+    // Rule: distance zero means the points are equal
+    dist_zero_imp_eq(x: M, y: M) {
+        x.distance(y) = 0 implies x = y
+    }
+
+    // Rule: distance must be symmetric
+    symmetric(x: M, y: M) {
+        x.distance(y) = y.distance(x)
+    }
+
+    // Rule: distance must satisfy the triangle inequality
+    triangle(x: M, y: M, z: M) {
+        x.distance(z) <= x.distance(y) + y.distance(z)
+    }
+}
+
+theorem distance_non_negative<M: MetricSpace>(x: M, y: M) {
+    not x.distance(y).is_negative
+} by {
+    x.distance(x) <= x.distance(y) + y.distance(x)
+    0 <= x.distance(y) + x.distance(y)
+    0 <= x.distance(y)
+}
+
+// The discrete metric
+define discrete<T>(x: T, y: T) -> Real {
+    if x = y {
+        0
+    } else {
+        1
+    }
+}
+
+theorem discrete_self_distance_is_zero<T>(x: T) {
+    discrete(x, x) = 0
+}
+
+theorem discrete_dist_zero_imp_eq<T>(x: T, y: T) {
+    discrete(x, y) = 0 implies x = y
+}
+
+theorem discrete_symmetric<T>(x: T, y: T) {
+    discrete(x, y) = discrete(y, x)
+} by {
+    if x = y {
+        discrete(x, y) = discrete(y, x)
+    } else {
+        discrete(x, y) = discrete(y, x)
+    }
+}
+
+theorem discrete_triangle<T>(x: T, y: T, z: T) {
+    discrete(x, z) <= discrete(x, y) + discrete(y, z)
+} by {
+    if x = y {
+        discrete(x, z) <= discrete(x, y) + discrete(y, z)
+    } else {
+        discrete(x, y) = 1
+        0 <= discrete(y, z)
+        if x = z {
+            discrete(x, z) <= discrete(x, y) + discrete(y, z)
+        } else {
+            discrete(x, z) <= discrete(x, y) + discrete(y, z)
+        }
+    }
+}
+
+// Any type can be a metric space with respect to the discrete metric.
+inductive Color {
+    red
+    green
+    blue
+}
+
+// TODO: this works, but it looks very weird. The prover should be handling all this stuff.
+instance Color: MetricSpace {
+    let distance: (Color, Color) -> Real = discrete
+} by {
+    forall(a: Color) {
+        discrete(a, a) = 0
+        MetricSpace.distance<Color>(a, a) = 0
+    }
+
+    forall(a: Color, b: Color) {
+        discrete(a, b) = 0 implies a = b
+        MetricSpace.distance<Color>(a, b) = 0 implies a = b
+    }
+
+    forall(a: Color, b: Color) {
+        discrete(a, b) = discrete(b, a)
+        MetricSpace.distance<Color>(a, b) = MetricSpace.distance<Color>(b, a)
+    }
+
+    forall(a: Color, b: Color, c: Color) {
+        discrete(a, c) <= discrete(a, b) + discrete(b, c)
+        MetricSpace.distance<Color>(a, c) <= MetricSpace.distance<Color>(a, b) + MetricSpace.distance<Color>(b, c)
+    }
+}

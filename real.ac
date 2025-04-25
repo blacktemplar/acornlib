@@ -4485,3 +4485,15 @@ theorem lt_mul_neg_right(x: Real, y: Real, z: Real) {
     (x - y).is_negative
     ((x - y) * z).is_positive
 }
+
+theorem add_neg_neg(x: Real, y: Real) {
+    x.is_negative and y.is_negative implies (x + y).is_negative
+}
+
+theorem zero_lte_imp_non_neg(x: Real) {
+    Real.0 <= x implies not x.is_negative
+}
+
+theorem non_neg_imp_zero_lte(x: Real) {
+    not x.is_negative implies Real.0 <= x
+}
