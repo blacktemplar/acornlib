@@ -1471,3 +1471,11 @@ theorem one_plus_two {
 theorem one_plus_three {
     1 + 3 = 4
 }
+
+theorem one_plus_four {
+    1 + 4 = 5
+}
+
+theorem one_plus_five {
+    1 + 5 = 6
+}

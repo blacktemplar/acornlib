@@ -1,5 +1,5 @@
 dependencies: 0
-content: 17549634478270848797
+content: 11305844477628177759
 blocks:
   add_assoc:
     nat:
@@ -666,6 +666,14 @@ blocks:
     - Nat.exp
     - Nat.induction
     - mul_one_left
+  one_plus_five:
+    nat:
+    - Nat.6
+    - add_one_left
+  one_plus_four:
+    nat:
+    - Nat.5
+    - add_one_left
   one_plus_one:
     nat:
     - Nat.1
