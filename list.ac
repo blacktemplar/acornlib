@@ -146,3 +146,22 @@ theorem unique_length<T>(list: List<T>) {
         }
     }
 }
+
+class List<T> {
+    define append(self, item: T) -> List<T> {
+        self + List.singleton(item)
+    }
+}
+
+// A list of the numbers from 0 to n-1.
+define range(n: Nat) -> List<Nat> {
+    match n {
+        Nat.0 {
+            List.nil<Nat>
+        }
+        Nat.suc(n) {
+            range(n).append(n)
+        }
+    }
+}
+
