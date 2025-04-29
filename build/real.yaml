@@ -1,9 +1,19 @@
-dependencies: 15236289873425204706
-content: 5363848902074945288
+dependencies: 13392644967150671697
+content: 18398103142695075060
 blocks:
   '96':
     real:
     - gt_is_dedekind_cut
+  Real.AddComm:
+    real:
+    - add_assoc
+    - add_comm
+    - add_zero_left
+  Real.MulComm:
+    real:
+    - mul_assoc
+    - mul_comm
+    - mul_one_left
   abs_from_rat:
     rat:
     - Rat.abs

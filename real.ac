@@ -4497,3 +4497,15 @@ theorem zero_lte_imp_non_neg(x: Real) {
 theorem non_neg_imp_zero_lte(x: Real) {
     not x.is_negative implies Real.0 <= x
 }
+
+from monoid import AddComm, MulComm
+
+instance Real: AddComm {
+    let zero: Real = Real.0
+    let add: (Real, Real) -> Real = Real.add
+}
+
+instance Real: MulComm {
+    let one: Real = Real.1
+    let mul: (Real, Real) -> Real = Real.mul
+}
