@@ -227,3 +227,31 @@ theorem length_range(n: Nat) {
     // Conclusion
     f(n)
 }
+
+define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
+    match items {
+        List.nil {
+            List.nil<U>
+        }
+        List.cons(head, tail) {
+            List.cons(f(head), map(tail, f))
+        }
+    }
+}
+
+from monoid import AddComm
+
+define sum<A: AddComm>(items: List<A>) -> A {
+    match items {
+        List.nil {
+            A.zero
+        }
+        List.cons(head, tail) {
+            head + sum(tail)
+        }
+    }
+}
+
+define sum_range<A: AddComm>(f: Nat -> A, n: Nat) -> A {
+    sum(map(List.range(n), f))
+}
