@@ -1,4 +1,5 @@
 from nat import Nat
+numerals Nat
 
 inductive List<T> {
     nil
@@ -164,3 +165,24 @@ define range(n: Nat) -> List<Nat> {
         }
     }
 }
+
+class List<T> {
+    let range: Nat -> List<Nat> = range
+
+    define filter(self, f: T -> Bool) -> List<T> {
+        match self {
+            List.nil {
+                List.nil<T>
+            }
+            List.cons(head, tail) {
+                if f(head) {
+                    List.cons(head, tail.filter(f))
+                } else {
+                    tail.filter(f)
+                }
+            }
+        }
+    }
+}
+
+
