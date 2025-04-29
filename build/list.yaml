@@ -1,5 +1,5 @@
 dependencies: 12995233490379378251
-content: 10191752646188292188
+content: 6314853364791358518
 blocks:
   add_contains_left:
     list:
@@ -24,6 +24,18 @@ blocks:
     list:
     - List.add
     - List.induction
+  length_range:
+    list:
+    - List.append
+    - List.length
+    - List.singleton
+    - add_length
+    - range
+    nat:
+    - Nat.1
+    - Nat.induction
+    - add_comm
+    - add_one_left
   nil_add:
     list:
     - List.add
