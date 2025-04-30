@@ -255,3 +255,40 @@ define sum<A: AddComm>(items: List<A>) -> A {
 define sum_range<A: AddComm>(f: Nat -> A, n: Nat) -> A {
     sum(map(List.range(n), f))
 }
+
+theorem map_add<T, U>(left: List<T>, right: List<T>, f: T -> U) {
+    map(left + right, f) = map(left, f) + map(right, f)
+} by {
+    define p(x: List<T>) -> Bool {
+        map(x + right, f) = map(x, f) + map(right, f)
+    }
+    
+    // Base case: map(nil + right, f) = map(nil, f) + map(right, f)
+    map(List.nil<T> + right, f) = map(right, f)
+    map(List.nil<T>, f) = List.nil<U>
+    List.nil<U> + map(right, f) = map(right, f)
+    p(List.nil)
+    
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            // Induction hypothesis: map(tail + right, f) = map(tail, f) + map(right, f)
+            
+            // Left side: map(List.cons(head, tail) + right, f)
+            map(List.cons(head, tail) + right, f) = map(List.cons(head, tail + right), f)
+            map(List.cons(head, tail + right), f) = List.cons(f(head), map(tail + right, f))
+            
+            // Use induction hypothesis
+            List.cons(f(head), map(tail + right, f)) = List.cons(f(head), map(tail, f) + map(right, f))
+            
+            // Right side: map(List.cons(head, tail), f) + map(right, f)
+            map(List.cons(head, tail), f) = List.cons(f(head), map(tail, f))
+            map(List.cons(head, tail), f) + map(right, f) = List.cons(f(head), map(tail, f)) + map(right, f)
+            List.cons(f(head), map(tail, f)) + map(right, f) = List.cons(f(head), map(tail, f) + map(right, f))
+            
+            // Therefore
+            map(List.cons(head, tail) + right, f) = map(List.cons(head, tail), f) + map(right, f)
+            p(List.cons(head, tail))
+        }
+    }
+}
