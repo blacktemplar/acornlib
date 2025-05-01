@@ -1,6 +1,10 @@
 dependencies: 2928430306547093352
-content: 12869361780574273546
+content: 2601672922338209462
 blocks:
+  add_assoc:
+    list:
+    - List.add
+    - List.induction
   add_contains_left:
     list:
     - List.add

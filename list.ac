@@ -292,3 +292,37 @@ theorem map_add<T, U>(left: List<T>, right: List<T>, f: T -> U) {
         }
     }
 }
+
+theorem add_assoc<T>(a: List<T>, b: List<T>, c: List<T>) {
+    (a + b) + c = a + (b + c)
+} by {
+    define p(x: List<T>) -> Bool {
+        (x + b) + c = x + (b + c)
+    }
+    
+    // Base case: (nil + b) + c = nil + (b + c)
+    (List.nil<T> + b) + c = b + c
+    List.nil<T> + (b + c) = b + c
+    p(List.nil)
+    
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            // Induction hypothesis: (tail + b) + c = tail + (b + c)
+            
+            // Left side: (List.cons(head, tail) + b) + c
+            (List.cons(head, tail) + b) + c = List.cons(head, tail + b) + c
+            List.cons(head, tail + b) + c = List.cons(head, (tail + b) + c)
+            
+            // Use induction hypothesis
+            List.cons(head, (tail + b) + c) = List.cons(head, tail + (b + c))
+            
+            // Right side: List.cons(head, tail) + (b + c)
+            List.cons(head, tail) + (b + c) = List.cons(head, tail + (b + c))
+            
+            // Therefore
+            (List.cons(head, tail) + b) + c = List.cons(head, tail) + (b + c)
+            p(List.cons(head, tail))
+        }
+    }
+}
