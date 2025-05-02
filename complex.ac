@@ -1,0 +1,6 @@
+from real import Real
+
+structure Complex {
+    re: Real
+    im: Real
+}
