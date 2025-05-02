@@ -204,4 +204,4 @@ theorem abs_squared_conj(a: Complex) { a * a.conj = Complex.new(a.abs_squared, R
 
 theorem abs_squared_nonneg(a: Complex) { a.abs_squared >= Real.0 }
 
-theorem abs_squared_zero_iff(a: Complex) { a.abs_squared = Real.0 iff a = Complex.0 }
+theorem abs_squared_zero_iff(a: Complex) { (a.abs_squared = Real.0) = (a = Complex.0) }
