@@ -20,14 +20,13 @@ When you're ready, push your code to your fork, and open a pull request in the m
 
 ## What to Contribute
 
-The current goal for `acornlib` is to support the mathematics needed for the most common theorem-proving benchmarks, like [miniF2F](https://github.com/facebookresearch/miniF2F/blob/main/lean/src/test.lean) and ProofNet. We still need to implement several parts of high school and college level mathematics:
+The current goal for `acornlib` is to support the mathematics needed for the most common theorem-proving benchmarks, like [miniF2F](https://github.com/facebookresearch/miniF2F/blob/main/lean/src/test.lean) and PutnameBench. We still need to implement several parts of high school and college level mathematics:
 
-- Real numbers
-  - Ring axioms
-  - Calculus basics
+- Exponentiation
+- The definition and properties of `e`
 - Complex numbers
-- Trigonometry
-- `List<T>`
+- Trigonometry: sine, cosine, pi
+- Vectors
 - Matrices
 
 If you're not sure where to start, jump into [Discord](https://discord.gg/RqXxaye4MC) and we're happy to discuss.
