@@ -193,12 +193,12 @@ theorem length_range(n: Nat) {
     define f(x: Nat) -> Bool {
         List.range(x).length = x
     }
-    
+
     // Base case: List.range(0).length = 0
     List.range(0) = List.nil<Nat>
     List.nil<Nat>.length = Nat.0
     f(0)
-    
+
     // Inductive step
     forall(x: Nat) {
         if f(x) {
@@ -206,24 +206,24 @@ theorem length_range(n: Nat) {
             List.range(x.suc) = range(x.suc)
             List.range(x.suc) = range(x).append(x)
             List.range(x.suc) = range(x) + List.singleton(x)
-            
+
             // Use add_length theorem
             range(x).length + List.singleton(x).length = (range(x) + List.singleton(x)).length
             range(x).length + List.singleton(x).length = List.range(x.suc).length
-            
+
             // Simplify the left side
             List.range(x).length = x
             List.singleton(x).length = Nat.1
             x + Nat.1 = x.suc
             x + List.singleton(x).length = x.suc
             List.range(x).length + List.singleton(x).length = x.suc
-            
+
             // Therefore
             List.range(x.suc).length = x.suc
             f(x.suc)
         }
     }
-    
+
     // Conclusion
     f(n)
 }
