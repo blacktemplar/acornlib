@@ -49,27 +49,21 @@ class Complex {
 // Theorems for complex numbers
 
 // Addition properties
-theorem add_comm(a: Complex, b: Complex) {
-    a + b = b + a
-} by {
+theorem add_comm(a: Complex, b: Complex) { a + b = b + a } by {
     a.re + b.re = b.re + a.re
     a.im + b.im = b.im + a.im
     Complex.new(a.re + b.re, a.im + b.im) = Complex.new(b.re + a.re, b.im + a.im)
     a + b = b + a
 }
 
-theorem add_assoc(a: Complex, b: Complex, c: Complex) {
-    (a + b) + c = a + (b + c)
-} by {
+theorem add_assoc(a: Complex, b: Complex, c: Complex) { (a + b) + c = a + (b + c) } by {
     (a.re + b.re) + c.re = a.re + (b.re + c.re)
     (a.im + b.im) + c.im = a.im + (b.im + c.im)
     Complex.new((a.re + b.re) + c.re, (a.im + b.im) + c.im) = Complex.new(a.re + (b.re + c.re), a.im + (b.im + c.im))
     (a + b) + c = a + (b + c)
 }
 
-theorem add_zero(a: Complex) {
-    a + Complex.0 = a
-} by {
+theorem add_zero(a: Complex) { a + Complex.0 = a } by {
     a.re + Real.0 = a.re
     a.im + Real.0 = a.im
     Complex.new(a.re + Real.0, a.im + Real.0) = Complex.new(a.re, a.im)
@@ -77,36 +71,26 @@ theorem add_zero(a: Complex) {
 }
 
 // Multiplication properties
-theorem mul_comm(a: Complex, b: Complex) {
-    a * b = b * a
-} by {
+theorem mul_comm(a: Complex, b: Complex) { a * b = b * a } by {
     a.re * b.re - a.im * b.im = b.re * a.re - b.im * a.im
     a.re * b.im + a.im * b.re = b.re * a.im + b.im * a.re
     Complex.new(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re) = Complex.new(b.re * a.re - b.im * a.im, b.re * a.im + b.im * a.re)
     a * b = b * a
 }
 
-theorem mul_assoc(a: Complex, b: Complex, c: Complex) {
-    (a * b) * c = a * (b * c)
-}
+theorem mul_assoc(a: Complex, b: Complex, c: Complex) { (a * b) * c = a * (b * c) }
 
-theorem mul_one(a: Complex) {
-    a * Complex.1 = a
-} by {
+theorem mul_one(a: Complex) { a * Complex.1 = a } by {
     a.re * Real.1 - a.im * Real.0 = a.re
     a.re * Real.0 + a.im * Real.1 = a.im
     Complex.new(a.re * Real.1 - a.im * Real.0, a.re * Real.0 + a.im * Real.1) = Complex.new(a.re, a.im)
     a * Complex.1 = a
 }
 
-theorem distrib(a: Complex, b: Complex, c: Complex) {
-    a * (b + c) = a * b + a * c
-}
+theorem distrib(a: Complex, b: Complex, c: Complex) { a * (b + c) = a * b + a * c }
 
 // Properties of i
-theorem i_squared {
-    Complex.i * Complex.i = Complex.new(Real.-1, Real.0)
-} by {
+theorem i_squared { Complex.i * Complex.i = Complex.new(Real.-1, Real.0) } by {
     Complex.i.re * Complex.i.re - Complex.i.im * Complex.i.im = Real.0 * Real.0 - Real.1 * Real.1
     Complex.i.re * Complex.i.im + Complex.i.im * Complex.i.re = Real.0 * Real.1 + Real.1 * Real.0
     Complex.new(Real.0 * Real.0 - Real.1 * Real.1, Real.0 * Real.1 + Real.1 * Real.0) = Complex.new(Real.-1, Real.0)
@@ -114,9 +98,7 @@ theorem i_squared {
 }
 
 // Properties of conjugate
-theorem conj_add(a: Complex, b: Complex) {
-    (a + b).conj() = a.conj() + b.conj()
-} by {
+theorem conj_add(a: Complex, b: Complex) { (a + b).conj() = a.conj() + b.conj() } by {
     (a + b).conj() = Complex.new(a.re + b.re, -(a.im + b.im))
     a.conj() + b.conj() = Complex.new(a.re, -a.im) + Complex.new(b.re, -b.im)
     a.conj() + b.conj() = Complex.new(a.re + b.re, -a.im + -b.im)
@@ -124,13 +106,9 @@ theorem conj_add(a: Complex, b: Complex) {
     (a + b).conj() = a.conj() + b.conj()
 }
 
-theorem conj_mul(a: Complex, b: Complex) {
-    (a * b).conj() = a.conj() * b.conj()
-}
+theorem conj_mul(a: Complex, b: Complex) { (a * b).conj() = a.conj() * b.conj() }
 
-theorem conj_conj(a: Complex) {
-    a.conj().conj() = a
-} by {
+theorem conj_conj(a: Complex) { a.conj().conj() = a } by {
     a.conj().conj() = Complex.new(a.re, -a.im).conj()
     a.conj().conj() = Complex.new(a.re, -(-a.im))
     a.conj().conj() = Complex.new(a.re, a.im)
@@ -138,9 +116,7 @@ theorem conj_conj(a: Complex) {
 }
 
 // Absolute value properties
-theorem abs_squared_conj(a: Complex) {
-    a * a.conj() = Complex.new(a.abs_squared(), Real.0)
-} by {
+theorem abs_squared_conj(a: Complex) { a * a.conj() = Complex.new(a.abs_squared(), Real.0) } by {
     a * a.conj() = Complex.new(a.re, a.im) * Complex.new(a.re, -a.im)
     a * a.conj() = Complex.new(a.re * a.re - a.im * (-a.im), a.re * (-a.im) + a.im * a.re)
     a * a.conj() = Complex.new(a.re * a.re + a.im * a.im, a.re * (-a.im) + a.im * a.re)
@@ -148,10 +124,6 @@ theorem abs_squared_conj(a: Complex) {
     a * a.conj() = Complex.new(a.abs_squared(), Real.0)
 }
 
-theorem abs_squared_nonneg(a: Complex) {
-    a.abs_squared() >= Real.0
-}
+theorem abs_squared_nonneg(a: Complex) { a.abs_squared() >= Real.0 }
 
-theorem abs_squared_zero_iff(a: Complex) {
-    a.abs_squared() = Real.0 iff a = Complex.0
-}
+theorem abs_squared_zero_iff(a: Complex) { a.abs_squared() = Real.0 iff a = Complex.0 }
