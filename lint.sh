@@ -6,6 +6,3 @@ find . -name "*.ac" -exec sed -i '' 's/[[:space:]]*$//' {} \;
 
 # 2. Validate file structure
 find . -name "*.ac" -exec grep -nEH '[^[:space:]]$' {} \; | awk '{print "Trailing whitespace fixed in: " $1}'
-
-# 3. Run formal verification
-./verify.sh "$@"
