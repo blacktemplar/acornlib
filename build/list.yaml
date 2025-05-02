@@ -1,6 +1,10 @@
-dependencies: 2928430306547093352
-content: 1156826414553238217
+dependencies: 3881809779734736538
+content: 3471874579078614367
 blocks:
+  add_assoc:
+    list:
+    - List.add
+    - List.induction
   add_contains_left:
     list:
     - List.add
@@ -36,6 +40,11 @@ blocks:
     - Nat.induction
     - add_comm
     - add_one_left
+  map_add:
+    list:
+    - List.add
+    - List.induction
+    - map
   nil_add:
     list:
     - List.add

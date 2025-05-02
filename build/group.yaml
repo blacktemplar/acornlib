@@ -1,9 +1,12 @@
 dependencies: 0
-content: 7283800473741923846
+content: 10194262268399979310
 blocks:
   '102':
     group:
     - identity_subgroup_constraint
+  '130':
+    group:
+    - trivial_hom_is_hom
   identity_subgroup_constraint:
     group:
     - Group.identity_left
@@ -48,3 +51,8 @@ blocks:
     - Group.associative
     - Group.identity_right
     - Group.inverse_right
+  trivial_hom_is_hom:
+    group:
+    - Group.identity_left
+    - is_hom
+    - trivial_hom
