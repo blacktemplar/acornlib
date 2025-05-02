@@ -33,18 +33,16 @@ if __name__ == "__main__":
         for pattern in sys.argv[1:]:
             for root, _, files in os.walk('.'):
                 for file in files:
-                    if file.endswith('.ac'):
-                        full_path = os.path.join(root, file)
-                        if lint_file(full_path):
-                            changed_files.append(full_path)
+                    full_path = os.path.join(root, file)
+                    if lint_file(full_path):
+                        changed_files.append(full_path)
     # Otherwise, lint all .ac files
     else:
         for root, _, files in os.walk('.'):
             for file in files:
-                if file.endswith('.ac'):
-                    full_path = os.path.join(root, file)
-                    if lint_file(full_path):
-                        changed_files.append(full_path)
+                full_path = os.path.join(root, file)
+                if lint_file(full_path):
+                    changed_files.append(full_path)
     
     if changed_files:
         print(f"Formatted {len(changed_files)} files")
