@@ -401,18 +401,6 @@ class Real {
         Real.new(add_gt(self, other))
     }
 
-    // Additive properties (proven)
-    theorem add_comm(a: Real, b: Real) { a + b = b + a }
-    theorem add_assoc(a: Real, b: Real, c: Real) { (a + b) + c = a + (b + c) }
-
-    // Multiplicative operations
-    define mul(self, other: Real) -> Real {
-        limit_rat(mul_rat_seq(rat_seq(self), rat_seq(other)))
-    }
-
-    // Multiplicative properties (proven in theorems below)
-    theorem mul_comm(a: Real, b: Real) { a * b = b * a }
-    theorem mul_assoc(a: Real, b: Real, c: Real) { (a * b) * c = a * (b * c) }
 }
 
 theorem add_gt_rat(z1: Real, z2: Real, r1: Rat, r2: Rat) {
