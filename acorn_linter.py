@@ -9,8 +9,8 @@ def lint_file(filepath):
     
     new_lines = []
     for line in lines:
-        # Remove trailing whitespace
-        cleaned = re.sub(r'[ \t]+$', '', line)
+        # Remove trailing whitespace before newline
+        cleaned = re.sub(r'[ \t]+(\r?\n)', r'\1', line)
         # Ensure newline at EOF
         cleaned = cleaned.rstrip('\n') + '\n'
         new_lines.append(cleaned)

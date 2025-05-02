@@ -16,8 +16,7 @@ jobs:
       
       - name: Run linter
         run: |
-          chmod +x lint.sh
-          ./lint.sh
+          python3 acorn_linter.py
       
       - name: Auto-commit fixes
         if: |
