@@ -129,7 +129,7 @@ theorem trivial_hom_is_hom<G: Group, H: Group>(a: G, b: G) {
 }
 
 structure GroupHom<G: Group, H: Group> {
-    hom : G -> H
+    hom: G -> H
 } constraint {
     is_hom(hom)
 }
