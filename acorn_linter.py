@@ -78,7 +78,8 @@ if __name__ == "__main__":
     
     if changed_files:
         print(f"Formatted {len(changed_files)} files")
-        sys.exit(1)  # Exit with error to abort commit if used in pre-commit
+        # Exit with success (0) so CI can continue and commit the changes
+        sys.exit(0)
     else:
         print("All files are clean!")
         sys.exit(0)
