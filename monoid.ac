@@ -47,3 +47,16 @@ typeclass M: MulComm {
         a * b = b * a
     }
 }
+
+from nat import Nat
+
+define pow<M: MulComm>(base: M, exp: Nat) -> M {
+    match exp {
+        Nat.0 {
+            M.one
+        }
+        Nat.suc(n) {
+            base * pow(base, n)
+        }
+    }
+}
