@@ -4,8 +4,12 @@ import sys
 
 def lint_file(filepath):
     modified = False
-    with open(filepath, 'r') as f:
-        lines = f.readlines()
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+    except UnicodeDecodeError:
+        print(f"Skipping {filepath}: Not a UTF-8 text file")
+        return False
     
     new_lines = []
     for line in lines:
