@@ -402,8 +402,8 @@ class Real {
     }
 
     // Additive properties (proven)
-    theorem add_comm(a: Real, b: Real): a + b = b + a = add_comm(a, b)
-    theorem add_assoc(a: Real, b: Real, c: Real): (a + b) + c = a + (b + c) = add_assoc(a, b, c)
+    theorem add_comm(a: Real, b: Real) { a + b = b + a }
+    theorem add_assoc(a: Real, b: Real, c: Real) { (a + b) + c = a + (b + c) }
 
     // Multiplicative operations
     define mul(self, other: Real) -> Real {
@@ -411,8 +411,8 @@ class Real {
     }
 
     // Multiplicative properties (proven in theorems below)
-    theorem mul_comm(a: Real, b: Real): a * b = b * a = mul_comm(a, b)
-    theorem mul_assoc(a: Real, b: Real, c: Real): (a * b) * c = a * (b * c) = mul_assoc(a, b, c)
+    theorem mul_comm(a: Real, b: Real) { a * b = b * a }
+    theorem mul_assoc(a: Real, b: Real, c: Real) { (a * b) * c = a * (b * c) }
 }
 
 theorem add_gt_rat(z1: Real, z2: Real, r1: Rat, r2: Rat) {
