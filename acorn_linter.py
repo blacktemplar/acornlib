@@ -9,10 +9,11 @@ def lint_file(filepath):
     
     new_lines = []
     for line in lines:
-        # Remove trailing whitespace before newline
-        cleaned = re.sub(r'[ \t]+(\r?\n)', r'\1', line)
+        # Remove trailing whitespace
+        cleaned = re.sub(r'[ \t]+$', '', line)
         # Ensure newline at EOF
-        cleaned = cleaned.rstrip('\n') + '\n'
+        if not cleaned.endswith('\n'):
+            cleaned += '\n'
         new_lines.append(cleaned)
         if cleaned != line:
             modified = True
@@ -25,12 +26,19 @@ def lint_file(filepath):
     return False
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python acorn_linter.py [file1.ac] [file2.ac] ...")
-        sys.exit(1)
-    
     changed_files = []
-    for pattern in sys.argv[1:]:
+    
+    # If specific files are provided, lint only those
+    if len(sys.argv) > 1:
+        for pattern in sys.argv[1:]:
+            for root, _, files in os.walk('.'):
+                for file in files:
+                    if file.endswith('.ac'):
+                        full_path = os.path.join(root, file)
+                        if lint_file(full_path):
+                            changed_files.append(full_path)
+    # Otherwise, lint all .ac files
+    else:
         for root, _, files in os.walk('.'):
             for file in files:
                 if file.endswith('.ac'):
