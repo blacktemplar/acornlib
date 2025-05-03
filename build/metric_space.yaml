@@ -3,8 +3,8 @@ content: 11156348535475454218
 blocks:
   Color.MetricSpace:
     metric_space:
-    - discrete
     - discrete_dist_zero_imp_eq
+    - discrete_self_distance_is_zero
     - discrete_symmetric
     - discrete_triangle
   discrete_dist_zero_imp_eq:
