@@ -62,7 +62,6 @@ blocks:
     - Complex.mul
     - Complex.re
     real:
-    - Real.add
     - Real.neg
     - Real.sub
     - add_zero_left
