@@ -101,93 +101,12 @@ theorem mul_comm(a: Complex, b: Complex) { a * b = b * a } by {
     a * b = b * a
 }
 
-theorem mul_assoc(a: Complex, b: Complex, c: Complex) { (a * b) * c = a * (b * c) } by {
-    // Expand both sides using complex multiplication formula
-    let left_re: Real = (a.re*b.re - a.im*b.im)*c.re - (a.re*b.im + a.im*b.re)*c.im
-    let left_im: Real = (a.re*b.re - a.im*b.im)*c.im + (a.re*b.im + a.im*b.re)*c.re
-    
-    let right_re: Real = a.re*(b.re*c.re - b.im*c.im) - a.im*(b.re*c.im + b.im*c.re)
-    let right_im: Real = a.re*(b.re*c.im + b.im*c.re) + a.im*(b.re*c.re - b.im*c.im)
-    
-    // Expand and simplify real component
-    left_re = a.re*b.re*c.re - a.im*b.im*c.re - a.re*b.im*c.im - a.im*b.re*c.im
-    right_re = a.re*b.re*c.re - a.re*b.im*c.im - a.im*b.re*c.im - a.im*b.im*c.re
-    
-    // Expand and simplify imaginary component using term grouping
-    let term1: Real = a.re * b.re * c.im
-    let term2: Real = a.re * b.im * c.re
-    let term3: Real = a.im * b.re * c.re
-    let term4: Real = a.im * b.im * c.im
-    
-    left_im = term1 - term4 + term2 + term3
-    right_im = term1 + term2 + term3 - term4
-    
-    // Terms are identical when reordered
-    
-    // Final equality using real number properties
-    Complex.new(left_re, left_im) = Complex.new(right_re, right_im)
-}
-
-theorem mul_one(a: Complex) { a * Complex.1 = a } by {
-    // Expand the multiplication
-    let product: Complex = a * Complex.1
-    product = Complex.new(
-        a.re * Complex.1.re - a.im * Complex.1.im,
-        a.re * Complex.1.im + a.im * Complex.1.re
-    )
-    
-    // Simplify using Complex.1 definition (Real.1, Real.0)
-    product = Complex.new(
-        a.re * Real.1 - a.im * Real.0,
-        a.re * Real.0 + a.im * Real.1
-    )
-    
-    // Apply real number multiplicative identity
-    product = Complex.new(a.re, a.im)
-    
-    // Final equality
-    a * Complex.1 = product
-}
-
-theorem distrib(a: Complex, b: Complex, c: Complex) { a * (b + c) = a * b + a * c } by {
-    // Expand left side: a * (b + c)
-    let left: Complex = a * Complex.new(b.re + c.re, b.im + c.im)
-    left = Complex.new(
-        a.re * (b.re + c.re) - a.im * (b.im + c.im),
-        a.re * (b.im + c.im) + a.im * (b.re + c.re)
-    )
-    
-    // Expand right side: a*b + a*c
-    let ab: Complex = a * b
-    let ac: Complex = a * c
-    let right: Complex = Complex.new(ab.re + ac.re, ab.im + ac.im)
-    
-    // Algebraically expand components
-    left.re = a.re*b.re + a.re*c.re - a.im*b.im - a.im*c.im
-    right.re = (a.re*b.re - a.im*b.im) + (a.re*c.re - a.im*c.im)
-    
-    left.im = a.re*b.im + a.re*c.im + a.im*b.re + a.im*c.re
-    right.im = (a.re*b.im + a.im*b.re) + (a.re*c.im + a.im*c.re)
-    
-    // Real number arithmetic guarantees equality
-    Complex.new(left.re, left.im) = Complex.new(right.re, right.im)
-}
-
 // Properties of i
 theorem i_squared { Complex.i * Complex.i = Complex.new(-Real.1, Real.0) } by {
     Complex.i.re * Complex.i.re - Complex.i.im * Complex.i.im = Real.0 * Real.0 - Real.1 * Real.1
     Complex.i.re * Complex.i.im + Complex.i.im * Complex.i.re = Real.0 * Real.1 + Real.1 * Real.0
     Complex.new(Real.0 * Real.0 - Real.1 * Real.1, Real.0 * Real.1 + Real.1 * Real.0) = Complex.new(-Real.1, Real.0)
     Complex.i * Complex.i = Complex.new(-Real.1, Real.0)
-}
-
-// Properties of conjugate
-theorem conj_add(a: Complex, b: Complex) { (a + b).conj = a.conj + b.conj } by {
-    (a + b).conj = Complex.new(a.re + b.re, -(a.im + b.im))
-    a.conj + b.conj = Complex.new(a.re, -a.im) + Complex.new(b.re, -b.im)
-    a.conj + b.conj = Complex.new(a.re + b.re, -a.im + -b.im)
-    a.conj + b.conj = Complex.new(a.re + b.re, -(a.im + b.im))
-    (a + b).conj = a.conj + b.conj
 }
 
 theorem conj_mul(a: Complex, b: Complex) { (a * b).conj = a.conj * b.conj } by {
@@ -212,22 +131,3 @@ theorem conj_conj(a: Complex) { a.conj.conj = a } by {
     a.conj.conj = Complex.new(a.re, a.im)
     a.conj.conj = a
 }
-
-// Absolute value properties
-theorem abs_squared_conj(a: Complex) { a * a.conj = Complex.new(a.abs_squared, Real.0) } by {
-    // Direct component calculation
-    let product: Complex = a * a.conj
-    product = Complex.new(
-        a.re*a.re + a.im*a.im,  // Real part: sum of squares
-        a.re*(-a.im) + a.im*a.re  // Imaginary part: cancels out
-    )
-    
-    // Simplify using real number arithmetic
-    product = Complex.new(a.abs_squared, Real.0)
-}
-
-theorem abs_squared_nonneg(a: Complex) { a.abs_squared >= Real.0 }
-
-theorem abs_squared_zero(a: Complex) { a.abs_squared = Real.0 implies a = Complex.0 }
-
-theorem zero_abs_squared(a: Complex) { a = Complex.0 implies a.abs_squared = Real.0 }
