@@ -184,7 +184,7 @@ class List<T> {
         }
     }
 }
- 
+
 // Let's see if any LLM can prove this theorem.
 theorem length_range(n: Nat) {
     List.range(n).length = n
@@ -193,12 +193,12 @@ theorem length_range(n: Nat) {
     define f(x: Nat) -> Bool {
         List.range(x).length = x
     }
-    
+
     // Base case: List.range(0).length = 0
     List.range(0) = List.nil<Nat>
     List.nil<Nat>.length = Nat.0
     f(0)
-    
+
     // Inductive step
     forall(x: Nat) {
         if f(x) {
@@ -206,24 +206,24 @@ theorem length_range(n: Nat) {
             List.range(x.suc) = range(x.suc)
             List.range(x.suc) = range(x).append(x)
             List.range(x.suc) = range(x) + List.singleton(x)
-            
+
             // Use add_length theorem
             range(x).length + List.singleton(x).length = (range(x) + List.singleton(x)).length
             range(x).length + List.singleton(x).length = List.range(x.suc).length
-            
+
             // Simplify the left side
             List.range(x).length = x
             List.singleton(x).length = Nat.1
             x + Nat.1 = x.suc
             x + List.singleton(x).length = x.suc
             List.range(x).length + List.singleton(x).length = x.suc
-            
+
             // Therefore
             List.range(x.suc).length = x.suc
             f(x.suc)
         }
     }
-    
+
     // Conclusion
     f(n)
 }
@@ -262,30 +262,30 @@ theorem map_add<T, U>(left: List<T>, right: List<T>, f: T -> U) {
     define p(x: List<T>) -> Bool {
         map(x + right, f) = map(x, f) + map(right, f)
     }
-    
+
     // Base case: map(nil + right, f) = map(nil, f) + map(right, f)
     map(List.nil<T> + right, f) = map(right, f)
     map(List.nil<T>, f) = List.nil<U>
     List.nil<U> + map(right, f) = map(right, f)
     p(List.nil)
-    
+
     // Inductive step
     forall(head: T, tail: List<T>) {
         if p(tail) {
             // Induction hypothesis: map(tail + right, f) = map(tail, f) + map(right, f)
-            
+
             // Left side: map(List.cons(head, tail) + right, f)
             map(List.cons(head, tail) + right, f) = map(List.cons(head, tail + right), f)
             map(List.cons(head, tail + right), f) = List.cons(f(head), map(tail + right, f))
-            
+
             // Use induction hypothesis
             List.cons(f(head), map(tail + right, f)) = List.cons(f(head), map(tail, f) + map(right, f))
-            
+
             // Right side: map(List.cons(head, tail), f) + map(right, f)
             map(List.cons(head, tail), f) = List.cons(f(head), map(tail, f))
             map(List.cons(head, tail), f) + map(right, f) = List.cons(f(head), map(tail, f)) + map(right, f)
             List.cons(f(head), map(tail, f)) + map(right, f) = List.cons(f(head), map(tail, f) + map(right, f))
-            
+
             // Therefore
             map(List.cons(head, tail) + right, f) = map(List.cons(head, tail), f) + map(right, f)
             p(List.cons(head, tail))
@@ -299,27 +299,27 @@ theorem add_assoc<T>(a: List<T>, b: List<T>, c: List<T>) {
     define p(x: List<T>) -> Bool {
         (x + b) + c = x + (b + c)
     }
-    
+
     // Base case: (nil + b) + c = nil + (b + c)
     (List.nil<T> + b) + c = b + c
     List.nil<T> + (b + c) = b + c
     p(List.nil)
-    
+
     // Inductive step
     forall(head: T, tail: List<T>) {
         if p(tail) {
             // Induction hypothesis: (tail + b) + c = tail + (b + c)
-            
+
             // Left side: (List.cons(head, tail) + b) + c
             (List.cons(head, tail) + b) + c = List.cons(head, tail + b) + c
             List.cons(head, tail + b) + c = List.cons(head, (tail + b) + c)
-            
+
             // Use induction hypothesis
             List.cons(head, (tail + b) + c) = List.cons(head, tail + (b + c))
-            
+
             // Right side: List.cons(head, tail) + (b + c)
             List.cons(head, tail) + (b + c) = List.cons(head, tail + (b + c))
-            
+
             // Therefore
             (List.cons(head, tail) + b) + c = List.cons(head, tail) + (b + c)
             p(List.cons(head, tail))

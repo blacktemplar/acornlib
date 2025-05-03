@@ -53,7 +53,7 @@ structure FiniteSet<T> {
 
 class FiniteSet<T> {
     let from_list: List<T> -> FiniteSet<T> = function(ts: List<T>) {
-        FiniteSet.new(ts.contains) 
+        FiniteSet.new(ts.contains)
     }
 
     define is_empty(self) -> Bool {

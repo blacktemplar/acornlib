@@ -5,7 +5,7 @@ define is_reduced(a: Int, b: Int) -> Bool {
     b > Int.0 and gcd(a, b) = Int.1
 }
 
-theorem denom_one_is_reduced(a: Int) { 
+theorem denom_one_is_reduced(a: Int) {
     is_reduced(a, Int.1)
 }
 
@@ -319,7 +319,7 @@ theorem unreduce_left(a: Int, b: Int) {
 
 theorem mul_int_right(r: Rat, n: Int) {
     r * Rat.from_int(n) = reduce(r.num * n, r.denom)
-} 
+}
 
 theorem mul_int_left(n: Int, r: Rat) {
     Rat.from_int(n) * r = reduce(n * r.num, r.denom)
@@ -794,7 +794,7 @@ theorem mul_cancels_right(a: Rat, b: Rat, c: Rat) {
 theorem half_plus_half(r: Rat) {
     (r / Rat.2) + (r / Rat.2) = r
 } by {
-    (r / Rat.2) * Rat.2 = r 
+    (r / Rat.2) * Rat.2 = r
     (r / Rat.2 + r / Rat.2) * Rat.2 = r + r
     (r / Rat.2 + r / Rat.2) * Rat.2 = r * Rat.2
     r / Rat.2 + r / Rat.2 = r
@@ -1230,7 +1230,7 @@ theorem lt_imp_rat_between(a: Rat, b: Rat) {
         a < c and c < b
     }
 } by {
-    a / Rat.2 < b / Rat.2    
+    a / Rat.2 < b / Rat.2
     a < (a + b) * Rat.2.reciprocal
     (a + b) * Rat.2.reciprocal < b
 }
@@ -1245,7 +1245,7 @@ theorem gt_imp_rat_between(a: Rat, b: Rat) {
         b < c and c < a
     }
     a > c
-    c > b 
+    c > b
 }
 
 theorem lt_cancel_pos_mul_right(a: Rat, b: Rat, c: Rat) {
@@ -1315,7 +1315,7 @@ theorem neg_abs(a: Rat) {
     if a.is_negative {
         a.abs = -a
         (-a).abs = -a
-        (-a).abs = a.abs 
+        (-a).abs = a.abs
     } else {
         if a = Rat.0 {
             (-a).abs = a.abs
@@ -1682,7 +1682,7 @@ theorem iop_recip(n: Nat) {
     Rat.from_nat(n) >= Rat.0
     (Rat.1 + Rat.from_nat(n)).is_positive
     (Rat.1 + Rat.from_nat(n)) != Rat.0
-    (Rat.1 + Rat.from_nat(n)).reciprocal = iop(n)    
+    (Rat.1 + Rat.from_nat(n)).reciprocal = iop(n)
 }
 
 theorem iop_mul_lt_one(n: Nat) {

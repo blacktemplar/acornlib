@@ -100,7 +100,7 @@ theorem no_infinite_decreasing(f: Nat -> Nat) {
         f(0).suc <= z
         f(0).suc <= f(0)
         false
-    }    
+    }
 }
 
 theorem dtz_terminates(f: Nat -> Nat) {
@@ -213,7 +213,7 @@ theorem divides_gcd(d: Nat, a: Nat, b: Nat) {
     divides(d, Pair<Nat, Nat>.new(a, b).second)
     divides_both(d, Pair<Nat, Nat>.new(a, b))
     divides_gcd_pair(d, Pair<Nat, Nat>.new(a, b))
-    
+
     divides(d, gcd_pair(Pair<Nat, Nat>.new(a, b)))
     divides(d, gcd(a, b))
 }
@@ -280,7 +280,7 @@ theorem gcd_divides(d: Nat, a: Nat, b: Nat) {
     p.first = a
     p.second = b
     divides(d, gcd_pair(p))
-    divides_both(d, p)    
+    divides_both(d, p)
     divides(d, p.first)
     divides(d, a)
     divides(d, p.second)
@@ -401,7 +401,7 @@ theorem gcd_mult_left_nonzero(a: Nat, b: Nat, m: Nat) {
     let d: Nat satisfy {
         m * d = gcd(m * a, m * b)
     }
-    
+
     // Overall we will prove equality by proving both sides divide the other.
     // First we prove that d equals gcd(a, b), to prove that right divides left.
     divides(m * d, m * a)

@@ -4,7 +4,7 @@ from rat import Rat
 
 // Using the Dedekind cut definition of reals.
 
-define is_cut(f: Rat -> Bool) -> Bool { 
+define is_cut(f: Rat -> Bool) -> Bool {
     exists(x: Rat) {
         f(x)
     } and exists(x: Rat) {
@@ -115,7 +115,7 @@ class Real {
         self != Real.0 and not self.is_positive
     }
 
-    // For reals, <= is the comparison operator by which the others are defined. 
+    // For reals, <= is the comparison operator by which the others are defined.
     define lte(self, other: Real) -> Bool {
         forall(r: Rat) {
             self.gt_rat(r) implies other.gt_rat(r)
@@ -212,7 +212,7 @@ theorem lte_both_ways_imp_eq(a: Real, b: Real) {
         }
     }
     a.gt_rat = b.gt_rat
-    a = b    
+    a = b
 }
 
 theorem gt_rat_imp_gt_from_rat(a: Real, r: Rat) {
@@ -338,7 +338,7 @@ theorem add_gt_is_cut(z1: Real, z2: Real) {
     if add_gt(z1, z2, upper1 + upper2) {
         let (f1: Rat, f2: Rat) satisfy {
             z1.gt_rat(f1) and z2.gt_rat(f2) and upper1 + upper2 = f1 + f2
-        } 
+        }
         f1 < upper1
         f2 < upper2
         f1 + f2 < upper1 + f2
@@ -400,6 +400,7 @@ class Real {
     define add(self, other: Real) -> Real {
         Real.new(add_gt(self, other))
     }
+
 }
 
 theorem add_gt_rat(z1: Real, z2: Real, r1: Rat, r2: Rat) {
@@ -918,7 +919,7 @@ theorem lt_add_one(a: Real) {
         Real.from_int(floor(a)) < a
         a < Real.from_int(floor(a) + Int.1)
         Real.from_int(floor(a)) + a < a + (Real.from_int(floor(a) + Int.1))
-        Real.from_int(floor(a)) + a < a + (Real.from_int(floor(a)) + Real.1)        
+        Real.from_int(floor(a)) + a < a + (Real.from_int(floor(a)) + Real.1)
         a + Real.from_int(floor(a)) < a + Real.1 + Real.from_int(floor(a))
         a < a + Real.1
     }
@@ -1023,7 +1024,7 @@ theorem add_rat_eps_between(a: Real, b: Real) {
     eps.is_positive
     r1 + eps = r2
     Real.from_rat(r1) + Real.from_rat(eps) = Real.from_rat(r2)
-    
+
     // Combine them
     a + Real.from_rat(eps) < Real.from_rat(r1) + Real.from_rat(eps)
     a + Real.from_rat(eps) < Real.from_rat(r2)
@@ -1041,7 +1042,7 @@ theorem lt_add_right(a: Real, b: Real, c: Real) {
     a < a + Real.from_rat(r / Rat.2)
     a < a + hr
     c < c + Real.from_rat(r / Rat.2)
-    c < c + hr 
+    c < c + hr
     hr + hr = Real.from_rat(r)
     a + c < (a + hr) + (c + hr)
     a + c < (a + hr + hr) + c
@@ -1362,7 +1363,7 @@ theorem neg_distrib(a: Real, b: Real) {
 } by {
     a + b + -(a + b) = Real.0
     -(a + b) + b + a = Real.0
-    -(a + b) + b = -a 
+    -(a + b) + b = -a
     -(a + b) + (b + -b) = -(a + b)
     -(a + b) + b + -b = -(a + b)
     -(a + b) = -a + -b
@@ -2443,7 +2444,7 @@ theorem converges_imp_converges_to(q: Nat -> Real) {
                     q(i) < limit(q) + eps
                     q(i).is_close(limit(q), eps)
                 }
-            }            
+            }
         }
     }
 }
@@ -3329,7 +3330,7 @@ theorem lift_constant_is_constant(f: Rat -> Real) {
         forall(n: Nat) {
             compose(f, rat_seq(x))(n) = y
         }
-        limit(compose(f, rat_seq(x))) = y 
+        limit(compose(f, rat_seq(x))) = y
         lift_uc(f)(x) = y
     }
 }
@@ -3377,7 +3378,7 @@ theorem rat_mul_uniform(r: Rat) {
             Rat.0 <= r.abs
             let delta: Rat satisfy {
                 delta.is_positive and r.abs * delta < reps2
-            } 
+            }
             forall(r1: Rat, r2: Rat) {
                 if r1.is_close(r2, delta) {
                     (r1 - r2).abs < delta
@@ -3631,7 +3632,7 @@ theorem converges_imp_bounded(a: Nat -> Rat) {
     }
 }
 
-// Prove that convergent sequences can have their absolute value bounded. 
+// Prove that convergent sequences can have their absolute value bounded.
 theorem converges_imp_abs_bounded(a: Nat -> Rat) {
     converges(lift_seq(a))
     implies
