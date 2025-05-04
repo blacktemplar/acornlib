@@ -1,4 +1,5 @@
 from int import Int
+numerals Int
 
 problem {
     theorem(a: Int, b: Int, c: Int, d: Int) {
@@ -17,3 +18,14 @@ problem {
         (a + b) * (a - b) = a * a + b * -b
     }
 }
+
+problem {
+    theorem(a: Int, b: Int) {
+        (a + b) * (a + b) = a * a + 2 * a * b + b * b
+    } by {
+        (a + b) * (a + b) = a * a + a * b + b * a + b * b
+        (a + b) * (a + b) = a * a + a * b + a * b + b * b
+        (a + b) * (a + b) = a * a + (a * b + a * b) + b * b
+        (a + b) * (a + b) = a * a + 2 * a * b + b * b
+    }
+} 

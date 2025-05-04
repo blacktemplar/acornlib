@@ -1,12 +1,20 @@
-dependencies: 15807020617263718512
-content: 11807380421420714265
+dependencies: 11650764189154077463
+content: 1243904570452696433
 blocks:
-  '2':
+  '21':
+    int:
+    - add_assoc
+    - mul_assoc
+    - mul_comm
+    - mul_distrib_left
+    - mul_distrib_right
+    - times_two
+  '3':
     int:
     - add_assoc
     - mul_distrib_left
     - mul_distrib_right
-  '8':
+  '9':
     int:
     - Int.sub
     - add_assoc
