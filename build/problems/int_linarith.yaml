@@ -1,5 +1,5 @@
 dependencies: 11650764189154077463
-content: 1243904570452696433
+content: 5018566691430621255
 blocks:
   '21':
     int:
@@ -14,6 +14,15 @@ blocks:
     - add_assoc
     - mul_distrib_left
     - mul_distrib_right
+  '32':
+    int:
+    - Int.add
+    - add_assoc
+    - add_comm
+    - mul_comm
+    - mul_distrib_left
+    - mul_distrib_right
+    - times_two
   '9':
     int:
     - Int.sub

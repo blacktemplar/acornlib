@@ -29,3 +29,18 @@ problem {
         (a + b) * (a + b) = a * a + 2 * a * b + b * b
     }
 } 
+
+problem {
+    theorem(a: Int, b: Int, c: Int) {
+        (a + b + c) * (a + b + c) = a * a + b * b + c * c + 2 * a * b + 2 * a * c + 2 * b * c
+    } by {
+        (a + b + c) * (a + b + c) = (a + b) * (a + b + c) + c * (a + b + c)
+        (a + b + c) * (a + b + c) = (a + b) * a + (a + b) * b + (a + b) * c + c * a + c * b + c * c
+        (a + b + c) * (a + b + c) = a * a + b * a + a * b + b * b + a * c + b * c + c * a + c * b + c * c
+        (a + b + c) * (a + b + c) = a * a + b * a + a * b + b * b + a * c + c * a + b * c + c * b + c * c
+        (a + b + c) * (a + b + c) = a * a + (b * a + a * b) + b * b + (a * c + c * a) + (b * c + c * b) + c * c
+        (a + b + c) * (a + b + c) = a * a + 2 * a * b + b * b + 2 * a * c + 2 * b * c + c * c
+        (a + b + c) * (a + b + c) = a * a + b * b + 2 * a * b + 2 * a * c + c * c + 2 * b * c
+        (a + b + c) * (a + b + c) = a * a + b * b + 2 * a * b + c * c + 2 * a * c + 2 * b * c
+    } 
+}
