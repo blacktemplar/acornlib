@@ -1,5 +1,5 @@
 dependencies: 4678792152437776352
-content: 77860034884364008
+content: 174110985350923788
 blocks:
   '96':
     real:
@@ -2534,6 +2534,20 @@ blocks:
     - add_rat_eps_between
     - add_zero_left
     - pos_gt_zero
+  square_nonneg:
+    real:
+    - Real.gte
+    - Real.is_negative
+    - gt_imp_not_lte
+    - lte_or_gte
+    - mul_neg_neg
+    - mul_pos_pos
+    - mul_zero_left
+    - not_lt_imp_gte
+    - not_lte_imp_gt
+    - pos_lte_imp_pos
+    - rat_separating
+    - zero_not_positive
   sub_both_eq_sub_add:
     real:
     - Real.sub
