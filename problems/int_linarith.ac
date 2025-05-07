@@ -44,3 +44,16 @@ problem {
         (a + b + c) * (a + b + c) = a * a + b * b + 2 * a * b + c * c + 2 * a * c + 2 * b * c
     } 
 }
+
+problem {
+    theorem(a: Int, b: Int, x: Int) {
+        (x - a) * (x - b) = 0 implies x = a or x = b
+    } by {
+        if x - a = 0 {
+            x = a
+        } else {
+            x - b = 0
+            x = b
+        }
+    }
+}
