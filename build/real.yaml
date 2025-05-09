@@ -1,0 +1,276 @@
+dependencies: 8501597659450617286
+content: 9652213878915254060
+blocks:
+  add_continuous2:
+    real:
+    - continuous2
+    - continuous2_at
+    - continuous2_condition
+    real_ring:
+    - add_close
+    - close_and_lt_imp_close
+    - eps_lt_half
+  add_fns_uniform:
+    real:
+    - add_fns
+    - uniform
+    - uniform_condition
+    real_ring:
+    - Real.is_close
+    - add_close
+    - close_and_lt_imp_close
+    - eps_lt_half
+    - eps_smaller_than_both
+  add_real_eps_between:
+    real_base:
+    - add_rat_eps_between
+    real_ring:
+    - from_rat_pos
+  add_real_uniform:
+    real:
+    - close_add
+    - uniform
+    - uniform_condition
+    real_base:
+    - add_comm
+  close_add:
+    real_base:
+    - add_comm
+    - sub_cancels
+    real_ring:
+    - Real.is_close
+    - sub_both_eq_sub_add
+  compose_uniform:
+    real:
+    - uniform
+    - uniform_condition
+    real_ring:
+    - Real.is_close
+    - compose
+  constant_is_rat_uniform:
+    rat:
+    - one_is_pos
+    real:
+    - is_constant
+    - rat_condition
+    - rat_uniform
+    real_ring:
+    - self_close
+  constant_is_uniform:
+    real:
+    - is_constant
+    - uniform
+    - uniform_condition
+    real_ring:
+    - mul_one_right
+    - self_close
+  lift_constant_is_constant:
+    real:
+    - constant_is_rat_uniform
+    - is_constant
+    - lift_uc
+    real_ring:
+    - compose
+    - eq_imp_limit
+    - eventual_eq
+  lift_fixes_rats:
+    real:
+    - lift_uc
+    - limit_compose_rat_uniform
+    real_ring:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - rat_seq_converges_to
+  lift_inc_is_inc:
+    rat:
+    - lt_add_pos
+    real:
+    - add_real_eps_between
+    - increasing
+    - lift_fixes_rats
+    - lift_uniform_is_uniform
+    - rat_increasing
+    - uniform
+    - uniform_condition
+    real_base:
+    - Real.gt
+    - Real.lt
+    - add_assoc
+    - add_from_rat
+    - add_rat_eps_between
+    - gt_from_rat_imp_gt_rat
+    - gt_imp_not_lte
+    - gt_rat_sorts
+    - lt_add_converse
+    - lt_add_left
+    - lt_add_rat_left
+    - lt_add_right
+    - lt_lte_trans
+    - lt_min_imp_lt_left
+    - lt_min_imp_lt_right
+    - lte_add_left
+    - lte_or_gte
+    - min_pos_pos
+    - not_gt_rat_self
+    - rat_between_reals
+    real_ring:
+    - close_and_lt_imp_close
+    - close_imp_bounds
+    - eps_lt_half
+    - eps_smaller_than_both
+    - from_rat_pos
+    - rat_intersect
+    - rat_seq_is_close
+    - self_close
+    - smaller_rat_eps
+  lift_uniform_is_uniform:
+    nat:
+    - gte_each_of_three
+    real:
+    - lift_uc
+    - rat_condition
+    - rat_uniform
+    - uniform
+    - uniform_condition
+    - uniform_imp_seq
+    real_ring:
+    - Real.is_close
+    - close_and_lt_imp_close
+    - close_comm
+    - close_limit_imp_seqs_get_close
+    - close_reals_imp_close_rats
+    - compose
+    - converges_imp_converges_to
+    - converges_to
+    - converges_to_imp_converges
+    - find_less_than_a_third
+    - from_rat_pos
+    - is_close_triangle
+    - lift_rat_seq_converges
+    - lift_seq_elt
+    - limit_rat
+    - limit_rat_rat_seq
+    - rat_seq_converges_to
+    - seq_close
+  limit_compose_rat_uniform:
+    real:
+    - rat_condition
+    - rat_uniform
+    real_ring:
+    - close_imp_eps_pos
+    - close_reals_imp_close_rats
+    - compose
+    - converges_to
+    - lift_seq_elt
+    - rat_approx
+  limit_compose_uniform:
+    nat:
+    - Nat.lte
+    - lte_trans
+    real:
+    - uniform
+    - uniform_condition
+    real_ring:
+    - compose
+    - converges_imp_converges_to
+    - converges_to
+  neg_uniform:
+    real:
+    - uniform
+    - uniform_condition
+    real_ring:
+    - neg_is_close
+  rat_mul_uniform:
+    nat:
+    - gte_each_of_three
+    rat:
+    - Rat.is_close
+    - Rat.lte
+    - iop_gets_lt
+    - iop_pos
+    - lte_lt_trans
+    - lte_mul_nonneg
+    - lte_trans
+    - mul_comm
+    - mul_two_abs
+    - neg_abs
+    - some_mul_lt
+    - sub_distrib
+    - zero_lte_abs
+    real:
+    - rat_condition
+    - rat_uniform
+    real_base:
+    - Real.gte
+    - not_lt_imp_gte
+    - zero_not_positive
+    real_ring:
+    - Real.is_close
+    - close_and_lt_imp_close
+    - close_rats_imp_close_reals
+    - compose
+    - pos_lte_imp_pos
+    - smaller_rat_eps
+  tighten_uc:
+    real:
+    - uniform_condition
+    real_ring:
+    - close_and_lt_imp_close
+  uni_cond_imp_rat_cond:
+    real:
+    - rat_condition
+    - uniform_condition
+    real_ring:
+    - close_rats_imp_close_reals
+    - compose
+  uniform_imp_continuous:
+    real:
+    - continuous
+    - continuous_at
+    - continuous_condition
+    - uniform
+    - uniform_condition
+  uniform_imp_rat_uniform:
+    real:
+    - rat_uniform
+    - uni_cond_imp_rat_cond
+    - uniform
+    - uniform_condition
+    real_base:
+    - Real.gte
+    - not_lt_imp_gte
+    - zero_not_positive
+    real_ring:
+    - close_and_lt_imp_close
+    - pos_lte_imp_pos
+    - smaller_rat_eps
+  uniform_imp_seq:
+    real:
+    - rat_condition
+    - rat_uniform
+    real_ring:
+    - Real.is_close
+    - cauchy_condition
+    - close_reals_imp_close_rats
+    - compose
+    - converges
+    - from_rat_pos
+    - lift_seq
+  uniform_ne_imp_rat_ne:
+    real:
+    - uniform
+    - uniform_condition
+    real_base:
+    - Real.lt
+    real_ring:
+    - Real.is_close
+    - close_and_lt_imp_close
+    - close_comm
+    - eps_lt_half
+    - eps_smaller_than_both
+    - is_close_triangle
+    - neq_imp_abs_diff_pos
+    - rat_intersect
+    - rat_seq_is_close
+    - self_close
