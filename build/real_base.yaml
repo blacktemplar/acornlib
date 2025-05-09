@@ -1,0 +1,1107 @@
+dependencies: 13571564220757096328
+content: 14792015569967699132
+blocks:
+  '98':
+    real_base:
+    - gt_is_dedekind_cut
+  abs_from_rat:
+    rat:
+    - Rat.abs
+    - abs_non_neg
+    - neg_imp_lt_zero
+    real_base:
+    - Real.0
+    - Real.abs
+    - from_rat_maintains_lt
+    - lt_zero_imp_neg
+    - neg_from_rat
+    - real_neg_imp_rat_neg
+  abs_gte_zero:
+    real_base:
+    - Real.abs
+    - Real.gte
+    - gt_imp_not_lte
+    - lt_zero_imp_neg
+    - lte_or_gte
+    - neg_neg
+    - neg_neg_is_pos
+    - not_lt_imp_gte
+    - pos_gt_zero
+  abs_neg:
+    real_base:
+    - Real.abs
+    - Real.is_negative
+    - neg_neg
+    - neg_neg_is_pos
+    - neg_pos_is_neg
+    - neg_zero
+  add_assoc:
+    rat:
+    - add_assoc
+    real_base:
+    - Real.add
+    - Real.gt_rat
+    - Real.new
+    - add_comm
+    - add_gt
+    - add_gt_is_dedekind_cut
+    - add_gt_rat
+    - gt_rat_adding_three
+  add_comm:
+    real_base:
+    - Real.add
+    - add_gt_symm
+  add_from_int:
+    rat:
+    - add_int_eq_int_add
+    real_base:
+    - Real.from_int
+    - add_from_rat
+  add_from_rat:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.lt
+    - add_gt_from_rat_imp_rat_add_gt
+    - add_gt_imp_gt_from_rat
+    - from_rat_gt_imp_gt
+    - gt_from_rat_imp_add_gt
+    - gt_from_rat_imp_gt_rat
+    - gt_imp_from_rat_gt
+    - gt_imp_not_lte
+    - gt_rat_imp_gt_from_rat
+    - not_lt_imp_gte
+    - rat_add_gt_imp_add_gt_from_rat
+    - rat_between_reals
+  add_from_rat_zero:
+    rat:
+    - add_zero_right
+    real_base:
+    - Real.0
+    - add_from_rat
+  add_gt_from_rat_imp_rat_add_gt:
+    rat:
+    - Rat.gt
+    - adding_lts
+    real_base:
+    - add_gt
+    - from_rat_gt_imp_gt
+  add_gt_has_no_greatest:
+    rat:
+    - Rat.gt
+    - Rat.lte
+    - lt_add_right
+    - lt_lte_trans
+    - not_lt_self
+    - trichotomy
+    real_base:
+    - Real.constraint
+    - Real.new
+    - add_gt
+    - has_greatest
+    - is_dedekind_cut
+    - is_greatest
+  add_gt_imp_gt_from_rat:
+    real_base:
+    - Real.add
+    - Real.gt_rat
+    - add_gt_is_dedekind_cut
+    - gt_rat_imp_gt_from_rat
+  add_gt_is_cut:
+    rat:
+    - add_comm
+    - adding_lts
+    - lt_add_right
+    - not_lt_both_ways
+    real_base:
+    - Real.new
+    - add_gt
+    - exists_gte_rat
+    - exists_lesser_rat
+    - gt_rat_sorts
+    - is_cut
+  add_gt_is_dedekind_cut:
+    real_base:
+    - add_gt_has_no_greatest
+    - add_gt_is_cut
+    - add_gt_is_lower
+    - is_dedekind_cut
+  add_gt_is_lower:
+    rat:
+    - Rat.lt
+    - add_assoc
+    - add_cancels_sub
+    - add_comm
+    - add_neg_lt
+    - neg_pos_is_neg
+    - neg_sub
+    - not_lt_both_ways
+    real_base:
+    - add_gt
+    - gt_rat_sorts
+    - is_lower
+  add_gt_rat:
+    real_base:
+    - Real.add
+    - Real.gt_rat
+    - add_gt
+    - add_gt_is_dedekind_cut
+  add_gt_symm:
+    rat:
+    - add_comm
+    real_base:
+    - Real.new
+    - add_gt
+  add_gt_trans:
+    rat:
+    - Rat.gt
+    real_base:
+    - Real.new
+    - add_gt_is_lower
+    - is_lower
+  add_lt_lt:
+    rat:
+    - adding_lts
+    real_base:
+    - Real.gt
+    - Real.lt
+    - add_from_rat
+    - from_rat_maintains_lt
+    - gt_from_rat_imp_gt_rat
+    - gt_rat_sorts
+    - lt_lte_trans
+    - lte_add_left
+    - lte_add_right
+    - lte_lt_trans
+    - lte_trans
+    - not_gt_rat_self
+    - rat_between_reals
+  add_neg_eq_zero:
+    real_base:
+    - Real.lt
+    - add_neg_gte_zero
+    - add_neg_lte_zero
+    - gte_imp_not_lt
+  add_neg_gte_zero:
+    rat:
+    - Rat.sub
+    - add_assoc
+    - add_comm
+    - add_inv_cancels_right
+    - add_zero_left
+    - neg_neg_is_pos
+    - neg_sub
+    real_base:
+    - Real.from_rat
+    - Real.gt
+    - Real.lt
+    - add_comm
+    - add_from_rat
+    - add_lt_lt
+    - gt_imp_not_lte
+    - lt_rat_neg
+    - lt_swap_neg
+    - lt_zero_imp_neg
+    - neg_from_rat
+    - not_lt_imp_gte
+    - rat_between_reals
+    - rat_window
+    - real_neg_imp_rat_neg
+  add_neg_lte_zero:
+    rat:
+    - Rat.gt
+    - Rat.sub
+    - add_comm
+    - minus_cancels_plus
+    - zero_lt_imp_pos
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.is_positive
+    - Real.lt
+    - add_from_rat
+    - add_lt_lt
+    - from_rat_gt_imp_gt
+    - gt_zero_imp_pos
+    - gte_imp_not_lt
+    - lt_swap_neg
+    - neg_from_rat
+    - not_lte_imp_gt
+    - rat_between_reals
+    - rat_window
+  add_rat_eps_between:
+    rat:
+    - Rat.lt
+    - add_cancels_sub
+    - add_comm
+    real_base:
+    - Real.gt
+    - Real.lt
+    - add_from_rat
+    - gt_from_rat_imp_gt_rat
+    - gt_rat_sorts
+    - lt_add_rat_right
+    - lt_lte_trans
+    - not_gt_rat_self
+    - rat_between_reals
+  add_zero_left:
+    real_base:
+    - add_comm
+    - add_zero_right
+  add_zero_right:
+    real_base:
+    - Real.gt
+    - Real.lt
+    - add_from_rat_zero
+    - gt_imp_not_lte
+    - lte_add_right
+    - lte_or_gte
+    - rat_between_reals
+  exists_gte_rat:
+    real_base:
+    - Real.constraint
+    - is_cut
+    - is_dedekind_cut
+  exists_lesser_rat:
+    real_base:
+    - Real.constraint
+    - is_cut
+    - is_dedekind_cut
+  floor:
+    real_base:
+    - floor_exists
+  floor_exists:
+    int:
+    - Int.1
+    - Int.gte
+    - abs_neg_nat
+    - add_assoc
+    - add_comm
+    - add_from_nat
+    - add_lte
+    - add_zero_right
+    - lt_not_ref
+    - lte_abs
+    - lte_and_lt
+    - neg_from_nat
+    - neg_nat_zero
+    - neg_neg
+    - neg_zero
+    - plus_abs_gte_zero
+    - pos_part_from
+    nat:
+    - Nat.induction
+    - add_comm
+    - add_one_left
+    - add_one_right
+    real_base:
+    - Real.from_int
+    - Real.gte
+    - gt_imp_not_lte
+    - gt_some_int
+    - lt_some_int
+    - lt_some_int_cancel
+    - lte_lt_trans
+    - lte_or_gte
+    - not_lt_imp_gte
+  from_rat_gt_imp_gt:
+    real_base:
+    - Real.from_rat
+    - Real.gt_rat
+    - gt_is_dedekind_cut
+  from_rat_maintains_lt:
+    rat:
+    - Rat.gt
+    real_base:
+    - Real.gt
+    - gt_imp_from_rat_gt
+    - gt_rat_imp_gt_from_rat
+  from_rat_maintains_lte:
+    rat:
+    - Rat.lte
+    real_base:
+    - Real.gt
+    - Real.lt
+    - from_rat_maintains_lt
+    - not_lte_imp_gt
+  gt_add_neg:
+    real_base:
+    - Real.gt
+    - add_zero_right
+    - lt_add_left
+    - neg_lt_zero
+  gt_both_imp_gt_max:
+    real_base:
+    - gte_imp_not_lt
+    - max
+    - max_gte_left
+    - max_gte_right
+  gt_from_rat_imp_add_gt:
+    real_base:
+    - Real.add
+    - Real.gt_rat
+    - add_gt_is_dedekind_cut
+    - gt_from_rat_imp_gt_rat
+  gt_from_rat_imp_gt_rat:
+    rat:
+    - Rat.gt
+    real_base:
+    - Real.gt
+    - Real.lt
+    - Real.lte
+    - gt_imp_from_rat_gt
+    - gt_rat_sorts
+    - lte_both_ways_imp_eq
+  gt_has_no_greatest:
+    rat:
+    - Rat.div
+    - Rat.gt
+    - Rat.gte
+    - Rat.lt
+    - Rat.lte
+    - add_assoc
+    - add_cancels_sub
+    - add_comm
+    - add_half_half
+    - half_is_pos
+    - lt_add_pos
+    - mul_pos_pos
+    - not_lt_both_ways
+    - not_lt_self
+    real_base:
+    - has_greatest
+    - is_greatest
+  gt_imp_from_rat_gt:
+    real_base:
+    - Real.from_rat
+    - Real.gt_rat
+    - gt_is_dedekind_cut
+  gt_imp_not_lte:
+    real_base:
+    - Real.gt
+    - Real.lt
+    - lte_both_ways_imp_eq
+  gt_is_cut:
+    rat:
+    - Rat.gt
+    - Rat.sub
+    - add_cancels_sub
+    - add_comm
+    - gt_minus_pos
+    - neg_sub
+    - not_lt_both_ways
+    - one_is_pos
+    real_base:
+    - is_cut
+  gt_is_dedekind_cut:
+    real_base:
+    - is_dedekind_cut
+  gt_is_lower:
+    rat:
+    - Rat.gt
+    - lt_trans
+    real_base:
+    - is_lower
+  gt_max_imp_gt_left:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - lte_lt_trans
+    - max_gte_left
+  gt_max_imp_gt_right:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - lte_lt_trans
+    - max_gte_right
+  gt_rat_adding_three:
+    real_base:
+    - Real.add
+    - Real.gt_rat
+    - add_gt
+    - add_gt_is_dedekind_cut
+  gt_rat_adding_three_converse:
+    rat:
+    - add_assoc
+    real_base:
+    - add_gt
+    - add_gt_rat
+  gt_rat_imp_gt_from_rat:
+    rat:
+    - Rat.gt
+    - not_lt_both_ways
+    real_base:
+    - Real.gt
+    - Real.lt
+    - Real.lte
+    - from_rat_gt_imp_gt
+    - gt_rat_sorts
+    - not_gt_rat_self
+  gt_rat_neg:
+    rat:
+    - Rat.sub
+    - add_comm
+    - gt_minus_pos
+    - neg_sub
+    real_base:
+    - Real.from_rat
+    - Real.gt
+    - Real.lt
+    - add_from_rat
+    - add_rat_eps_between
+    - gt_imp_from_rat_gt
+    - gt_imp_not_lte
+    - gt_rat_imp_gt_from_rat
+    - lt_trans
+    - neg_gt_rat
+    - not_lte_imp_gt
+  gt_rat_sorts:
+    rat:
+    - Rat.gt
+    - trichotomy
+    real_base:
+    - Real.constraint
+    - Real.new
+    - is_dedekind_cut
+    - is_lower
+  gt_some_int:
+    rat:
+    - floor
+    real_base:
+    - Real.from_int
+    - from_rat_maintains_lte
+    - gt_imp_not_lte
+    - gt_some_rat
+    - lte_trans
+    - not_lte_imp_gt
+  gt_some_rat:
+    real_base:
+    - exists_lesser_rat
+    - gt_rat_imp_gt_from_rat
+  gt_zero_imp_pos:
+    real_base:
+    - Real.0
+    - Real.is_positive
+    - gt_from_rat_imp_gt_rat
+  gte_imp_not_lt:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - gt_imp_not_lte
+  gte_self:
+    real_base:
+    - Real.gte
+    - Real.lte
+  lower_rat:
+    rat:
+    - add_neg_lt
+    - iop_pos
+    - neg_pos_is_neg
+    real_base:
+    - Real.from_int
+    - floor
+    - from_rat_maintains_lt
+    - lt_lte_trans
+  lt_add_cancel_left:
+    real_base:
+    - add_comm
+    - lt_add_cancel_right
+  lt_add_cancel_right:
+    real_base:
+    - Real.lt
+    - Real.lte
+    - lt_add_converse
+    - lt_add_right
+    - lte_or_gte
+    - rat_separating
+  lt_add_converse:
+    real_base:
+    - Real.gte
+    - gte_imp_not_lt
+    - lte_add_right
+    - not_lt_imp_gte
+  lt_add_left:
+    real_base:
+    - add_comm
+    - lt_add_right
+  lt_add_one:
+    int:
+    - add_comm
+    rat:
+    - Rat.1
+    real_base:
+    - Real.1
+    - Real.add
+    - Real.from_int
+    - Real.gt
+    - Real.gte
+    - Real.lt
+    - add_assoc
+    - add_comm
+    - add_from_int
+    - add_lt_lt
+    - floor
+    - gte_imp_not_lt
+    - lt_add_converse
+    - lt_some_int_cancel
+    - not_lt_imp_gte
+  lt_add_pos:
+    rat:
+    - Rat.gt
+    - zero_lt_imp_pos
+    real_base:
+    - Real.gt
+    - Real.is_positive
+    - Real.lt
+    - add_comm
+    - from_rat_gt_imp_gt
+    - gt_zero_imp_pos
+    - lt_add_pos_rat
+    - lt_lte_trans
+    - lte_add_left
+    - pos_gt_zero
+    - rat_between_reals
+  lt_add_pos_int:
+    int:
+    - div_pos_imp_lte
+    - divides
+    - mul_one_right
+    rat:
+    - Rat.1
+    - lte_from_int
+    real_base:
+    - Real.1
+    - Real.from_int
+    - add_comm
+    - from_rat_maintains_lte
+    - lt_add_one
+    - lt_lte_trans
+    - lte_add_left
+  lt_add_pos_rat:
+    int:
+    - Int.0
+    - Int.1
+    - Int.abs
+    - add_from_nat
+    - member_abs_pos
+    nat:
+    - Nat.induction
+    - add_one_left
+    rat:
+    - Rat.0
+    - Rat.1
+    - Rat.from_int
+    - Rat.is_positive
+    - add_int_eq_int_add
+    - denom_positive
+    - distrib_left
+    - mul_comm
+    - mul_denom
+    - mul_one_left
+    - mul_zero_right
+    - neg_denom
+    - not_pos_and_neg
+    real_base:
+    - Real.0
+    - Real.from_int
+    - Real.gt
+    - Real.lt
+    - add_assoc
+    - add_comm
+    - add_from_rat
+    - add_zero_right
+    - lt_add_pos_int
+    - lt_zero_imp_neg
+    - lte_add_left
+    - not_lte_imp_gt
+    - real_neg_imp_rat_neg
+  lt_add_rat_left:
+    real_base:
+    - add_comm
+    - lt_add_rat_right
+  lt_add_rat_right:
+    rat:
+    - add_inv_cancels_right
+    real_base:
+    - Real.0
+    - Real.add
+    - Real.gt
+    - add_assoc
+    - add_comm
+    - add_from_rat
+    - add_zero_left
+    - lt_add_converse
+  lt_add_right:
+    rat:
+    - add_half_half
+    - half_plus_half
+    - half_pos
+    real_base:
+    - Real.lt
+    - add_assoc
+    - add_comm
+    - add_from_rat
+    - add_lt_lt
+    - add_rat_eps_between
+    - lt_add_pos_rat
+    - lt_lte_trans
+    - lte_add_right
+  lt_both_imp_lt_min:
+    real_base:
+    - Real.gt
+    - lte_both_ways_imp_eq
+    - min
+    - min_lte_left
+    - min_lte_right
+    - not_lte_imp_gt
+  lt_lte_trans:
+    real_base:
+    - Real.gt
+    - gt_imp_not_lte
+    - lte_trans
+    - not_lte_imp_gt
+  lt_min_imp_lt_left:
+    real_base:
+    - lt_lte_trans
+    - min_lte_left
+  lt_min_imp_lt_right:
+    real_base:
+    - lt_lte_trans
+    - min_lte_right
+  lt_neg_swap_neg:
+    real_base:
+    - Real.gt
+    - lt_swap_neg
+    - lt_trans
+    - neg_from_rat
+    - neg_gt_rat
+    - rat_between_reals
+  lt_rat_neg:
+    real_base:
+    - Real.gt_rat
+    - Real.neg
+    - gt_rat_imp_gt_from_rat
+    - neg_gt
+    - neg_gt_is_dedekind_cut
+  lt_some_int:
+    rat:
+    - floor
+    real_base:
+    - Real.from_int
+    - from_rat_maintains_lt
+    - lt_some_rat
+    - lt_trans
+  lt_some_int_cancel:
+    int:
+    - Int.lt
+    rat:
+    - Rat.is_positive
+    - Rat.lt
+    - from_int_num
+    - sub_from_int
+    real_base:
+    - Real.from_int
+    - Real.gt
+    - gt_from_rat_imp_gt_rat
+    - gt_rat_sorts
+    - not_gt_rat_self
+  lt_some_rat:
+    rat:
+    - lt_add_pos
+    - one_is_pos
+    real_base:
+    - from_rat_maintains_lt
+    - lte_lt_trans
+    - lte_some_rat
+  lt_swap_neg:
+    rat:
+    - neg_sub
+    - sub_zero
+    - zero_minus
+    real_base:
+    - Real.from_rat
+    - Real.gt
+    - Real.lt
+    - gt_rat_neg
+    - lt_lte_trans
+    - lt_rat_neg
+    - neg_from_rat
+    - rat_between_reals
+  lt_trans:
+    real_base:
+    - Real.gte
+    - Real.lt
+    - gte_imp_not_lt
+    - lt_lte_trans
+  lt_zero_imp_neg:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.is_negative
+    - Real.lt
+    - gt_zero_imp_pos
+    - lte_both_ways_imp_eq
+    - pos_gt_zero
+    - zero_not_positive
+  lte_abs:
+    real_base:
+    - Real.abs
+    - Real.lt
+    - Real.lte
+    - lt_swap_neg
+    - lte_trans
+    - neg_lt_zero
+    - neg_zero
+  lte_add_left:
+    real_base:
+    - add_comm
+    - lte_add_right
+  lte_add_right:
+    real_base:
+    - Real.lte
+    - add_gt
+    - add_gt_rat
+    - gt_from_rat_imp_add_gt
+    - gt_rat_imp_gt_from_rat
+  lte_both_ways_imp_eq:
+    real_base:
+    - Real.lte
+    - Real.new
+  lte_lt_trans:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.lt
+    - gt_imp_not_lte
+    - gte_imp_not_lt
+    - lt_lte_trans
+    - not_lt_imp_gte
+  lte_or_gte:
+    rat:
+    - not_lt_both_ways
+    real_base:
+    - Real.lte
+    - gt_rat_sorts
+  lte_self:
+    real_base:
+    - Real.lte
+  lte_some_rat:
+    real_base:
+    - exists_gte_rat
+    - gt_from_rat_imp_gt_rat
+    - not_lte_imp_gt
+  lte_trans:
+    real_base:
+    - Real.lte
+  max_gte_left:
+    real_base:
+    - Real.gt
+    - max
+    - not_lt_imp_gte
+    - rat_separating
+  max_gte_right:
+    real_base:
+    - Real.gte
+    - gt_imp_not_lte
+    - lte_or_gte
+    - max
+    - not_lt_imp_gte
+    - rat_separating
+  max_pos_pos:
+    real_base:
+    - max
+  min_lte_left:
+    real_base:
+    - Real.lt
+    - Real.lte
+    - lte_or_gte
+    - min
+  min_lte_right:
+    real_base:
+    - Real.gt
+    - Real.lte
+    - gt_imp_not_lte
+    - lte_or_gte
+    - min
+  min_pos_pos:
+    real_base:
+    - min
+  neg_distrib:
+    real_base:
+    - add_assoc
+    - add_comm
+    - add_neg_eq_zero
+    - add_zero_left
+    - lt_add_cancel_left
+    - neg_neg
+  neg_from_rat:
+    rat:
+    - Rat.gt
+    - lt_neg
+    - neg_sub
+    - not_lt_both_ways
+    - sub_zero
+    - zero_minus
+    real_base:
+    - Real.gt
+    - Real.gt_rat
+    - Real.lt
+    - Real.neg
+    - from_rat_gt_imp_gt
+    - from_rat_maintains_lt
+    - gt_from_rat_imp_gt_rat
+    - gt_imp_not_lte
+    - lt_rat_neg
+    - neg_gt
+    - neg_gt_is_dedekind_cut
+    - not_lte_imp_gt
+    - rat_between_reals
+  neg_gt_has_no_greatest:
+    rat:
+    - Rat.lte
+    - Rat.sub
+    - add_inv_cancels_right
+    - lt_add_pos
+    - not_lt_both_ways
+    - not_lt_self
+    - sub_add
+    - zero_minus
+    real_base:
+    - Real.0
+    - Real.from_rat
+    - Real.gt
+    - add_assoc
+    - add_comm
+    - add_from_rat
+    - add_rat_eps_between
+    - add_zero_left
+    - has_greatest
+    - is_greatest
+    - lt_add_rat_right
+    - neg_gt
+  neg_gt_is_cut:
+    rat:
+    - iop_pos
+    - neg_sub
+    - sub_zero
+    - zero_minus
+    real_base:
+    - Real.from_rat
+    - Real.gt
+    - Real.gte
+    - Real.lt
+    - gte_imp_not_lt
+    - is_cut
+    - lower_rat
+    - lt_add_pos_rat
+    - neg_gt
+    - rat_between_reals
+  neg_gt_is_dedekind_cut:
+    real_base:
+    - is_dedekind_cut
+    - neg_gt_has_no_greatest
+    - neg_gt_is_cut
+    - neg_gt_is_lower
+  neg_gt_is_lower:
+    rat:
+    - lt_neg
+    real_base:
+    - Real.lt
+    - from_rat_maintains_lt
+    - is_lower
+    - lt_lte_trans
+    - neg_gt
+  neg_gt_rat:
+    real_base:
+    - Real.gt_rat
+    - Real.neg
+    - gt_from_rat_imp_gt_rat
+    - neg_gt
+    - neg_gt_is_dedekind_cut
+  neg_lt_neg_swap_neg:
+    real_base:
+    - lt_neg_swap_neg
+    - lt_trans
+    - neg_lt_swap_neg
+    - rat_between_reals
+  neg_lt_rat:
+    rat:
+    - neg_sub
+    - sub_zero
+    - zero_minus
+    real_base:
+    - Real.lt
+    - add_rat_eps_between
+    - gt_imp_not_lte
+    - lt_rat_neg
+    - lte_or_gte
+    - neg_from_rat
+    - not_lte_imp_gt
+    - rat_separating
+  neg_lt_swap_neg:
+    real_base:
+    - Real.gt
+    - lt_swap_neg
+    - lt_trans
+    - neg_from_rat
+    - neg_lt_rat
+    - rat_between_reals
+  neg_lt_zero:
+    real_base:
+    - Real.gt
+    - Real.is_negative
+    - Real.lt
+    - Real.lte
+    - gt_zero_imp_pos
+    - lte_or_gte
+  neg_neg:
+    real_base:
+    - Real.gt
+    - Real.lt
+    - lt_neg_swap_neg
+    - neg_lt_swap_neg
+    - not_lte_imp_gt
+    - rat_separating
+  neg_neg_is_pos:
+    real_base:
+    - Real.gt
+    - gt_zero_imp_pos
+    - neg_lt_neg_swap_neg
+    - neg_lt_zero
+    - neg_zero
+  neg_pos_is_neg:
+    real_base:
+    - Real.gt
+    - lt_zero_imp_neg
+    - neg_lt_swap_neg
+    - neg_zero
+    - pos_gt_zero
+  neg_zero:
+    rat:
+    - Rat.0
+    - sub_zero
+    - zero_minus
+    real_base:
+    - Real.0
+    - neg_from_rat
+  not_gt_rat_self:
+    rat:
+    - Rat.gt
+    - not_lt_both_ways
+    real_base:
+    - from_rat_gt_imp_gt
+  not_lt_imp_gte:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - not_lte_imp_gt
+  not_lte_imp_gt:
+    real_base:
+    - Real.gt
+    - Real.lt
+    - lte_or_gte
+    - lte_self
+  pos_gt_zero:
+    real_base:
+    - Real.0
+    - Real.is_positive
+    - gt_rat_imp_gt_from_rat
+  rat_add_gt_imp_add_gt_from_rat:
+    rat:
+    - Rat.div
+    - Rat.gt
+    - Rat.lt
+    - Rat.sub
+    - add_assoc
+    - add_cancels_sub
+    - add_comm
+    - add_half_half
+    - gt_minus_pos
+    - half_is_pos
+    - minus_cancels_plus
+    - mul_pos_pos
+    - sub_add
+    real_base:
+    - add_gt
+    - gt_imp_from_rat_gt
+  rat_between_rat_and_real:
+    rat:
+    - Rat.gt
+    - Rat.lte
+    - trichotomy
+    real_base:
+    - Real.constraint
+    - has_greatest
+    - is_dedekind_cut
+    - is_greatest
+  rat_between_reals:
+    rat:
+    - Rat.gt
+    real_base:
+    - Real.gt
+    - Real.lte
+    - gt_from_rat_imp_gt_rat
+    - gt_imp_from_rat_gt
+    - gt_rat_imp_gt_from_rat
+    - not_lte_imp_gt
+    - rat_between_rat_and_real
+    - rat_separating
+  rat_between_reals_gt:
+    real_base:
+    - Real.gt
+    - rat_between_reals
+  rat_dual_upper_bound:
+    rat:
+    - iop_pos
+    real_base:
+    - Real.gt
+    - Real.lt
+    - lt_lte_trans
+    - lte_lt_trans
+    - not_lte_imp_gt
+    - rat_window
+  rat_separating:
+    real_base:
+    - Real.gte
+    - Real.lt
+    - Real.lte
+    - Real.new
+    - gte_imp_not_lt
+    - lte_or_gte
+  rat_window:
+    rat:
+    - Rat.sub
+    - add_cancels_sub
+    real_base:
+    - add_from_rat
+    - lt_add_converse
+    - lt_add_pos_rat
+    - rat_between_reals
+  real_neg_imp_rat_neg:
+    rat:
+    - lt_zero_imp_neg
+    real_base:
+    - Real.gt
+    - Real.is_positive
+    - gt_from_rat_imp_gt_rat
+    - gt_rat_sorts
+    - neg_lt_zero
+    - zero_not_positive
+  sub_cancels:
+    real_base:
+    - Real.sub
+    - add_assoc
+    - add_comm
+    - add_neg_eq_zero
+    - add_zero_left
+  sub_moves_sides:
+    real_base:
+    - sub_cancels
+  zero_not_positive:
+    rat:
+    - Rat.gt
+    - not_lt_both_ways
+    real_base:
+    - Real.0
+    - Real.is_positive
+    - from_rat_gt_imp_gt
