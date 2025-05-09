@@ -2759,6 +2759,7 @@ theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
     implies
     converges_to(compose(f, a), f(r))
 } by {
+    let fa: Nat -> Real = compose(f, a)
     forall(eps: Real) {
         if eps.is_positive {
             let delta: Rat satisfy {
@@ -2777,10 +2778,12 @@ theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
                     a(i).is_close(r, delta)
                     f(a(i)).is_close(f(r), eps)
                     compose(f, a)(i).is_close(f(r), eps)
+                    fa(i).is_close(f(r), eps)
                 }
             }
         }
     }
+    converges_to(fa, f(r))
 }
 
 // Lifting a uniformly continuous function of rationals
