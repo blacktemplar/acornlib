@@ -1,4 +1,4 @@
-dependencies: 8914384381047859106
+dependencies: 4694864967253660017
 content: 11156348535475454218
 blocks:
   Color.MetricSpace:
@@ -24,8 +24,6 @@ blocks:
     metric_space:
     - discrete
     - discrete_self_distance_is_zero
-    real:
-    - non_neg_imp_zero_lte
     real_base:
     - Real.is_negative
     - Real.lt
@@ -36,12 +34,17 @@ blocks:
     - lte_lt_trans
     - lte_or_gte
     - lte_self
+    real_ring:
+    - non_neg_imp_zero_lte
   distance_non_negative:
     metric_space:
     - MetricSpace.self_distance_is_zero
     - MetricSpace.symmetric
     - MetricSpace.triangle
-    real:
+    real_base:
+    - Real.add
+    - Real.gte
+    real_ring:
     - add_neg_neg
     - non_neg_imp_zero_lte
     - zero_lte_imp_non_neg

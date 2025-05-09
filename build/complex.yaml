@@ -1,4 +1,4 @@
-dependencies: 8914384381047859106
+dependencies: 4694864967253660017
 content: 14549475988330977023
 blocks:
   abs_squared_conj:
@@ -9,23 +9,23 @@ blocks:
     - Complex.mul
     - Complex.new
     - Complex.re
-    real:
-    - mul_comm
-    - mul_neg_right
     real_base:
     - Real.sub
     - add_neg_eq_zero
     - neg_neg
+    real_ring:
+    - mul_comm
+    - mul_neg_right
   abs_squared_nonneg:
     complex:
     - Complex.abs_squared
-    real:
-    - square_nonneg
     real_base:
     - Real.gte
     - add_zero_left
     - lte_add_right
     - lte_trans
+    real_ring:
+    - square_nonneg
   add_assoc:
     complex:
     - Complex.add
@@ -45,11 +45,11 @@ blocks:
     - Complex.im
     - Complex.new
     - Complex.re
-    real:
-    - sub_zero_imp_eq
     real_base:
     - add_comm
     - sub_cancels
+    real_ring:
+    - sub_zero_imp_eq
   conj_add:
     complex:
     - Complex.add
@@ -76,13 +76,12 @@ blocks:
     - Complex.new
     - Complex.re
     - add_zero
-    real:
-    - Real.mul
-    - mul_neg_left
-    - mul_neg_right
     real_base:
     - neg_distrib
     - neg_neg
+    real_ring:
+    - mul_neg_left
+    - mul_neg_right
   distrib:
     complex:
     - Complex.add
@@ -90,36 +89,34 @@ blocks:
     - Complex.mul
     - Complex.new
     - Complex.re
-    real:
-    - mul_distrib_right
-    - sub_both_eq_sub_add
-    - sub_either_order
     real_base:
     - Real.sub
     - add_assoc
     - add_comm
-    - neg_neg
+    real_ring:
+    - mul_distrib_right
+    - sub_both_eq_sub_add
   i_squared:
     complex:
     - Complex.i
     - Complex.im
     - Complex.mul
     - Complex.re
-    real:
-    - mul_comm
-    - mul_distrib_left
-    - mul_one_left
-    - mul_zero_left
     real_base:
     - Real.sub
     - add_zero_left
+    real_ring:
+    - mul_comm
+    - mul_one_left
+    - mul_zero_left
   mul_comm:
     complex:
     - Complex.mul
-    real:
-    - mul_comm
     real_base:
+    - Real.sub
     - add_comm
+    real_ring:
+    - mul_comm
   mul_one:
     complex:
     - Complex.1
@@ -127,12 +124,12 @@ blocks:
     - Complex.mul
     - Complex.new
     - Complex.re
-    real:
-    - mul_comm
-    - mul_one_left
-    - mul_zero_right
     real_base:
     - Real.sub
     - add_zero_left
     - add_zero_right
     - neg_zero
+    real_ring:
+    - mul_comm
+    - mul_one_left
+    - mul_zero_right
