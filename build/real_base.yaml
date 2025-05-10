@@ -1,5 +1,5 @@
 dependencies: 13571564220757096328
-content: 14792015569967699132
+content: 70288435579976541
 blocks:
   '98':
     real_base:
@@ -257,6 +257,79 @@ blocks:
     - lte_add_right
     - lte_or_gte
     - rat_between_reals
+  bounds_imp_close:
+    real_base:
+    - Real.abs
+    - Real.gt
+    - Real.is_close
+    - Real.sub
+    - abs_neg
+    - add_comm
+    - lt_add_converse
+    - neg_distrib
+    - neg_neg
+    - sub_cancels
+    - sub_moves_sides
+  close_comm:
+    real_base:
+    - Real.is_close
+    - Real.sub
+    - abs_neg
+    - add_comm
+    - neg_distrib
+    - neg_neg
+  close_imp_bounds:
+    real_base:
+    - Real.gt
+    - Real.is_close
+    - Real.sub
+    - add_comm
+    - close_comm
+    - lt_add_right
+    - lte_abs
+    - lte_lt_trans
+    - neg_neg
+    - sub_cancels
+    - sub_moves_sides
+  close_imp_eps_pos:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.is_close
+    - abs_gte_zero
+    - gt_zero_imp_pos
+    - lte_lt_trans
+  close_rats_imp_close_reals:
+    rat:
+    - Rat.is_close
+    - Rat.sub
+    real_base:
+    - Real.gt
+    - Real.is_close
+    - Real.sub
+    - abs_from_rat
+    - add_from_rat
+    - from_rat_maintains_lt
+    - neg_from_rat
+  close_reals_imp_close_rats:
+    rat:
+    - Rat.is_close
+    - Rat.sub
+    real_base:
+    - Real.gt
+    - Real.is_close
+    - Real.neg
+    - Real.sub
+    - abs_from_rat
+    - abs_neg
+    - add_from_rat
+    - gt_from_rat_imp_gt_rat
+    - gt_rat_sorts
+    - lt_swap_neg
+    - neg_from_rat
+    - neg_lt_neg_swap_neg
+    - neg_neg
+    - not_gt_rat_self
   exists_gte_rat:
     real_base:
     - Real.constraint
@@ -1024,6 +1097,21 @@ blocks:
     real_base:
     - add_gt
     - gt_imp_from_rat_gt
+  rat_approx_exists:
+    rat:
+    - Rat.gt
+    - bounds_imp_close
+    - gt_minus_pos
+    - lt_add_pos
+    real_base:
+    - Real.lt
+    - add_from_rat
+    - bounds_imp_close
+    - close_imp_bounds
+    - close_rats_imp_close_reals
+    - from_rat_maintains_lt
+    - lt_lte_trans
+    - rat_window
   rat_between_rat_and_real:
     rat:
     - Rat.gt
@@ -1060,6 +1148,30 @@ blocks:
     - lte_lt_trans
     - not_lte_imp_gt
     - rat_window
+  rat_intersect:
+    real_base:
+    - Real.lt
+    - bounds_imp_close
+    - close_imp_bounds
+    - lt_both_imp_lt_min
+    - lt_lte_trans
+    - lt_min_imp_lt_left
+    - lt_min_imp_lt_right
+    - rat_between_reals
+  rat_lower:
+    rat:
+    - Rat.gt
+    - add_cancels_sub
+    - gt_minus_pos
+    real_base:
+    - Real.gt
+    - Real.lt
+    - add_from_rat
+    - close_imp_bounds
+    - from_rat_maintains_lt
+    - gt_imp_not_lte
+    - lte_lt_trans
+    - rat_window
   rat_separating:
     real_base:
     - Real.gte
@@ -1068,6 +1180,20 @@ blocks:
     - Real.new
     - gte_imp_not_lt
     - lte_or_gte
+  rat_upper:
+    rat:
+    - Rat.sub
+    - minus_cancels_plus
+    real_base:
+    - Real.lt
+    - Real.sub
+    - add_from_rat
+    - close_imp_bounds
+    - gt_imp_not_lte
+    - lt_add_pos_rat
+    - lt_trans
+    - neg_from_rat
+    - rat_window
   rat_window:
     rat:
     - Rat.sub
@@ -1087,6 +1213,10 @@ blocks:
     - gt_rat_sorts
     - neg_lt_zero
     - zero_not_positive
+  self_close:
+    real_base:
+    - lt_add_pos
+    - sum_bounds_imp_close
   sub_cancels:
     real_base:
     - Real.sub
@@ -1096,6 +1226,14 @@ blocks:
     - add_zero_left
   sub_moves_sides:
     real_base:
+    - sub_cancels
+  sum_bounds_imp_close:
+    real_base:
+    - Real.lte
+    - Real.sub
+    - bounds_imp_close
+    - lt_add_right
+    - lt_lte_trans
     - sub_cancels
   zero_not_positive:
     rat:

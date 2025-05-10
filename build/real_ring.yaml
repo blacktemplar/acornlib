@@ -1,5 +1,5 @@
-dependencies: 6562520544296348291
-content: 15956318569537739298
+dependencies: 14447370166362664718
+content: 3375566347965592176
 blocks:
   Real.AddComm:
     real_base:
@@ -15,6 +15,7 @@ blocks:
     real_base:
     - Real.abs
     - Real.gt
+    - Real.is_close
     - Real.sub
     - abs_neg
     - add_comm
@@ -22,8 +23,6 @@ blocks:
     - neg_lt_swap_neg
     - neg_neg
     - neg_zero
-    real_ring:
-    - Real.is_close
   add_close:
     real_base:
     - Real.gt
@@ -31,17 +30,17 @@ blocks:
     - add_assoc
     - add_comm
     - add_lt_lt
+    - bounds_imp_close
+    - close_imp_bounds
+    - close_imp_eps_pos
     - lt_add_pos
     - max
     - neg_neg
     - rat_separating
+    - sum_bounds_imp_close
     real_ring:
-    - bounds_imp_close
-    - close_imp_bounds
-    - close_imp_eps_pos
     - sub_both_eq_sub_add
     - sub_either_order
-    - sum_bounds_imp_close
   add_gt_imp_gt_sub:
     real_base:
     - Real.gt
@@ -85,7 +84,6 @@ blocks:
     real_base:
     - add_from_rat
     real_ring:
-    - Real.is_close
     - add_close
     - add_rat_seq
     - close_and_lt_imp_close
@@ -103,28 +101,14 @@ blocks:
     - limit_rat
     - seq_eq
     - seq_eq_symm
-  bounds_imp_close:
-    real_base:
-    - Real.abs
-    - Real.gt
-    - Real.sub
-    - abs_neg
-    - add_comm
-    - lt_add_converse
-    - neg_distrib
-    - neg_neg
-    - sub_cancels
-    - sub_moves_sides
-    real_ring:
-    - Real.is_close
   cauch_imp_ub:
     nat:
     - lte_ref
     real_base:
     - Real.lt
+    - close_imp_bounds
     real_ring:
     - cauchy_condition
-    - close_imp_bounds
     - eventual_ub
   cauchy_gt_has_no_greatest:
     rat:
@@ -176,6 +160,7 @@ blocks:
     - add_lt_lt
     - add_zero_left
     - add_zero_right
+    - close_imp_bounds
     - gt_imp_not_lte
     - gt_max_imp_gt_right
     - gt_zero_imp_pos
@@ -190,7 +175,6 @@ blocks:
     real_ring:
     - cauchy_condition
     - cauchy_gt_rat
-    - close_imp_bounds
     - converges
     - eventual_lb
   cauchy_gt_something:
@@ -202,6 +186,8 @@ blocks:
     - Real.gt
     - Real.lt
     - add_zero_left
+    - close_comm
+    - close_imp_bounds
     - gt_imp_not_lte
     - gt_zero_imp_pos
     - lt_add_one
@@ -212,58 +198,22 @@ blocks:
     real_ring:
     - cauchy_condition
     - cauchy_gt_rat
-    - close_comm
-    - close_imp_bounds
     - converges
     - eventual_lb
-    - rat_lower
   cauchy_imp_lb:
     nat:
     - lte_ref
     real_base:
     - Real.gte
     - Real.lt
+    - close_imp_bounds
     real_ring:
     - cauchy_condition
-    - close_imp_bounds
     - eventual_lb
   close_and_lt_imp_close:
     real_base:
+    - Real.is_close
     - lt_trans
-    real_ring:
-    - Real.is_close
-  close_comm:
-    real_base:
-    - Real.sub
-    - abs_neg
-    - add_comm
-    - neg_distrib
-    - neg_neg
-    real_ring:
-    - Real.is_close
-  close_imp_bounds:
-    real_base:
-    - Real.gt
-    - Real.sub
-    - add_comm
-    - lt_add_right
-    - lte_abs
-    - lte_lt_trans
-    - neg_neg
-    - sub_cancels
-    - sub_moves_sides
-    real_ring:
-    - Real.is_close
-    - close_comm
-  close_imp_eps_pos:
-    real_base:
-    - Real.gt
-    - Real.gte
-    - abs_gte_zero
-    - gt_zero_imp_pos
-    - lte_lt_trans
-    real_ring:
-    - Real.is_close
   close_limit_imp_seqs_get_close:
     nat:
     - Nat.lte
@@ -272,6 +222,7 @@ blocks:
     real_base:
     - Real.gt
     - Real.gte
+    - Real.is_close
     - Real.lt
     - Real.sub
     - abs_gte_zero
@@ -279,6 +230,8 @@ blocks:
     - add_comm
     - add_rat_eps_between
     - add_zero_left
+    - close_comm
+    - close_imp_eps_pos
     - gt_zero_imp_pos
     - lt_add_right
     - lt_lte_trans
@@ -287,9 +240,6 @@ blocks:
     - rat_between_reals
     - sub_moves_sides
     real_ring:
-    - Real.is_close
-    - close_comm
-    - close_imp_eps_pos
     - convergent_seqs_get_close
     - converges_imp_converges_to
     - converges_to
@@ -298,55 +248,23 @@ blocks:
     - is_close_triangle
     - only_abs_zero_eq_zero
     - seq_close
-  close_rats_imp_close_reals:
-    rat:
-    - Rat.is_close
-    - Rat.sub
-    real_base:
-    - Real.gt
-    - Real.sub
-    - abs_from_rat
-    - add_from_rat
-    - from_rat_maintains_lt
-    - neg_from_rat
-    real_ring:
-    - Real.is_close
-  close_reals_imp_close_rats:
-    rat:
-    - Rat.is_close
-    - Rat.sub
-    real_base:
-    - Real.gt
-    - Real.neg
-    - Real.sub
-    - abs_from_rat
-    - abs_neg
-    - add_from_rat
-    - gt_from_rat_imp_gt_rat
-    - gt_rat_sorts
-    - lt_swap_neg
-    - neg_from_rat
-    - neg_lt_neg_swap_neg
-    - neg_neg
-    - not_gt_rat_self
-    real_ring:
-    - Real.is_close
   const_rat_converges_to_rat:
+    real_base:
+    - self_close
     real_ring:
     - const_rat_seq
     - converges_to
     - lift_seq_elt
-    - self_close
   convergent_seqs_get_close:
     nat:
     - Nat.lte
     - gte_each_of_three
     - lte_trans
     real_base:
+    - Real.is_close
     - Real.lt
     - lt_lte_trans
     real_ring:
-    - Real.is_close
     - converges_imp_converges_to
     - converges_to
     - eps_lt_half
@@ -400,27 +318,27 @@ blocks:
     real_base:
     - Real.gt
     - Real.gte
+    - bounds_imp_close
+    - close_imp_bounds
     - gt_zero_imp_pos
     - lt_add_left
     - lt_lte_trans
     - lte_lt_trans
     - pos_gt_zero
     - rat_between_reals_gt
+    - self_close
     real_ring:
-    - bounds_imp_close
-    - close_imp_bounds
     - converges_to
     - eventual_lb
     - eventual_ub
     - limit_lt_imp_ub
     - lt_limit_imp_lb
-    - self_close
     - sub_lt_is_gt
   converges_to_imp_converges:
     real_base:
+    - Real.is_close
     - lt_trans
     real_ring:
-    - Real.is_close
     - cauchy_condition
     - converges
     - converges_to
@@ -473,14 +391,14 @@ blocks:
     - Real.gt
     - Real.is_positive
     - add_from_rat
+    - close_imp_eps_pos
     - from_rat_gt_imp_gt
     - gt_zero_imp_pos
     - pos_gt_zero
+    - rat_approx_exists
     - rat_between_reals
     real_ring:
-    - close_imp_eps_pos
     - lt_imp_minus_pos
-    - rat_approx_exists
   eps_smaller_than_both:
     real_base:
     - Real.gt
@@ -491,11 +409,12 @@ blocks:
     - pos_gt_zero
     - rat_between_reals
   eq_converges:
+    real_base:
+    - self_close
     real_ring:
     - cauchy_condition
     - converges
     - eventual_eq
-    - self_close
   eq_imp_limit:
     real_base:
     - Real.gte
@@ -555,7 +474,7 @@ blocks:
     real_ring:
     - from_rat_pos
   from_rat_pos:
-    real_ring:
+    real_base:
     - close_imp_eps_pos
     - rat_approx_exists
   gt_converges_to_imp_ub:
@@ -564,10 +483,10 @@ blocks:
     - Real.lt
     - Real.sub
     - add_comm
+    - close_imp_bounds
     - neg_neg
     - sub_moves_sides
     real_ring:
-    - close_imp_bounds
     - converges_to
     - eventual_ub
     - lt_imp_minus_pos
@@ -593,12 +512,12 @@ blocks:
     - Real.lt
     - add_rat_eps_between
     - add_zero_left
+    - close_imp_eps_pos
     - from_rat_maintains_lt
     - lte_lt_trans
     - pos_gt_zero
     real_ring:
     - abs_lt_imp_close_to_zero
-    - close_imp_eps_pos
     - converges_to
     - lift_seq_elt
     - rat_approx
@@ -607,15 +526,15 @@ blocks:
     - Real.gt
     - add_assoc
     - add_comm
+    - bounds_imp_close
+    - close_comm
+    - close_imp_bounds
     - gt_max_imp_gt_right
     - lt_add_right
     - lt_trans
     - max
     real_ring:
     - add_gt_imp_gt_sub
-    - bounds_imp_close
-    - close_comm
-    - close_imp_bounds
     - sub_both_eq_sub_add
     - sub_either_order
   lb_lte_limit:
@@ -648,8 +567,9 @@ blocks:
     - eventual_lb
     - eventual_ub
   lift_rat_seq_close:
-    real_ring:
+    real_base:
     - close_comm
+    real_ring:
     - lift_seq_elt
     - rat_seq_is_close
   lift_rat_seq_converges:
@@ -666,9 +586,9 @@ blocks:
     - gte_each_of_three
     - lte_trans
     real_base:
+    - Real.is_close
     - lt_trans
     real_ring:
-    - Real.is_close
     - add_close
     - add_seq
     - converges_imp_converges_to
@@ -753,10 +673,10 @@ blocks:
     - Real.lt
     - Real.sub
     - add_comm
+    - close_imp_bounds
     - neg_neg
     - sub_moves_sides
     real_ring:
-    - close_imp_bounds
     - converges_to
     - eventual_lb
     - lt_imp_minus_pos
@@ -976,11 +896,12 @@ blocks:
     - pos_imp_zero_lt
     - pos_reciprocal
     - smaller_positive
+    real_base:
+    - close_rats_imp_close_reals
+    - close_reals_imp_close_rats
     real_ring:
     - cauchy_condition
     - close_and_lt_imp_close
-    - close_rats_imp_close_reals
-    - close_reals_imp_close_rats
     - converges
     - converges_imp_abs_bounded
     - from_rat_pos
@@ -1038,6 +959,7 @@ blocks:
     - pos_reciprocal
     real_base:
     - Real.gt
+    - Real.is_close
     - abs_from_rat
     - add_from_rat_zero
     - from_rat_maintains_lt
@@ -1047,7 +969,6 @@ blocks:
     - not_gt_rat_self
     - sub_cancels
     real_ring:
-    - Real.is_close
     - abs_lt_imp_close_to_zero
     - converges_imp_abs_bounded
     - converges_to
@@ -1076,12 +997,11 @@ blocks:
     - zero_rat_seq_is_zero
   neg_is_close:
     real_base:
+    - Real.is_close
     - Real.sub
     - add_comm
-    - neg_neg
-    real_ring:
-    - Real.is_close
     - close_comm
+    - neg_neg
   neg_is_zero_sub:
     rat:
     - Rat.sub
@@ -1108,7 +1028,6 @@ blocks:
     real_base:
     - neg_from_rat
     real_ring:
-    - Real.is_close
     - close_and_lt_imp_close
     - converges_imp_converges_to
     - converges_to
@@ -1154,74 +1073,32 @@ blocks:
     - Real.is_positive
     - Real.lte
   rat_approx:
-    real_ring:
-    - rat_approx_exists
-  rat_approx_exists:
-    rat:
-    - Rat.gt
-    - bounds_imp_close
-    - gt_minus_pos
-    - lt_add_pos
     real_base:
-    - Real.lt
-    - add_from_rat
-    - from_rat_maintains_lt
-    - lt_lte_trans
-    - rat_window
-    real_ring:
-    - bounds_imp_close
-    - close_imp_bounds
-    - close_rats_imp_close_reals
+    - rat_approx_exists
   rat_close:
     real_base:
     - Real.lt
-    - lte_or_gte
-    real_ring:
     - close_comm
-    - rat_close_to_both_lt
+    - lte_or_gte
     - rat_intersect
+    real_ring:
+    - rat_close_to_both_lt
   rat_close_to_both_lt:
     real_base:
     - Real.lt
+    - bounds_imp_close
+    - close_imp_bounds
     - lt_add_right
     - lt_lte_trans
     - lt_trans
     - rat_between_reals
-    real_ring:
-    - bounds_imp_close
-    - close_imp_bounds
     - sum_bounds_imp_close
-  rat_intersect:
-    real_base:
-    - Real.lt
-    - lt_both_imp_lt_min
-    - lt_lte_trans
-    - lt_min_imp_lt_left
-    - lt_min_imp_lt_right
-    - rat_between_reals
-    real_ring:
-    - bounds_imp_close
-    - close_imp_bounds
-  rat_lower:
-    rat:
-    - Rat.gt
-    - add_cancels_sub
-    - gt_minus_pos
-    real_base:
-    - Real.gt
-    - Real.lt
-    - add_from_rat
-    - from_rat_maintains_lt
-    - gt_imp_not_lte
-    - lte_lt_trans
-    - rat_window
-    real_ring:
-    - close_imp_bounds
   rat_seq_converges_to:
     rat:
     - iop_gets_lt
     real_base:
     - Real.gt
+    - Real.is_close
     - Real.lt
     - add_rat_eps_between
     - add_zero_left
@@ -1230,7 +1107,6 @@ blocks:
     - lt_trans
     - pos_gt_zero
     real_ring:
-    - Real.is_close
     - converges_to
     - lift_rat_seq_close
     - lift_seq_elt
@@ -1240,21 +1116,6 @@ blocks:
     real_ring:
     - rat_approx
     - rat_seq
-  rat_upper:
-    rat:
-    - Rat.sub
-    - minus_cancels_plus
-    real_base:
-    - Real.lt
-    - Real.sub
-    - add_from_rat
-    - gt_imp_not_lte
-    - lt_add_pos_rat
-    - lt_trans
-    - neg_from_rat
-    - rat_window
-    real_ring:
-    - close_imp_bounds
   real_lte_imp_rat_lte:
     rat:
     - Rat.lte
@@ -1263,11 +1124,6 @@ blocks:
     - Real.lte
     - gt_imp_from_rat_gt
     - not_gt_rat_self
-  self_close:
-    real_base:
-    - lt_add_pos
-    real_ring:
-    - sum_bounds_imp_close
   self_eq:
     real_ring:
     - converges_imp_converges_to
@@ -1424,15 +1280,6 @@ blocks:
     - add_zero_left
     - neg_neg
     - sub_moves_sides
-  sum_bounds_imp_close:
-    real_base:
-    - Real.lte
-    - Real.sub
-    - lt_add_right
-    - lt_lte_trans
-    - sub_cancels
-    real_ring:
-    - bounds_imp_close
   ub_imp_limit_lte:
     real_base:
     - Real.gt

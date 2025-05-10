@@ -1,4 +1,4 @@
-dependencies: 8501597659450617286
+dependencies: 3667531209744900426
 content: 9652213878915254060
 blocks:
   add_continuous2:
@@ -16,7 +16,6 @@ blocks:
     - uniform
     - uniform_condition
     real_ring:
-    - Real.is_close
     - add_close
     - close_and_lt_imp_close
     - eps_lt_half
@@ -35,17 +34,16 @@ blocks:
     - add_comm
   close_add:
     real_base:
+    - Real.is_close
     - add_comm
     - sub_cancels
     real_ring:
-    - Real.is_close
     - sub_both_eq_sub_add
   compose_uniform:
     real:
     - uniform
     - uniform_condition
     real_ring:
-    - Real.is_close
     - compose
   constant_is_rat_uniform:
     rat:
@@ -54,16 +52,17 @@ blocks:
     - is_constant
     - rat_condition
     - rat_uniform
-    real_ring:
+    real_base:
     - self_close
   constant_is_uniform:
     real:
     - is_constant
     - uniform
     - uniform_condition
+    real_base:
+    - self_close
     real_ring:
     - mul_one_right
-    - self_close
   lift_constant_is_constant:
     real:
     - constant_is_rat_uniform
@@ -99,6 +98,7 @@ blocks:
     - add_assoc
     - add_from_rat
     - add_rat_eps_between
+    - close_imp_bounds
     - gt_from_rat_imp_gt_rat
     - gt_imp_not_lte
     - gt_rat_sorts
@@ -114,15 +114,14 @@ blocks:
     - min_pos_pos
     - not_gt_rat_self
     - rat_between_reals
+    - rat_intersect
+    - self_close
     real_ring:
     - close_and_lt_imp_close
-    - close_imp_bounds
     - eps_lt_half
     - eps_smaller_than_both
     - from_rat_pos
-    - rat_intersect
     - rat_seq_is_close
-    - self_close
     - smaller_rat_eps
   lift_uniform_is_uniform:
     nat:
@@ -134,12 +133,12 @@ blocks:
     - uniform
     - uniform_condition
     - uniform_imp_seq
-    real_ring:
-    - Real.is_close
-    - close_and_lt_imp_close
+    real_base:
     - close_comm
-    - close_limit_imp_seqs_get_close
     - close_reals_imp_close_rats
+    real_ring:
+    - close_and_lt_imp_close
+    - close_limit_imp_seqs_get_close
     - compose
     - converges_imp_converges_to
     - converges_to
@@ -157,9 +156,10 @@ blocks:
     real:
     - rat_condition
     - rat_uniform
-    real_ring:
+    real_base:
     - close_imp_eps_pos
     - close_reals_imp_close_rats
+    real_ring:
     - compose
     - converges_to
     - lift_seq_elt
@@ -203,12 +203,11 @@ blocks:
     - rat_uniform
     real_base:
     - Real.gte
+    - close_rats_imp_close_reals
     - not_lt_imp_gte
     - zero_not_positive
     real_ring:
-    - Real.is_close
     - close_and_lt_imp_close
-    - close_rats_imp_close_reals
     - compose
     - pos_lte_imp_pos
     - smaller_rat_eps
@@ -221,8 +220,9 @@ blocks:
     real:
     - rat_condition
     - uniform_condition
-    real_ring:
+    real_base:
     - close_rats_imp_close_reals
+    real_ring:
     - compose
   uniform_imp_continuous:
     real:
@@ -249,10 +249,10 @@ blocks:
     real:
     - rat_condition
     - rat_uniform
-    real_ring:
-    - Real.is_close
-    - cauchy_condition
+    real_base:
     - close_reals_imp_close_rats
+    real_ring:
+    - cauchy_condition
     - compose
     - converges
     - from_rat_pos
@@ -262,15 +262,15 @@ blocks:
     - uniform
     - uniform_condition
     real_base:
-    - Real.lt
-    real_ring:
     - Real.is_close
-    - close_and_lt_imp_close
+    - Real.lt
     - close_comm
+    - rat_intersect
+    - self_close
+    real_ring:
+    - close_and_lt_imp_close
     - eps_lt_half
     - eps_smaller_than_both
     - is_close_triangle
     - neq_imp_abs_diff_pos
-    - rat_intersect
     - rat_seq_is_close
-    - self_close
