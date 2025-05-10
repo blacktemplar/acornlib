@@ -1,5 +1,5 @@
-dependencies: 14849156758158948298
-content: 9649905792499271126
+dependencies: 7511024722513035619
+content: 2095396335171199431
 blocks:
   Real.AddComm:
     real_base:
@@ -275,11 +275,9 @@ blocks:
   converges_imp_abs_bounded:
     rat:
     - Rat.abs
-    - Rat.lte
     - abs_non_neg
     - bounding_both
     - lt_trans
-    - lte_lt_trans
     real_ring:
     - converges_imp_bounded
     - converges_to_imp_converges
@@ -582,8 +580,9 @@ blocks:
     - rat_seq_converges_to
   lift_seq_elt:
     real_ring:
-    - compose
     - lift_seq
+    util:
+    - compose
   limit_add_seq:
     nat:
     - Nat.lte
@@ -1214,7 +1213,6 @@ blocks:
     real_base:
     - Real.gt
     - Real.sub
-    - add_comm
     - lt_add_left
     - lt_swap_neg
   sub_lte:

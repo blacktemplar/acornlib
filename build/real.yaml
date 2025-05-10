@@ -1,5 +1,5 @@
-dependencies: 16995695103767962090
-content: 7090675634869113568
+dependencies: 9249428095977931898
+content: 10892114401065601951
 blocks:
   add_continuous2:
     real:
@@ -47,7 +47,7 @@ blocks:
     - uniform_condition
     real_base:
     - Real.is_close
-    real_ring:
+    util:
     - compose
   constant_is_rat_uniform:
     rat:
@@ -73,9 +73,10 @@ blocks:
     - is_constant
     - lift_uc
     real_ring:
-    - compose
     - eq_imp_limit
     - eventual_eq
+    util:
+    - compose
   lift_fixes_rats:
     real:
     - lift_uc
@@ -144,7 +145,6 @@ blocks:
     real_ring:
     - close_and_lt_imp_close
     - close_limit_imp_seqs_get_close
-    - compose
     - converges_imp_converges_to
     - converges_to
     - converges_to_imp_converges
@@ -157,6 +157,8 @@ blocks:
     - limit_rat_rat_seq
     - rat_seq_converges_to
     - seq_close
+    util:
+    - compose
   limit_compose_rat_uniform:
     real:
     - rat_condition
@@ -165,10 +167,11 @@ blocks:
     - close_imp_eps_pos
     - close_reals_imp_close_rats
     real_ring:
-    - compose
     - converges_to
     - lift_seq_elt
     - rat_approx
+    util:
+    - compose
   limit_compose_uniform:
     nat:
     - Nat.lte
@@ -177,9 +180,10 @@ blocks:
     - uniform
     - uniform_condition
     real_ring:
-    - compose
     - converges_imp_converges_to
     - converges_to
+    util:
+    - compose
   neg_uniform:
     real:
     - uniform
@@ -214,9 +218,10 @@ blocks:
     - zero_not_positive
     real_ring:
     - close_and_lt_imp_close
-    - compose
     - pos_lte_imp_pos
     - smaller_rat_eps
+    util:
+    - compose
   tighten_uc:
     real:
     - uniform_condition
@@ -228,7 +233,7 @@ blocks:
     - uniform_condition
     real_base:
     - close_rats_imp_close_reals
-    real_ring:
+    util:
     - compose
   uniform_imp_continuous:
     real:
@@ -260,10 +265,11 @@ blocks:
     - close_reals_imp_close_rats
     real_ring:
     - cauchy_condition
-    - compose
     - converges
     - from_rat_pos
     - lift_seq
+    util:
+    - compose
   uniform_ne_imp_rat_ne:
     real:
     - uniform

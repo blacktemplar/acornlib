@@ -1,5 +1,6 @@
 from nat import Nat
 from rat import Rat
+from util import compose
 from real_base import Real, min, max, is_cut, is_lower, is_greatest, has_greatest, is_dedekind_cut
 
 // This file uses Cauchy sequences to define multiplication, and uses that to demonstrate that
@@ -662,13 +663,6 @@ theorem converges_to_unique(q: Nat -> Real, a: Real, b: Real) {
     }
     if b < a {
         false
-    }
-}
-
-// Probably this should go somewhere else.
-define compose<T, U, V>(f: U -> V, g: T -> U) -> T -> V {
-    function(t: T) {
-        f(g(t))
     }
 }
 

@@ -1,7 +1,8 @@
 from nat import Nat
 from rat import Rat
+from util import compose
 from real_base import min
-from real_ring import compose, lift_seq, converges, cauchy_condition, converges_to, limit, rat_seq, limit_rat, seq_close
+from real_ring import lift_seq, converges, cauchy_condition, converges_to, limit, rat_seq, limit_rat, seq_close
 from real_series import Real
  
 // This file proves theorems about uniform convergence.
