@@ -1,6 +1,6 @@
 from nat import Nat
 from rat import Rat
-from util import compose
+from util import compose, is_constant
 from real_base import min
 from real_ring import lift_seq, converges, cauchy_condition, converges_to, limit, rat_seq, limit_rat, seq_close
 from real_series import Real
@@ -439,14 +439,6 @@ theorem lift_inc_is_inc(f: Rat -> Real) {
             lf(x) < lf(y)
 
             lift_uc(f)(x) < lift_uc(f)(y)
-        }
-    }
-}
-
-define is_constant<T, U>(f: T -> U) -> Bool {
-    exists(y: U) {
-        forall(x: T) {
-            f(x) = y
         }
     }
 }

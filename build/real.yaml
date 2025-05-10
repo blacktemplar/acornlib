@@ -1,5 +1,5 @@
 dependencies: 9249428095977931898
-content: 10892114401065601951
+content: 11029005580778227254
 blocks:
   add_continuous2:
     real:
@@ -53,30 +53,32 @@ blocks:
     rat:
     - one_is_pos
     real:
-    - is_constant
     - rat_condition
     - rat_uniform
     real_base:
     - self_close
+    util:
+    - is_constant
   constant_is_uniform:
     real:
-    - is_constant
     - uniform
     - uniform_condition
     real_base:
     - self_close
     real_ring:
     - mul_one_right
+    util:
+    - is_constant
   lift_constant_is_constant:
     real:
     - constant_is_rat_uniform
-    - is_constant
     - lift_uc
     real_ring:
     - eq_imp_limit
     - eventual_eq
     util:
     - compose
+    - is_constant
   lift_fixes_rats:
     real:
     - lift_uc
