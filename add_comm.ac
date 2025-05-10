@@ -1,0 +1,24 @@
+// AddComm represents a commutative, additive monoid.
+typeclass M: AddComm {
+    zero: M
+
+    add: (M, M) -> M
+
+    associative(a: M, b: M, c: M) {
+        (a + b) + c = a + (b + c)
+    }
+
+    // The identity element must satisfy the identity property
+    identity_right(a: M) {
+        a + M.zero = a
+    }
+
+    // Other direction of the identity property
+    identity_left(a: M) {
+        M.zero + a = a
+    }
+
+    commutative(a: M, b: M) {
+        a + b = b + a
+    }
+}

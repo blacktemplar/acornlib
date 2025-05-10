@@ -1,0 +1,11 @@
+dependencies: 18135159083158618902
+content: 18141993753447681545
+blocks:
+  pow_add:
+    mul_comm:
+    - pow
+    nat:
+    - Nat.add
+    - Nat.induction
+    - add_comm
+    - add_suc_left

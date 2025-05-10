@@ -1,5 +1,5 @@
-dependencies: 14447370166362664718
-content: 3375566347965592176
+dependencies: 14849156758158948298
+content: 9649905792499271126
 blocks:
   Real.AddComm:
     real_base:
@@ -9,8 +9,8 @@ blocks:
   Real.MulComm:
     real_ring:
     - mul_assoc
-    - mul_comm
     - mul_one_left
+    - real_mul_comm
   abs_lt_imp_close_to_zero:
     real_base:
     - Real.abs
@@ -82,6 +82,7 @@ blocks:
     - gte_each_of_three
     - lte_trans
     real_base:
+    - Real.is_close
     - add_from_rat
     real_ring:
     - add_close
@@ -194,6 +195,7 @@ blocks:
     - lt_lte_trans
     - lte_or_gte
     - neg_lt_rat
+    - rat_lower
     - rat_window
     real_ring:
     - cauchy_condition
@@ -273,9 +275,11 @@ blocks:
   converges_imp_abs_bounded:
     rat:
     - Rat.abs
+    - Rat.lte
     - abs_non_neg
     - bounding_both
     - lt_trans
+    - lte_lt_trans
     real_ring:
     - converges_imp_bounded
     - converges_to_imp_converges
@@ -728,8 +732,8 @@ blocks:
     - Real.lte
     real_ring:
     - lt_mul_pos_right
-    - mul_comm
     - mul_zero_left
+    - real_mul_comm
   mul3_as_seq:
     real_ring:
     - Real.mul
@@ -745,17 +749,13 @@ blocks:
   mul_assoc:
     real_ring:
     - mul3_as_seq
-    - mul_comm
     - mul_rat_seq_comm
     - mul_seq_assoc
-  mul_comm:
-    real_ring:
-    - Real.mul
-    - mul_rat_seq_comm
+    - real_mul_comm
   mul_distrib_left:
     real_ring:
-    - mul_comm
     - mul_distrib_right
+    - real_mul_comm
   mul_distrib_right:
     real_ring:
     - Real.mul
@@ -798,8 +798,8 @@ blocks:
     - mul_zero_left
   mul_neg_one_right:
     real_ring:
-    - mul_comm
     - mul_neg_one_left
+    - real_mul_comm
   mul_neg_pos:
     real_base:
     - neg_neg
@@ -810,19 +810,19 @@ blocks:
     - mul_pos_pos
   mul_neg_right:
     real_ring:
-    - mul_comm
     - mul_neg_left
+    - real_mul_comm
   mul_nonneg_nonneg:
     real_base:
     - Real.is_negative
     real_ring:
-    - mul_comm
     - mul_pos_pos
     - mul_zero_left
+    - real_mul_comm
   mul_one_left:
     real_ring:
-    - mul_comm
     - mul_one_right
+    - real_mul_comm
   mul_one_right:
     rat:
     - mul_one_right
@@ -839,8 +839,8 @@ blocks:
     - mul_rat_seq
   mul_pos_neg:
     real_ring:
-    - mul_comm
     - mul_neg_pos
+    - real_mul_comm
   mul_pos_pos:
     nat:
     - gte_each_of_three
@@ -934,8 +934,8 @@ blocks:
     - mul_rat_seq
   mul_sub_distrib_left:
     real_ring:
-    - mul_comm
     - mul_sub_distrib_right
+    - real_mul_comm
   mul_sub_distrib_right:
     real_base:
     - Real.sub
@@ -944,8 +944,8 @@ blocks:
     - mul_neg_right
   mul_zero_left:
     real_ring:
-    - mul_comm
     - mul_zero_right
+    - real_mul_comm
   mul_zero_rat_seq:
     rat:
     - Rat.div
@@ -990,8 +990,8 @@ blocks:
     - limit_rat_const_rat_seq
     - limit_rat_mul_rat_seq
     - limit_rat_rat_seq
-    - mul_comm
     - mul_rat_seq
+    - real_mul_comm
     - seq_eq
     - zero_rat_seq
     - zero_rat_seq_is_zero
@@ -1026,6 +1026,7 @@ blocks:
     nat:
     - lte_trans
     real_base:
+    - Real.is_close
     - neg_from_rat
     real_ring:
     - close_and_lt_imp_close
@@ -1124,6 +1125,10 @@ blocks:
     - Real.lte
     - gt_imp_from_rat_gt
     - not_gt_rat_self
+  real_mul_comm:
+    real_ring:
+    - Real.mul
+    - mul_rat_seq_comm
   self_eq:
     real_ring:
     - converges_imp_converges_to
@@ -1209,6 +1214,7 @@ blocks:
     real_base:
     - Real.gt
     - Real.sub
+    - add_comm
     - lt_add_left
     - lt_swap_neg
   sub_lte:

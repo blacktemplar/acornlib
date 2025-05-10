@@ -1657,7 +1657,7 @@ class Real {
     }
 }
 
-theorem mul_comm(x: Real, y: Real) {
+theorem real_mul_comm(x: Real, y: Real) {
     x * y = y * x
 } by {
     x * y = limit_rat(mul_rat_seq(rat_seq(x), rat_seq(y)))
@@ -2003,7 +2003,8 @@ theorem non_neg_imp_zero_lte(x: Real) {
     not x.is_negative implies Real.0 <= x
 }
 
-from monoid import AddComm, MulComm
+from add_comm import AddComm
+from mul_comm import MulComm
 
 instance Real: AddComm {
     let zero: Real = Real.0

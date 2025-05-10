@@ -1,4 +1,4 @@
-dependencies: 3667531209744900426
+dependencies: 5633466100324911931
 content: 9652213878915254060
 blocks:
   add_continuous2:
@@ -15,6 +15,8 @@ blocks:
     - add_fns
     - uniform
     - uniform_condition
+    real_base:
+    - Real.is_close
     real_ring:
     - add_close
     - close_and_lt_imp_close
@@ -43,6 +45,8 @@ blocks:
     real:
     - uniform
     - uniform_condition
+    real_base:
+    - Real.is_close
     real_ring:
     - compose
   constant_is_rat_uniform:
@@ -134,6 +138,7 @@ blocks:
     - uniform_condition
     - uniform_imp_seq
     real_base:
+    - Real.is_close
     - close_comm
     - close_reals_imp_close_rats
     real_ring:
@@ -203,6 +208,7 @@ blocks:
     - rat_uniform
     real_base:
     - Real.gte
+    - Real.is_close
     - close_rats_imp_close_reals
     - not_lt_imp_gte
     - zero_not_positive
@@ -250,6 +256,7 @@ blocks:
     - rat_condition
     - rat_uniform
     real_base:
+    - Real.is_close
     - close_reals_imp_close_rats
     real_ring:
     - cauchy_condition
