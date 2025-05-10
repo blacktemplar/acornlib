@@ -1,5 +1,5 @@
 dependencies: 12433125378171260037
-content: 5415561974503892315
+content: 16708763012318145193
 blocks:
   add_assoc:
     list:
@@ -48,6 +48,15 @@ blocks:
   nil_add:
     list:
     - List.add
+  sum_add:
+    add_comm:
+    - AddComm.associative
+    - AddComm.commutative
+    - AddComm.identity_right
+    list:
+    - List.add
+    - List.induction
+    - sum
   unique_length:
     list:
     - List.induction

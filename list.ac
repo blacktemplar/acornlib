@@ -259,6 +259,45 @@ define partials<A: AddComm>(f: Nat -> A, n: Nat) -> A {
     sum(map(List.range(n), f))
 }
 
+theorem sum_add<A: AddComm>(left: List<A>, right: List<A>) {
+    sum(left + right) = sum(left) + sum(right)
+} by {
+    define p(x: List<A>) -> Bool {
+        sum(x + right) = sum(x) + sum(right)
+    }
+
+    // Base case: sum(nil + right) = sum(nil) + sum(right)
+    sum(List.nil<A> + right) = sum(right)
+    sum(List.nil<A>) = A.zero
+    A.zero + sum(right) = sum(right)
+    p(List.nil)
+
+    // Inductive step
+    forall(head: A, tail: List<A>) {
+        if p(tail) {
+            // Induction hypothesis: sum(tail + right) = sum(tail) + sum(right)
+
+            // Left side: sum(List.cons(head, tail) + right)
+            sum(List.cons(head, tail) + right) = sum(List.cons(head, tail + right))
+            sum(List.cons(head, tail + right)) = head + sum(tail + right)
+
+            // Use induction hypothesis
+            head + sum(tail + right) = head + (sum(tail) + sum(right))
+
+            // Right side: sum(List.cons(head, tail)) + sum(right)
+            sum(List.cons(head, tail)) = head + sum(tail)
+            sum(List.cons(head, tail)) + sum(right) = (head + sum(tail)) + sum(right)
+
+            // Use associativity
+            (head + sum(tail)) + sum(right) = head + (sum(tail) + sum(right))
+
+            // Therefore
+            sum(List.cons(head, tail) + right) = sum(List.cons(head, tail)) + sum(right)
+            p(List.cons(head, tail))
+        }
+    }
+}
+
 theorem map_add<T, U>(left: List<T>, right: List<T>, f: T -> U) {
     map(left + right, f) = map(left, f) + map(right, f)
 } by {
