@@ -252,7 +252,10 @@ define sum<A: AddComm>(items: List<A>) -> A {
     }
 }
 
-define sum_range<A: AddComm>(f: Nat -> A, n: Nat) -> A {
+// The partial sums of an infinite series.
+// partials(a) gives a new infinite sequence, where the nth
+// element is the sum of the first n elements of a.
+define partials<A: AddComm>(f: Nat -> A, n: Nat) -> A {
     sum(map(List.range(n), f))
 }
 
@@ -326,3 +329,4 @@ theorem add_assoc<T>(a: List<T>, b: List<T>, c: List<T>) {
         }
     }
 }
+

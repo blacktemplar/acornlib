@@ -1,5 +1,6 @@
 from nat import Nat
 from rat import Rat
+from list import partials
 from real_ring import Real
 
 // This file defines infinite series and proves theorems about them.
@@ -7,3 +8,11 @@ from real_ring import Real
 class Real {
     // Placeholder to let other modules import Real from here.
 }
+
+// seq_lte is whether every element of the sequence is lte.
+define seq_lte(a: Nat -> Real, b: Nat -> Real) -> Bool {
+    forall(n: Nat) {
+        a(n) <= b(n)
+    }
+}
+
