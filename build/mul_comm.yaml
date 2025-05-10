@@ -1,8 +1,8 @@
 dependencies: 18135159083158618902
-content: 14278837650411784231
+content: 18141993753447681545
 blocks:
   pow_add:
-    monoid:
+    mul_comm:
     - pow
     nat:
     - Nat.add

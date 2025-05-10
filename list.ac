@@ -239,7 +239,7 @@ define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
     }
 }
 
-from monoid import AddComm
+from add_comm import AddComm
 
 define sum<A: AddComm>(items: List<A>) -> A {
     match items {
