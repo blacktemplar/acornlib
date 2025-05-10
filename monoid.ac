@@ -60,3 +60,39 @@ define pow<M: MulComm>(base: M, exp: Nat) -> M {
         }
     }
 }
+
+// Proof that a^n * a^m = a^(n+m)
+theorem pow_add<M: MulComm>(a: M, n: Nat, m: Nat) {
+    pow(a, n) * pow(a, m) = pow(a, n + m)
+} by {
+    // Define a helper function for induction
+    define f(x: Nat) -> Bool { pow_add(a, x, m) }
+
+    // Base case: a^0 * a^m = a^(0+m)
+    pow(a, Nat.0) * pow(a, m) = M.one * pow(a, m)
+    M.identity_left(pow(a, m))
+    pow(a, Nat.0) * pow(a, m) = pow(a, m)
+    pow(a, Nat.0 + m) = pow(a, m)
+    pow_add(a, Nat.0, m)
+    f(Nat.0)
+
+    // Inductive step
+    forall(x: Nat) {
+        if f(x) {
+            pow_add(a, x, m)
+            pow(a, x) * pow(a, m) = pow(a, x + m)
+
+            // Now prove for x.suc
+            pow(a, x.suc) * pow(a, m) = (a * pow(a, x)) * pow(a, m)
+            M.associative(a, pow(a, x), pow(a, m))
+            pow(a, x.suc) * pow(a, m) = a * (pow(a, x) * pow(a, m))
+            pow(a, x.suc) * pow(a, m) = a * pow(a, x + m)
+            pow(a, x.suc) * pow(a, m) = pow(a, (x + m).suc)
+            pow(a, x.suc) * pow(a, m) = pow(a, x.suc + m)
+            pow_add(a, x.suc, m)
+            f(x.suc)
+        }
+    }
+
+    pow_add(a, n, m)
+}

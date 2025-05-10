@@ -1,3 +1,11 @@
 dependencies: 18135159083158618902
-content: 17828785946593772555
-blocks: {}
+content: 14278837650411784231
+blocks:
+  pow_add:
+    monoid:
+    - pow
+    nat:
+    - Nat.add
+    - Nat.induction
+    - add_comm
+    - add_suc_left

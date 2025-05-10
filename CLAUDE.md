@@ -1,6 +1,6 @@
-This code is tricky, because it uses Acorn, a programming language that you don't know.
+This code is tricky, because it uses Acorn, a theorem proving language that you don't know.
 
-Acorn is a theorem proving language. Look at real.ac and nat.ac to get a sense of how it works.
+Before writing a proof, look at at least one Acorn file to understand the syntax. For proofs by induction, look at nat.ac. For proofs involving limits, look at real_ring.ac.
 
 You can run
 
