@@ -1,0 +1,9 @@
+from nat import Nat
+from rat import Rat
+from real_ring import Real
+
+// This file defines infinite series and proves theorems about them.
+
+class Real {
+    // Placeholder to let other modules import Real from here.
+}

@@ -1,4 +1,4 @@
-dependencies: 2053373843741352128
+dependencies: 138275151376347071
 content: 14549475988330977023
 blocks:
   abs_squared_conj:
@@ -15,7 +15,6 @@ blocks:
     - add_neg_eq_zero
     - neg_neg
     real_ring:
-    - Real.mul
     - mul_neg_right
     - real_mul_comm
   abs_squared_nonneg:
@@ -121,7 +120,6 @@ blocks:
     - Complex.mul
     - Complex.re
     real_base:
-    - Real.add
     - Real.neg
     - Real.sub
     - add_zero_left
@@ -159,7 +157,6 @@ blocks:
     - add_zero_right
     - neg_zero
     real_ring:
-    - Real.mul
     - mul_one_left
     - mul_zero_left
     - mul_zero_right
