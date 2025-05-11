@@ -1,5 +1,5 @@
 dependencies: 12433125378171260037
-content: 9687224996360763180
+content: 12784877633384658989
 blocks:
   add_assoc:
     list:
@@ -28,6 +28,13 @@ blocks:
     list:
     - List.add
     - List.induction
+  add_to_nil:
+    list:
+    - List.length
+    - add_length
+    - length_zero_imp_nil
+    nat:
+    - add_to_zero
   length_range:
     list:
     - List.append
@@ -40,6 +47,12 @@ blocks:
     - Nat.induction
     - add_comm
     - add_one_left
+  length_zero_imp_nil:
+    list:
+    - List.length
+    - List.new
+    nat:
+    - Nat.Nat.suc
   map_add:
     list:
     - List.add

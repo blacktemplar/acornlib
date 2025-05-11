@@ -372,3 +372,11 @@ theorem add_assoc<T>(a: List<T>, b: List<T>, c: List<T>) {
 theorem map_singleton<T, U>(f: T -> U, x: T) {
     map(List.singleton(x), f) = List.singleton(f(x))
 }
+
+theorem length_zero_imp_nil<T>(list: List<T>) {
+    list.length = Nat.0 implies list = List.nil<T>
+}
+
+theorem add_to_nil<T>(a: List<T>, b: List<T>) {
+    a + b = List.nil<T> implies a = List.nil<T> and b = List.nil<T>
+}
