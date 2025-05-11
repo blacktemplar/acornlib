@@ -12,4 +12,4 @@ to run the verifier. This should be run after every change, to make sure the pro
 
 ## Quick Reference
 
-Numeric literals must be scoped. You can write `Nat.0` indicates zero, the natural number. `Real.0` indicates zero, the real number. A `numerals Nat` statement will set the default, but don't add that if it isn't already there.
+Numeric literals must have their type specified. You can write `Nat.0` to indicate zero, the natural number. `Real.0` indicates zero, the real number. A `numerals Nat` statement will set the default, but don't add that if it isn't already there.
