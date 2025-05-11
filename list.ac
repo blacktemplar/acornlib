@@ -380,3 +380,7 @@ theorem length_zero_imp_nil<T>(list: List<T>) {
 theorem add_to_nil<T>(a: List<T>, b: List<T>) {
     a + b = List.nil<T> implies a = List.nil<T> and b = List.nil<T>
 }
+
+theorem append_not_nil<T>(a: List<T>, t: T) {
+    a.append(t) != List.nil<T>
+}

@@ -1,5 +1,5 @@
 dependencies: 12433125378171260037
-content: 12784877633384658989
+content: 2898114728434295634
 blocks:
   add_assoc:
     list:
@@ -35,6 +35,12 @@ blocks:
     - length_zero_imp_nil
     nat:
     - add_to_zero
+  append_not_nil:
+    list:
+    - List.List.cons
+    - List.append
+    - List.singleton
+    - add_to_nil
   length_range:
     list:
     - List.append
