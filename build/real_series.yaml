@@ -1,6 +1,21 @@
 dependencies: 6853790133024774457
-content: 124964405380588356
+content: 3653912981765013925
 blocks:
+  partials_seq_lte:
+    list:
+    - map
+    - partials
+    - range
+    nat:
+    - Nat.induction
+    real_base:
+    - Real.lte
+    - lte_add_left
+    - lte_add_right
+    - lte_trans
+    real_series:
+    - partials_suc
+    - seq_lte
   partials_suc:
     add_comm:
     - AddComm.commutative

@@ -27,7 +27,32 @@ theorem partials_suc(a: Nat -> Real, n: Nat) {
 }
 
 // Theorem: If seq_lte(a, b), then their partials also obey seq_lte.
-// theorem partials_seq_lte(a: Nat -> Real, b: Nat -> Real) {
-//     seq_lte(a, b) implies seq_lte(partials(a), partials(b))
-// }
+theorem partials_seq_lte(a: Nat -> Real, b: Nat -> Real) {
+    seq_lte(a, b) implies seq_lte(partials(a), partials(b))
+} by {
+    // Define a predicate for our induction
+    define p(n: Nat) -> Bool {
+        partials(a)(n) <= partials(b)(n)
+    }
 
+    partials(a)(Nat.0) <= partials(b)(Nat.0)
+    p(Nat.0)
+
+    // Inductive step
+    forall(n: Nat) {
+        if p(n) {
+            partials(a, n) <= partials(b, n)
+            a(n) <= b(n)
+            partials(a, n) + a(n) <= partials(b, n) + a(n)
+            partials(a, n) + a(n) <= partials(b, n) + b(n)
+            partials(a)(n.suc) <= partials(b)(n.suc)
+            p(n.suc)
+        }
+    }
+
+    // By induction, p holds for all n
+    forall(n: Nat) {
+        p(n)
+    }
+}
+ 
