@@ -1,5 +1,5 @@
 dependencies: 12433125378171260037
-content: 16708763012318145193
+content: 9687224996360763180
 blocks:
   add_assoc:
     list:
@@ -44,6 +44,10 @@ blocks:
     list:
     - List.add
     - List.induction
+    - map
+  map_singleton:
+    list:
+    - List.singleton
     - map
   nil_add:
     list:

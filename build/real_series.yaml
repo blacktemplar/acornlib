@@ -1,3 +1,18 @@
-dependencies: 16062644092429708695
-content: 15117686399288816173
-blocks: {}
+dependencies: 6853790133024774457
+content: 124964405380588356
+blocks:
+  partials_suc:
+    add_comm:
+    - AddComm.commutative
+    - AddComm.identity_right
+    list:
+    - List.append
+    - List.singleton
+    - map_add
+    - map_singleton
+    - partials
+    - range
+    - sum
+    - sum_add
+    real_base:
+    - add_comm

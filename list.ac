@@ -369,3 +369,6 @@ theorem add_assoc<T>(a: List<T>, b: List<T>, c: List<T>) {
     }
 }
 
+theorem map_singleton<T, U>(f: T -> U, x: T) {
+    map(List.singleton(x), f) = List.singleton(f(x))
+}

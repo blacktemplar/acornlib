@@ -16,85 +16,18 @@ define seq_lte(a: Nat -> Real, b: Nat -> Real) -> Bool {
     }
 }
 
-// // Theorem: If seq_lte(a, b), then their partials also obey seq_lte.
+theorem partials_suc(a: Nat -> Real, n: Nat) {
+    partials(a, n.suc) = partials(a, n) + a(n)
+} by {
+    // Simplify the left hand side.
+    partials(a, n.suc) = sum(map(List.range(n.suc), a))
+    List.range(n.suc) = List.range(n) + List.singleton(n)
+    map(List.range(n.suc), a) = map(List.range(n), a) + map(List.singleton(n), a)
+    sum(map(List.range(n.suc), a)) = sum(map(List.range(n), a)) + sum(map(List.singleton(n), a))
+}
+
+// Theorem: If seq_lte(a, b), then their partials also obey seq_lte.
 // theorem partials_seq_lte(a: Nat -> Real, b: Nat -> Real) {
 //     seq_lte(a, b) implies seq_lte(partials(a), partials(b))
-// } by {
-//     define f(n: Nat) -> Bool {
-//         seq_lte(a, b) implies partials(a, n) <= partials(b, n)
-//     }
-
-//     // Base case: n = Nat.0
-//     partials(a, Nat.0) = sum(map(List.range(Nat.0), a))
-//     partials(b, Nat.0) = sum(map(List.range(Nat.0), b))
-//     List.range(Nat.0) = List.nil<Nat>
-//     map(List.nil<Nat>, a) = List.nil<Real>
-//     map(List.nil<Nat>, b) = List.nil<Real>
-//     sum(List.nil<Real>) = Real.0
-//     partials(a, Nat.0) = Real.0
-//     partials(b, Nat.0) = Real.0
-//     Real.0 <= Real.0
-//     f(Nat.0)
-
-//     // Inductive step
-//     forall(n: Nat) {
-//         if f(n) {
-//             // Induction hypothesis: seq_lte(a, b) implies partials(a, n) <= partials(b, n)
-
-//             // For n.suc, we need to show partials(a, n.suc) <= partials(b, n.suc)
-//             partials(a, n.suc) = sum(map(List.range(n.suc), a))
-//             partials(b, n.suc) = sum(map(List.range(n.suc), b))
-
-//             // Use the definition of range(n.suc)
-//             List.range(n.suc) = range(n).append(n)
-//             List.range(n.suc) = range(n) + List.singleton(n)
-
-//             // Apply map over the sum
-//             map(range(n) + List.singleton(n), a) = map(range(n), a) + map(List.singleton(n), a)
-//             map(range(n) + List.singleton(n), b) = map(range(n), b) + map(List.singleton(n), b)
-
-//             // Calculate sum
-//             partials(a, n.suc) = sum(map(range(n), a) + map(List.singleton(n), a))
-//             partials(b, n.suc) = sum(map(range(n), b) + map(List.singleton(n), b))
-
-//             // Sum distributes over addition
-//             partials(a, n.suc) = sum(map(range(n), a)) + sum(map(List.singleton(n), a))
-//             partials(b, n.suc) = sum(map(range(n), b)) + sum(map(List.singleton(n), b))
-
-//             // Simplify the terms
-//             sum(map(range(n), a)) = partials(a, n)
-//             sum(map(range(n), b)) = partials(b, n)
-
-//             // Calculate map(List.singleton(n), a) and map(List.singleton(n), b)
-//             map(List.singleton(n), a) = List.singleton(a(n))
-//             map(List.singleton(n), b) = List.singleton(b(n))
-
-//             // Calculate sum of singletons
-//             sum(List.singleton(a(n))) = a(n)
-//             sum(List.singleton(b(n))) = b(n)
-
-//             // Combine the terms
-//             partials(a, n.suc) = partials(a, n) + a(n)
-//             partials(b, n.suc) = partials(b, n) + b(n)
-
-//             // Use the induction hypothesis and seq_lte assumption
-//             seq_lte(a, b)
-//             a(n) <= b(n)
-//             partials(a, n) <= partials(b, n)
-
-//             // Addition preserves inequality
-//             partials(a, n) + a(n) <= partials(b, n) + b(n)
-//             partials(a, n.suc) <= partials(b, n.suc)
-
-//             f(n.suc)
-//         }
-//     }
-
-//     // Complete the theorem
-//     seq_lte(a, b)
-//     forall(n: Nat) {
-//         f(n)
-//         partials(a, n) <= partials(b, n)
-//     }
 // }
 
