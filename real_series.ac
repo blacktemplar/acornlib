@@ -116,3 +116,9 @@ theorem distant_increasing(a: Nat -> Real, m: Nat, n: Nat) {
         a(m) <= a(n)
     }
 }
+
+define bounded_above(a: Nat -> Real, b: Real) -> Bool {
+    forall(n: Nat) {
+        a(n) <= b
+    }
+}
