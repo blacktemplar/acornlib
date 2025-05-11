@@ -1,6 +1,30 @@
 dependencies: 6853790133024774457
-content: 3653912981765013925
+content: 16355042331703370639
 blocks:
+  distant_increasing:
+    int:
+    - sub_nat
+    - sub_nat_imp_add
+    - sub_nat_negate_imp_add
+    - sub_nat_zero_left
+    nat:
+    - Nat.induction
+    - Nat.lte
+    - add_comm
+    - add_one_right
+    - add_suc_right
+    - add_zero_left
+    - add_zero_right
+    - lt_diff
+    - lt_imp_lt_suc
+    - lt_or_lte
+    - lte_imp_not_lt
+    real_base:
+    - Real.lte
+    - lte_self
+    - lte_trans
+    real_series:
+    - is_increasing
   partials_seq_lte:
     list:
     - map

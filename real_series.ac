@@ -1,7 +1,7 @@
 from nat import Nat
 from rat import Rat
 from list import partials, sum, map, List, range
-from real_ring import Real
+from real_ring import Real, converges, converges_to, limit
 
 // This file defines infinite series and proves theorems about them.
 
@@ -55,4 +55,64 @@ theorem partials_seq_lte(a: Nat -> Real, b: Nat -> Real) {
         p(n)
     }
 }
- 
+
+// This definition of increasing is not strict.
+// It includes less-than-or-equal.
+define is_increasing(a: Nat -> Real) -> Bool {
+    forall(n: Nat) {
+        a(n) <= a(n.suc)
+    }
+}
+
+theorem distant_increasing(a: Nat -> Real, m: Nat, n: Nat) {
+    is_increasing(a) and m <= n implies a(m) <= a(n)
+} by {
+    // Define a predicate for our induction
+    define p(k: Nat) -> Bool {
+        forall(j: Nat) {
+            j + k <= n implies a(j) <= a(j + k)
+        }
+    }
+
+    // Base case: k = 0
+    forall(j: Nat) {
+        if j + Nat.0 <= n {
+            j <= n
+            j + Nat.0 = j
+            a(j) <= a(j)
+        }
+    }
+    p(Nat.0)
+
+    // Inductive step: if p(k) holds, prove p(k.suc)
+    forall(k: Nat) {
+        if p(k) {
+            forall(j: Nat) {
+                if j + k.suc <= n {
+                    // This means j+k+1 <= n, which means j+k <= n-1 < n
+                    j + k <= n
+
+                    // Apply p(k) to get a(j) <= a(j+k)
+                    a(j) <= a(j + k)
+
+                    // Apply the definition of is_increasing to the point j+k
+                    a(j + k) <= a(j + k + Nat.1)
+                    a(j + k) <= a(j + k.suc)
+
+                    // Combine the inequalities
+                    a(j) <= a(j + k.suc)
+                }
+            }
+            p(k.suc)
+        }
+    }
+
+    // Apply the predicate with j=m, k=n-m
+    if m <= n {
+        let k: Nat satisfy { m + k = n }
+        p(k)
+        m + k <= n
+        a(m) <= a(m + k)
+        a(m) <= a(n)
+    }
+}
