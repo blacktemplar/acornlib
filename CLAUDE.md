@@ -16,6 +16,8 @@ Before proving a theorem, take a look to see if the theorem statement is actuall
 
 Numeric literals must have their type specified. You can write `Nat.0` to indicate zero, the natural number. `Real.0` indicates zero, the real number. A `numerals Nat` statement will set the default, but don't add that if it isn't already there.
 
+Variable names must be lowercase.
+
 ## Fixing Proofs
 
 When a statement could not be verified, there are two possibilities.

@@ -1,5 +1,5 @@
 dependencies: 11236361933127250947
-content: 14946974749361181767
+content: 8541800294967280418
 blocks:
   distant_increasing:
     int:
@@ -25,6 +25,34 @@ blocks:
     - lte_trans
     real_series:
     - is_increasing
+  increasing_convergent_bounded_by_limit:
+    nat:
+    - Nat.lt
+    - Nat.lte
+    - lt_not_symm
+    - lt_or_lte
+    - lte_trans
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.is_close
+    - Real.lt
+    - add_zero_left
+    - close_imp_bounds
+    - gte_imp_not_lt
+    - lte_lt_trans
+    - not_lte_imp_gt
+    - rat_between_reals_gt
+    - sub_moves_sides
+    real_ring:
+    - converges_imp_converges_to
+    - converges_to
+    - lt_imp_minus_pos
+    - sub_both_eq_sub_add
+    - sub_zero_imp_eq
+    real_series:
+    - bounded_above
+    - distant_increasing
   partials_seq_lte:
     list:
     - map
