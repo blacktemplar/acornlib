@@ -127,10 +127,6 @@ define bounded_above(a: Nat -> Real, b: Real) -> Bool {
 theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
     is_increasing(a) and converges(a) implies bounded_above(a, limit(a))
 } by {
-    // First, assume the premises
-    is_increasing(a)
-    converges(a)
-
     // We'll prove that for any n, a(n) <= limit(a)
     forall(n: Nat) {
         // Suppose for contradiction that a(n) > limit(a)
@@ -197,7 +193,4 @@ theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
         // Therefore, a(n) <= limit(a)
         a(n) <= limit(a)
     }
-
-    // Since this holds for all n, the sequence is bounded above by its limit
-    bounded_above(a, limit(a))
 }
