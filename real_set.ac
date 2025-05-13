@@ -16,10 +16,23 @@ define is_upper_bound(s: Real -> Bool, x: Real) -> Bool {
     }
 }
 
+define is_lower_bound(s: Real -> Bool, x: Real) -> Bool {
+    forall(y: Real) {
+        s(y) implies x <= y
+    }
+}
+
 define is_least_upper_bound(s: Real -> Bool, x: Real) -> Bool {
     is_upper_bound(s, x) and
     forall(y: Real) {
         is_upper_bound(s, y) implies x <= y
+    }
+}
+
+define is_greatest_lower_bound(s: Real -> Bool, x: Real) -> Bool {
+    is_lower_bound(s, x) and
+    forall(y: Real) {
+        is_lower_bound(s, y) implies y <= x
     }
 }
 
@@ -173,4 +186,4 @@ theorem ub_imp_lub(s: Real -> Bool, x: Real) {
             }
         }
     }    
-}
+} 
