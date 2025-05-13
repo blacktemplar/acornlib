@@ -1,5 +1,6 @@
 from nat import Nat
 from rat import Rat
+from real_base import is_cut, is_lower, is_greatest, has_greatest, is_dedekind_cut
 from real_ring import Real, converges, converges_to, limit
 
 // This file proves theorems about sets of real numbers.
