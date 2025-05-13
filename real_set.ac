@@ -1,0 +1,23 @@
+from nat import Nat
+from rat import Rat
+from real_ring import Real, converges, converges_to, limit
+
+// This file proves theorems about sets of real numbers.
+
+class Real {
+    // Placeholder to let other modules import Real from here.
+}
+
+// Not strict.
+define is_upper_bound(s: Real -> Bool, x: Real) -> Bool {
+    forall(y: Real) {
+        s(y) implies y <= x
+    }
+}
+
+define is_least_upper_bound(s: Real -> Bool, x: Real) -> Bool {
+    is_upper_bound(s, x) and
+    forall(y: Real) {
+        is_upper_bound(s, y) implies x <= y
+    }
+}
