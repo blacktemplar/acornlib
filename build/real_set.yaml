@@ -1,3 +1,24 @@
 dependencies: 16240648193659227655
-content: 14025226154315074492
-blocks: {}
+content: 2252840791507672855
+blocks:
+  sup_cut_is_cut:
+    rat:
+    - iop_pos
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.lt
+    - gt_imp_not_lte
+    - gte_imp_not_lt
+    - is_cut
+    - lt_lte_trans
+    - lte_lt_trans
+    - lte_or_gte
+    - max
+    - not_lte_imp_gt
+    - rat_dual_upper_bound
+    - rat_lower
+    real_set:
+    - is_nonempty
+    - is_upper_bound
+    - sup_cut
