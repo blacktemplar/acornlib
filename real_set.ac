@@ -186,4 +186,93 @@ theorem ub_imp_lub(s: Real -> Bool, x: Real) {
             }
         }
     }    
-} 
+}
+
+define flip(f: Real -> Bool, x: Real) -> Bool {
+    f(-x)
+}
+
+theorem flip_flip(f: Real -> Bool) {
+    flip(flip(f)) = f
+} by {
+    let ff: Real -> Bool = flip(f)
+    forall(x: Real) {
+        flip(ff, x) = ff(-x)
+        flip(flip(f), x) = flip(f)(-x)
+        flip(flip(f), x) = f(x)
+    }
+}
+
+theorem lb_imp_flip_ub(f: Real -> Bool, x: Real) {
+    is_lower_bound(f, x) implies is_upper_bound(flip(f), -x)
+}
+
+theorem ub_imp_flip_lb(f: Real -> Bool, x: Real) {
+    is_upper_bound(f, x) implies is_lower_bound(flip(f), -x)
+}
+
+theorem glb_imp_flip_lub(f: Real -> Bool, x: Real) {
+    is_greatest_lower_bound(f, x)
+    implies is_least_upper_bound(flip(f), -x)
+} by {
+    is_lower_bound(f, x)
+    is_upper_bound(flip(f), -x)
+    
+    forall(y: Real) {
+        if is_upper_bound(flip(f), y) {
+            is_lower_bound(flip(flip(f)), -y)
+            is_lower_bound(f, -y)
+            -y <= x
+            -x <= y
+        }
+    }
+    is_least_upper_bound(flip(f), -x)
+}
+
+theorem lub_imp_flip_glb(f: Real -> Bool, x: Real) {
+    is_least_upper_bound(f, x)
+    implies is_greatest_lower_bound(flip(f), -x)
+} by {
+    is_upper_bound(f, x)
+    is_lower_bound(flip(f), -x)
+    
+    forall(y: Real) {
+        if is_lower_bound(flip(f), y) {
+            is_upper_bound(flip(flip(f)), -y)
+            is_upper_bound(f, -y)
+            x <= -y
+            y <= -x
+        }
+    }
+}
+
+// theorem lb_imp_glb(s: Real -> Bool, x: Real) {
+//     is_nonempty(s) and is_lower_bound(s, x)
+//     implies exists(y: Real) {
+//         is_greatest_lower_bound(s, y)
+//     }
+// } by {
+//     define neg_s(z: Real) -> Bool {
+//         s(-z)
+//     }
+//     is_nonempty(neg_s)
+//     is_upper_bound(neg_s, -x)
+//     let y: Real satisfy {
+//         is_least_upper_bound(neg_s, y)
+//     }
+//     is_upper_bound(neg_s, y)
+//     forall(x: Real) {
+//         if s(x) {
+//             neg_s(-x)
+//             -y <= x
+//         }
+//     }
+//     is_lower_bound(s, -y)
+//     forall(z: Real) {
+//         if is_lower_bound(s, z) {
+//             is_upper_bound(neg_s, -z)
+//             z <= -y
+//         }
+//     }
+//     is_greatest_lower_bound(s, -y)
+// }

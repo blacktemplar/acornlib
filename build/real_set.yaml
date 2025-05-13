@@ -1,6 +1,49 @@
 dependencies: 16240648193659227655
-content: 5310897846906486045
+content: 4475854579504699745
 blocks:
+  flip_flip:
+    real_base:
+    - neg_neg
+    real_set:
+    - flip
+  glb_imp_flip_lub:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - gte_imp_not_lt
+    - lt_neg_swap_neg
+    - not_lte_imp_gt
+    real_set:
+    - flip_flip
+    - is_greatest_lower_bound
+    - is_least_upper_bound
+    - is_lower_bound
+    - lb_imp_flip_ub
+    - ub_imp_flip_lb
+  lb_imp_flip_ub:
+    real_base:
+    - Real.gt
+    - gt_imp_not_lte
+    - neg_lt_swap_neg
+    - not_lte_imp_gt
+    real_set:
+    - flip
+    - is_lower_bound
+    - is_upper_bound
+  lub_imp_flip_glb:
+    real_base:
+    - Real.gt
+    - Real.gte
+    - gte_imp_not_lt
+    - neg_lt_swap_neg
+    - not_lte_imp_gt
+    real_set:
+    - flip_flip
+    - is_greatest_lower_bound
+    - is_least_upper_bound
+    - is_upper_bound
+    - lb_imp_flip_ub
+    - ub_imp_flip_lb
   sup_cut_is_cut:
     rat:
     - iop_pos
@@ -58,6 +101,16 @@ blocks:
     real_set:
     - is_upper_bound
     - sup_cut
+  ub_imp_flip_lb:
+    real_base:
+    - Real.gt
+    - gt_imp_not_lte
+    - lt_neg_swap_neg
+    - not_lte_imp_gt
+    real_set:
+    - flip
+    - is_lower_bound
+    - is_upper_bound
   ub_imp_lub:
     real_base:
     - Real.gt
