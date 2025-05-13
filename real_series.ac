@@ -2,7 +2,7 @@ from nat import Nat
 from rat import Rat
 from list import partials, sum, map, List, range
 import real_set
-from real_ring import Real, converges, converges_to, limit
+from real_ring import Real, converges, converges_to, limit, cauchy_condition
 
 // This file defines infinite series and proves theorems about them.
 
@@ -238,6 +238,62 @@ theorem ub_imp_lub(a: Nat -> Real, b: Real) {
 
 // The monotone convergence principle states that any increasing sequence 
 // that is bounded above converges
-// theorem monotone_convergence_principle(a: Nat -> Real, b: Real) {
-//     is_increasing(a) and is_upper_bound(a, b) implies converges(a)
-// }
+theorem monotone_convergence_principle(a: Nat -> Real, b: Real) {
+    is_increasing(a) and is_upper_bound(a, b) implies converges(a)
+} by {
+    let l: Real satisfy {
+        is_least_upper_bound(a, l)
+    }
+    
+    forall(eps: Real) {
+        if eps.is_positive {
+            // Find epsilon/2 for triangle inequality
+            let eps2: Real satisfy {
+                eps2.is_positive and eps2 + eps2 < eps
+            }
+            
+            // Since l is the least upper bound, l-eps2 is not an upper bound
+            let x: Real = l - eps2
+            x < l
+            not is_upper_bound(a, x)
+            
+            // If x is not an upper bound, there exists some n such that a(n) > x
+            let n: Nat satisfy {
+                not a(n) <= x
+            }
+            // We know a(n) > x = l - eps2
+            l - eps2 < a(n)
+            
+            // For all indices i,j ≥ n, prove they're within epsilon of each other
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    n <= i
+                    a(n) <= a(i)
+                    n <= j
+                    a(n) <= a(j)
+                    a(i) <= l
+                    a(j) <= l
+                    l - eps2 < a(n)
+                    l - eps2 < a(i)
+                    l - eps2 < a(j)
+                    a(i) < l + eps2
+                    (l - a(i)).abs < eps2
+                    (a(i) - l).abs < eps2
+                    l - eps2 < a(j)
+                    a(j) <= l
+                    a(j) < l + eps2
+                    (a(j) - l).abs < eps2
+                    (a(i) - a(j)).abs < eps2 + eps2
+                    eps2 + eps2 < eps
+                    (a(i) - a(j)).abs < eps
+                    a(i).is_close(a(j), eps)
+                }
+            }
+            
+            // We've proven that for all i,j ≥ n,
+            // a(i) and a(j) are within epsilon of each other.
+            // This is exactly the definition of cauchy_condition
+            cauchy_condition(a, n, eps)
+        }
+    }
+}

@@ -1,5 +1,5 @@
 dependencies: 18150715609067898718
-content: 7381028136019207064
+content: 10912015108968569596
 blocks:
   distant_increasing:
     int:
@@ -53,6 +53,28 @@ blocks:
     real_series:
     - distant_increasing
     - is_upper_bound
+  monotone_convergence_principle:
+    real_base:
+    - Real.gt
+    - Real.is_close
+    - Real.lt
+    - bounds_imp_close
+    - close_comm
+    - close_imp_bounds
+    - lt_lte_trans
+    - lte_lt_trans
+    - not_lte_imp_gt
+    - self_close
+    real_ring:
+    - cauchy_condition
+    - converges
+    - eps_lt_half
+    - is_close_triangle
+    real_series:
+    - distant_increasing
+    - is_least_upper_bound
+    - is_upper_bound
+    - ub_imp_lub
   partials_seq_lte:
     list:
     - map
