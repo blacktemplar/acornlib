@@ -1,5 +1,5 @@
 dependencies: 16240648193659227655
-content: 6377137962490200530
+content: 3555844021259458850
 blocks:
   sup_cut_is_cut:
     rat:
@@ -22,6 +22,13 @@ blocks:
     - is_nonempty
     - is_upper_bound
     - sup_cut
+  sup_cut_is_dedekind_cut:
+    real_base:
+    - is_dedekind_cut
+    real_set:
+    - sup_cut_is_cut
+    - sup_cut_is_lower
+    - sup_cut_not_has_greatest
   sup_cut_is_lower:
     real_base:
     - Real.gt
@@ -34,3 +41,36 @@ blocks:
     real_set:
     - is_upper_bound
     - sup_cut
+  sup_cut_not_has_greatest:
+    rat:
+    - lt_add_pos
+    - lt_lte_trans
+    - not_lt_both_ways
+    real_base:
+    - Real.gt
+    - Real.gte
+    - add_from_rat
+    - add_rat_eps_between
+    - gte_imp_not_lt
+    - has_greatest
+    - is_greatest
+    - not_lte_imp_gt
+    real_set:
+    - is_upper_bound
+    - sup_cut
+  ub_imp_lub:
+    real_base:
+    - Real.gt
+    - Real.gt_rat
+    - Real.lt
+    - gt_from_rat_imp_gt_rat
+    - gt_imp_not_lte
+    - gt_rat_imp_gt_from_rat
+    - lt_lte_trans
+    - not_lte_imp_gt
+    - rat_between_reals_gt
+    real_set:
+    - is_least_upper_bound
+    - is_upper_bound
+    - sup_cut
+    - sup_cut_is_dedekind_cut

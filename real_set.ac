@@ -87,8 +87,90 @@ theorem sup_cut_is_lower(s: Real -> Bool, ub: Real) {
     }
 }
  
-// theorem ub_imp_lub(s: Real -> Bool, x: Real) {
-//     is_upper_bound(s, x) implies exists(y: Real) {
-//         is_least_upper_bound(s, y)
-//     }
-// }
+theorem sup_cut_not_has_greatest(s: Real -> Bool, ub: Real) {
+    is_nonempty(s) and is_upper_bound(s, ub)
+    implies
+    not has_greatest(sup_cut(s))
+} by {
+    if has_greatest(sup_cut(s)) {
+        let q: Rat satisfy {
+            is_greatest(sup_cut(s), q)
+        }
+        
+        sup_cut(s, q)
+        not is_upper_bound(s, Real.from_rat(q))
+        let z: Real satisfy {
+            s(z) and z > Real.from_rat(q)
+        }
+        
+        let q_prime: Rat satisfy {
+            q < q_prime and Real.from_rat(q_prime) < z
+        }
+        
+        // Since Real.from_rat(q_prime) < z and z is in s,
+        // Real.from_rat(q_prime) is not an upper bound for s
+        not is_upper_bound(s, Real.from_rat(q_prime))
+        
+        // Therefore q_prime is in the cut
+        sup_cut(s, q_prime)
+        
+        // But q < q_prime, contradicting our assumption
+        not q_prime <= q
+        not is_greatest(sup_cut(s), q)
+        false
+    }
+}
+
+theorem sup_cut_is_dedekind_cut(s: Real -> Bool, ub: Real) {
+    is_nonempty(s) and is_upper_bound(s, ub)
+    implies
+    is_dedekind_cut(sup_cut(s))
+}
+
+theorem ub_imp_lub(s: Real -> Bool, x: Real) {
+    is_nonempty(s) and is_upper_bound(s, x)
+    implies exists(y: Real) {
+        is_least_upper_bound(s, y)
+    }
+} by {
+    is_dedekind_cut(sup_cut(s))
+    let y: Real = Real.new(sup_cut(s))
+    
+    // Part 1: Show y is an upper bound of s
+    forall(z: Real) {
+        if s(z) {
+            if z > y {
+                let q: Rat satisfy {
+                    z > Real.from_rat(q) and Real.from_rat(q) > y
+                }
+                not sup_cut(s, q)
+                is_upper_bound(s, Real.from_rat(q))
+                z <= Real.from_rat(q)
+                false
+            }
+        }
+    }
+    is_upper_bound(s, y)
+    
+    // Part 2: Show y is the least upper bound
+    forall(w: Real) {
+        if is_upper_bound(s, w) {
+            // We'll prove y <= w by contradiction
+            if y > w {
+                let q: Rat satisfy {
+                    y > Real.from_rat(q) and Real.from_rat(q) > w
+                }
+                sup_cut(s, q)
+                not is_upper_bound(s, Real.from_rat(q))
+                let z: Real satisfy {
+                    s(z) and z > Real.from_rat(q)
+                }
+                z <= w
+                Real.from_rat(q) > w
+                z > Real.from_rat(q)
+                z > w
+                false 
+            }
+        }
+    }    
+}
