@@ -117,15 +117,21 @@ theorem distant_increasing(a: Nat -> Real, m: Nat, n: Nat) {
     }
 }
 
-define bounded_above(a: Nat -> Real, b: Real) -> Bool {
+define is_upper_bound(a: Nat -> Real, b: Real) -> Bool {
     forall(n: Nat) {
         a(n) <= b
     }
 }
 
-// Theorem: If a sequence is increasing and converges, then it's bounded above by its limit
+define is_least_upper_bound(a: Nat -> Real, l: Real) -> Bool {
+    is_upper_bound(a, l) and forall(x: Real) {
+        x < l implies not is_upper_bound(a, x)
+    }
+}
+
+// Theorem: If a sequence is increasing and converges, then its limit is an upper bound
 theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
-    is_increasing(a) and converges(a) implies bounded_above(a, limit(a))
+    is_increasing(a) and converges(a) implies is_upper_bound(a, limit(a))
 } by {
     // We'll prove that for any n, a(n) <= limit(a)
     forall(n: Nat) {
@@ -194,3 +200,16 @@ theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
         a(n) <= limit(a)
     }
 }
+
+// If there's an upper bound, there's a least upper bound.
+// theorem ub_imp_lub(a: Nat -> Real, b: Real) {
+//     is_upper_bound(a, b) implies exists(c: Real) {
+//         is_least_upper_bound(a, c)
+//     }
+// }
+
+// The monotone convergence principle states that any increasing sequence 
+// that is bounded above converges
+// theorem monotone_convergence_principle(a: Nat -> Real, b: Real) {
+//     is_increasing(a) and is_upper_bound(a, b) implies converges(a)
+// }

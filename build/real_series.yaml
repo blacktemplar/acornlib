@@ -1,5 +1,5 @@
 dependencies: 11236361933127250947
-content: 15374305767179109741
+content: 474263825762022470
 blocks:
   distant_increasing:
     int:
@@ -51,8 +51,8 @@ blocks:
     - sub_both_eq_sub_add
     - sub_zero_imp_eq
     real_series:
-    - bounded_above
     - distant_increasing
+    - is_upper_bound
   partials_seq_lte:
     list:
     - map
