@@ -1,6 +1,7 @@
 from nat import Nat
 from rat import Rat
 from list import partials, sum, map, List, range
+import real_set
 from real_ring import Real, converges, converges_to, limit
 
 // This file defines infinite series and proves theorems about them.
@@ -131,7 +132,8 @@ define is_least_upper_bound(a: Nat -> Real, l: Real) -> Bool {
 
 // Theorem: If a sequence is increasing and converges, then its limit is an upper bound
 theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
-    is_increasing(a) and converges(a) implies is_upper_bound(a, limit(a))
+    is_increasing(a) and converges(a)
+    implies is_upper_bound(a, limit(a))
 } by {
     // We'll prove that for any n, a(n) <= limit(a)
     forall(n: Nat) {
@@ -201,12 +203,38 @@ theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
     }
 }
 
+define image(a: Nat -> Real, x: Real) -> Bool {
+    exists(n: Nat) {
+        a(n) = x
+    }
+}
+
+theorem ub_imp_image_ub(a: Nat -> Real, b: Real) {
+    is_upper_bound(a, b)
+    implies real_set.is_upper_bound(image(a), b)
+}
+
 // If there's an upper bound, there's a least upper bound.
-// theorem ub_imp_lub(a: Nat -> Real, b: Real) {
-//     is_upper_bound(a, b) implies exists(c: Real) {
-//         is_least_upper_bound(a, c)
-//     }
-// }
+theorem ub_imp_lub(a: Nat -> Real, b: Real) {
+    is_upper_bound(a, b) implies exists(c: Real) {
+        is_least_upper_bound(a, c)
+    }
+} by {
+    real_set.is_upper_bound(image(a), b)
+    let c: Real satisfy {
+        real_set.is_least_upper_bound(image(a), c)
+    }
+    is_upper_bound(a, c)
+    forall(x: Real) {
+        if x < c {
+            if is_upper_bound(a, x) {
+                real_set.is_upper_bound(image(a), x)
+                false
+            }
+        }
+    }
+    is_least_upper_bound(a, c)
+}
 
 // The monotone convergence principle states that any increasing sequence 
 // that is bounded above converges

@@ -1,5 +1,5 @@
-dependencies: 11236361933127250947
-content: 474263825762022470
+dependencies: 18150715609067898718
+content: 7381028136019207064
 blocks:
   distant_increasing:
     int:
@@ -83,3 +83,22 @@ blocks:
     - sum_add
     real_base:
     - add_comm
+  ub_imp_image_ub:
+    real_series:
+    - image
+    - is_upper_bound
+    real_set:
+    - is_upper_bound
+  ub_imp_lub:
+    real_base:
+    - Real.gte
+    - gte_imp_not_lt
+    real_series:
+    - image
+    - is_least_upper_bound
+    - is_upper_bound
+    real_set:
+    - is_least_upper_bound
+    - is_nonempty
+    - is_upper_bound
+    - ub_imp_lub
