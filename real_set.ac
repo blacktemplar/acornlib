@@ -246,33 +246,18 @@ theorem lub_imp_flip_glb(f: Real -> Bool, x: Real) {
     }
 }
 
-// theorem lb_imp_glb(s: Real -> Bool, x: Real) {
-//     is_nonempty(s) and is_lower_bound(s, x)
-//     implies exists(y: Real) {
-//         is_greatest_lower_bound(s, y)
-//     }
-// } by {
-//     define neg_s(z: Real) -> Bool {
-//         s(-z)
-//     }
-//     is_nonempty(neg_s)
-//     is_upper_bound(neg_s, -x)
-//     let y: Real satisfy {
-//         is_least_upper_bound(neg_s, y)
-//     }
-//     is_upper_bound(neg_s, y)
-//     forall(x: Real) {
-//         if s(x) {
-//             neg_s(-x)
-//             -y <= x
-//         }
-//     }
-//     is_lower_bound(s, -y)
-//     forall(z: Real) {
-//         if is_lower_bound(s, z) {
-//             is_upper_bound(neg_s, -z)
-//             z <= -y
-//         }
-//     }
-//     is_greatest_lower_bound(s, -y)
-// }
+theorem lb_imp_glb(s: Real -> Bool, x: Real) {
+    is_nonempty(s) and is_lower_bound(s, x)
+    implies exists(y: Real) {
+        is_greatest_lower_bound(s, y)
+    }
+} by {
+    is_nonempty(flip(s))
+    is_upper_bound(flip(s), -x)
+    let y: Real satisfy {
+        is_least_upper_bound(flip(s), y)
+    }
+    is_greatest_lower_bound(flip(flip(s)), -y)
+    flip(flip(s)) = s
+    is_greatest_lower_bound(s, -y)
+}

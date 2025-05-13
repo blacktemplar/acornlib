@@ -1,5 +1,5 @@
 dependencies: 16240648193659227655
-content: 4475854579504699745
+content: 12500591937759142135
 blocks:
   flip_flip:
     real_base:
@@ -30,6 +30,14 @@ blocks:
     - flip
     - is_lower_bound
     - is_upper_bound
+  lb_imp_glb:
+    real_set:
+    - flip
+    - flip_flip
+    - is_nonempty
+    - lb_imp_flip_ub
+    - lub_imp_flip_glb
+    - ub_imp_lub
   lub_imp_flip_glb:
     real_base:
     - Real.gt
