@@ -70,6 +70,23 @@ theorem sup_cut_is_cut(s: Real -> Bool, ub: Real) {
     not sup_cut(s, r2)
 }
 
+theorem sup_cut_is_lower(s: Real -> Bool, ub: Real) {
+    is_nonempty(s) and is_upper_bound(s, ub)
+    implies
+    is_lower(sup_cut(s))
+} by {
+    forall(x: Rat, y: Rat) {
+        if sup_cut(s, y) and x < y {
+            let z: Real satisfy {
+                s(z) and z > Real.from_rat(y)
+            }      
+            z > Real.from_rat(x)            
+            not is_upper_bound(s, Real.from_rat(x))
+            sup_cut(s, x)
+        }
+    }
+}
+ 
 // theorem ub_imp_lub(s: Real -> Bool, x: Real) {
 //     is_upper_bound(s, x) implies exists(y: Real) {
 //         is_least_upper_bound(s, y)

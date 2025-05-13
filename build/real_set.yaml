@@ -1,5 +1,5 @@
 dependencies: 16240648193659227655
-content: 2252840791507672855
+content: 6377137962490200530
 blocks:
   sup_cut_is_cut:
     rat:
@@ -20,5 +20,17 @@ blocks:
     - rat_lower
     real_set:
     - is_nonempty
+    - is_upper_bound
+    - sup_cut
+  sup_cut_is_lower:
+    real_base:
+    - Real.gt
+    - Real.lt
+    - from_rat_maintains_lt
+    - gt_imp_not_lte
+    - is_lower
+    - lt_lte_trans
+    - not_lte_imp_gt
+    real_set:
     - is_upper_bound
     - sup_cut
