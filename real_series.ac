@@ -130,6 +130,12 @@ define is_least_upper_bound(a: Nat -> Real, l: Real) -> Bool {
     }
 }
 
+define is_lower_bound(a: Nat -> Real, b: Real) -> Bool {
+    forall(n: Nat) {
+        b <= a(n)
+    }
+}
+
 // Theorem: If a sequence is increasing and converges, then its limit is an upper bound
 theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
     is_increasing(a) and converges(a)
@@ -297,3 +303,17 @@ theorem monotone_convergence_principle(a: Nat -> Real, b: Real) {
         }
     }
 }
+
+theorem nonneg_partials_increasing(a: Nat -> Real) {
+    is_lower_bound(a, Real.0) implies is_increasing(partials(a))
+}
+
+// theorem nonneg_partials_bounded_above(a: Nat -> Real, lim: Real) {
+//     is_lower_bound(a, Real.0) and converges_to(a, lim)
+//     implies is_upper_bound(partials(a), lim)
+// }
+
+// theorem comparison_test(a: Nat -> Real, b: Nat -> Real) {
+//     is_lower_bound(a, Real.0) and seq_lte(a, b) and converges(b)
+//     implies converges(a)
+// }
