@@ -2012,6 +2012,32 @@ theorem non_neg_imp_zero_lte(x: Real) {
     not x.is_negative implies Real.0 <= x
 }
 
+// TODO: prove, perhaps with something with mul_rat_seq
+// theorem mul_from_rat(a: Rat, b: Rat) {
+//     Real.from_rat(a) * Real.from_rat(b) = Real.from_rat(a * b)
+// }
+
+// theorem exists_small_mul(a: Real, b: Real) {
+//     a.is_positive and b.is_positive implies
+//     exists(c: Real) {
+//         c.is_positive and a * c < b
+//     }
+// } by {
+//     let a_ub: Rat satisfy {
+//         a < Real.from_rat(a_ub)
+//     }
+//     let b_lb: Rat satisfy {
+//         b_lb.is_positive and Real.from_rat(b_lb) < b
+//     }
+//     let r: Rat satisfy {
+//         a_ub * r = b_lb
+//     }
+//     let c: Real = Real.from_rat(r)
+//     Real.from_rat(a_ub) * Real.from_rat(r) = Real.from_rat(b_lb)
+//     Real.from_rat(a_ub) * c = Real.from_rat(b_lb)
+//     Real.from_rat(a_ub) * c < b
+// }
+
 from add_comm import AddComm
 from mul_comm import MulComm
 
