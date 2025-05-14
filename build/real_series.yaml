@@ -1,5 +1,5 @@
 dependencies: 18150715609067898718
-content: 1532842212195799750
+content: 11384243137665554951
 blocks:
   distant_increasing:
     int:
@@ -75,6 +75,10 @@ blocks:
     - is_least_upper_bound
     - is_upper_bound
     - ub_imp_lub
+  nonneg_partials_bounded_above:
+    real_series:
+    - increasing_convergent_bounded_by_limit
+    - nonneg_partials_increasing
   nonneg_partials_increasing:
     real_base:
     - add_zero_right

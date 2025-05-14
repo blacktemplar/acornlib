@@ -308,10 +308,12 @@ theorem nonneg_partials_increasing(a: Nat -> Real) {
     is_lower_bound(a, Real.0) implies is_increasing(partials(a))
 }
 
-// theorem nonneg_partials_bounded_above(a: Nat -> Real, lim: Real) {
-//     is_lower_bound(a, Real.0) and converges_to(a, lim)
-//     implies is_upper_bound(partials(a), lim)
-// }
+theorem nonneg_partials_bounded_above(a: Nat -> Real) {
+    is_lower_bound(a, Real.0) and converges(partials(a))
+    implies is_upper_bound(partials(a), limit(partials(a)))
+} by {
+    is_increasing(partials(a))
+}
 
 // theorem comparison_test(a: Nat -> Real, b: Nat -> Real) {
 //     is_lower_bound(a, Real.0) and seq_lte(a, b) and converges(b)
