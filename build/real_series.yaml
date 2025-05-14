@@ -1,6 +1,17 @@
 dependencies: 18150715609067898718
-content: 11384243137665554951
+content: 12688180356625857938
 blocks:
+  comparison_test:
+    real_base:
+    - lte_trans
+    real_series:
+    - is_lower_bound
+    - monotone_convergence_principle
+    - nonneg_partials_bounded_above
+    - nonneg_partials_increasing
+    - partials_seq_lte
+    - seq_lte
+    - seq_lte_ub
   distant_increasing:
     int:
     - sub_nat
@@ -117,6 +128,12 @@ blocks:
     - sum_add
     real_base:
     - add_comm
+  seq_lte_ub:
+    real_base:
+    - lte_trans
+    real_series:
+    - is_upper_bound
+    - seq_lte
   ub_imp_image_ub:
     real_series:
     - image
