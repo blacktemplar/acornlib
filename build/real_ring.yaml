@@ -1,5 +1,5 @@
 dependencies: 12350333011908703263
-content: 2095396335171199431
+content: 3329780851583570682
 blocks:
   Real.AddComm:
     real_base:
@@ -707,6 +707,10 @@ blocks:
     - cauchy_gt_rat
     - eventual_lb_extends
     - limit
+  lt_mul_neg_left:
+    real_ring:
+    - lt_mul_neg_right
+    - real_mul_comm
   lt_mul_neg_right:
     real_base:
     - Real.gte
@@ -718,12 +722,22 @@ blocks:
     - mul_neg_neg
     - mul_sub_distrib_left
     - sub_zero_imp_eq
+  lt_mul_pos_left:
+    real_ring:
+    - diff_pos_imp_lt
+    - lt_imp_minus_pos
+    - mul_pos_pos
+    - mul_sub_distrib_right
   lt_mul_pos_right:
     real_ring:
     - diff_pos_imp_lt
     - lt_imp_minus_pos
     - mul_pos_pos
     - mul_sub_distrib_left
+  lte_mul_nonneg_left:
+    real_ring:
+    - lte_mul_nonneg_right
+    - real_mul_comm
   lte_mul_nonneg_right:
     real_base:
     - Real.is_negative

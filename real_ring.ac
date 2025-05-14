@@ -1952,6 +1952,11 @@ theorem lt_mul_pos_right(x: Real, y: Real, z: Real) {
     x * z < y * z
 }
 
+theorem lt_mul_pos_left(x: Real, y: Real, z: Real) {
+    z.is_positive and x < y implies
+    z * x < z * y
+}
+
 theorem lte_mul_nonneg_right(x: Real, y: Real, z: Real) {
     not z.is_negative and x <= y implies
     x * z <= y * z
@@ -1974,6 +1979,11 @@ theorem lte_mul_nonneg_right(x: Real, y: Real, z: Real) {
     }
 }
 
+theorem lte_mul_nonneg_left(x: Real, y: Real, z: Real) {
+    not z.is_negative and x <= y implies
+    z * x <= z * y
+}
+
 theorem lt_mul_neg_right(x: Real, y: Real, z: Real) {
     z.is_negative and x < y implies
     y * z < x * z
@@ -1983,6 +1993,11 @@ theorem lt_mul_neg_right(x: Real, y: Real, z: Real) {
     x - y != Real.0
     (x - y).is_negative
     ((x - y) * z).is_positive
+}
+
+theorem lt_mul_neg_left(x: Real, y: Real, z: Real) {
+    z.is_negative and x < y implies
+    z * y < z * x
 }
 
 theorem add_neg_neg(x: Real, y: Real) {
