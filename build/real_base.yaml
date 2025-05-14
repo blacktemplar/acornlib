@@ -1,5 +1,5 @@
 dependencies: 13571564220757096328
-content: 70288435579976541
+content: 5414598826944262823
 blocks:
   '98':
     real_base:
@@ -1079,6 +1079,10 @@ blocks:
     - Real.0
     - Real.is_positive
     - gt_rat_imp_gt_from_rat
+  pos_imp_eq_abs:
+    real_base:
+    - Real.abs
+    - Real.is_negative
   rat_add_gt_imp_add_gt_from_rat:
     rat:
     - Rat.div

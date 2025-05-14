@@ -1393,6 +1393,10 @@ class Real {
     }
 }
 
+theorem pos_imp_eq_abs(a: Real) {
+    a.is_positive implies a = a.abs
+}
+
 theorem sub_cancels(a: Real, b: Real) {
     a + b - b = a
 } by {

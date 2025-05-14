@@ -1,5 +1,5 @@
-dependencies: 18150715609067898718
-content: 12688180356625857938
+dependencies: 16587550451008542396
+content: 16751915055721680859
 blocks:
   comparison_test:
     real_base:
@@ -12,6 +12,12 @@ blocks:
     - partials_seq_lte
     - seq_lte
     - seq_lte_ub
+  const_converges:
+    real_ring:
+    - eq_converges
+    - eventual_eq
+    util:
+    - constant
   distant_increasing:
     int:
     - sub_nat
@@ -134,6 +140,13 @@ blocks:
     real_series:
     - is_upper_bound
     - seq_lte
+  seq_mul_zero:
+    real_ring:
+    - mul_zero_left
+    real_series:
+    - seq_mul
+    util:
+    - constant
   ub_imp_image_ub:
     real_series:
     - image

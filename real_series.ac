@@ -1,3 +1,4 @@
+from util import constant
 from nat import Nat
 from rat import Rat
 from list import partials, sum, map, List, range
@@ -331,3 +332,46 @@ theorem comparison_test(a: Nat -> Real, b: Nat -> Real) {
     is_upper_bound(partials(b), limit(partials(b)))
     is_upper_bound(partials(a), limit(partials(b)))
 }
+
+define seq_mul(a: Real, b: Nat -> Real, n: Nat) -> Real {
+    a * b(n)
+}
+
+theorem const_converges(a: Real) {
+    converges(constant<Nat, Real>(a))
+}
+
+theorem seq_mul_zero(a: Nat -> Real) {
+    seq_mul(Real.0, a) = constant<Nat, Real>(Real.0)
+}
+
+// theorem converges_nonneg_seq_mul(a: Real, b: Nat -> Real) {
+//     a.is_positive and converges(b)
+//     implies converges(seq_mul(a, b))
+// } by {
+//     forall(eps: Real) {
+//         if eps.is_positive {
+//             let eps2: Real satisfy {
+//                 eps2.is_positive and a * eps2 < eps
+//             }
+            
+//             let n: Nat satisfy {
+//                 cauchy_condition(b, n, eps2)
+//             }
+            
+//             forall(i: Nat, j: Nat) {
+//                 if n <= i and n <= j {
+//                     b(i).is_close(b(j), eps2)
+//                     (b(i) - b(j)).abs < eps2
+//                     a * (b(i) - b(j)).abs < a * eps2
+//                     a.abs * (b(i) - b(j)).abs < a * eps2
+//                     (a * (b(i) - b(j))).abs < a * eps2
+//                     (a * b(i) - a * b(j)).abs < a * eps2
+//                     seq_mul(a, b)(i).is_close(seq_mul(a, b)(j), eps)
+//                 }
+//             }
+            
+//             cauchy_condition(seq_mul(a, b), n, eps)
+//         }
+//     }
+// }
