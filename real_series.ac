@@ -341,6 +341,10 @@ theorem const_converges(a: Real) {
     converges(constant<Nat, Real>(a))
 }
 
+theorem const_limit(a: Real) {
+    limit(constant<Nat, Real>(a)) = a
+}
+
 theorem seq_mul_zero(a: Nat -> Real) {
     seq_mul(Real.0, a) = constant<Nat, Real>(Real.0)
 }

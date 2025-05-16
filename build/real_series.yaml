@@ -1,5 +1,5 @@
 dependencies: 7359982404215580487
-content: 13795864447541213520
+content: 8301641362860452442
 blocks:
   comparison_test:
     real_base:
@@ -15,6 +15,12 @@ blocks:
   const_converges:
     real_ring:
     - eq_converges
+    - eventual_eq
+    util:
+    - constant
+  const_limit:
+    real_ring:
+    - eq_imp_limit
     - eventual_eq
     util:
     - constant
