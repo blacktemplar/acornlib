@@ -3,7 +3,7 @@ from nat import Nat
 from rat import Rat
 from list import partials, sum, map, List, range
 import real_set
-from real_ring import Real, converges, converges_to, limit, cauchy_condition
+from real_ring import Real, converges, converges_to, limit, cauchy_bound
 
 // This file defines infinite series and proves theorems about them.
 
@@ -300,7 +300,7 @@ theorem monotone_convergence_principle(a: Nat -> Real, b: Real) {
             // We've proven that for all i,j ≥ n,
             // a(i) and a(j) are within epsilon of each other.
             // This is exactly the definition of cauchy_condition
-            cauchy_condition(a, n, eps)
+            cauchy_bound(a, n, eps)
         }
     }
 }
@@ -360,7 +360,7 @@ theorem converges_pos_seq_mul(a: Real, b: Nat -> Real) {
             }
             
             let n: Nat satisfy {
-                cauchy_condition(b, n, eps2)
+                cauchy_bound(b, n, eps2)
             }
             
             forall(i: Nat, j: Nat) {
@@ -375,7 +375,7 @@ theorem converges_pos_seq_mul(a: Real, b: Nat -> Real) {
                 }
             }
             
-            cauchy_condition(seq_mul(a, b), n, eps)
+            cauchy_bound(seq_mul(a, b), n, eps)
         }
     }
 }
@@ -391,7 +391,7 @@ theorem neg_seq_converges(a: Nat -> Real) {
             }
             
             let n: Nat satisfy {
-                cauchy_condition(a, n, eps2)
+                cauchy_bound(a, n, eps2)
             }
             
             forall(i: Nat, j: Nat) {
@@ -403,7 +403,7 @@ theorem neg_seq_converges(a: Nat -> Real) {
                 }
             }
             
-            cauchy_condition(nsa, n, eps)
+            cauchy_bound(nsa, n, eps)
         }
     }
     converges(nsa)

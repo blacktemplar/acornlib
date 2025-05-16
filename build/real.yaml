@@ -1,5 +1,5 @@
-dependencies: 14185735150212902834
-content: 11029005580778227254
+dependencies: 6527741491096175387
+content: 13766796606339745603
 blocks:
   add_continuous2:
     real:
@@ -266,7 +266,7 @@ blocks:
     - Real.is_close
     - close_reals_imp_close_rats
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - converges
     - from_rat_pos
     - lift_seq

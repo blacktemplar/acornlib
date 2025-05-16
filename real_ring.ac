@@ -7,7 +7,7 @@ from real_base import Real, min, max, is_cut, is_lower, is_greatest, has_greates
 // real numbers are a ring.
 
 // The Cauchy condition for the convergence of a sequence.
-define cauchy_condition(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
+define cauchy_bound(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
     forall(i: Nat, j: Nat) {
         n <= i and n <= j implies q(i).is_close(q(j), eps)
     }
@@ -16,7 +16,7 @@ define cauchy_condition(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
 define converges(q: Nat -> Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(n: Nat) {
-            cauchy_condition(q, n, eps)
+            cauchy_bound(q, n, eps)
         }
     }
 }
@@ -45,7 +45,7 @@ theorem cauchy_gt_something(q: Nat -> Real) {
     let eps: Real = Real.1
     eps.is_positive
     let n: Nat satisfy {
-        cauchy_condition(q, n, eps)
+        cauchy_bound(q, n, eps)
     }
     let lb: Real satisfy {
         lb < q(n) - eps
@@ -73,7 +73,7 @@ theorem cauchy_gt_not_everything(q: Nat -> Real) {
     let eps: Real = Real.1
     eps.is_positive
     let n: Nat satisfy {
-        cauchy_condition(q, n, eps)
+        cauchy_bound(q, n, eps)
     }
     let r: Rat satisfy {
         Real.from_rat(r) > q(n) + eps
@@ -267,7 +267,7 @@ theorem eq_converges(q: Nat -> Real, a: Real) {
                     q(i).is_close(q(j), eps)
                 }
             }
-            cauchy_condition(q, n, eps)
+            cauchy_bound(q, n, eps)
         }
     }
 }
@@ -339,7 +339,7 @@ theorem ub_imp_limit_lte(q: Nat -> Real, ub: Real) {
 // Relate the cauchy condition to eventual bounds
 
 theorem cauchy_imp_lb(q: Nat -> Real, n: Nat, eps: Real) {
-    cauchy_condition(q, n, eps) implies eventual_lb(q, q(n) - eps)
+    cauchy_bound(q, n, eps) implies eventual_lb(q, q(n) - eps)
 } by {
     forall(i: Nat) {
         if n <= i {
@@ -350,7 +350,7 @@ theorem cauchy_imp_lb(q: Nat -> Real, n: Nat, eps: Real) {
 }
 
 theorem cauch_imp_ub(q: Nat -> Real, n: Nat, eps: Real) {
-    cauchy_condition(q, n, eps) implies eventual_ub(q, q(n) + eps)
+    cauchy_bound(q, n, eps) implies eventual_ub(q, q(n) + eps)
 } by {
     forall(i: Nat) {
         if n <= i {
@@ -398,7 +398,7 @@ theorem limit_lt_imp_ub(q: Nat -> Real, ub: Real) {
     limit(q) + eps + eps < ub
 
     let n: Nat satisfy {
-        cauchy_condition(q, n, eps)
+        cauchy_bound(q, n, eps)
     }
     eventual_ub(q, q(n) + eps)
     eventual_lb(q, q(n) - eps)
@@ -572,7 +572,7 @@ theorem converges_to_imp_converges(q: Nat -> Real, a: Real) {
                     q(i).is_close(q(j), eps)
                 }
             }
-            cauchy_condition(q, n, eps)
+            cauchy_bound(q, n, eps)
         }
     }
 }
@@ -1331,8 +1331,8 @@ theorem mul_rat_seq_converges(a: Nat -> Rat, b: Nat -> Rat) {
                     seq(i).is_close(seq(j), eps)
                 }
             }
-            cauchy_condition(seq, n, eps)
-            cauchy_condition(lift_seq(mul_rat_seq(a, b)), n, eps)
+            cauchy_bound(seq, n, eps)
+            cauchy_bound(lift_seq(mul_rat_seq(a, b)), n, eps)
         }
     }
 }

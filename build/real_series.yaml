@@ -1,5 +1,5 @@
-dependencies: 7359982404215580487
-content: 8301641362860452442
+dependencies: 6989557063699450585
+content: 11253026121423193055
 blocks:
   comparison_test:
     real_base:
@@ -40,7 +40,7 @@ blocks:
     - lt_trans
     - pos_imp_eq_abs
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - converges
     - exists_small_mul
     - lt_mul_pos_left
@@ -121,7 +121,7 @@ blocks:
     - not_lte_imp_gt
     - self_close
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - converges
     - eps_lt_half
     - is_close_triangle
@@ -136,7 +136,7 @@ blocks:
     - Real.sub
     - abs_neg
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - close_and_lt_imp_close
     - converges
     - from_rat_pos

@@ -1,5 +1,5 @@
 dependencies: 12350333011908703263
-content: 17815592570359308885
+content: 9625536155485736581
 blocks:
   Real.AddComm:
     real_base:
@@ -109,7 +109,7 @@ blocks:
     - Real.lt
     - close_imp_bounds
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - eventual_ub
   cauchy_gt_has_no_greatest:
     rat:
@@ -174,7 +174,7 @@ blocks:
     - pos_gt_zero
     - rat_dual_upper_bound
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - cauchy_gt_rat
     - converges
     - eventual_lb
@@ -198,7 +198,7 @@ blocks:
     - rat_lower
     - rat_window
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - cauchy_gt_rat
     - converges
     - eventual_lb
@@ -210,7 +210,7 @@ blocks:
     - Real.lt
     - close_imp_bounds
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - eventual_lb
   close_and_lt_imp_close:
     real_base:
@@ -341,7 +341,7 @@ blocks:
     - Real.is_close
     - lt_trans
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - converges
     - converges_to
     - eps_lt_half
@@ -414,7 +414,7 @@ blocks:
     real_base:
     - self_close
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - converges
     - eventual_eq
   eq_imp_limit:
@@ -971,7 +971,7 @@ blocks:
     - close_rats_imp_close_reals
     - close_reals_imp_close_rats
     real_ring:
-    - cauchy_condition
+    - cauchy_bound
     - close_and_lt_imp_close
     - converges
     - converges_imp_abs_bounded
