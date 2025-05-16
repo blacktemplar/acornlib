@@ -1,5 +1,5 @@
 dependencies: 12350333011908703263
-content: 9459805233659499798
+content: 13005747747967462999
 blocks:
   Real.AddComm:
     real_base:
@@ -461,6 +461,26 @@ blocks:
     - lte_trans
     real_ring:
     - eventual_ub
+  exists_small_mul:
+    rat:
+    - Rat.gt
+    - cancel_positivity_left
+    - iop_pos
+    - mul_cancels_div_left
+    - pos_ne_zero
+    - zero_lt_imp_pos
+    real_base:
+    - Real.is_positive
+    - Real.lt
+    - from_rat_gt_imp_gt
+    - lt_lte_trans
+    - rat_window
+    real_ring:
+    - from_rat_pos
+    - gt_pos_is_pos
+    - lt_mul_pos_right
+    - mul_from_rat
+    - smaller_rat_eps
   find_less_than_a_third:
     rat:
     - cancel_positivity_left
@@ -492,6 +512,12 @@ blocks:
     - converges_to
     - eventual_ub
     - lt_imp_minus_pos
+  gt_pos_is_pos:
+    real_base:
+    - close_imp_eps_pos
+    - self_close
+    real_ring:
+    - close_and_lt_imp_close
   half_pos_is_pos:
     real_base:
     - Real.gt

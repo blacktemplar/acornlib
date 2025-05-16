@@ -2026,26 +2026,36 @@ theorem mul_from_rat(a: Rat, b: Rat) {
     mul_rat_seq(const_rat_seq(a), const_rat_seq(b)) = const_rat_seq(a * b)
 }
 
-// theorem exists_small_mul(a: Real, b: Real) {
-//     a.is_positive and b.is_positive implies
-//     exists(c: Real) {
-//         c.is_positive and a * c < b
-//     }
-// } by {
-//     let a_ub: Rat satisfy {
-//         a < Real.from_rat(a_ub)
-//     }
-//     let b_lb: Rat satisfy {
-//         b_lb.is_positive and Real.from_rat(b_lb) < b
-//     }
-//     let r: Rat satisfy {
-//         a_ub * r = b_lb
-//     }
-//     let c: Real = Real.from_rat(r)
-//     Real.from_rat(a_ub) * Real.from_rat(r) = Real.from_rat(b_lb)
-//     Real.from_rat(a_ub) * c = Real.from_rat(b_lb)
-//     Real.from_rat(a_ub) * c < b
-// }
+theorem gt_pos_is_pos(a: Real, b: Real) {
+    a.is_positive and a < b implies b.is_positive
+}
+
+theorem exists_small_mul(a: Real, b: Real) {
+    a.is_positive and b.is_positive implies
+    exists(c: Real) {
+        c.is_positive and a * c < b
+    }
+} by {
+    let a_ub: Rat satisfy {
+        a < Real.from_rat(a_ub)
+    }
+    Real.from_rat(a_ub).is_positive
+    a_ub.is_positive
+    let b_lb: Rat satisfy {
+        b_lb.is_positive and Real.from_rat(b_lb) < b
+    }
+    let r: Rat satisfy {
+        a_ub * r = b_lb
+    }
+    r.is_positive
+    let c: Real = Real.from_rat(r)
+    c.is_positive
+    Real.from_rat(a_ub) * Real.from_rat(r) = Real.from_rat(b_lb)
+    Real.from_rat(a_ub) * c = Real.from_rat(b_lb)
+    Real.from_rat(a_ub) * c < b
+    a * c < Real.from_rat(a_ub) * c
+    a * c < b
+}
 
 from add_comm import AddComm
 from mul_comm import MulComm
