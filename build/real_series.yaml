@@ -1,5 +1,5 @@
 dependencies: 7359982404215580487
-content: 16751915055721680859
+content: 13795864447541213520
 blocks:
   comparison_test:
     real_base:
@@ -18,6 +18,38 @@ blocks:
     - eventual_eq
     util:
     - constant
+  converges_neg_seq_mul:
+    real_base:
+    - neg_neg
+    - neg_neg_is_pos
+    real_ring:
+    - mul_neg_one_left
+    real_series:
+    - converges_pos_seq_mul
+    - neg_seq_converges_converse
+    - seq_mul_combine
+  converges_pos_seq_mul:
+    real_base:
+    - Real.is_close
+    - lt_trans
+    - pos_imp_eq_abs
+    real_ring:
+    - cauchy_condition
+    - converges
+    - exists_small_mul
+    - lt_mul_pos_left
+    - mul_abs
+    - mul_sub_distrib_right
+    real_series:
+    - seq_mul
+  converges_seq_mul:
+    real_base:
+    - Real.is_negative
+    real_series:
+    - const_converges
+    - converges_neg_seq_mul
+    - converges_pos_seq_mul
+    - seq_mul_zero
   distant_increasing:
     int:
     - sub_nat
@@ -92,6 +124,31 @@ blocks:
     - is_least_upper_bound
     - is_upper_bound
     - ub_imp_lub
+  neg_seq_converges:
+    real_base:
+    - Real.is_close
+    - Real.sub
+    - abs_neg
+    real_ring:
+    - cauchy_condition
+    - close_and_lt_imp_close
+    - converges
+    - from_rat_pos
+    - mul_neg_one_left
+    - neg_is_close
+    - smaller_rat_eps
+    real_series:
+    - seq_mul
+  neg_seq_converges_converse:
+    real_base:
+    - neg_neg
+    real_ring:
+    - mul_assoc
+    - mul_neg_one_right
+    real_series:
+    - neg_seq_converges
+    - seq_mul
+    - seq_mul_one
   nonneg_partials_bounded_above:
     real_series:
     - increasing_convergent_bounded_by_limit
@@ -140,6 +197,22 @@ blocks:
     real_series:
     - is_upper_bound
     - seq_lte
+  seq_mul_combine:
+    real_ring:
+    - mul_assoc
+    real_series:
+    - seq_mul
+  seq_mul_comm:
+    real_ring:
+    - mul_assoc
+    - real_mul_comm
+    real_series:
+    - seq_mul
+  seq_mul_one:
+    real_ring:
+    - mul_one_left
+    real_series:
+    - seq_mul
   seq_mul_zero:
     real_ring:
     - mul_zero_left

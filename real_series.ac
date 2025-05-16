@@ -345,33 +345,110 @@ theorem seq_mul_zero(a: Nat -> Real) {
     seq_mul(Real.0, a) = constant<Nat, Real>(Real.0)
 }
 
-// theorem converges_nonneg_seq_mul(a: Real, b: Nat -> Real) {
-//     a.is_positive and converges(b)
-//     implies converges(seq_mul(a, b))
-// } by {
-//     forall(eps: Real) {
-//         if eps.is_positive {
-//             let eps2: Real satisfy {
-//                 eps2.is_positive and a * eps2 < eps
-//             }
+theorem converges_pos_seq_mul(a: Real, b: Nat -> Real) {
+    a.is_positive and converges(b)
+    implies converges(seq_mul(a, b))
+} by {
+    forall(eps: Real) {
+        if eps.is_positive {
+            let eps2: Real satisfy {
+                eps2.is_positive and a * eps2 < eps
+            }
             
-//             let n: Nat satisfy {
-//                 cauchy_condition(b, n, eps2)
-//             }
+            let n: Nat satisfy {
+                cauchy_condition(b, n, eps2)
+            }
             
-//             forall(i: Nat, j: Nat) {
-//                 if n <= i and n <= j {
-//                     b(i).is_close(b(j), eps2)
-//                     (b(i) - b(j)).abs < eps2
-//                     a * (b(i) - b(j)).abs < a * eps2
-//                     a.abs * (b(i) - b(j)).abs < a * eps2
-//                     (a * (b(i) - b(j))).abs < a * eps2
-//                     (a * b(i) - a * b(j)).abs < a * eps2
-//                     seq_mul(a, b)(i).is_close(seq_mul(a, b)(j), eps)
-//                 }
-//             }
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    b(i).is_close(b(j), eps2)
+                    (b(i) - b(j)).abs < eps2
+                    a * (b(i) - b(j)).abs < a * eps2
+                    a.abs * (b(i) - b(j)).abs < a * eps2
+                    (a * (b(i) - b(j))).abs < a * eps2
+                    (a * b(i) - a * b(j)).abs < a * eps2
+                    seq_mul(a, b)(i).is_close(seq_mul(a, b)(j), eps)
+                }
+            }
             
-//             cauchy_condition(seq_mul(a, b), n, eps)
-//         }
-//     }
-// }
+            cauchy_condition(seq_mul(a, b), n, eps)
+        }
+    }
+}
+
+theorem neg_seq_converges(a: Nat -> Real) {
+    converges(a) implies converges(seq_mul(-Real.1, a))
+} by {
+    let nsa: Nat -> Real = seq_mul(-Real.1, a)
+    forall(eps: Real) {
+        if eps.is_positive {
+            let eps2: Real satisfy {
+                eps2.is_positive and eps2 < eps
+            }
+            
+            let n: Nat satisfy {
+                cauchy_condition(a, n, eps2)
+            }
+            
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    a(i).is_close(a(j), eps2)
+                    (a(i) - a(j)).abs < eps2
+                    (-a(i) - -a(j)).abs < eps2
+                    nsa(i).is_close(nsa(j), eps)
+                }
+            }
+            
+            cauchy_condition(nsa, n, eps)
+        }
+    }
+    converges(nsa)
+}
+
+theorem seq_mul_one(a: Nat -> Real) {
+    seq_mul(Real.1, a) = a
+}
+
+theorem neg_seq_converges_converse(a: Nat -> Real) {
+    converges(seq_mul(-Real.1, a)) implies converges(a)
+} by {
+    converges(seq_mul(-Real.1, seq_mul(-Real.1, a)))
+    seq_mul(-Real.1, seq_mul(-Real.1, a)) = seq_mul((-Real.1) * -Real.1, a)
+    converges(seq_mul((-Real.1) * -Real.1, a))
+    -Real.1 * -Real.1 = Real.1
+    converges(seq_mul(Real.1, a))
+    seq_mul(Real.1, a) = a
+}
+
+theorem seq_mul_comm(a: Real, b: Real, c: Nat -> Real) {
+    seq_mul(a, seq_mul(b, c)) = seq_mul(b, seq_mul(a, c))
+}
+
+theorem seq_mul_combine(a: Real, b: Real, c: Nat -> Real) {
+    seq_mul(a * b, c) = seq_mul(a, seq_mul(b, c))
+}
+
+theorem converges_neg_seq_mul(a: Real, b: Nat -> Real) {
+    a.is_negative and converges(b)
+    implies converges(seq_mul(a, b))
+} by {
+    (-a).is_positive
+    converges(seq_mul(-a, b))
+    seq_mul(-a, b) = seq_mul(-Real.1 * a, b)
+    seq_mul(-a, b) = seq_mul(-Real.1, seq_mul(a, b))
+}
+
+theorem converges_seq_mul(a: Real, b: Nat -> Real) {
+    converges(b) implies converges(seq_mul(a, b))
+} by {
+    if a.is_positive {
+        converges(seq_mul(a, b))
+    } else {
+        if a = Real.0 {
+            seq_mul(Real.0, b) = constant<Nat, Real>(Real.0)
+            converges(seq_mul(a, b))
+        } else {
+            converges(seq_mul(a, b))
+        }
+    }
+}
