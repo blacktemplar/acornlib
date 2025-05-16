@@ -6,13 +6,15 @@ from real_base import Real, min, max, is_cut, is_lower, is_greatest, has_greates
 // This file uses Cauchy sequences to define multiplication, and uses that to demonstrate that
 // real numbers are a ring.
 
-// The Cauchy condition for the convergence of a sequence.
+// The bound on the end of a sequence that's part of the Cauchy converges condition.
+// Separating it out like this makes it a bit clearer to prove.
 define cauchy_bound(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
     forall(i: Nat, j: Nat) {
         n <= i and n <= j implies q(i).is_close(q(j), eps)
     }
 }
 
+// The Cauchy condition for the convergence of a sequence.
 define converges(q: Nat -> Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(n: Nat) {
