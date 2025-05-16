@@ -1,5 +1,5 @@
-dependencies: 6527741491096175387
-content: 13766796606339745603
+dependencies: 6820572928361300520
+content: 17046729230825910530
 blocks:
   add_continuous2:
     real:
@@ -159,6 +159,7 @@ blocks:
     - limit_rat_rat_seq
     - rat_seq_converges_to
     - seq_close
+    - tail_bound
     util:
     - compose
   limit_compose_rat_uniform:
@@ -166,24 +167,24 @@ blocks:
     - rat_condition
     - rat_uniform
     real_base:
+    - Real.from_rat
     - close_imp_eps_pos
     - close_reals_imp_close_rats
     real_ring:
     - converges_to
     - lift_seq_elt
     - rat_approx
+    - tail_bound
     util:
     - compose
   limit_compose_uniform:
-    nat:
-    - Nat.lte
-    - lte_trans
     real:
     - uniform
     - uniform_condition
     real_ring:
     - converges_imp_converges_to
     - converges_to
+    - tail_bound
     util:
     - compose
   neg_uniform:

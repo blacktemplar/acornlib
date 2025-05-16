@@ -6,8 +6,8 @@ from real_base import Real, min, max, is_cut, is_lower, is_greatest, has_greates
 // This file uses Cauchy sequences to define multiplication, and uses that to demonstrate that
 // real numbers are a ring.
 
-// The bound on the end of a sequence that's part of the Cauchy converges condition.
-// Separating it out like this makes it a bit clearer to prove.
+// The bound on the end of a sequence that's part of the Cauchy convergence condition.
+// Separating it out like this makes convergence a bit clearer to prove.
 define cauchy_bound(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
     forall(i: Nat, j: Nat) {
         n <= i and n <= j implies q(i).is_close(q(j), eps)
@@ -440,13 +440,19 @@ theorem eq_imp_limit(q: Nat -> Real, a: Real) {
     }
 }
 
+// The bound on the end of a sequence that's part of the Weierstress convergence definition.
+// Separating it out like this makes convergence a bit clearer to prove.
+define tail_bound(q: Nat -> Real, a: Real, n: Nat, eps: Real) -> Bool {
+    forall(i: Nat) {
+        n <= i implies q(i).is_close(a, eps)
+    }
+}
+
 // converges_to is the Weierstrass definition.
 define converges_to(q: Nat -> Real, a: Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(n: Nat) {
-            forall(i: Nat) {
-                n <= i implies q(i).is_close(a, eps)
-            }
+            tail_bound(q, a, n, eps)
         }
     }
 }
@@ -843,6 +849,7 @@ theorem rat_seq_converges_to(x: Real) {
                     lift_seq(rat_seq(x))(i).is_close(x, eps)
                 }
             }
+            tail_bound(lift_seq(rat_seq(x)), x, n, eps)
         }
     }
 }
@@ -1091,21 +1098,23 @@ theorem add_rat_seq_is_add(a: Nat -> Rat, b: Nat -> Rat) {
                 delta.is_positive and delta + delta < eps
             }
             let n1: Nat satisfy {
-                forall(i: Nat) {
-                    n1 <= i implies lift_seq(a)(i).is_close(limit_rat(a), delta)
-                }
+                tail_bound(lift_seq(a), limit_rat(a), n1, delta)
             }
             let n2: Nat satisfy {
-                forall(i: Nat) {
-                    n2 <= i implies lift_seq(b)(i).is_close(limit_rat(b), delta)
-                }
+                tail_bound(lift_seq(b), limit_rat(b), n2, delta)
             }
             let n: Nat satisfy {
                 n1 <= n and n2 <= n
             }
             forall(i: Nat) {
                 if n <= i {
+                    n1 <= i
+                    tail_bound(lift_seq(a), Real.new(limit_rat(a).gt_rat), n1, delta)
+                    lift_seq(a, i).is_close(Real.new(limit_rat(a).gt_rat), delta)
                     lift_seq(a)(i).is_close(limit_rat(a), delta)
+                    n2 <= i
+                    tail_bound(lift_seq(b), Real.new(limit_rat(b).gt_rat), n2, delta)
+                    lift_seq(b, i).is_close(Real.new(limit_rat(b).gt_rat), delta)
                     lift_seq(b)(i).is_close(limit_rat(b), delta)
                     (lift_seq(a, i) + lift_seq(b, i)).is_close(limit_rat(a) + limit_rat(b), delta + delta)
                     seq(i).is_close(target, delta + delta)
@@ -1145,8 +1154,13 @@ theorem neg_seq_converges(a: Nat -> Rat) {
                 delta.is_positive and delta < eps
             }
             let n1: Nat satisfy {
-                forall(i: Nat) {
-                    n1 <= i implies lift_seq(a)(i).is_close(limit_rat(a), delta)
+                tail_bound(lift_seq(a), limit_rat(a), n1, delta)
+            }
+            forall(i: Nat) {
+                if n1 <= i {
+                    tail_bound(lift_seq(a), Real.new(limit_rat(a).gt_rat), n1, delta)
+                    lift_seq(a, i).is_close(Real.new(limit_rat(a).gt_rat), delta)
+                    lift_seq(a)(i).is_close(limit_rat(a), delta)
                 }
             }
             let n: Nat satisfy {
@@ -1556,6 +1570,7 @@ theorem mul_zero_rat_seq(a: Nat -> Rat, z: Nat -> Rat) {
                     mul_seq(i).is_close(Real.0, eps)
                 }
             }
+            tail_bound(mul_seq, Real.0, n, eps)
         }
     }
     converges_to(mul_seq, Real.0)

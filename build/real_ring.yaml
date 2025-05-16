@@ -1,5 +1,5 @@
 dependencies: 12350333011908703263
-content: 5190522625919878963
+content: 11489662842237208884
 blocks:
   Real.AddComm:
     real_base:
@@ -83,6 +83,7 @@ blocks:
     - lte_trans
     real_base:
     - Real.is_close
+    - Real.new
     - add_from_rat
     real_ring:
     - add_close
@@ -93,6 +94,7 @@ blocks:
     - eps_lt_half
     - lift_seq_elt
     - limit_rat
+    - tail_bound
   add_rat_seq_well_def:
     real_ring:
     - add_rat_seq_is_add
@@ -218,7 +220,6 @@ blocks:
     - lt_trans
   close_limit_imp_seqs_get_close:
     nat:
-    - Nat.lte
     - gte_each_of_three
     - lte_trans
     real_base:
@@ -250,6 +251,7 @@ blocks:
     - is_close_triangle
     - only_abs_zero_eq_zero
     - seq_close
+    - tail_bound
   const_rat_converges_to_rat:
     real_base:
     - self_close
@@ -257,9 +259,9 @@ blocks:
     - const_rat_seq
     - converges_to
     - lift_seq_elt
+    - tail_bound
   convergent_seqs_get_close:
     nat:
-    - Nat.lte
     - gte_each_of_three
     - lte_trans
     real_base:
@@ -272,6 +274,7 @@ blocks:
     - eps_lt_half
     - is_close_triangle
     - seq_close
+    - tail_bound
   converges_imp_abs_bounded:
     rat:
     - Rat.abs
@@ -336,6 +339,7 @@ blocks:
     - limit_lt_imp_ub
     - lt_limit_imp_lb
     - sub_lt_is_gt
+    - tail_bound
   converges_to_imp_converges:
     real_base:
     - Real.is_close
@@ -346,6 +350,7 @@ blocks:
     - converges_to
     - eps_lt_half
     - is_close_triangle
+    - tail_bound
   converges_to_unique:
     real_base:
     - Real.lt
@@ -512,6 +517,7 @@ blocks:
     - converges_to
     - eventual_ub
     - lt_imp_minus_pos
+    - tail_bound
   gt_pos_is_pos:
     real_base:
     - close_imp_eps_pos
@@ -549,6 +555,7 @@ blocks:
     - converges_to
     - lift_seq_elt
     - rat_approx
+    - tail_bound
   is_close_triangle:
     real_base:
     - Real.gt
@@ -611,7 +618,6 @@ blocks:
     - compose
   limit_add_seq:
     nat:
-    - Nat.lte
     - gte_each_of_three
     - lte_trans
     real_base:
@@ -623,6 +629,7 @@ blocks:
     - converges_imp_converges_to
     - converges_to
     - eps_lt_half
+    - tail_bound
   limit_definition_of_add:
     real_ring:
     - add_rat_seq_is_add
@@ -709,6 +716,7 @@ blocks:
     - converges_to
     - eventual_lb
     - lt_imp_minus_pos
+    - tail_bound
   lt_imp_minus_pos:
     real_base:
     - Real.sub
@@ -1049,6 +1057,7 @@ blocks:
     - mul_rat_seq
     - seq_eq_zero_imp_converges_to_zero
     - smaller_rat_eps
+    - tail_bound
   mul_zero_right:
     rat:
     - mul_zero_right
@@ -1098,17 +1107,21 @@ blocks:
     - lte_trans
     real_base:
     - Real.is_close
+    - Real.is_negative
+    - Real.new
     - neg_from_rat
+    - neg_pos_is_neg
     real_ring:
     - close_and_lt_imp_close
     - converges_imp_converges_to
     - converges_to
-    - converges_to_unique_one_way
+    - converges_to_unique
     - eps_smaller_than_both
     - lift_seq_elt
     - limit_rat
     - neg_is_close
     - neg_rat_seq
+    - tail_bound
   neq_imp_abs_diff_pos:
     real_base:
     - Real.gt
@@ -1182,6 +1195,7 @@ blocks:
     - converges_to
     - lift_rat_seq_close
     - lift_seq_elt
+    - tail_bound
   rat_seq_is_close:
     rat:
     - iop_pos

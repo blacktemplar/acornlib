@@ -1,4 +1,4 @@
-dependencies: 13619408992064256963
+dependencies: 2564591905121397560
 content: 11253026121423193055
 blocks:
   comparison_test:
@@ -83,10 +83,8 @@ blocks:
   increasing_convergent_bounded_by_limit:
     nat:
     - Nat.lt
-    - Nat.lte
     - lt_not_symm
     - lt_or_lte
-    - lte_trans
     real_base:
     - Real.gt
     - Real.gte
@@ -105,6 +103,7 @@ blocks:
     - lt_imp_minus_pos
     - sub_both_eq_sub_add
     - sub_zero_imp_eq
+    - tail_bound
     real_series:
     - distant_increasing
     - is_upper_bound

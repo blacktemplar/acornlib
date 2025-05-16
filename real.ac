@@ -2,7 +2,7 @@ from nat import Nat
 from rat import Rat
 from util import compose, is_constant
 from real_base import min
-from real_ring import lift_seq, converges, cauchy_bound, converges_to, limit, rat_seq, limit_rat, seq_close
+from real_ring import lift_seq, converges, cauchy_bound, converges_to, limit, rat_seq, limit_rat, seq_close, tail_bound
 from real_series import Real
  
 // This file proves theorems about uniform convergence.
@@ -35,7 +35,7 @@ theorem uniform_imp_seq(f: Rat -> Real, q: Nat -> Rat) {
 } by {
     forall(eps: Real) {
         if eps.is_positive {
-            let delta: Rat satisfy {
+            let delta: Rat satisfy { 
                 delta.is_positive and rat_condition(f, delta, eps)
             }
             let n: Nat satisfy {
@@ -96,6 +96,7 @@ theorem limit_compose_uniform(f: Real -> Real, a: Nat -> Real) {
                     fa(i).is_close(f(limit(a)), eps)
                 }
             }
+            tail_bound(fa, f(limit(a)), n, eps)
         }
     }
     converges_to(fa, f(limit(a)))
@@ -115,13 +116,13 @@ theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
             }
             Real.from_rat(delta).is_positive
             let n: Nat satisfy {
-                forall(i: Nat) {
-                    n <= i implies lift_seq(a)(i).is_close(Real.from_rat(r), Real.from_rat(delta))
-                }
+                tail_bound(lift_seq(a), Real.from_rat(r), n, Real.from_rat(delta))
             }
 
             forall(i: Nat) {
                 if n <= i {
+                    tail_bound(lift_seq(a), Real.new(r.gt), n, Real.from_rat(delta))
+                    lift_seq(a, i).is_close(Real.new(r.gt), Real.from_rat(delta))
                     lift_seq(a)(i).is_close(Real.from_rat(r), Real.from_rat(delta))
                     a(i).is_close(r, delta)
                     f(a(i)).is_close(f(r), eps)
@@ -129,6 +130,7 @@ theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
                     fa(i).is_close(f(r), eps)
                 }
             }
+            tail_bound(fa, f(r), n, eps)
         }
     }
     converges_to(fa, f(r))
