@@ -1,5 +1,5 @@
 dependencies: 12350333011908703263
-content: 13005747747967462999
+content: 17815592570359308885
 blocks:
   Real.AddComm:
     real_base:
@@ -785,6 +785,22 @@ blocks:
     - rat_seq_converges_to
     - seq_eq
     - seq_eq_symm
+  mul_abs:
+    real_base:
+    - Real.abs
+    - Real.gt
+    - Real.lt
+    - abs_neg
+    - neg_neg
+    - neg_neg_is_pos
+    - pos_gt_zero
+    - pos_imp_eq_abs
+    real_ring:
+    - mul_neg_left
+    - mul_neg_neg
+    - mul_neg_right
+    - mul_nonneg_nonneg
+    - zero_lte_imp_non_neg
   mul_assoc:
     real_ring:
     - mul3_as_seq
