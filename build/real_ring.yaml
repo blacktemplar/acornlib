@@ -1,5 +1,5 @@
 dependencies: 12350333011908703263
-content: 5256440522787089748
+content: 9459805233659499798
 blocks:
   Real.AddComm:
     real_base:
@@ -782,6 +782,22 @@ blocks:
     - mul_right_well_def
     - seq_eq_imp_limit_rat_eq
     - seq_eq_rat_seq_limit
+    - seq_eq_symm
+  mul_from_rat:
+    rat:
+    - mul_comm
+    real_ring:
+    - Real.mul
+    - const_rat_converges_to_rat
+    - const_rat_seq
+    - lift_rat_seq_converges
+    - limit_rat_const_rat_seq
+    - limit_rat_rat_seq
+    - mul_rat_seq
+    - mul_rat_seq_comm
+    - mul_rat_seq_eq
+    - seq_eq
+    - seq_eq_imp_limit_rat_eq
     - seq_eq_symm
   mul_left_well_def:
     real_ring:

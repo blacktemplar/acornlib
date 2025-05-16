@@ -2012,10 +2012,19 @@ theorem non_neg_imp_zero_lte(x: Real) {
     not x.is_negative implies Real.0 <= x
 }
 
-// TODO: prove, perhaps with something with mul_rat_seq
-// theorem mul_from_rat(a: Rat, b: Rat) {
-//     Real.from_rat(a) * Real.from_rat(b) = Real.from_rat(a * b)
-// }
+theorem mul_from_rat(a: Rat, b: Rat) {
+    Real.from_rat(a) * Real.from_rat(b) = Real.from_rat(a * b)
+} by {
+    // Represent the lhs as a limit
+    let mr: Nat -> Rat = mul_rat_seq(rat_seq(Real.from_rat(a)), rat_seq(Real.from_rat(b)))
+    Real.from_rat(a) * Real.from_rat(b) = limit_rat(mr)
+
+    // Simplify the lhs
+    seq_eq(rat_seq(Real.from_rat(a)), const_rat_seq(a))
+    seq_eq(rat_seq(Real.from_rat(b)), const_rat_seq(b))
+    seq_eq(mul_rat_seq(const_rat_seq(a), const_rat_seq(b)), mr)
+    mul_rat_seq(const_rat_seq(a), const_rat_seq(b)) = const_rat_seq(a * b)
+}
 
 // theorem exists_small_mul(a: Real, b: Real) {
 //     a.is_positive and b.is_positive implies
