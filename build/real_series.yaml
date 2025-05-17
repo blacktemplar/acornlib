@@ -1,5 +1,5 @@
 dependencies: 9075433940415237908
-content: 12897912249262062680
+content: 10608578140906262309
 blocks:
   comparison_test:
     real_base:
@@ -183,6 +183,18 @@ blocks:
     - add_seq
     - sub_zero_imp_eq
     real_series:
+    - partials_suc
+    - partials_zero
+  partials_mul_seq_comm:
+    nat:
+    - Nat.induction
+    real_ring:
+    - mul_distrib_right
+    - mul_zero_left
+    - mul_zero_right
+    - real_mul_comm
+    real_series:
+    - mul_seq
     - partials_suc
     - partials_zero
   partials_seq_lte:

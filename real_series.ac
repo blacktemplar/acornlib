@@ -452,4 +452,47 @@ theorem partials_add_seq_comm(a: Nat -> Real, b: Nat -> Real) {
     }
 }
 
+theorem partials_mul_seq_comm(a: Real, b: Nat -> Real) {
+    partials(mul_seq(a, b)) = mul_seq(a, partials(b))
+} by {
+    // Define a predicate for induction on n
+    define p(n: Nat) -> Bool {
+        partials(mul_seq(a, b), n) = mul_seq(a, partials(b))(n)
+    }
+    
+    // Base case: n = 0
+    partials(mul_seq(a, b), Nat.0) = Real.0
+    mul_seq(a, partials(b))(Nat.0) = a * partials(b)(Nat.0)
+    partials(b, Nat.0) = Real.0
+    a * Real.0 = Real.0
+    p(Nat.0)
+    
+    // Inductive step
+    forall(n: Nat) {
+        if p(n) {
+            // By the induction hypothesis
+            partials(mul_seq(a, b), n) = mul_seq(a, partials(b))(n)
+            
+            // Now prove for n.suc
+            partials(mul_seq(a, b), n.suc) = partials(mul_seq(a, b), n) + mul_seq(a, b)(n)
+            partials(mul_seq(a, b), n.suc) = mul_seq(a, partials(b))(n) + mul_seq(a, b)(n)
+            mul_seq(a, partials(b))(n) = a * partials(b)(n)
+            mul_seq(a, b)(n) = a * b(n)
+            partials(mul_seq(a, b), n.suc) = a * partials(b)(n) + a * b(n)
+            partials(mul_seq(a, b), n.suc) = a * (partials(b)(n) + b(n))
+            
+            // Use the definition of partials for the successor case
+            partials(b, n.suc) = partials(b, n) + b(n)
+            a * (partials(b)(n) + b(n)) = a * partials(b)(n.suc)
+            partials(mul_seq(a, b), n.suc) = a * partials(b)(n.suc)
+            partials(mul_seq(a, b), n.suc) = mul_seq(a, partials(b))(n.suc)
+            p(n.suc)
+        }
+    }
+}
+
+define tail<T>(a: Nat -> T, n: Nat, i: Nat) -> T {
+    a(n + i)
+}
+
 // TODO: linearity of convergent series
