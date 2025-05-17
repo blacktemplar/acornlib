@@ -495,4 +495,55 @@ define tail<T>(a: Nat -> T, n: Nat, i: Nat) -> T {
     a(n + i)
 }
 
-// TODO: linearity of convergent series
+theorem tail_zero<T>(a: Nat -> T) {
+    tail(a, Nat.0) = a
+}
+
+// Two different ways of adding the first m items, and the next n.
+theorem partial_tail(a: Nat -> Real, m: Nat, n: Nat) {
+    partial(a, m + n) = partial(a, m) + partial(tail(a, m), n)
+} by {
+    // Define a predicate for induction on n
+    define p(k: Nat) -> Bool {
+        partial(a, m + k) = partial(a, m) + partial(tail(a, m), k)
+    }
+    
+    // Base case: n = 0
+    partial(a, m + Nat.0) = partial(a, m)
+    partial(tail(a, m), Nat.0) = Real.0
+    partial(a, m) + Real.0 = partial(a, m)
+    p(Nat.0)
+    
+    // Inductive step
+    forall(k: Nat) {
+        if p(k) {
+            // By the induction hypothesis
+            partial(a, m + k) = partial(a, m) + partial(tail(a, m), k)
+            
+            // Now prove for k.suc
+            // First, simplify the left side
+            m + k.suc = (m + k).suc
+            partial(a, m + k.suc) = partial(a, (m + k).suc)
+            partial(a, (m + k).suc) = partial(a, m + k) + a(m + k)
+            
+            // Substitute using induction hypothesis
+            partial(a, m + k) + a(m + k) = (partial(a, m) + partial(tail(a, m), k)) + a(m + k)
+            
+            // For the right side
+            partial(tail(a, m), k.suc) = partial(tail(a, m), k) + tail(a, m)(k)
+            tail(a, m)(k) = a(m + k)
+            partial(tail(a, m), k.suc) = partial(tail(a, m), k) + a(m + k)
+            
+            // Combine with partial(a, m)
+            partial(a, m) + partial(tail(a, m), k.suc) = partial(a, m) + (partial(tail(a, m), k) + a(m + k))
+            
+            // By associativity
+            partial(a, m) + (partial(tail(a, m), k) + a(m + k)) = (partial(a, m) + partial(tail(a, m), k)) + a(m + k)
+            
+            // Therefore
+            partial(a, m + k.suc) = partial(a, m) + partial(tail(a, m), k.suc)
+            p(k.suc)
+        }
+    }
+    p(n)
+}
