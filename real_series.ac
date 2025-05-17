@@ -547,3 +547,30 @@ theorem partial_tail(a: Nat -> Real, m: Nat, n: Nat) {
     }
     p(n)
 }
+
+theorem tail_converges(a: Nat -> Real, k: Nat) {
+    converges(partial(a)) implies
+    converges_to(partial(tail(a, k)), limit(partial(a)) - partial(a, k))
+} by {
+    let target: Real = limit(partial(a)) - partial(a, k)
+    forall(eps: Real) {
+        if eps.is_positive {
+            let n: Nat satisfy {
+                tail_bound(partial(a), limit(partial(a)), n, eps)
+            }
+            forall(i: Nat) {
+                if n <= i {
+                    partial(a)(i).is_close(limit(partial(a)), eps)
+                    partial(a, k + i).is_close(limit(partial(a)), eps)
+                    partial(a, k + i).is_close(partial(a, k) + limit(partial(a)) - partial(a, k), eps)
+                    (partial(a, k + i) + -partial(a, k)).is_close(limit(partial(a)) + -partial(a, k), eps)
+                    (partial(a, k + i) - partial(a, k)).is_close(limit(partial(a)) - partial(a, k), eps)
+                    (partial(a, k) + partial(tail(a, k), i) - partial(a, k)).is_close(target, eps)
+                    partial(tail(a, k), i).is_close(target, eps)
+                }
+            }
+            tail_bound(partial(tail(a, k)), target, n, eps)
+        }
+    }
+    converges_to(partial(tail(a, k)), target)
+}
