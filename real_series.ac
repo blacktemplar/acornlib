@@ -603,6 +603,36 @@ theorem tail_converges_to(a: Nat -> Real, n: Nat) {
     converges_to(tail(a, n), limit(a))
 }
 
+theorem tail_imp_converges_to(a: Nat -> Real, n: Nat) {
+    converges(tail(a, n)) implies
+    converges_to(a, limit(tail(a, n)))
+} by {
+    converges_to(tail(a, n), limit(tail(a, n)))
+    forall(eps: Real) {
+        if eps.is_positive {
+            let n1: Nat satisfy {
+                tail_bound(tail(a, n), limit(tail(a, n)), n1, eps)
+            }
+            let n2: Nat = n + n1
+
+            forall(i: Nat) {
+                if n2 <= i {
+                    let d: Nat satisfy {
+                        n + n1 + d = i
+                    }
+                    tail(a, n)(n1 + d) = a(i)
+                    tail(a, n)(n1 + d).is_close(limit(tail(a, n)), eps)
+                    a(i).is_close(limit(tail(a, n)), eps)
+                }
+            }
+
+            tail_bound(a, limit(tail(a, n)), n2, eps)
+        }
+    }
+}
+
+// Maybe we could just use tail_converges_to to prove this,
+// along with sequence ops, and it would be simpler.
 theorem tail_partial_converges(a: Nat -> Real, k: Nat) {
     converges(partial(a)) implies
     converges_to(partial(tail(a, k)), limit(partial(a)) - partial(a, k))
