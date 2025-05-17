@@ -1,5 +1,5 @@
 dependencies: 10681158794615117025
-content: 11253026121423193055
+content: 7124839135783783035
 blocks:
   comparison_test:
     real_base:
@@ -24,17 +24,25 @@ blocks:
     - eventual_eq
     util:
     - constant
-  converges_neg_seq_mul:
+  converges_mul_seq:
+    real_base:
+    - Real.is_negative
+    real_series:
+    - const_converges
+    - converges_neg_mul_seq
+    - converges_pos_mul_seq
+    - mul_seq_zero
+  converges_neg_mul_seq:
     real_base:
     - neg_neg
     - neg_neg_is_pos
     real_ring:
     - mul_neg_one_left
     real_series:
-    - converges_pos_seq_mul
+    - converges_pos_mul_seq
+    - mul_seq_combine
     - neg_seq_converges_converse
-    - seq_mul_combine
-  converges_pos_seq_mul:
+  converges_pos_mul_seq:
     real_base:
     - Real.is_close
     - lt_trans
@@ -47,15 +55,7 @@ blocks:
     - mul_abs
     - mul_sub_distrib_right
     real_series:
-    - seq_mul
-  converges_seq_mul:
-    real_base:
-    - Real.is_negative
-    real_series:
-    - const_converges
-    - converges_neg_seq_mul
-    - converges_pos_seq_mul
-    - seq_mul_zero
+    - mul_seq
   distant_increasing:
     int:
     - sub_nat
@@ -129,6 +129,29 @@ blocks:
     - is_least_upper_bound
     - is_upper_bound
     - ub_imp_lub
+  mul_seq_combine:
+    real_ring:
+    - mul_assoc
+    real_series:
+    - mul_seq
+  mul_seq_comm:
+    real_ring:
+    - mul_assoc
+    - real_mul_comm
+    real_series:
+    - mul_seq
+  mul_seq_one:
+    real_ring:
+    - mul_one_left
+    real_series:
+    - mul_seq
+  mul_seq_zero:
+    real_ring:
+    - mul_zero_left
+    real_series:
+    - mul_seq
+    util:
+    - constant
   neg_seq_converges:
     real_base:
     - Real.is_close
@@ -143,7 +166,7 @@ blocks:
     - neg_is_close
     - smaller_rat_eps
     real_series:
-    - seq_mul
+    - mul_seq
   neg_seq_converges_converse:
     real_base:
     - neg_neg
@@ -151,9 +174,9 @@ blocks:
     - mul_assoc
     - mul_neg_one_right
     real_series:
+    - mul_seq
+    - mul_seq_one
     - neg_seq_converges
-    - seq_mul
-    - seq_mul_one
   nonneg_partials_bounded_above:
     real_series:
     - increasing_convergent_bounded_by_limit
@@ -202,29 +225,6 @@ blocks:
     real_series:
     - is_upper_bound
     - seq_lte
-  seq_mul_combine:
-    real_ring:
-    - mul_assoc
-    real_series:
-    - seq_mul
-  seq_mul_comm:
-    real_ring:
-    - mul_assoc
-    - real_mul_comm
-    real_series:
-    - seq_mul
-  seq_mul_one:
-    real_ring:
-    - mul_one_left
-    real_series:
-    - seq_mul
-  seq_mul_zero:
-    real_ring:
-    - mul_zero_left
-    real_series:
-    - seq_mul
-    util:
-    - constant
   ub_imp_image_ub:
     real_series:
     - image

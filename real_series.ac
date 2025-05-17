@@ -333,7 +333,7 @@ theorem comparison_test(a: Nat -> Real, b: Nat -> Real) {
     is_upper_bound(partials(a), limit(partials(b)))
 }
 
-define seq_mul(a: Real, b: Nat -> Real, n: Nat) -> Real {
+define mul_seq(a: Real, b: Nat -> Real, n: Nat) -> Real {
     a * b(n)
 }
 
@@ -345,13 +345,13 @@ theorem const_limit(a: Real) {
     limit(constant<Nat, Real>(a)) = a
 }
 
-theorem seq_mul_zero(a: Nat -> Real) {
-    seq_mul(Real.0, a) = constant<Nat, Real>(Real.0)
+theorem mul_seq_zero(a: Nat -> Real) {
+    mul_seq(Real.0, a) = constant<Nat, Real>(Real.0)
 }
 
-theorem converges_pos_seq_mul(a: Real, b: Nat -> Real) {
+theorem converges_pos_mul_seq(a: Real, b: Nat -> Real) {
     a.is_positive and converges(b)
-    implies converges(seq_mul(a, b))
+    implies converges(mul_seq(a, b))
 } by {
     forall(eps: Real) {
         if eps.is_positive {
@@ -371,19 +371,19 @@ theorem converges_pos_seq_mul(a: Real, b: Nat -> Real) {
                     a.abs * (b(i) - b(j)).abs < a * eps2
                     (a * (b(i) - b(j))).abs < a * eps2
                     (a * b(i) - a * b(j)).abs < a * eps2
-                    seq_mul(a, b)(i).is_close(seq_mul(a, b)(j), eps)
+                    mul_seq(a, b)(i).is_close(mul_seq(a, b)(j), eps)
                 }
             }
             
-            cauchy_bound(seq_mul(a, b), n, eps)
+            cauchy_bound(mul_seq(a, b), n, eps)
         }
     }
 }
 
 theorem neg_seq_converges(a: Nat -> Real) {
-    converges(a) implies converges(seq_mul(-Real.1, a))
+    converges(a) implies converges(mul_seq(-Real.1, a))
 } by {
-    let nsa: Nat -> Real = seq_mul(-Real.1, a)
+    let nsa: Nat -> Real = mul_seq(-Real.1, a)
     forall(eps: Real) {
         if eps.is_positive {
             let eps2: Real satisfy {
@@ -409,50 +409,50 @@ theorem neg_seq_converges(a: Nat -> Real) {
     converges(nsa)
 }
 
-theorem seq_mul_one(a: Nat -> Real) {
-    seq_mul(Real.1, a) = a
+theorem mul_seq_one(a: Nat -> Real) {
+    mul_seq(Real.1, a) = a
 }
 
 theorem neg_seq_converges_converse(a: Nat -> Real) {
-    converges(seq_mul(-Real.1, a)) implies converges(a)
+    converges(mul_seq(-Real.1, a)) implies converges(a)
 } by {
-    converges(seq_mul(-Real.1, seq_mul(-Real.1, a)))
-    seq_mul(-Real.1, seq_mul(-Real.1, a)) = seq_mul((-Real.1) * -Real.1, a)
-    converges(seq_mul((-Real.1) * -Real.1, a))
+    converges(mul_seq(-Real.1, mul_seq(-Real.1, a)))
+    mul_seq(-Real.1, mul_seq(-Real.1, a)) = mul_seq((-Real.1) * -Real.1, a)
+    converges(mul_seq((-Real.1) * -Real.1, a))
     -Real.1 * -Real.1 = Real.1
-    converges(seq_mul(Real.1, a))
-    seq_mul(Real.1, a) = a
+    converges(mul_seq(Real.1, a))
+    mul_seq(Real.1, a) = a
 }
 
-theorem seq_mul_comm(a: Real, b: Real, c: Nat -> Real) {
-    seq_mul(a, seq_mul(b, c)) = seq_mul(b, seq_mul(a, c))
+theorem mul_seq_comm(a: Real, b: Real, c: Nat -> Real) {
+    mul_seq(a, mul_seq(b, c)) = mul_seq(b, mul_seq(a, c))
 }
 
-theorem seq_mul_combine(a: Real, b: Real, c: Nat -> Real) {
-    seq_mul(a * b, c) = seq_mul(a, seq_mul(b, c))
+theorem mul_seq_combine(a: Real, b: Real, c: Nat -> Real) {
+    mul_seq(a * b, c) = mul_seq(a, mul_seq(b, c))
 }
 
-theorem converges_neg_seq_mul(a: Real, b: Nat -> Real) {
+theorem converges_neg_mul_seq(a: Real, b: Nat -> Real) {
     a.is_negative and converges(b)
-    implies converges(seq_mul(a, b))
+    implies converges(mul_seq(a, b))
 } by {
     (-a).is_positive
-    converges(seq_mul(-a, b))
-    seq_mul(-a, b) = seq_mul(-Real.1 * a, b)
-    seq_mul(-a, b) = seq_mul(-Real.1, seq_mul(a, b))
+    converges(mul_seq(-a, b))
+    mul_seq(-a, b) = mul_seq(-Real.1 * a, b)
+    mul_seq(-a, b) = mul_seq(-Real.1, mul_seq(a, b))
 }
 
-theorem converges_seq_mul(a: Real, b: Nat -> Real) {
-    converges(b) implies converges(seq_mul(a, b))
+theorem converges_mul_seq(a: Real, b: Nat -> Real) {
+    converges(b) implies converges(mul_seq(a, b))
 } by {
     if a.is_positive {
-        converges(seq_mul(a, b))
+        converges(mul_seq(a, b))
     } else {
         if a = Real.0 {
-            seq_mul(Real.0, b) = constant<Nat, Real>(Real.0)
-            converges(seq_mul(a, b))
+            mul_seq(Real.0, b) = constant<Nat, Real>(Real.0)
+            converges(mul_seq(a, b))
         } else {
-            converges(seq_mul(a, b))
+            converges(mul_seq(a, b))
         }
     }
 }
