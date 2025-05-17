@@ -1,5 +1,5 @@
 dependencies: 12350333011908703263
-content: 8922310143125190414
+content: 17650995612001258090
 blocks:
   Real.AddComm:
     real_base:
@@ -509,9 +509,12 @@ blocks:
     - pos_ne_zero
     - zero_lt_imp_pos
     real_base:
+    - Real.gt
+    - Real.is_negative
     - Real.is_positive
     - Real.lt
     - from_rat_gt_imp_gt
+    - gt_zero_imp_pos
     - lt_lte_trans
     - rat_window
     real_ring:

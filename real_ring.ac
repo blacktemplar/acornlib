@@ -2048,7 +2048,7 @@ theorem gt_pos_is_pos(a: Real, b: Real) {
 }
 
 theorem exists_small_mul(a: Real, b: Real) {
-    a.is_positive and b.is_positive implies
+    not a.is_negative and b.is_positive implies
     exists(c: Real) {
         c.is_positive and a * c < b
     }

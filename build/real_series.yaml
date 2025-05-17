@@ -1,5 +1,5 @@
-dependencies: 10681158794615117025
-content: 7124839135783783035
+dependencies: 12313456343619255675
+content: 5197524141613156855
 blocks:
   comparison_test:
     real_base:
@@ -18,6 +18,12 @@ blocks:
     - eventual_eq
     util:
     - constant
+  const_converges_to:
+    real_ring:
+    - converges_imp_converges_to
+    real_series:
+    - const_converges
+    - const_limit
   const_limit:
     real_ring:
     - eq_imp_limit
@@ -46,11 +52,14 @@ blocks:
     real_base:
     - Real.is_close
     - lt_trans
+    - neg_lt_zero
     - pos_imp_eq_abs
+    - zero_not_positive
     real_ring:
     - cauchy_bound
     - converges
     - exists_small_mul
+    - gt_pos_is_pos
     - lt_mul_pos_left
     - mul_abs
     - mul_sub_distrib_right
