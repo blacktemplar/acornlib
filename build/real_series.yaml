@@ -1,5 +1,5 @@
 dependencies: 10326154983804721344
-content: 10660042837474111738
+content: 6919513293596038216
 blocks:
   comparison_test:
     real_base:
@@ -28,6 +28,11 @@ blocks:
     real_ring:
     - eq_imp_limit
     - eventual_eq
+    util:
+    - constant
+  const_seq_n:
+    real_series:
+    - const_seq
     util:
     - constant
   converges_mul_seq:
@@ -268,8 +273,6 @@ blocks:
     - is_upper_bound
     - seq_lte
   tail_converges:
-    add_comm:
-    - AddComm.associative
     nat:
     - Nat.lte
     - add_comm
@@ -287,6 +290,15 @@ blocks:
     - tail_bound
     real_series:
     - partial_tail
+  tail_partial:
+    add_comm:
+    - AddComm.commutative
+    real_ring:
+    - add_seq
+    real_series:
+    - const_seq_n
+    - partial_tail
+    - tail
   tail_zero:
     int:
     - sub_nat_negate_imp_add

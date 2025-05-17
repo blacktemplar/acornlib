@@ -552,6 +552,26 @@ theorem partial_tail_sub(a: Nat -> Real, m: Nat, n: Nat) {
     partial(tail(a, m), n) = partial(a, m + n) - partial(a, m)
 }
 
+let const_seq: Real -> (Nat -> Real) = constant<Nat, Real>
+
+theorem const_seq_n(a: Real, n: Nat) {
+    const_seq(a)(n) = a
+} by {
+    const_seq(a) = constant<Nat, Real>(a)
+}
+
+// The sequence-operations version of partial_tail.
+// Partial and tail don't quite commute, there's an additive shift.
+theorem tail_partial(a: Nat -> Real, n: Nat) {
+    tail(partial(a), n) = add_seq(partial(tail(a, n)), const_seq(partial(a, n)))
+} by {
+    forall(i: Nat) {
+        tail(partial(a), n)(i) = partial(tail(a, n))(i) + partial(a, n)
+        tail(partial(a), n)(i) = partial(tail(a, n))(i) + const_seq(partial(a, n))(i)
+        tail(partial(a), n)(i) = add_seq(partial(tail(a, n)), const_seq(partial(a, n)))(i)
+    }
+}
+
 theorem tail_converges(a: Nat -> Real, k: Nat) {
     converges(partial(a)) implies
     converges_to(partial(tail(a, k)), limit(partial(a)) - partial(a, k))
