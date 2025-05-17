@@ -3,7 +3,7 @@ from nat import Nat
 from rat import Rat
 from list import partials, sum, map, List, range
 import real_set
-from real_ring import Real, converges, converges_to, limit, cauchy_bound, tail_bound
+from real_ring import Real, converges, converges_to, limit, cauchy_bound, tail_bound, add_seq
 
 // This file defines infinite series and proves theorems about them.
 
@@ -406,3 +406,5 @@ theorem mul_seq_combine(a: Real, b: Real, c: Nat -> Real) {
 theorem converges_mul_seq(a: Real, b: Nat -> Real) {
     converges(b) implies converges(mul_seq(a, b))
 }
+
+// TODO: linearity of convergent series
