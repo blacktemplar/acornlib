@@ -407,4 +407,49 @@ theorem converges_mul_seq(a: Real, b: Nat -> Real) {
     converges(b) implies converges(mul_seq(a, b))
 }
 
+// Maybe it would have been better to not define partials this way.
+theorem partials_zero(a: Nat -> Real) {
+    partials(a, Nat.0) = Real.0
+}
+
+theorem partials_add_seq_comm(a: Nat -> Real, b: Nat -> Real) {
+    partials(add_seq(a, b)) = add_seq(partials(a), partials(b))
+} by {
+    // Define a predicate for induction on n
+    define p(n: Nat) -> Bool {
+        partials(add_seq(a, b), n) = add_seq(partials(a), partials(b))(n)
+    }
+    
+    // Base case: n = 0
+    add_seq(partials(a), partials(b))(Nat.0) = Real.0 + Real.0
+    add_seq(partials(a), partials(b))(Nat.0) = Real.0
+    p(Nat.0)
+    
+    // Inductive step
+    forall(n: Nat) {
+        if p(n) {
+            // By the induction hypothesis
+            partials(add_seq(a, b), n) = add_seq(partials(a), partials(b))(n)
+            
+            // Now we need to prove for n.suc
+            partials(add_seq(a, b), n.suc) = partials(add_seq(a, b), n) + add_seq(a, b)(n)
+            partials(add_seq(a, b), n.suc) = add_seq(partials(a), partials(b))(n) + (a(n) + b(n))
+            
+            partials(a, n.suc) = partials(a, n) + a(n)
+            partials(b, n.suc) = partials(b, n) + b(n)
+            
+            add_seq(partials(a), partials(b))(n.suc) = partials(a)(n.suc) + partials(b)(n.suc)
+            add_seq(partials(a), partials(b))(n.suc) = (partials(a, n) + a(n)) + (partials(b, n) + b(n))
+            
+            // Rearranging using associativity and commutativity of addition
+            (partials(a, n) + a(n)) + (partials(b, n) + b(n)) = (partials(a, n) + partials(b, n)) + (a(n) + b(n))
+            (partials(a, n) + partials(b, n)) + (a(n) + b(n)) = add_seq(partials(a), partials(b))(n) + (a(n) + b(n))
+            
+            // Therefore
+            partials(add_seq(a, b), n.suc) = add_seq(partials(a), partials(b))(n.suc)
+            p(n.suc)
+        }
+    }
+}
+
 // TODO: linearity of convergent series

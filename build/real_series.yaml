@@ -1,5 +1,5 @@
 dependencies: 9075433940415237908
-content: 13164328419328349839
+content: 12897912249262062680
 blocks:
   comparison_test:
     real_base:
@@ -170,6 +170,21 @@ blocks:
     - is_increasing
     - is_lower_bound
     - partials_suc
+  partials_add_seq_comm:
+    add_comm:
+    - AddComm.associative
+    - AddComm.commutative
+    nat:
+    - Nat.induction
+    real_base:
+    - add_comm
+    - sub_moves_sides
+    real_ring:
+    - add_seq
+    - sub_zero_imp_eq
+    real_series:
+    - partials_suc
+    - partials_zero
   partials_seq_lte:
     list:
     - map
@@ -200,6 +215,12 @@ blocks:
     - sum_add
     real_base:
     - add_comm
+  partials_zero:
+    list:
+    - map
+    - partials
+    - range
+    - sum
   seq_lte_ub:
     real_base:
     - lte_trans
