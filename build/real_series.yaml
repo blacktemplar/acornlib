@@ -1,5 +1,5 @@
 dependencies: 10326154983804721344
-content: 3950620158647397762
+content: 11008753701472674848
 blocks:
   add_seq_converges:
     real_ring:
@@ -39,6 +39,16 @@ blocks:
     - const_seq
     util:
     - constant
+  converges_add_imp_converges:
+    real_base:
+    - add_comm
+    real_ring:
+    - add_seq
+    - converges_to_imp_converges
+    real_series:
+    - add_seq_converges
+    - neg_seq_cancels
+    - neg_seq_converges_to
   converges_const_seq:
     real_ring:
     - eq_converges
@@ -185,6 +195,12 @@ blocks:
     - mul_seq
     - mul_seq_converges_to
     - mul_seq_one
+  neg_seq_converges_to:
+    real_ring:
+    - mul_neg_one_left
+    real_series:
+    - mul_seq_converges_to
+    - neg_seq
   neg_seq_neg_seq:
     real_base:
     - neg_neg

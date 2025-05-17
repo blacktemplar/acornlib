@@ -689,9 +689,23 @@ theorem neg_seq_cancels(a: Nat -> Real, b: Nat -> Real) {
     }
 }
 
-// theorem converges_add_imp_converges(a: Nat -> Real, b: Nat -> Real) {
-//     converges(add_seq(a, b)) and converges(a) implies converges(b)
-// }
+theorem neg_seq_converges_to(a: Nat -> Real) {
+    converges(a) implies converges_to(neg_seq(a), -limit(a))
+} by {
+    converges_to(mul_seq(-Real.1, a), -Real.1 * limit(a))
+    neg_seq(a) = mul_seq(-Real.1, a)
+    converges_to(neg_seq(a), -Real.1 * limit(a))
+}
+
+theorem converges_add_imp_converges(a: Nat -> Real, b: Nat -> Real) {
+    converges(add_seq(a, b)) and converges(a) implies converges(b)
+} by {
+    converges(neg_seq(a))
+    converges(add_seq(add_seq(a, b), neg_seq(a)))
+    add_seq(a, b) = add_seq(b, a)
+    add_seq(add_seq(b, a), neg_seq(a)) = b
+    add_seq(add_seq(a, b), neg_seq(a)) = b
+}
 
 // theorem partial_tail_conv_imp_partial_conv(a: Nat -> Real, n: Nat) {
 //     converges(partial(tail(a, n))) implies converges(partial(a))
