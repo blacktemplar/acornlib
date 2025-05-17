@@ -1,5 +1,5 @@
-dependencies: 9075433940415237908
-content: 10608578140906262309
+dependencies: 10326154983804721344
+content: 649457434120956485
 blocks:
   comparison_test:
     real_base:
@@ -7,9 +7,9 @@ blocks:
     real_series:
     - is_lower_bound
     - monotone_convergence_principle
-    - nonneg_partials_bounded_above
-    - nonneg_partials_increasing
-    - partials_seq_lte
+    - nonneg_partial_bounded_above
+    - nonneg_partial_increasing
+    - partial_seq_lte
     - seq_lte
     - seq_lte_ub
   const_converges:
@@ -158,22 +158,24 @@ blocks:
     - mul_seq
     - mul_seq_converges_to
     - mul_seq_one
-  nonneg_partials_bounded_above:
+  nonneg_partial_bounded_above:
     real_series:
     - increasing_convergent_bounded_by_limit
-    - nonneg_partials_increasing
-  nonneg_partials_increasing:
+    - nonneg_partial_increasing
+  nonneg_partial_increasing:
     real_base:
     - add_zero_right
     - lte_add_left
     real_series:
     - is_increasing
     - is_lower_bound
-    - partials_suc
-  partials_add_seq_comm:
+    - partial_suc
+  partial_add_seq_comm:
     add_comm:
     - AddComm.associative
     - AddComm.commutative
+    - AddComm.identity_left
+    - AddComm.identity_right
     nat:
     - Nat.induction
     real_base:
@@ -183,9 +185,9 @@ blocks:
     - add_seq
     - sub_zero_imp_eq
     real_series:
-    - partials_suc
-    - partials_zero
-  partials_mul_seq_comm:
+    - partial_suc
+    - partial_zero
+  partial_mul_seq_comm:
     nat:
     - Nat.induction
     real_ring:
@@ -195,12 +197,12 @@ blocks:
     - real_mul_comm
     real_series:
     - mul_seq
-    - partials_suc
-    - partials_zero
-  partials_seq_lte:
+    - partial_suc
+    - partial_zero
+  partial_seq_lte:
     list:
     - map
-    - partials
+    - partial
     - range
     nat:
     - Nat.induction
@@ -210,9 +212,9 @@ blocks:
     - lte_add_right
     - lte_trans
     real_series:
-    - partials_suc
+    - partial_suc
     - seq_lte
-  partials_suc:
+  partial_suc:
     add_comm:
     - AddComm.commutative
     - AddComm.identity_right
@@ -221,16 +223,16 @@ blocks:
     - List.singleton
     - map_add
     - map_singleton
-    - partials
+    - partial
     - range
     - sum
     - sum_add
     real_base:
     - add_comm
-  partials_zero:
+  partial_zero:
     list:
     - map
-    - partials
+    - partial
     - range
     - sum
   seq_lte_ub:
