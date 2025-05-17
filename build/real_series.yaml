@@ -1,5 +1,5 @@
-dependencies: 12313456343619255675
-content: 5197524141613156855
+dependencies: 9075433940415237908
+content: 1411319662196006154
 blocks:
   comparison_test:
     real_base:
@@ -31,40 +31,10 @@ blocks:
     util:
     - constant
   converges_mul_seq:
-    real_base:
-    - Real.is_negative
-    real_series:
-    - const_converges
-    - converges_neg_mul_seq
-    - converges_pos_mul_seq
-    - mul_seq_zero
-  converges_neg_mul_seq:
-    real_base:
-    - neg_neg
-    - neg_neg_is_pos
     real_ring:
-    - mul_neg_one_left
+    - converges_to_imp_converges
     real_series:
-    - converges_pos_mul_seq
-    - mul_seq_combine
-    - neg_seq_converges_converse
-  converges_pos_mul_seq:
-    real_base:
-    - Real.is_close
-    - lt_trans
-    - neg_lt_zero
-    - pos_imp_eq_abs
-    - zero_not_positive
-    real_ring:
-    - cauchy_bound
-    - converges
-    - exists_small_mul
-    - gt_pos_is_pos
-    - lt_mul_pos_left
-    - mul_abs
-    - mul_sub_distrib_right
-    real_series:
-    - mul_seq
+    - mul_seq_converges_to
   distant_increasing:
     int:
     - sub_nat
@@ -149,6 +119,22 @@ blocks:
     - real_mul_comm
     real_series:
     - mul_seq
+  mul_seq_converges_to:
+    real_base:
+    - Real.is_close
+    - Real.lt
+    - abs_not_neg
+    - lte_lt_trans
+    real_ring:
+    - converges_imp_converges_to
+    - converges_to
+    - exists_small_mul_variant
+    - lte_mul_nonneg_left
+    - mul_abs
+    - mul_sub_distrib_right
+    - tail_bound
+    real_series:
+    - mul_seq
   mul_seq_one:
     real_ring:
     - mul_one_left
@@ -161,31 +147,17 @@ blocks:
     - mul_seq
     util:
     - constant
-  neg_seq_converges:
-    real_base:
-    - Real.is_close
-    - Real.sub
-    - abs_neg
-    real_ring:
-    - cauchy_bound
-    - close_and_lt_imp_close
-    - converges
-    - from_rat_pos
-    - mul_neg_one_left
-    - neg_is_close
-    - smaller_rat_eps
-    real_series:
-    - mul_seq
   neg_seq_converges_converse:
     real_base:
     - neg_neg
     real_ring:
+    - converges_to_imp_converges
     - mul_assoc
     - mul_neg_one_right
     real_series:
     - mul_seq
+    - mul_seq_converges_to
     - mul_seq_one
-    - neg_seq_converges
   nonneg_partials_bounded_above:
     real_series:
     - increasing_convergent_bounded_by_limit

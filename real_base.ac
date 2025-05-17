@@ -1436,6 +1436,16 @@ theorem abs_neg(a: Real) {
     }
 }
 
+theorem abs_not_neg(a: Real) {
+    not a.abs.is_negative
+} by {
+    if a.is_negative {
+        not a.abs.is_negative
+    } else {
+        not a.abs.is_negative
+    }
+}
+
 define min(a: Real, b: Real) -> Real {
     if a < b {
         a

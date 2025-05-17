@@ -1,5 +1,5 @@
 dependencies: 13571564220757096328
-content: 5414598826944262823
+content: 5850419802432032887
 blocks:
   '98':
     real_base:
@@ -35,6 +35,15 @@ blocks:
     - neg_neg_is_pos
     - neg_pos_is_neg
     - neg_zero
+  abs_not_neg:
+    real_base:
+    - Real.is_negative
+    - abs_neg
+    - lt_zero_imp_neg
+    - lte_abs
+    - lte_lt_trans
+    - neg_lt_zero
+    - neg_neg_is_pos
   add_assoc:
     rat:
     - add_assoc

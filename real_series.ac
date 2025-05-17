@@ -353,82 +353,31 @@ theorem mul_seq_zero(a: Nat -> Real) {
     mul_seq(Real.0, a) = constant<Nat, Real>(Real.0)
 }
 
-// theorem mul_seq_converges_to_(a: Real, b: Nat -> Real) {
-//     converges(b) implies converges_to(mul_seq(a, b), a * limit(b))
-// } by {
-//     converges_to(b, limit(b))
-//     forall(eps: Real) {
-//         if eps.is_positive {
-//             let eps2: Real satisfy {
-//                 eps2.is_positive and eps2 * a.abs < eps
-//             }
-//             let n: Nat satisfy {
-//                 tail_bound(b, limit(b), n, eps2)
-//             }
-//             tail_bound(mul_seq(a, b), a * limit(b), n, eps)
-//         }
-//     }
-// }
-
-theorem converges_pos_mul_seq(a: Real, b: Nat -> Real) {
-    a.is_positive and converges(b)
-    implies converges(mul_seq(a, b))
+theorem mul_seq_converges_to(a: Real, b: Nat -> Real) {
+    converges(b) implies converges_to(mul_seq(a, b), a * limit(b))
 } by {
-    not a.is_negative
+    converges_to(b, limit(b))
     forall(eps: Real) {
         if eps.is_positive {
             let eps2: Real satisfy {
-                eps2.is_positive and a * eps2 < eps
+                eps2.is_positive and a.abs * eps2 < eps
             }
-            
             let n: Nat satisfy {
-                cauchy_bound(b, n, eps2)
+                tail_bound(b, limit(b), n, eps2)
             }
-            
-            forall(i: Nat, j: Nat) {
-                if n <= i and n <= j {
-                    b(i).is_close(b(j), eps2)
-                    (b(i) - b(j)).abs < eps2
-                    a * (b(i) - b(j)).abs < a * eps2
-                    a.abs * (b(i) - b(j)).abs < a * eps2
-                    (a * (b(i) - b(j))).abs < a * eps2
-                    (a * b(i) - a * b(j)).abs < a * eps2
-                    mul_seq(a, b)(i).is_close(mul_seq(a, b)(j), eps)
+            forall(i: Nat) {
+                if n <= i {
+                    b(i).is_close(limit(b), eps2)
+                    (b(i) - limit(b)).abs < eps2
+                    a.abs * (b(i) - limit(b)).abs <= a.abs * eps2
+                    (a * b(i) - a * limit(b)).abs <= a.abs * eps2
+                    (a * b(i) - a * limit(b)).abs < eps
+                    mul_seq(a, b)(i).is_close(a * limit(b), eps)
                 }
             }
-            
-            cauchy_bound(mul_seq(a, b), n, eps)
+            tail_bound(mul_seq(a, b), a * limit(b), n, eps)
         }
     }
-}
-
-theorem neg_seq_converges(a: Nat -> Real) {
-    converges(a) implies converges(mul_seq(-Real.1, a))
-} by {
-    let nsa: Nat -> Real = mul_seq(-Real.1, a)
-    forall(eps: Real) {
-        if eps.is_positive {
-            let eps2: Real satisfy {
-                eps2.is_positive and eps2 < eps
-            }
-            
-            let n: Nat satisfy {
-                cauchy_bound(a, n, eps2)
-            }
-            
-            forall(i: Nat, j: Nat) {
-                if n <= i and n <= j {
-                    a(i).is_close(a(j), eps2)
-                    (a(i) - a(j)).abs < eps2
-                    (-a(i) - -a(j)).abs < eps2
-                    nsa(i).is_close(nsa(j), eps)
-                }
-            }
-            
-            cauchy_bound(nsa, n, eps)
-        }
-    }
-    converges(nsa)
 }
 
 theorem mul_seq_one(a: Nat -> Real) {
@@ -454,27 +403,6 @@ theorem mul_seq_combine(a: Real, b: Real, c: Nat -> Real) {
     mul_seq(a * b, c) = mul_seq(a, mul_seq(b, c))
 }
 
-theorem converges_neg_mul_seq(a: Real, b: Nat -> Real) {
-    a.is_negative and converges(b)
-    implies converges(mul_seq(a, b))
-} by {
-    (-a).is_positive
-    converges(mul_seq(-a, b))
-    mul_seq(-a, b) = mul_seq(-Real.1 * a, b)
-    mul_seq(-a, b) = mul_seq(-Real.1, mul_seq(a, b))
-}
-
 theorem converges_mul_seq(a: Real, b: Nat -> Real) {
     converges(b) implies converges(mul_seq(a, b))
-} by {
-    if a.is_positive {
-        converges(mul_seq(a, b))
-    } else {
-        if a = Real.0 {
-            mul_seq(Real.0, b) = constant<Nat, Real>(Real.0)
-            converges(mul_seq(a, b))
-        } else {
-            converges(mul_seq(a, b))
-        }
-    }
 }
