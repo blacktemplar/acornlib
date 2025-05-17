@@ -1,6 +1,10 @@
 dependencies: 10326154983804721344
-content: 10683120915259647252
+content: 3950620158647397762
 blocks:
+  add_seq_converges:
+    real_ring:
+    - converges_to_imp_converges
+    - limit_add_seq
   comparison_test:
     real_base:
     - lte_trans
@@ -35,6 +39,12 @@ blocks:
     - const_seq
     util:
     - constant
+  converges_const_seq:
+    real_ring:
+    - eq_converges
+    - eventual_eq
+    real_series:
+    - const_seq_n
   converges_mul_seq:
     real_ring:
     - converges_to_imp_converges
@@ -152,6 +162,18 @@ blocks:
     - mul_seq
     util:
     - constant
+  neg_seq_cancels:
+    real_base:
+    - Real.sub
+    - neg_neg
+    - sub_moves_sides
+    real_ring:
+    - add_seq
+    - mul_neg_left
+    - mul_one_left
+    real_series:
+    - mul_seq
+    - neg_seq
   neg_seq_converges_converse:
     real_base:
     - neg_neg
@@ -163,6 +185,16 @@ blocks:
     - mul_seq
     - mul_seq_converges_to
     - mul_seq_one
+  neg_seq_neg_seq:
+    real_base:
+    - neg_neg
+    real_ring:
+    - mul_neg_left
+    - mul_neg_one_left
+    - mul_one_left
+    real_series:
+    - mul_seq
+    - neg_seq
   nonneg_partial_bounded_above:
     real_series:
     - increasing_convergent_bounded_by_limit
@@ -252,6 +284,15 @@ blocks:
     real_series:
     - partial_suc
     - partial_zero
+    - tail
+  partial_tail_rewrite:
+    real_base:
+    - Real.sub
+    real_ring:
+    - add_seq
+    real_series:
+    - const_seq_n
+    - partial_tail_sub
     - tail
   partial_tail_sub:
     add_comm:

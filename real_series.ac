@@ -572,6 +572,10 @@ theorem tail_partial(a: Nat -> Real, n: Nat) {
     }
 }
 
+theorem partial_tail_rewrite(a: Nat -> Real, n: Nat) {
+    partial(tail(a, n)) = add_seq(tail(partial(a), n), const_seq(-partial(a, n)))
+}
+
 theorem tail_converges_to(a: Nat -> Real, n: Nat) {
     converges(a) implies
     converges_to(tail(a, n), limit(a))
@@ -659,11 +663,41 @@ theorem tail_partial_converges(a: Nat -> Real, k: Nat) {
     converges_to(partial(tail(a, k)), target)
 }
 
-// theorem partial_tail_conv_imp_partial_conv(a: Nat -> Real, k: Nat) {
-//     converges(partial(tail(a, k))) implies converges(partial(a))
+theorem converges_const_seq(a: Real) {
+    converges(const_seq(a))
+}
+
+theorem add_seq_converges(a: Nat -> Real, b: Nat -> Real) {
+    converges(a) and converges(b) implies converges(add_seq(a, b))
+}
+
+define neg_seq(a: Nat -> Real) -> (Nat -> Real) {
+    mul_seq(-Real.1, a)
+}
+
+theorem neg_seq_neg_seq(a: Nat -> Real) {
+    neg_seq(neg_seq(a)) = a
+}
+
+theorem neg_seq_cancels(a: Nat -> Real, b: Nat -> Real) {
+    add_seq(add_seq(a, b), neg_seq(b)) = a
+} by {
+    forall(i: Nat) {
+        add_seq(a, b, i) - b(i) = a(i)
+        add_seq(a, b, i) + neg_seq(b, i) = a(i)
+        add_seq(add_seq(a, b), neg_seq(b))(i) = a(i)
+    }
+}
+
+// theorem converges_add_imp_converges(a: Nat -> Real, b: Nat -> Real) {
+//     converges(add_seq(a, b)) and converges(a) implies converges(b)
+// }
+
+// theorem partial_tail_conv_imp_partial_conv(a: Nat -> Real, n: Nat) {
+//     converges(partial(tail(a, n))) implies converges(partial(a))
 // } by {
-//     forall(eps: Real) {
-//         if eps.is_positive {
-//         }
-//     }
+//     partial(tail(a, n)) = add_seq(tail(partial(a), n), const_seq(-partial(a, n)))
+//     converges(add_seq(tail(partial(a), n), const_seq(-partial(a, n))))
+//     converges(const_seq(-partial(a, n)))
+//     converges(tail(partial(a), n))
 // }
