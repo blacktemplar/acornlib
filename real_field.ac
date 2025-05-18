@@ -1,0 +1,16 @@
+from nat import Nat
+from rat import Rat
+from real_ring import lift_seq, converges, converges_to, limit
+from real_series import Real
+numerals Real
+
+// This file defines real division and proves theorems about it.
+
+define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
+    a(n).reciprocal
+}
+
+// theorem recip_rat_seq_converges(a: Nat -> Rat, b: Real) {
+//     converges_to(lift_seq(a), b) and b != 0
+//     implies converges(lift_seq(recip_rat_seq(a)))
+// }
