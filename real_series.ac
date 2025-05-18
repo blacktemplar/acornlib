@@ -697,7 +697,7 @@ theorem neg_seq_converges_to(a: Nat -> Real) {
     converges_to(neg_seq(a), -Real.1 * limit(a))
 }
 
-theorem converges_add_imp_converges(a: Nat -> Real, b: Nat -> Real) {
+theorem conv_add_imp_conv_right(a: Nat -> Real, b: Nat -> Real) {
     converges(add_seq(a, b)) and converges(a) implies converges(b)
 } by {
     converges(neg_seq(a))
@@ -707,11 +707,17 @@ theorem converges_add_imp_converges(a: Nat -> Real, b: Nat -> Real) {
     add_seq(add_seq(a, b), neg_seq(a)) = b
 }
 
-// theorem partial_tail_conv_imp_partial_conv(a: Nat -> Real, n: Nat) {
-//     converges(partial(tail(a, n))) implies converges(partial(a))
-// } by {
-//     partial(tail(a, n)) = add_seq(tail(partial(a), n), const_seq(-partial(a, n)))
-//     converges(add_seq(tail(partial(a), n), const_seq(-partial(a, n))))
-//     converges(const_seq(-partial(a, n)))
-//     converges(tail(partial(a), n))
-// }
+theorem conv_add_imp_conv_left(a: Nat -> Real, b: Nat -> Real) {
+    converges(add_seq(a, b)) and converges(b) implies converges(a)
+} by {
+    add_seq(a, b) = add_seq(b, a)
+}
+
+theorem partial_tail_conv_imp_partial_conv(a: Nat -> Real, n: Nat) {
+    converges(partial(tail(a, n))) implies converges(partial(a))
+} by {
+    partial(tail(a, n)) = add_seq(tail(partial(a), n), const_seq(-partial(a, n)))
+    converges(add_seq(tail(partial(a), n), const_seq(-partial(a, n))))
+    converges(const_seq(-partial(a, n)))
+    converges(tail(partial(a), n))
+}

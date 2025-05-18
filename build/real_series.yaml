@@ -1,5 +1,5 @@
 dependencies: 10326154983804721344
-content: 11008753701472674848
+content: 7436608217573320127
 blocks:
   add_seq_converges:
     real_ring:
@@ -39,7 +39,14 @@ blocks:
     - const_seq
     util:
     - constant
-  converges_add_imp_converges:
+  conv_add_imp_conv_left:
+    real_base:
+    - add_comm
+    real_ring:
+    - add_seq
+    real_series:
+    - conv_add_imp_conv_right
+  conv_add_imp_conv_right:
     real_base:
     - add_comm
     real_ring:
@@ -301,6 +308,14 @@ blocks:
     - partial_suc
     - partial_zero
     - tail
+  partial_tail_conv_imp_partial_conv:
+    real_ring:
+    - converges_to_imp_converges
+    real_series:
+    - conv_add_imp_conv_left
+    - converges_const_seq
+    - partial_tail_rewrite
+    - tail_imp_converges_to
   partial_tail_rewrite:
     real_base:
     - Real.sub
