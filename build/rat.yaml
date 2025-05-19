@@ -1,9 +1,30 @@
 dependencies: 17285642633256121314
-content: 2350891095453369679
+content: 18163673877026584930
 blocks:
   '11':
     rat:
     - denom_one_is_reduced
+  abs_div:
+    rat:
+    - Rat.abs
+    - Rat.div
+    - abs_non_neg
+    - abs_non_pos
+    - cancel_positivity_right
+    - div_neg_neg
+    - div_negs_cancel
+    - mul_cancels_div
+    - mul_non_neg
+    - mul_pos_neg
+    - neg_mul
+    - neg_recip
+    - neg_sub
+    - not_pos_and_neg
+    - pos_recip
+    - recip_recip
+    - single_trichotomy
+    - sub_zero
+    - zero_minus
   abs_mul_abs:
     rat:
     - abs_non_neg
@@ -387,6 +408,43 @@ blocks:
     - mul_reduced
     - mul_reduced_int_right
     - reduce_idempotent
+  div_neg_neg:
+    rat:
+    - Rat.div
+    - mul_neg_neg
+    - neg_imp_lt_zero
+    - neg_recip
+  div_negs_cancel:
+    rat:
+    - Rat.1
+    - Rat.reciprocal
+    - Rat.sub
+    - add_zero_left
+    - cancel_left_num_denom
+    - from_int_num
+    - half_is_pos
+    - half_lt_one
+    - mul_neg_one_left
+    - mul_one_right
+    - neg_sub
+    - pos_ne_zero
+    - rat_neg_one
+    - reduce_idempotent
+    - sub_zero
+    - times_two
+    - zero_denom
+    - zero_minus
+  div_zero:
+    rat:
+    - Rat.0
+    - Rat.div
+    - Rat.from_int
+    - Rat.reciprocal
+    - from_int_num
+    - mul_comm
+    - mul_zero_right
+    - reduce
+    - zero_denom
   finite_seq_abs_bounded:
     nat:
     - Nat.induction
@@ -694,6 +752,12 @@ blocks:
     rat:
     - Rat.lte
     - lt_trans
+  lt_mul_lte:
+    rat:
+    - Rat.lte
+    - lt_mul_pos
+    - lt_pos_mul_lt_pos
+    - not_pos_and_neg
   lt_mul_pos:
     rat:
     - Rat.gt
@@ -1215,6 +1279,17 @@ blocks:
     - Rat.is_negative
     - Rat.is_positive
     - neg_num
+  neg_recip:
+    rat:
+    - Rat.div
+    - div_zero
+    - mul_neg_neg
+    - mul_one_left
+    - mul_zero_right
+    - not_pos_and_neg
+    - pos_recip
+    - recip_recip
+    - single_trichotomy
   neg_sub:
     int:
     - neg_neg
@@ -1320,6 +1395,9 @@ blocks:
     rat:
     - not_lt_self
     - pos_imp_zero_lt
+  pos_recip:
+    rat:
+    - pos_reciprocal
   pos_reciprocal:
     rat:
     - Rat.is_positive
@@ -1347,7 +1425,6 @@ blocks:
     - mul_one_left
   recip_mul:
     rat:
-    - Rat.0
     - Rat.div
     - Rat.new
     - Rat.reciprocal
@@ -1363,6 +1440,16 @@ blocks:
     - mul_zero_right
     - recip_eq_one_div
     - reduce
+    - zero_num
+  recip_recip:
+    rat:
+    - Rat.div
+    - Rat.reciprocal
+    - add_div_distrib
+    - reciprocal_inverts
+    - reduce
+    - three_thirds
+    - times_three
     - zero_num
   reciprocal_inverts:
     rat:
