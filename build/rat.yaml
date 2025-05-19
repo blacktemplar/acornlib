@@ -1,5 +1,5 @@
 dependencies: 17285642633256121314
-content: 12173286796716661927
+content: 2350891095453369679
 blocks:
   '11':
     rat:
@@ -83,6 +83,10 @@ blocks:
     - mul_comm
     rat:
     - Rat.add
+  add_div_distrib:
+    rat:
+    - Rat.div
+    - distrib_right
   add_half_half:
     rat:
     - Rat.div
@@ -218,6 +222,13 @@ blocks:
     - lt_cancel_add_right
     - minus_cancels_plus
     - neg_sub
+  cancel_left_num_denom:
+    rat:
+    - Rat.div
+    - mul_comm
+    - mul_fractions
+    - mul_inv_cancels_right
+    - mul_one_right
   cancel_positivity_left:
     rat:
     - mul_pos_neg
@@ -228,6 +239,13 @@ blocks:
     rat:
     - cancel_positivity_left
     - mul_comm
+  cancel_to_reciprocal:
+    rat:
+    - Rat.div
+    - mul_fractions
+    - mul_inv_cancels_right
+    - mul_one_left
+    - mul_one_right
   close_comm:
     rat:
     - Rat.is_close
@@ -886,6 +904,13 @@ blocks:
     - mul_comm
     - mul_inv_cancels_right
     - mul_one_left
+  mul_fractions:
+    rat:
+    - Rat.div
+    - Rat.mul
+    - mul_assoc
+    - mul_comm
+    - recip_mul
   mul_int_eq_int_mul:
     int:
     - add_zero_left
@@ -1311,10 +1336,34 @@ blocks:
     - from_int_num
     - neg_denom
     - neg_num
+  recip_diff:
+    rat:
+    - cancel_to_reciprocal
+    - mul_comm
+    - sub_div_distrib
   recip_eq_one_div:
     rat:
     - Rat.div
     - mul_one_left
+  recip_mul:
+    rat:
+    - Rat.0
+    - Rat.div
+    - Rat.new
+    - Rat.reciprocal
+    - add_zero_left
+    - add_zero_right
+    - distrib_left
+    - mul_assoc
+    - mul_cancels_div
+    - mul_cancels_div_left
+    - mul_comm
+    - mul_div_cancels
+    - mul_inv_cancels_left
+    - mul_zero_right
+    - recip_eq_one_div
+    - reduce
+    - zero_num
   reciprocal_inverts:
     rat:
     - Rat.div
@@ -1573,6 +1622,11 @@ blocks:
     - distrib_left
     - mul_comm
     - neg_mul
+  sub_div_distrib:
+    rat:
+    - Rat.div
+    - mul_comm
+    - sub_distrib
   sub_from_int:
     int:
     - Int.sub

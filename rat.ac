@@ -2048,6 +2048,58 @@ theorem lte_mul_lte(a: Rat, b: Rat, c: Rat, d: Rat) {
     }
 }
 
-// theorem recip_diff(a: Rat, b: Rat) {
-//     a.reciprocal - b.reciprocal = XXX
-// }
+theorem add_div_distrib(a: Rat, b: Rat, c: Rat) {
+    (a + b) / c = a / c + b / c
+}
+
+theorem sub_div_distrib(a: Rat, b: Rat, c: Rat) {
+    (a - b) / c = a / c - b / c
+}
+
+theorem recip_mul(a: Rat, b: Rat) {
+    (a * b).reciprocal = a.reciprocal * b.reciprocal
+} by {
+    if a = Rat.0 {
+        // Degenerate but it works
+        a * b = Rat.0
+        (a * b).reciprocal = Rat.0
+        (a * b).reciprocal = a.reciprocal * b.reciprocal
+    } else {
+        if b = Rat.0 {
+            (a * b).reciprocal = a.reciprocal * b.reciprocal
+        } else {
+            (a * b).reciprocal * (a * b) = Rat.1
+            (a * b).reciprocal = a.reciprocal * b.reciprocal
+        }
+    }
+}
+
+theorem mul_fractions(a: Rat, b: Rat, c: Rat, d: Rat) {
+    (a / b) * (c / d) = (a * c) / (b * d)
+} by {
+    (a / b) * (c / d) = (a * b.reciprocal) * (c * d.reciprocal)
+    (a / b) * (c / d) = (a * c) * (b.reciprocal * d.reciprocal)
+    (b.reciprocal * d.reciprocal) = (b * d).reciprocal
+    (a / b) * (c / d) = (a * c) * (b * d).reciprocal
+}
+
+theorem cancel_left_num_denom(a: Rat, b: Rat, c: Rat) {
+    a != Rat.0 implies
+    (a * b) / (a * c) = b / c
+} by {
+    (a / a) * (b / c) = (a * b) / (a * c)
+}
+
+theorem cancel_to_reciprocal(a: Rat, b: Rat) {
+    a != Rat.0 and b != Rat.0 implies
+    a / (a * b) = b.reciprocal
+}
+
+theorem recip_diff(a: Rat, b: Rat) {
+    a != Rat.0 and b != Rat.0 implies
+    a.reciprocal - b.reciprocal = (b - a) / (a * b)
+} by {
+    (b - a) / (a * b) = (b / (a * b)) - (a / (a * b))
+    b / (a * b) = a.reciprocal
+    a / (a * b) = b.reciprocal
+}
