@@ -1473,6 +1473,32 @@ theorem gte_each_of_three_regular(a: Nat, b: Nat, c: Nat) {
     }
 }
 
+theorem gt_each_of_three_swapped(a: Nat, b: Nat, c: Nat) {
+    exists(n: Nat) {
+        a < n and b < n and c < n
+    }
+} by {
+    let n1: Nat satisfy {
+        a <= n1 and b <= n1 and c <= n1
+    }
+    let n: Nat satisfy {
+        n1 < n
+    }
+    a < n
+    b < n
+    c < n
+}
+
+theorem gt_each_of_three_regular(a: Nat, b: Nat, c: Nat) {
+    exists(n: Nat) {
+        n > a and n > b and n > c
+    }
+} by {
+    let n: Nat satisfy {
+        a < n and b < n and c < n
+    }
+}
+
 // Single-digit addition facts should probably just be theorems.
 theorem one_plus_two {
     1 + 2 = 3

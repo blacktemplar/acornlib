@@ -1,5 +1,5 @@
 dependencies: 0
-content: 11854504648678767239
+content: 18304220585295197449
 blocks:
   add_assoc:
     nat:
@@ -341,6 +341,15 @@ blocks:
   factorial_zero:
     nat:
     - factorial
+  gt_each_of_three_regular:
+    nat:
+    - Nat.gt
+    - gt_each_of_three_swapped
+  gt_each_of_three_swapped:
+    nat:
+    - gte_each_of_three
+    - lt_add_suc
+    - lte_and_lt
   gte_each_of_three:
     nat:
     - Nat.lt

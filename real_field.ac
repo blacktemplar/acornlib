@@ -20,7 +20,7 @@ define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
 //     eventual_lb(lift_seq(a), b_lb)
 //     let n1: Nat satisfy {
 //         forall(i: Nat) {
-//             n1 < i implies b_lb <= lift_seq(a)(i).abs
+//             n1 < i implies b_lb <= lift_seq(a)(i)
 //         }
 //     }
     
@@ -42,18 +42,23 @@ define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
             
 //             // Choose the larger of our two indices
 //             let n: Nat satisfy {
-//                 n1 <= n and n2 <= n
+//                 n1 < n and n2 < n
 //             }
             
 //             // Now we show that the reciprocal sequence satisfies the Cauchy property
 //             forall(i: Nat, j: Nat) {
 //                 if n <= i and n <= j {
 //                     // Both terms are close to b
+//                     n2 <= i
 //                     lift_seq(a)(i).is_close(b, eps_bound)
+//                     n2 <= j
 //                     lift_seq(a)(j).is_close(b, eps_bound)
                     
 //                     // Both terms are non-zero
+//                     n1 <= i
+//                     b_lb <= lift_seq(a)(i)
 //                     a(i) != Rat.0
+//                     n1 <= j
 //                     a(j) != Rat.0
                     
 //                     // Express reciprocals using formula for distance
