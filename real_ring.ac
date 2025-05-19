@@ -2083,6 +2083,15 @@ theorem exists_small_mul_variant(a: Real, b: Real) {
     not a.abs.is_negative
 }
 
+theorem exists_small_mul_variant_2(a: Real, b: Real) {
+    a.is_positive and b.is_positive implies
+    exists(c: Real) {
+        c.is_positive and c * a < b
+    }
+} by {
+    not a.is_negative
+}
+
 theorem mul_abs(a: Real, b: Real) {
     a.abs * b.abs = (a * b).abs
 } by {

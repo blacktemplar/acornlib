@@ -1,4 +1,4 @@
-dependencies: 10326154983804721344
+dependencies: 6595914728555878772
 content: 7436608217573320127
 blocks:
   add_seq_converges:
@@ -234,8 +234,6 @@ blocks:
     add_comm:
     - AddComm.associative
     - AddComm.commutative
-    - AddComm.identity_left
-    - AddComm.identity_right
     nat:
     - Nat.induction
     real_base:

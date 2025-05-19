@@ -1,5 +1,5 @@
 dependencies: 1495616488966560412
-content: 5053696016858808043
+content: 14536472338449206494
 blocks:
   Real.AddComm:
     real_base:
@@ -530,6 +530,14 @@ blocks:
     - neg_lt_zero
     real_ring:
     - exists_small_mul
+  exists_small_mul_variant_2:
+    real_base:
+    - neg_lt_zero
+    - zero_not_positive
+    real_ring:
+    - exists_small_mul
+    - gt_pos_is_pos
+    - real_mul_comm
   find_less_than_a_third:
     rat:
     - cancel_positivity_left
