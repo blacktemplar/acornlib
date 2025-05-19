@@ -2047,3 +2047,7 @@ theorem lte_mul_lte(a: Rat, b: Rat, c: Rat, d: Rat) {
         }
     }
 }
+
+// theorem recip_diff(a: Rat, b: Rat) {
+//     a.reciprocal - b.reciprocal = XXX
+// }

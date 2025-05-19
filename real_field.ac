@@ -1,6 +1,6 @@
 from nat import Nat
 from rat import Rat
-from real_ring import lift_seq, converges, converges_to, limit, cauchy_bound, eventual_lb
+from real_ring import lift_seq, converges, converges_to, limit, cauchy_bound, eventual_lb, tail_bound
 from real_series import Real
 numerals Real
 
@@ -35,12 +35,19 @@ define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
             
 //             // Find where the original sequence is within eps_bound of b
 //             let n2: Nat satisfy {
-//                 forall(i: Nat) {
-//                     n2 <= i implies lift_seq(a)(i).is_close(b, eps_bound)
+//                 tail_bound(lift_seq(a), b, n2, eps_bound)
+//             }
+//             forall(i: Nat) {
+//                 if n2 <= i {
+//                     n2 <= Nat.0 + i
+//                     n2 <= Nat.0 + (i + Nat.0)
+//                     lift_seq(a, Nat.0 + (i + Nat.0)).is_close(b, eps_bound)
+//                     lift_seq(a, Nat.0 + i).is_close(b, eps_bound)
+//                     lift_seq(a)(i).is_close(b, eps_bound)
 //                 }
 //             }
             
-//             // Choose the larger of our two indices
+//             // Choose a bound above both
 //             let n: Nat satisfy {
 //                 n1 < n and n2 < n
 //             }
@@ -59,6 +66,7 @@ define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
 //                     b_lb <= lift_seq(a)(i)
 //                     a(i) != Rat.0
 //                     n1 <= j
+//                     b_lb <= lift_seq(a)(j)
 //                     a(j) != Rat.0
                     
 //                     // Express reciprocals using formula for distance
