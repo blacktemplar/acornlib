@@ -1,5 +1,5 @@
 dependencies: 0
-content: 8062204909165422398
+content: 11854504648678767239
 blocks:
   add_assoc:
     nat:
@@ -347,6 +347,10 @@ blocks:
     - lt_or_lte
     - lte_ref
     - lte_trans
+  gte_each_of_three_regular:
+    nat:
+    - Nat.gte
+    - gte_each_of_three
   has_prime_divisor:
     nat:
     - Nat.lt

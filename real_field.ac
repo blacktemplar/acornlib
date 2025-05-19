@@ -42,7 +42,7 @@ define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
             
 //             // Choose the larger of our two indices
 //             let n: Nat satisfy {
-//                 n >= n1 and n >= n2
+//                 n1 <= n and n2 <= n
 //             }
             
 //             // Now we show that the reciprocal sequence satisfies the Cauchy property

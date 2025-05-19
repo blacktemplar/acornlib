@@ -1463,6 +1463,16 @@ theorem gte_each_of_three(a: Nat, b: Nat, c: Nat) {
     a <= n2 and b <= n2 and c <= n2
 }
 
+theorem gte_each_of_three_regular(a: Nat, b: Nat, c: Nat) {
+    exists(n: Nat) {
+        n >= a and n >= b and n >= c
+    }
+} by {
+    let n: Nat satisfy {
+        a <= n and b <= n and c <= n
+    }
+}
+
 // Single-digit addition facts should probably just be theorems.
 theorem one_plus_two {
     1 + 2 = 3
