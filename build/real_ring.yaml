@@ -1,9 +1,16 @@
-dependencies: 392142886447155979
-content: 12839746259406299141
+dependencies: 12767055020285045944
+content: 13927576747655947949
 blocks:
   Real.AddCommSemigroup:
     real_base:
     - add_comm
+  Real.AddGroup:
+    real_base:
+    - Real.sub
+    - sub_cancels
+    - sub_moves_sides
+    real_ring:
+    - sub_zero_imp_eq
   Real.AddMonoid:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
@@ -12,11 +19,17 @@ blocks:
   Real.AddSemigroup:
     real_base:
     - add_assoc
-  Real.MulCommMonoid:
+  Real.Monoid:
     real_ring:
-    - mul_assoc
     - mul_one_left
     - real_mul_comm
+  Real.Semigroup:
+    real_ring:
+    - mul_assoc
+  Real.Semiring:
+    real_ring:
+    - mul_distrib_left
+    - mul_distrib_right
   abs_lt_imp_close_to_zero:
     real_base:
     - Real.abs

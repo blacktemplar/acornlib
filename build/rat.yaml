@@ -1,9 +1,37 @@
-dependencies: 262125201485117796
-content: 1963976309509323785
+dependencies: 8412902719700427728
+content: 3877145440304377637
 blocks:
   '11':
     rat:
     - denom_one_is_reduced
+  Rat.AddCommSemigroup:
+    rat:
+    - add_comm
+  Rat.AddGroup:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    rat:
+    - add_cancels_sub
+    - zero_minus
+  Rat.AddMonoid:
+    rat:
+    - add_cancels_sub
+    - add_zero_left
+    - sub_zero
+  Rat.AddSemigroup:
+    rat:
+    - add_assoc
+  Rat.Monoid:
+    rat:
+    - mul_comm
+    - mul_one_left
+  Rat.Semigroup:
+    rat:
+    - mul_assoc
+  Rat.Semiring:
+    rat:
+    - distrib_left
+    - distrib_right
   abs_div:
     rat:
     - Rat.abs
