@@ -1,6 +1,37 @@
-dependencies: 3524690570180133336
-content: 16577366330483977843
+dependencies: 15725589672157618539
+content: 862035707726626623
 blocks:
+  neg_recip_rat_seq:
+    rat:
+    - Rat.div
+    - div_negs_cancel
+    - mul_neg_one_left
+    - mul_one_left
+    - neg_sub
+    - sub_zero
+    - zero_minus
+    real_field:
+    - recip_rat_seq
+    real_ring:
+    - neg_rat_seq
+  recip_rat_seq_converges:
+    real_base:
+    - Real.is_negative
+    - neg_neg
+    - neg_neg_is_pos
+    real_field:
+    - neg_recip_rat_seq
+    - recip_rat_seq_pos_converges
+    real_ring:
+    - converges_imp_converges_to
+    - converges_to_imp_converges
+    - converges_to_unique
+    - limit_rat
+    - neg_seq_converges
+    real_series:
+    - neg_seq_converges_converse
+    - neg_seq_converges_to
+    - neg_seq_lifts
   recip_rat_seq_pos_converges:
     nat:
     - Nat.lt

@@ -1,5 +1,5 @@
 dependencies: 12224125438728434030
-content: 7436608217573320127
+content: 7951943358868603448
 blocks:
   add_seq_converges:
     real_ring:
@@ -167,6 +167,17 @@ blocks:
     - tail_bound
     real_series:
     - mul_seq
+  mul_seq_neg_one_converges_converse:
+    real_base:
+    - neg_neg
+    real_ring:
+    - converges_to_imp_converges
+    - mul_assoc
+    - mul_neg_one_right
+    real_series:
+    - mul_seq
+    - mul_seq_converges_to
+    - mul_seq_one
   mul_seq_one:
     real_ring:
     - mul_one_left
@@ -191,22 +202,30 @@ blocks:
     real_series:
     - mul_seq
     - neg_seq
-  neg_seq_converges_converse:
-    real_base:
-    - neg_neg
+  neg_seq_converges:
     real_ring:
     - converges_to_imp_converges
-    - mul_assoc
-    - mul_neg_one_right
     real_series:
-    - mul_seq
-    - mul_seq_converges_to
-    - mul_seq_one
+    - neg_seq_converges_to
+  neg_seq_converges_converse:
+    real_series:
+    - neg_seq_converges
+    - neg_seq_neg_seq
   neg_seq_converges_to:
     real_ring:
     - mul_neg_one_left
     real_series:
     - mul_seq_converges_to
+    - neg_seq
+  neg_seq_lifts:
+    real_base:
+    - neg_from_rat
+    real_ring:
+    - lift_seq_elt
+    - mul_neg_one_left
+    - neg_rat_seq
+    real_series:
+    - mul_seq
     - neg_seq
   neg_seq_neg_seq:
     real_base:

@@ -1,7 +1,7 @@
 from nat import Nat
 from rat import Rat
-from real_ring import lift_seq, converges, converges_to, limit, cauchy_bound, eventual_lb, tail_bound
-from real_series import Real
+from real_ring import lift_seq, converges, converges_to, limit, cauchy_bound, eventual_lb, tail_bound, neg_rat_seq
+from real_series import Real, neg_seq
 numerals Real
 
 // This file defines real division and proves theorems about it.
@@ -10,6 +10,11 @@ define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
     a(n).reciprocal
 }
 
+theorem neg_recip_rat_seq(a: Nat -> Rat) {
+    neg_rat_seq(recip_rat_seq(a)) = recip_rat_seq(neg_rat_seq(a))
+}
+
+// Division works for positive reals
 theorem recip_rat_seq_pos_converges(a: Nat -> Rat, b: Real) {
     converges_to(lift_seq(a), b) and b.is_positive
     implies converges(lift_seq(recip_rat_seq(a)))
@@ -121,4 +126,27 @@ theorem recip_rat_seq_pos_converges(a: Nat -> Rat, b: Real) {
     
     // Therefore the sequence converges
     converges(lift_seq(recip_rat_seq(a)))
+}
+
+// Division works for all nonzero reals
+theorem recip_rat_seq_converges(a: Nat -> Rat, b: Real) {
+    converges_to(lift_seq(a), b) and b != Real.0
+    implies converges(lift_seq(recip_rat_seq(a)))
+} by {
+    if b.is_positive {
+        // This is the previous theorem
+        converges(lift_seq(recip_rat_seq(a)))
+    } else {
+        b.is_negative
+        (-b).is_positive
+        limit(lift_seq(a)) = b
+        converges_to(neg_seq(lift_seq(a)), -b)
+        converges_to(lift_seq(neg_rat_seq(a)), -b)
+        converges(lift_seq(recip_rat_seq(neg_rat_seq(a))))
+        recip_rat_seq(neg_rat_seq(a)) = neg_rat_seq(recip_rat_seq(a))
+        converges(lift_seq(neg_rat_seq(recip_rat_seq(a))))
+        lift_seq(neg_rat_seq(recip_rat_seq(a))) = neg_seq(lift_seq(recip_rat_seq(a)))
+        converges(neg_seq(lift_seq(recip_rat_seq(a))))
+        converges(lift_seq(recip_rat_seq(a)))
+    }
 }

@@ -3,7 +3,7 @@ from nat import Nat
 from rat import Rat
 from list import partial, sum, map, List, range
 import real_set
-from real_ring import Real, converges, converges_to, limit, cauchy_bound, tail_bound, add_seq
+from real_ring import Real, converges, converges_to, limit, cauchy_bound, tail_bound, add_seq, lift_seq, neg_rat_seq
 
 // This file defines infinite series and proves theorems about them.
 
@@ -384,7 +384,7 @@ theorem mul_seq_one(a: Nat -> Real) {
     mul_seq(Real.1, a) = a
 }
 
-theorem neg_seq_converges_converse(a: Nat -> Real) {
+theorem mul_seq_neg_one_converges_converse(a: Nat -> Real) {
     converges(mul_seq(-Real.1, a)) implies converges(a)
 } by {
     converges(mul_seq(-Real.1, mul_seq(-Real.1, a)))
@@ -679,6 +679,10 @@ theorem neg_seq_neg_seq(a: Nat -> Real) {
     neg_seq(neg_seq(a)) = a
 }
 
+theorem neg_seq_lifts(a: Nat -> Rat) {
+    neg_seq(lift_seq(a)) = lift_seq(neg_rat_seq(a))
+}
+
 theorem neg_seq_cancels(a: Nat -> Real, b: Nat -> Real) {
     add_seq(add_seq(a, b), neg_seq(b)) = a
 } by {
@@ -695,6 +699,17 @@ theorem neg_seq_converges_to(a: Nat -> Real) {
     converges_to(mul_seq(-Real.1, a), -Real.1 * limit(a))
     neg_seq(a) = mul_seq(-Real.1, a)
     converges_to(neg_seq(a), -Real.1 * limit(a))
+}
+
+theorem neg_seq_converges(a: Nat -> Real) {
+    converges(a) implies converges(neg_seq(a))
+}
+
+theorem neg_seq_converges_converse(a: Nat -> Real) {
+    converges(neg_seq(a)) implies converges(a)
+} by {
+    converges(neg_seq(neg_seq(a)))
+    neg_seq(neg_seq(a)) = a
 }
 
 theorem conv_add_imp_conv_right(a: Nat -> Real, b: Nat -> Real) {
