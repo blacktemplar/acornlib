@@ -1,0 +1,10 @@
+from add_monoid import AddMonoid
+
+// An additive group is an additive monoid that also has inverses.
+typeclass A: AddGroup extends AddMonoid {
+    neg: A -> A
+
+    add_inverse(a: A) {
+        a + -a = A.zero
+    }
+}
