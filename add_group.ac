@@ -8,3 +8,14 @@ typeclass A: AddGroup extends AddMonoid {
         a + -a = A.zero
     }
 }
+
+// This direction is proven rather than assumed
+theorem inverse_left<A: AddGroup>(a: A) {
+    -a + a = A.zero
+} by {
+    (-a + a) + -a = -a
+    (-a + a) + -a + --a = -a + --a
+    (-a + a) + (-a + --a) = -a + --a
+    (-a + a) + A.zero = A.zero
+}
+

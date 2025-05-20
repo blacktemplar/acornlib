@@ -1,3 +1,10 @@
 dependencies: 9748421934567896719
-content: 5948126209117991244
-blocks: {}
+content: 17332994999313890185
+blocks:
+  inverse_left:
+    add_group:
+    - AddGroup.inverse_right
+    add_monoid:
+    - AddMonoid.identity_right
+    add_semigroup:
+    - AddSemigroup.associative
