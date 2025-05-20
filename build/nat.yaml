@@ -1,6 +1,12 @@
-dependencies: 0
-content: 18304220585295197449
+dependencies: 2298601200483608754
+content: 16824899192921528960
 blocks:
+  Nat.AddSemigroup:
+    nat:
+    - add_assoc
+  Nat.Semigroup:
+    nat:
+    - mul_assoc
   add_assoc:
     nat:
     - Nat.induction

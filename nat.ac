@@ -1515,3 +1515,17 @@ theorem one_plus_four {
 theorem one_plus_five {
     1 + 5 = 6
 }
+
+// Demonstrating that Nat is a semiring.
+
+from add_semigroup import AddSemigroup
+
+instance Nat: AddSemigroup {
+    let add: (Nat, Nat) -> Nat = Nat.add
+}
+
+from semigroup import Semigroup
+
+instance Nat: Semigroup {
+    let mul: (Nat , Nat) -> Nat = Nat.mul
+}

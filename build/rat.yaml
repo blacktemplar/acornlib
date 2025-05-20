@@ -1,4 +1,4 @@
-dependencies: 17285642633256121314
+dependencies: 10114799090590206111
 content: 1963976309509323785
 blocks:
   '11':
@@ -55,7 +55,6 @@ blocks:
     - zero_minus
   abs_of_div:
     rat:
-    - Rat.div
     - abs_div
     - abs_mul_abs
     - abs_non_pos
@@ -1485,13 +1484,9 @@ blocks:
     - zero_num
   recip_recip:
     rat:
-    - Rat.div
     - Rat.reciprocal
-    - add_div_distrib
     - reciprocal_inverts
     - reduce
-    - three_thirds
-    - times_three
     - zero_num
   reciprocal_inverts:
     rat:
