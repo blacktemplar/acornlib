@@ -1,0 +1,24 @@
+dependencies: 3255977638742636657
+content: 2311062088106006502
+blocks:
+  '37':
+    subgroup:
+    - identity_subgroup_constraint
+  identity_subgroup_constraint:
+    group:
+    - Group.inverse_right
+    monoid:
+    - Monoid.identity_left
+    - Monoid.identity_right
+    subgroup:
+    - closure_constraint
+    - identity_constraint
+    - inverse_constraint
+    - is_identity
+    - subgroup_constraint
+  identity_subgroup_only_has_identity:
+    subgroup:
+    - Subgroup.contains
+    - identity_subgroup
+    - identity_subgroup_constraint
+    - is_identity

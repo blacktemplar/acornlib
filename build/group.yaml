@@ -1,29 +1,9 @@
 dependencies: 6517299527597468178
-content: 4108972550532267457
+content: 5127280561197323296
 blocks:
-  '112':
+  '65':
     group:
     - trivial_hom_is_hom
-  '84':
-    group:
-    - identity_subgroup_constraint
-  identity_subgroup_constraint:
-    group:
-    - Group.inverse_right
-    - closure_constraint
-    - identity_constraint
-    - inverse_constraint
-    - is_identity
-    - subgroup_constraint
-    monoid:
-    - Monoid.identity_left
-    - Monoid.identity_right
-  identity_subgroup_only_has_identity:
-    group:
-    - Subgroup.contains
-    - identity_subgroup
-    - identity_subgroup_constraint
-    - is_identity
   inverse_inverse:
     group:
     - Group.inverse_right
