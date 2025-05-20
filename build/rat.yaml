@@ -1,4 +1,4 @@
-dependencies: 10114799090590206111
+dependencies: 14275435444754640711
 content: 1963976309509323785
 blocks:
   '11':
@@ -56,19 +56,11 @@ blocks:
   abs_of_div:
     rat:
     - abs_div
-    - abs_mul_abs
     - abs_non_pos
-    - add_div_distrib
-    - add_zero_left
-    - cancel_positivity_left
     - div_zero
     - not_lt_both_ways
     - pos_imp_zero_lt
-    - sub_self
     - sub_zero
-    - three_is_positive
-    - three_thirds
-    - times_three
     - zero_minus
   abs_reduce_left:
     int:
