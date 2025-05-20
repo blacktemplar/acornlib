@@ -2,15 +2,15 @@ from semigroup import Semigroup
 
 // A multiplicative monoid is a multiplicative semigroup with an identity element.
 typeclass M: Monoid extends Semigroup {
-    one: M
+    e: M
     
     // The identity element must satisfy the identity property
     identity_right(a: M) {
-        a * M.one = a
+        a * M.e = a
     }
     
     // Other direction of the identity property
     identity_left(a: M) {
-        M.one * a = a
+        M.e * a = a
     }
 }

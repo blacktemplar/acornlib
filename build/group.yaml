@@ -1,22 +1,23 @@
-dependencies: 0
-content: 17461905358582731078
+dependencies: 6517299527597468178
+content: 4108972550532267457
 blocks:
-  '102':
-    group:
-    - identity_subgroup_constraint
-  '130':
+  '112':
     group:
     - trivial_hom_is_hom
+  '84':
+    group:
+    - identity_subgroup_constraint
   identity_subgroup_constraint:
     group:
-    - Group.identity_left
-    - Group.identity_right
     - Group.inverse_right
     - closure_constraint
     - identity_constraint
     - inverse_constraint
     - is_identity
     - subgroup_constraint
+    monoid:
+    - Monoid.identity_left
+    - Monoid.identity_right
   identity_subgroup_only_has_identity:
     group:
     - Subgroup.contains
@@ -25,34 +26,45 @@ blocks:
     - is_identity
   inverse_inverse:
     group:
-    - Group.associative
-    - Group.identity_left
-    - Group.identity_right
     - Group.inverse_right
+    monoid:
+    - Monoid.identity_left
+    - Monoid.identity_right
+    semigroup:
+    - Semigroup.associative
   inverse_left:
     group:
-    - Group.associative
-    - Group.identity_right
     - Group.inverse_right
+    monoid:
+    - Monoid.identity_right
+    semigroup:
+    - Semigroup.associative
   inverse_mul:
     group:
-    - Group.associative
-    - Group.identity_right
     - Group.inverse_right
     - inverse_left
     - right_cancel
+    monoid:
+    - Monoid.identity_right
+    semigroup:
+    - Semigroup.associative
   left_cancel:
     group:
-    - Group.associative
-    - Group.identity_left
     - inverse_left
+    monoid:
+    - Monoid.identity_left
+    semigroup:
+    - Semigroup.associative
   right_cancel:
     group:
-    - Group.associative
-    - Group.identity_right
     - Group.inverse_right
+    monoid:
+    - Monoid.identity_right
+    semigroup:
+    - Semigroup.associative
   trivial_hom_is_hom:
     group:
-    - Group.identity_left
     - is_hom
     - trivial_hom
+    monoid:
+    - Monoid.identity_left

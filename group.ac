@@ -1,27 +1,9 @@
-typeclass G: Group {
-    // The identity
-    e: G
+from monoid import Monoid
 
-    // The group operation
-    mul: (G, G) -> G
-
+// A group is a monoid that also has inverses.
+typeclass G: Group extends Monoid {
     // The inverse operation
     inverse: G -> G
-
-    // Groups must be associative
-    associative(a: G, b: G, c: G) {
-        (a * b) * c = a * (b * c)
-    }
-
-    // The identity element must satisfy the identity property
-    identity_right(a: G) {
-        a * G.e = a
-    }
-
-    // Other direction of the identity property
-    identity_left(a: G) {
-        G.e * a = a
-    }
 
     // We only need right-inverse, we can prove left-inverse from it.
     inverse_right(a: G) {
