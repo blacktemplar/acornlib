@@ -1,6 +1,33 @@
-dependencies: 16450793787198301210
-content: 11079756643831104039
+dependencies: 9553869505219073786
+content: 11203175921799776503
 blocks:
+  Int.AddCommSemigroup:
+    int:
+    - sub_add_left
+    - sub_imp_add
+  Int.AddGroup:
+    int:
+    - sub_imp_add
+    - sub_zero_left
+  Int.AddMonoid:
+    int:
+    - add_zero_right
+    - sub_negate_imp_add
+    - sub_zero_left
+  Int.AddSemigroup:
+    int:
+    - add_assoc
+  Int.Monoid:
+    int:
+    - mul_comm
+    - mul_one_left
+  Int.Semigroup:
+    int:
+    - mul_assoc
+  Int.Semiring:
+    int:
+    - mul_distrib_left
+    - mul_distrib_right
   abs_add_nonneg:
     int:
     - Int.is_negative
