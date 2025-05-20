@@ -1,0 +1,9 @@
+// An additive semigroup is associative, and that's about it.
+typeclass A: AddSemigroup {
+    add: (A, A) -> A
+
+    associative(a: A, b: A, c: A) {
+        a + (b + c) = (a + b) + c
+    }
+}
+
