@@ -19,3 +19,10 @@ theorem inverse_left<A: AddGroup>(a: A) {
     (-a + a) + A.zero = A.zero
 }
 
+theorem inverse_inverse<A: AddGroup>(a: A) {
+    --a = a
+} by {
+    a + -a = A.zero
+    a + -a + --a = --a
+}
+

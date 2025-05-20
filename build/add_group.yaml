@@ -1,6 +1,14 @@
 dependencies: 9748421934567896719
-content: 17332994999313890185
+content: 1524788340030532819
 blocks:
+  inverse_inverse:
+    add_group:
+    - AddGroup.inverse_right
+    add_monoid:
+    - AddMonoid.identity_left
+    - AddMonoid.identity_right
+    add_semigroup:
+    - AddSemigroup.associative
   inverse_left:
     add_group:
     - AddGroup.inverse_right
