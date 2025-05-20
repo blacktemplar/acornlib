@@ -2241,7 +2241,7 @@ instance Int: AddCommMonoid {
 from semigroup import Semigroup
 
 instance Int: Semigroup {
-    let mul: (Int , Int) -> Int = Int.mul
+    let mul: (Int, Int) -> Int = Int.mul
 }
 
 from monoid import Monoid

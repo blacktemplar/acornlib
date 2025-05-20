@@ -1543,7 +1543,7 @@ instance Nat: AddCommMonoid {
 from semigroup import Semigroup
 
 instance Nat: Semigroup {
-    let mul: (Nat , Nat) -> Nat = Nat.mul
+    let mul: (Nat, Nat) -> Nat = Nat.mul
 }
 
 from monoid import Monoid
