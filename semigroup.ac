@@ -5,7 +5,7 @@ typeclass S: Semigroup {
     mul: (S, S) -> S
 
     // Associativity property
-    associative(a: S, b: S, c: S) {
+    mul_associative(a: S, b: S, c: S) {
         a * (b * c) = (a * b) * c
     }
 }

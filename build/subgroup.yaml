@@ -1,4 +1,4 @@
-dependencies: 3255977638742636657
+dependencies: 1797759610663165109
 content: 2311062088106006502
 blocks:
   '37':
@@ -8,8 +8,8 @@ blocks:
     group:
     - Group.inverse_right
     monoid:
-    - Monoid.identity_left
-    - Monoid.identity_right
+    - Monoid.mul_identity_left
+    - Monoid.mul_identity_right
     subgroup:
     - closure_constraint
     - identity_constraint

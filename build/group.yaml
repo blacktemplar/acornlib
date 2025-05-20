@@ -1,4 +1,4 @@
-dependencies: 6517299527597468178
+dependencies: 500771963968340988
 content: 5127280561197323296
 blocks:
   '65':
@@ -8,43 +8,43 @@ blocks:
     group:
     - Group.inverse_right
     monoid:
-    - Monoid.identity_left
-    - Monoid.identity_right
+    - Monoid.mul_identity_left
+    - Monoid.mul_identity_right
     semigroup:
-    - Semigroup.associative
+    - Semigroup.mul_associative
   inverse_left:
     group:
     - Group.inverse_right
     monoid:
-    - Monoid.identity_right
+    - Monoid.mul_identity_right
     semigroup:
-    - Semigroup.associative
+    - Semigroup.mul_associative
   inverse_mul:
     group:
     - Group.inverse_right
     - inverse_left
     - right_cancel
     monoid:
-    - Monoid.identity_right
+    - Monoid.mul_identity_right
     semigroup:
-    - Semigroup.associative
+    - Semigroup.mul_associative
   left_cancel:
     group:
     - inverse_left
     monoid:
-    - Monoid.identity_left
+    - Monoid.mul_identity_left
     semigroup:
-    - Semigroup.associative
+    - Semigroup.mul_associative
   right_cancel:
     group:
     - Group.inverse_right
     monoid:
-    - Monoid.identity_right
+    - Monoid.mul_identity_right
     semigroup:
-    - Semigroup.associative
+    - Semigroup.mul_associative
   trivial_hom_is_hom:
     group:
     - is_hom
     - trivial_hom
     monoid:
-    - Monoid.identity_left
+    - Monoid.mul_identity_left

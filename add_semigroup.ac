@@ -2,7 +2,7 @@
 typeclass A: AddSemigroup {
     add: (A, A) -> A
 
-    associative(a: A, b: A, c: A) {
+    add_associative(a: A, b: A, c: A) {
         a + (b + c) = (a + b) + c
     }
 }

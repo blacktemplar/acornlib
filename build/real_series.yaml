@@ -1,4 +1,4 @@
-dependencies: 7568969491377122559
+dependencies: 3591580265289865727
 content: 7951943358868603448
 blocks:
   add_seq_converges:
@@ -253,7 +253,7 @@ blocks:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
     nat:
     - Nat.induction
     real_base:
@@ -296,7 +296,7 @@ blocks:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
     add_monoid:
-    - AddMonoid.identity_right
+    - AddMonoid.add_identity_right
     list:
     - List.append
     - List.singleton
@@ -312,7 +312,7 @@ blocks:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
     int:
     - sub_nat_negate_imp_add
     - sub_nat_zero_left

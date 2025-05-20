@@ -5,12 +5,12 @@ typeclass A: AddMonoid extends AddSemigroup {
     zero: A
 
     // The identity element must satisfy the identity property
-    identity_right(a: A) {
+    add_identity_right(a: A) {
         a + A.zero = a
     }
 
     // Other direction of the identity property
-    identity_left(a: A) {
+    add_identity_left(a: A) {
         A.zero + a = a
     }
 }

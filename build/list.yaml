@@ -1,4 +1,4 @@
-dependencies: 1560334054421770391
+dependencies: 1850940298387817008
 content: 7152753295385444785
 blocks:
   add_assoc:
@@ -75,9 +75,9 @@ blocks:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
     add_monoid:
-    - AddMonoid.identity_right
+    - AddMonoid.add_identity_right
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
     list:
     - List.add
     - List.induction

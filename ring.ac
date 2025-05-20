@@ -1,0 +1,5 @@
+from add_comm_group import AddCommGroup
+from semiring import Semiring
+
+typeclass R: Ring extends Semiring, AddCommGroup {
+}

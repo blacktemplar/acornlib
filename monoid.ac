@@ -5,12 +5,12 @@ typeclass M: Monoid extends Semigroup {
     e: M
     
     // The identity element must satisfy the identity property
-    identity_right(a: M) {
+    mul_identity_right(a: M) {
         a * M.e = a
     }
     
     // Other direction of the identity property
-    identity_left(a: M) {
+    mul_identity_left(a: M) {
         M.e * a = a
     }
 }

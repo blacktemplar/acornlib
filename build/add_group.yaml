@@ -1,4 +1,4 @@
-dependencies: 9748421934567896719
+dependencies: 12628588552286390385
 content: 11340640060166741719
 blocks:
   inverse_add:
@@ -7,35 +7,35 @@ blocks:
     - inverse_left
     - right_cancel
     add_monoid:
-    - AddMonoid.identity_right
+    - AddMonoid.add_identity_right
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
   inverse_inverse:
     add_group:
     - AddGroup.inverse_right
     add_monoid:
-    - AddMonoid.identity_left
-    - AddMonoid.identity_right
+    - AddMonoid.add_identity_left
+    - AddMonoid.add_identity_right
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
   inverse_left:
     add_group:
     - AddGroup.inverse_right
     add_monoid:
-    - AddMonoid.identity_right
+    - AddMonoid.add_identity_right
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
   left_cancel:
     add_group:
     - inverse_left
     add_monoid:
-    - AddMonoid.identity_left
+    - AddMonoid.add_identity_left
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
   right_cancel:
     add_group:
     - AddGroup.inverse_right
     add_monoid:
-    - AddMonoid.identity_right
+    - AddMonoid.add_identity_right
     add_semigroup:
-    - AddSemigroup.associative
+    - AddSemigroup.add_associative
