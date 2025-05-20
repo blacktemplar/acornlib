@@ -1,0 +1,11 @@
+// The default semigroup uses the multiplication operator..
+// For an additive semigroup, see add_semigroup.ac.
+typeclass S: Semigroup {
+    // The semigroup operation
+    mul: (S, S) -> S
+
+    // Associativity property
+    associative(a: S, b: S, c: S) {
+        a * (b * c) = (a * b) * c
+    }
+}
