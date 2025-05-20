@@ -26,3 +26,22 @@ theorem inverse_inverse<A: AddGroup>(a: A) {
     a + -a + --a = --a
 }
 
+theorem left_cancel<A: AddGroup>(a: A, b: A, c: A) {
+    a + b = a + c implies b = c
+} by {
+    -a + (a + b) = -a + (a + c)
+}
+
+theorem right_cancel<A: AddGroup>(a: A, b: A, c: A) {
+    b + a = c + a implies b = c
+} by {
+    (b + a) + -a = (c + a) + -a
+}
+
+theorem inverse_add<A: AddGroup>(a: A, b: A) {
+    -(a + b) = -b + -a
+} by {
+    -(a + b) + (a + b) = A.zero
+    -(a + b) + a = -b
+}
+
