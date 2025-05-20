@@ -1,6 +1,6 @@
 from list import List
-from add_comm import AddComm
-from mul_comm import MulComm
+from add_comm_monoid import AddCommMonoid
+from mul_comm_monoid import MulCommMonoid
 
 define const_false<T>(x: T) -> Bool {
     false

@@ -1,12 +1,12 @@
-dependencies: 12135828054166177257
-content: 14536472338449206494
+dependencies: 7374491851517526300
+content: 11867887358625680550
 blocks:
-  Real.AddComm:
+  Real.AddCommMonoid:
     real_base:
     - add_assoc
     - add_comm
     - add_zero_left
-  Real.MulComm:
+  Real.MulCommMonoid:
     real_ring:
     - mul_assoc
     - mul_one_left

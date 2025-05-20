@@ -1,4 +1,4 @@
-dependencies: 12224125438728434030
+dependencies: 12285473250570396603
 content: 7951943358868603448
 blocks:
   add_seq_converges:
@@ -250,9 +250,11 @@ blocks:
     - is_lower_bound
     - partial_suc
   partial_add_seq_comm:
-    add_comm:
-    - AddComm.associative
-    - AddComm.commutative
+    add_comm_monoid:
+    - AddCommMonoid.associative
+    - AddCommMonoid.commutative
+    - AddCommMonoid.identity_left
+    - AddCommMonoid.identity_right
     nat:
     - Nat.induction
     real_base:
@@ -292,9 +294,9 @@ blocks:
     - partial_suc
     - seq_lte
   partial_suc:
-    add_comm:
-    - AddComm.commutative
-    - AddComm.identity_right
+    add_comm_monoid:
+    - AddCommMonoid.commutative
+    - AddCommMonoid.identity_right
     list:
     - List.append
     - List.singleton
@@ -307,9 +309,9 @@ blocks:
     real_base:
     - add_comm
   partial_tail:
-    add_comm:
-    - AddComm.associative
-    - AddComm.commutative
+    add_comm_monoid:
+    - AddCommMonoid.associative
+    - AddCommMonoid.commutative
     int:
     - sub_nat_negate_imp_add
     - sub_nat_zero_left
@@ -343,8 +345,8 @@ blocks:
     - partial_tail_sub
     - tail
   partial_tail_sub:
-    add_comm:
-    - AddComm.commutative
+    add_comm_monoid:
+    - AddCommMonoid.commutative
     real_base:
     - sub_moves_sides
     real_series:
@@ -384,8 +386,8 @@ blocks:
     real_series:
     - tail
   tail_partial:
-    add_comm:
-    - AddComm.commutative
+    add_comm_monoid:
+    - AddCommMonoid.commutative
     real_ring:
     - add_seq
     real_series:
@@ -393,8 +395,9 @@ blocks:
     - partial_tail
     - tail
   tail_partial_converges:
-    add_comm:
-    - AddComm.commutative
+    add_comm_monoid:
+    - AddCommMonoid.associative
+    - AddCommMonoid.commutative
     nat:
     - Nat.lte
     - add_comm

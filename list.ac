@@ -239,9 +239,9 @@ define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
     }
 }
 
-from add_comm import AddComm
+from add_comm_monoid import AddCommMonoid
 
-define sum<A: AddComm>(items: List<A>) -> A {
+define sum<A: AddCommMonoid>(items: List<A>) -> A {
     match items {
         List.nil {
             A.zero
@@ -255,11 +255,11 @@ define sum<A: AddComm>(items: List<A>) -> A {
 // The partial sums of an infinite series.
 // partial(a) gives a new infinite sequence, where the nth
 // element is the sum of the first n elements of a.
-define partial<A: AddComm>(f: Nat -> A, n: Nat) -> A {
+define partial<A: AddCommMonoid>(f: Nat -> A, n: Nat) -> A {
     sum(map(List.range(n), f))
 }
 
-theorem sum_add<A: AddComm>(left: List<A>, right: List<A>) {
+theorem sum_add<A: AddCommMonoid>(left: List<A>, right: List<A>) {
     sum(left + right) = sum(left) + sum(right)
 } by {
     define p(x: List<A>) -> Bool {

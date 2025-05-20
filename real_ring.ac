@@ -2122,15 +2122,15 @@ theorem mul_abs(a: Real, b: Real) {
     }
 }
 
-from add_comm import AddComm
-from mul_comm import MulComm
+from add_comm_monoid import AddCommMonoid
+from mul_comm_monoid import MulCommMonoid
 
-instance Real: AddComm {
+instance Real: AddCommMonoid {
     let zero: Real = Real.0
     let add: (Real, Real) -> Real = Real.add
 }
 
-instance Real: MulComm {
+instance Real: MulCommMonoid {
     let one: Real = Real.1
     let mul: (Real, Real) -> Real = Real.mul
 }

@@ -1,5 +1,5 @@
-// AddComm represents a commutative, additive monoid.
-typeclass M: AddComm {
+// AddCommMonoid represents a commutative, additive monoid.
+typeclass M: AddCommMonoid {
     zero: M
 
     add: (M, M) -> M

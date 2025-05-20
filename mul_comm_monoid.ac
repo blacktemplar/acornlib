@@ -1,5 +1,5 @@
-// MulComm represents a commutative, multiplicative monoid.
-typeclass M: MulComm {
+// MulCommMonoid represents a commutative, multiplicative monoid.
+typeclass M: MulCommMonoid {
     one: M
 
     mul: (M, M) -> M
@@ -25,7 +25,7 @@ typeclass M: MulComm {
 
 from nat import Nat
 
-define pow<M: MulComm>(base: M, exp: Nat) -> M {
+define pow<M: MulCommMonoid>(base: M, exp: Nat) -> M {
     match exp {
         Nat.0 {
             M.one
@@ -37,7 +37,7 @@ define pow<M: MulComm>(base: M, exp: Nat) -> M {
 }
 
 // Proof that a^n * a^m = a^(n+m)
-theorem pow_add<M: MulComm>(a: M, n: Nat, m: Nat) {
+theorem pow_add<M: MulCommMonoid>(a: M, n: Nat, m: Nat) {
     pow(a, n) * pow(a, m) = pow(a, n + m)
 } by {
     // Define a helper function for induction
