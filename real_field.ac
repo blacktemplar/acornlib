@@ -10,111 +10,115 @@ define recip_rat_seq(a: Nat -> Rat, n: Nat) -> Rat {
     a(n).reciprocal
 }
 
-// theorem recip_rat_seq_pos_converges(a: Nat -> Rat, b: Real) {
-//     converges_to(lift_seq(a), b) and b.is_positive
-//     implies converges(lift_seq(recip_rat_seq(a)))
-// } by {
-//     let b_lb: Rat satisfy {
-//         Rat.0 < b_lb and Real.from_rat(b_lb) < b
-//     }
-//     let lsa: Nat -> Real = lift_seq(a)
-//     eventual_lb(lsa, Real.from_rat(b_lb))
-//     let n1: Nat satisfy {
-//         forall(i: Nat) {
-//             n1 < i implies Real.from_rat(b_lb) <= lsa(i)
-//         }
-//     }
-//     forall(i: Nat) {
-//         if n1 < i {
-//             b_lb <= a(i)
-//         }
-//     }
+theorem recip_rat_seq_pos_converges(a: Nat -> Rat, b: Real) {
+    converges_to(lift_seq(a), b) and b.is_positive
+    implies converges(lift_seq(recip_rat_seq(a)))
+} by {
+    let b_lb: Rat satisfy {
+        Rat.0 < b_lb and Real.from_rat(b_lb) < b
+    }
+    let lsa: Nat -> Real = lift_seq(a)
+    eventual_lb(lsa, Real.from_rat(b_lb))
+    let n1: Nat satisfy {
+        forall(i: Nat) {
+            n1 < i implies Real.from_rat(b_lb) <= lsa(i)
+        }
+    }
+    forall(i: Nat) {
+        if n1 < i {
+            b_lb <= a(i)
+        }
+    }
     
-//     forall(eps: Real) {
-//         if eps.is_positive {
-//             let reps: Rat satisfy {
-//                 reps.is_positive and Real.from_rat(reps) < eps
-//             }
+    forall(eps: Real) {
+        if eps.is_positive {
+            let reps: Rat satisfy {
+                reps.is_positive and Real.from_rat(reps) < eps
+            }
 
-//             // We had to work backwards to find this condition
-//             (b_lb * b_lb).is_positive
-//             (reps / (b_lb * b_lb)).is_positive
-//             let eps2: Rat satisfy {
-//                 eps2.is_positive and eps2 < reps / (b_lb * b_lb)
-//             }
-//             eps2 * (b_lb * b_lb) < reps
-//             let eps3: Rat satisfy {
-//                 eps3 + eps3 = eps2
-//             }
-//             eps3.is_positive
+            // We had to work backwards to find this condition
+            (b_lb * b_lb).is_positive
+            (reps * (b_lb * b_lb)).is_positive
+            let eps2: Rat satisfy {
+                eps2.is_positive and eps2 < reps * (b_lb * b_lb)
+            }
+            eps2 / (b_lb * b_lb) < reps
+            let eps3: Rat satisfy {
+                eps3 + eps3 = eps2
+            }
+            eps3.is_positive
             
-//             // Find where the original sequence is within eps_bound of b
-//             let n2: Nat satisfy {
-//                 tail_bound(lift_seq(a), b, n2, Real.from_rat(eps3))
-//             }
-//             forall(i: Nat) {
-//                 if n2 <= i {
-//                     n2 <= Nat.0 + i
-//                     n2 <= Nat.0 + (i + Nat.0)
-//                     tail_bound(lift_seq(a), Real.new(b.gt_rat), n2, Real.from_rat(eps3))
-//                     lift_seq(a)(i).is_close(b, Real.from_rat(eps3))
-//                 }
-//             }
+            // Find where the original sequence is within eps_bound of b
+            let n2: Nat satisfy {
+                tail_bound(lift_seq(a), b, n2, Real.from_rat(eps3))
+            }
+            forall(i: Nat) {
+                if n2 <= i {
+                    n2 <= Nat.0 + i
+                    n2 <= Nat.0 + (i + Nat.0)
+                    tail_bound(lift_seq(a), Real.new(b.gt_rat), n2, Real.from_rat(eps3))
+                    lift_seq(a)(i).is_close(b, Real.from_rat(eps3))
+                }
+            }
             
-//             // Choose a bound above both
-//             let n: Nat satisfy {
-//                 n1 < n and n2 < n
-//             }
+            // Choose a bound above both
+            let n: Nat satisfy {
+                n1 < n and n2 < n
+            }
             
-//             // Now we show that the reciprocal sequence satisfies the Cauchy property
-//             forall(i: Nat, j: Nat) {
-//                 if n <= i and n <= j {
-//                     // Both terms are close to b
-//                     n2 <= i
-//                     lift_seq(a)(i).is_close(b, Real.from_rat(eps3))
-//                     n2 <= j
-//                     lift_seq(a)(j).is_close(b, Real.from_rat(eps3))
+            // Now we show that the reciprocal sequence satisfies the Cauchy property
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    // Both terms are close to b
+                    n2 <= i
+                    lift_seq(a)(i).is_close(b, Real.from_rat(eps3))
+                    n2 <= j
+                    lift_seq(a)(j).is_close(b, Real.from_rat(eps3))
                     
-//                     // So their diff is small
-//                     lift_seq(a, i).is_close(lift_seq(a, j), Real.from_rat(eps3) + Real.from_rat(eps3))
-//                     a(i).is_close(a(j), eps2)
-//                     let diff: Rat = a(j) - a(i)
-//                     diff.abs < eps2
+                    // So their diff is small
+                    lift_seq(a, i).is_close(lift_seq(a, j), Real.from_rat(eps3) + Real.from_rat(eps3))
+                    a(i).is_close(a(j), eps2)
+                    let diff: Rat = a(j) - a(i)
+                    diff.abs < eps2
 
-//                     // Both terms are non-zero
-//                     n1 <= i
-//                     b_lb <= a(i)
-//                     a(i) != Rat.0
-//                     n1 <= j
-//                     b_lb <= a(j)
-//                     a(j) != Rat.0
+                    // Both terms are non-zero
+                    n1 <= i
+                    b_lb <= a(i)
+                    a(i) != Rat.0
+                    n1 <= j
+                    b_lb <= a(j)
+                    a(j) != Rat.0
 
-//                     // So their product is large
-//                     let prod: Rat = a(i) * a(j)
-//                     b_lb * b_lb <= prod
-//                     b_lb * b_lb <= prod.abs
-//                     (b_lb * b_lb).is_positive
-//                     prod.abs.is_positive
+                    // So their product is large
+                    let prod: Rat = a(i) * a(j)
+                    b_lb * b_lb <= prod
+                    b_lb * b_lb <= prod.abs
+                    (b_lb * b_lb).is_positive
+                    prod.abs.is_positive
 
-//                     diff.abs * (b_lb * b_lb) < eps2 * prod.abs
-//                     diff.abs / prod.abs < eps2 / (b_lb * b_lb)
-//                     (diff / prod).abs < eps2 / (b_lb * b_lb)
-//                     (diff / prod).abs < reps
-//                     ((a(j) - a(i)) / (a(i) * a(j))).abs < reps
-//                     a(i).reciprocal - a(j).reciprocal = ((a(j) - a(i)) / (a(i) * a(j)))
-//                     (a(i).reciprocal - a(j).reciprocal).abs < reps
-//                     a(i).reciprocal.is_close(a(j).reciprocal, reps)
-//                     recip_rat_seq(a)(i).is_close(recip_rat_seq(a)(j), reps)
-//                     lift_seq(recip_rat_seq(a))(i).is_close(lift_seq(recip_rat_seq(a))(j), Real.from_rat(reps))
-//                     lift_seq(recip_rat_seq(a))(i).is_close(lift_seq(recip_rat_seq(a))(j), eps)
-//                 }
-//             }
+                    diff.abs * (b_lb * b_lb) < eps2 * prod.abs
+                    diff.abs < eps2 * prod.abs / (b_lb * b_lb)
+                    eps2 * prod.abs / (b_lb * b_lb) = (eps2 / (b_lb * b_lb)) * prod.abs 
+                    diff.abs < (eps2 / (b_lb * b_lb)) * prod.abs 
+                    diff.abs / prod.abs < eps2 / (b_lb * b_lb)
+                    diff.abs / prod.abs = (diff / prod).abs
+                    (diff / prod).abs < eps2 / (b_lb * b_lb)
+                    (diff / prod).abs < reps
+                    ((a(j) - a(i)) / (a(i) * a(j))).abs < reps
+                    a(i).reciprocal - a(j).reciprocal = ((a(j) - a(i)) / (a(i) * a(j)))
+                    (a(i).reciprocal - a(j).reciprocal).abs < reps
+                    a(i).reciprocal.is_close(a(j).reciprocal, reps)
+                    recip_rat_seq(a)(i).is_close(recip_rat_seq(a)(j), reps)
+                    lift_seq(recip_rat_seq(a))(i).is_close(lift_seq(recip_rat_seq(a))(j), Real.from_rat(reps))
+                    lift_seq(recip_rat_seq(a))(i).is_close(lift_seq(recip_rat_seq(a))(j), eps)
+                }
+            }
             
-//             // This establishes the Cauchy criterion
-//             cauchy_bound(lift_seq(recip_rat_seq(a)), n, eps)
-//         }
-//     }
+            // This establishes the Cauchy criterion
+            cauchy_bound(lift_seq(recip_rat_seq(a)), n, eps)
+        }
+    }
     
-//     // Therefore the sequence converges
-//     converges(lift_seq(recip_rat_seq(a)))
-// }
+    // Therefore the sequence converges
+    converges(lift_seq(recip_rat_seq(a)))
+}

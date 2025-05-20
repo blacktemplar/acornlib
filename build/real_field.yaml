@@ -1,3 +1,59 @@
-dependencies: 3425099709117170996
-content: 9303771186351225351
-blocks: {}
+dependencies: 3524690570180133336
+content: 16577366330483977843
+blocks:
+  recip_rat_seq_pos_converges:
+    nat:
+    - Nat.lt
+    - Nat.lte
+    - add_comm
+    - add_zero_left
+    - gt_each_of_three_swapped
+    - lte_imp_not_lt
+    - lte_trans
+    rat:
+    - Rat.is_close
+    - abs_nonneg
+    - abs_of_div
+    - add_half_half
+    - cancel_positivity_right
+    - close_comm
+    - iop_gets_lt
+    - iop_pos
+    - lt_make_left_denom
+    - lt_make_right_denom
+    - lt_mul_lte
+    - lt_trans
+    - lte_abs
+    - lte_mul_lte
+    - lte_trans
+    - mul_comm
+    - mul_div_swap
+    - mul_pos_pos
+    - not_pos_and_neg
+    - pos_imp_zero_lt
+    - pos_lte
+    - pos_ne_zero
+    - recip_diff
+    - times_two
+    - two_is_pos
+    - zero_lt_imp_pos
+    real_base:
+    - Real.new
+    - add_from_rat
+    - close_rats_imp_close_reals
+    - close_reals_imp_close_rats
+    real_field:
+    - recip_rat_seq
+    real_ring:
+    - cauchy_bound
+    - close_and_lt_imp_close
+    - converges
+    - converges_to
+    - eventual_lb
+    - from_rat_pos
+    - is_close_triangle
+    - lift_seq_elt
+    - lt_converges_to_imp_lb
+    - real_lte_imp_rat_lte
+    - smaller_rat_eps
+    - tail_bound

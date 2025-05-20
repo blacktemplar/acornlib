@@ -1,5 +1,5 @@
 dependencies: 17285642633256121314
-content: 18163673877026584930
+content: 1963976309509323785
 blocks:
   '11':
     rat:
@@ -52,6 +52,24 @@ blocks:
     - neg_imp_lt_zero
     - not_pos_and_neg
     - sub_zero
+    - zero_minus
+  abs_of_div:
+    rat:
+    - Rat.div
+    - abs_div
+    - abs_mul_abs
+    - abs_non_pos
+    - add_div_distrib
+    - add_zero_left
+    - cancel_positivity_left
+    - div_zero
+    - not_lt_both_ways
+    - pos_imp_zero_lt
+    - sub_self
+    - sub_zero
+    - three_is_positive
+    - three_thirds
+    - times_three
     - zero_minus
   abs_reduce_left:
     int:
@@ -719,6 +737,12 @@ blocks:
     - Rat.lt
     - lt_mul_pos
     - pos_reciprocal
+  lt_elim_left_denom:
+    rat:
+    - Rat.div
+    - lt_make_right_denom
+    - pos_reciprocal
+    - recip_recip
   lt_from_int:
     int:
     - Int.lt
@@ -752,6 +776,19 @@ blocks:
     rat:
     - Rat.lte
     - lt_trans
+  lt_make_left_denom:
+    rat:
+    - Rat.div
+    - lt_rhs_div_pos
+    - pos_reciprocal
+    - recip_recip
+  lt_make_right_denom:
+    rat:
+    - Rat.div
+    - lt_mul_pos
+    - mul_div_cancels
+    - pos_ne_zero
+    - pos_recip
   lt_mul_lte:
     rat:
     - Rat.lte
@@ -968,6 +1005,11 @@ blocks:
     - mul_comm
     - mul_inv_cancels_right
     - mul_one_left
+  mul_div_swap:
+    rat:
+    - Rat.div
+    - mul_assoc
+    - mul_comm
   mul_fractions:
     rat:
     - Rat.div

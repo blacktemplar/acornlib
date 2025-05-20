@@ -2191,3 +2191,34 @@ theorem abs_div(a: Rat, b: Rat) {
         }
     }
 }
+
+theorem lt_make_left_denom(a: Rat, b: Rat, c: Rat) {
+    c.is_positive and a < b * c implies a / c < b
+}
+
+theorem lt_make_right_denom(a: Rat, b: Rat, c: Rat) {
+    b.is_positive and a * b < c implies a < c / b
+} by {
+    b.reciprocal.is_positive
+    a * b * b.reciprocal < c * b.reciprocal
+    a * b * b.reciprocal = a
+    a < c * b.reciprocal
+}
+
+theorem lt_elim_left_denom(a: Rat, b: Rat, c: Rat) {
+    b.is_positive and a / b < c implies a < c * b
+}
+
+theorem abs_of_div(a: Rat, b: Rat) {
+    (a / b).abs = a.abs / b.abs
+} by {
+    if (a / b).abs != a.abs / b.abs {
+        not b.is_positive
+        b.abs = -b
+        false
+    }
+}
+
+theorem mul_div_swap(a: Rat, b: Rat, c: Rat) {
+    a * b / c = (a / c) * b
+}
