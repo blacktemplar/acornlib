@@ -240,6 +240,7 @@ define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
 }
 
 from add_comm_monoid import AddCommMonoid
+from add_semigroup import AddSemigroup
 
 define sum<A: AddCommMonoid>(items: List<A>) -> A {
     match items {
@@ -289,6 +290,10 @@ theorem sum_add<A: AddCommMonoid>(left: List<A>, right: List<A>) {
             sum(List.cons(head, tail)) + sum(right) = (head + sum(tail)) + sum(right)
 
             // Use associativity
+            forall(a: A, b: A, c: A) {
+                AddSemigroup.associative(a, b, c)
+                (a + b) + c = a + (b + c)
+            }
             (head + sum(tail)) + sum(right) = head + (sum(tail) + sum(right))
 
             // Therefore

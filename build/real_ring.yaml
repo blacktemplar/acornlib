@@ -1,11 +1,17 @@
-dependencies: 7374491851517526300
-content: 11867887358625680550
+dependencies: 9169168466778314481
+content: 12839746259406299141
 blocks:
-  Real.AddCommMonoid:
+  Real.AddCommSemigroup:
+    real_base:
+    - add_comm
+  Real.AddMonoid:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    real_base:
+    - add_zero_left
+  Real.AddSemigroup:
     real_base:
     - add_assoc
-    - add_comm
-    - add_zero_left
   Real.MulCommMonoid:
     real_ring:
     - mul_assoc

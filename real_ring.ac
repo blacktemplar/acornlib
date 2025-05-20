@@ -2123,12 +2123,27 @@ theorem mul_abs(a: Real, b: Real) {
 }
 
 from add_comm_monoid import AddCommMonoid
-from mul_comm_monoid import MulCommMonoid
+from add_comm_semigroup import AddCommSemigroup
+from add_monoid import AddMonoid
+from add_semigroup import AddSemigroup
 
-instance Real: AddCommMonoid {
-    let zero: Real = Real.0
+instance Real: AddSemigroup {
     let add: (Real, Real) -> Real = Real.add
 }
+
+instance Real: AddCommSemigroup {
+}
+
+instance Real: AddMonoid {
+    let zero: Real = Real.0
+}
+
+instance Real: AddCommMonoid {
+}
+
+from mul_comm_monoid import MulCommMonoid
+
+
 
 instance Real: MulCommMonoid {
     let one: Real = Real.1

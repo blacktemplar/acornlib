@@ -1,5 +1,5 @@
-dependencies: 6630237913878113910
-content: 7152753295385444785
+dependencies: 9140018538885693191
+content: 8902149941233001835
 blocks:
   add_assoc:
     list:
@@ -72,10 +72,10 @@ blocks:
     list:
     - List.add
   sum_add:
-    add_comm_monoid:
-    - AddCommMonoid.associative
-    - AddCommMonoid.commutative
-    - AddCommMonoid.identity_right
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_monoid:
+    - AddMonoid.identity_right
     list:
     - List.add
     - List.induction
