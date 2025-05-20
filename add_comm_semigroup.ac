@@ -1,0 +1,8 @@
+from add_semigroup import AddSemigroup
+
+// Extending the additive semigroup with commutativity.
+typeclass A: AddCommSemigroup extends AddSemigroup {
+    commutative(a: A, b: A) {
+        a + b = b + a
+    }
+}
