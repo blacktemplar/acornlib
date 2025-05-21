@@ -1,5 +1,5 @@
 dependencies: 16318960615275231997
-content: 9357492418904027411
+content: 6788737888345887483
 blocks:
   mul_reciprocal:
     rat:
@@ -141,3 +141,6 @@ blocks:
     - real_lte_imp_rat_lte
     - smaller_rat_eps
     - tail_bound
+  zero_reciprocal:
+    real_field:
+    - Real.reciprocal

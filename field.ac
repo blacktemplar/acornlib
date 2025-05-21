@@ -1,0 +1,15 @@
+from comm_ring import CommRing
+
+// A field is a commutative ring with multiplicative inverses for all non-zero elements.
+typeclass F: Field extends CommRing {
+    inverse: F -> F
+
+    // Just always define the field inverse so that the inverse of zero is zero.
+    field_inverse_zero {
+        F.zero.inverse = F.zero
+    }
+
+    field_inverse(f: F) {
+        f != F.zero implies f * f.inverse = F.e
+    }
+}

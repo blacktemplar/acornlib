@@ -243,3 +243,7 @@ theorem mul_reciprocal(a: Real) {
     a * a.reciprocal = limit_rat(mul_rat_seq(rat_seq(a), recip_rat_seq(rat_seq(a))))
     a * a.reciprocal = limit_rat(prod)
 }
+
+theorem zero_reciprocal {
+    Real.0.reciprocal = Real.0
+}
