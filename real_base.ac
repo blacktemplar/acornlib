@@ -1832,3 +1832,7 @@ theorem rat_intersect(a: Real, b: Real, c: Real, d: Real, e: Real) {
     d - e < Real.from_rat(r)
     Real.from_rat(r).is_close(d, e)
 }
+
+theorem swap_minus_plus(a: Real, b: Real, c: Real) {
+    a + b - c = a - c + b
+}

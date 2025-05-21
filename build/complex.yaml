@@ -1,5 +1,5 @@
-dependencies: 9587663450347708880
-content: 12018966537335939601
+dependencies: 14006655783922438342
+content: 7810840537704893004
 blocks:
   abs_squared_conj:
     complex:
@@ -161,3 +161,36 @@ blocks:
     - mul_zero_left
     - mul_zero_right
     - real_mul_comm
+  mul_three_im:
+    complex:
+    - Complex.im
+    - Complex.mul
+    - Complex.re
+    real_base:
+    - Real.neg
+    - add_assoc
+    - add_comm
+    - neg_distrib
+    - neg_neg
+    - swap_minus_plus
+    real_ring:
+    - mul_distrib_left
+    - mul_neg_left
+    - mul_neg_right
+    - mul_sub_distrib_left
+  mul_three_re:
+    complex:
+    - Complex.im
+    - Complex.mul
+    - Complex.re
+    real_base:
+    - Real.neg
+    - Real.sub
+    - add_zero_left
+    - neg_neg
+    real_ring:
+    - mul_distrib_left
+    - mul_neg_left
+    - mul_sub_distrib_left
+    - sub_both_eq_sub_add
+    - sub_either_order

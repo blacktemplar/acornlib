@@ -211,6 +211,29 @@ theorem distrib(a: Complex, b: Complex, c: Complex) {
     a * (b + c) = a * b + a * c
 }
 
+theorem mul_three_re(a: Complex, b: Complex, c: Complex) {
+    ((a * b) * c).re = a.re * b.re * c.re - a.re * b.im * c.im - a.im * b.re * c.im - a.im * b.im * c.re
+} by {
+    ((a * b) * c).re = (a * b).re * c.re - (a * b).im * c.im
+    ((a * b) * c).re = (a.re * b.re - a.im * b.im) * c.re - (a.re * b.im + a.im * b.re) * c.im
+}
+
+theorem mul_three_im(a: Complex, b: Complex, c: Complex) {
+    ((a * b) * c).im = a.re * b.re * c.im + a.re * b.im * c.re + a.im * b.re * c.re - a.im * b.im * c.im
+} by {
+    ((a * b) * c).im = (a * b).re * c.im + (a * b).im * c.re
+    ((a * b) * c).im = (a.re * b.re - a.im * b.im) * c.im + (a.re * b.im + a.im * b.re) * c.re
+    ((a * b) * c).im = a.re * b.re * c.im - a.im * b.im * c.im + a.re * b.im * c.re + a.im * b.re * c.re 
+    ((a * b) * c).im = a.re * b.re * c.im + a.re * b.im * c.re - a.im * b.im * c.im + a.im * b.re * c.re 
+}
+
+// theorem mul_assoc(a: Complex, b: Complex, c: Complex) {
+//     (a * b) * c = a * (b * c)
+// } by {
+//     // The real parts are equal
+//     // The imaginary parts are equal
+// }
+
 // Properties of i
 theorem i_squared {
     Complex.i * Complex.i = Complex.new(-Real.1, Real.0)
