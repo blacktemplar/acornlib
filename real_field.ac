@@ -247,3 +247,9 @@ theorem mul_reciprocal(a: Real) {
 theorem zero_reciprocal {
     Real.0.reciprocal = Real.0
 }
+
+from field import Field
+
+instance Real: Field {
+    let inverse: Real -> Real = Real.reciprocal
+}

@@ -1,6 +1,10 @@
-dependencies: 9420294768152084700
-content: 6788737888345887483
+dependencies: 15783995614339248288
+content: 13485103202732916308
 blocks:
+  Real.Field:
+    real_field:
+    - mul_reciprocal
+    - zero_reciprocal
   mul_reciprocal:
     rat:
     - mul_inv_cancels_right

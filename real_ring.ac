@@ -2178,3 +2178,8 @@ from ring import Ring
 
 instance Real: Ring {
 }
+
+from comm_ring import CommRing
+
+instance Real: CommRing {
+}
