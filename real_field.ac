@@ -161,13 +161,17 @@ class Real {
     }
 }
 
-theorem pos_imp_eventually_nonzero(a: Nat -> Real) {
-    converges(a) and limit(a).is_positive
-    implies exists(n: Nat) {
+define eventually_nonzero(a: Nat -> Real) -> Bool {
+    exists(n: Nat) {
         forall(i: Nat) {
             n < i implies a(i) != Real.0
         }
     }
+}
+
+theorem pos_imp_eventually_nonzero(a: Nat -> Real) {
+    converges(a) and limit(a).is_positive
+    implies eventually_nonzero(a)
 } by {
     let n: Nat satisfy {
         forall(i: Nat) {
@@ -182,14 +186,30 @@ theorem pos_imp_eventually_nonzero(a: Nat -> Real) {
     }
 }
 
-// theorem nonzero_imp_eventually_nonzero(a: Nat -> Real) {
-//     converges(a) and limit(a) != Real.0
-//     implies exists(n: Nat) {
-//         forall(i: Nat) {
-//             n < i implies a(i) != Real.0
-//         }
-//     }
-// }
+theorem nonzero_imp_eventually_nonzero(a: Nat -> Real) {
+    converges(a) and limit(a) != Real.0
+    implies eventually_nonzero(a)
+} by {
+    if limit(a).is_positive {
+        eventually_nonzero(a)
+    } else {
+        limit(a).is_negative
+        limit(neg_seq(a)) = -limit(a)
+        limit(neg_seq(a)).is_positive
+        let n: Nat satisfy {
+            forall(i: Nat) {
+                n < i implies neg_seq(a)(i) != Real.0
+            }
+        }
+        forall(i: Nat) {
+            if n < i {
+                neg_seq(a)(i) != Real.0
+                a(i) != Real.0
+            }
+        }
+        eventually_nonzero(a)
+    }
+}
 
 // theorem mul_reciprocal(a: Real) {
 //     a != Real.0 implies a * a.reciprocal = Real.1

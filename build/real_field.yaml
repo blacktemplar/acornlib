@@ -1,5 +1,5 @@
 dependencies: 16318960615275231997
-content: 6168293497892197523
+content: 8459306976657276177
 blocks:
   neg_recip_rat_seq:
     rat:
@@ -14,6 +14,26 @@ blocks:
     - recip_rat_seq
     real_ring:
     - neg_rat_seq
+  nonzero_imp_eventually_nonzero:
+    real_base:
+    - Real.is_negative
+    - neg_neg
+    - neg_neg_is_pos
+    - neg_zero
+    real_field:
+    - eventually_nonzero
+    - pos_imp_eventually_nonzero
+    real_ring:
+    - converges_imp_converges_to
+    - converges_to_unique
+    - mul_neg_one_left
+    real_series:
+    - mul_seq
+    - neg_seq
+    - neg_seq_converges
+    - neg_seq_converges_to
+    real_set:
+    - flip_flip
   pos_imp_eventually_nonzero:
     nat:
     - Nat.lt
@@ -21,6 +41,8 @@ blocks:
     - Real.lt
     - add_zero_left
     - close_imp_bounds
+    real_field:
+    - eventually_nonzero
     real_ring:
     - converges_imp_converges_to
     - converges_to
