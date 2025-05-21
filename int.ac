@@ -2270,3 +2270,8 @@ from ring import Ring
 
 instance Int: Ring {
 }
+
+from comm_ring import CommRing
+
+instance Int: CommRing {
+}
