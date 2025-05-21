@@ -161,14 +161,26 @@ class Real {
     }
 }
 
-// theorem pos_imp_eventually_nonzero(a: Nat -> Real) {
-//     converges(a) and limit(a).is_positive
-//     implies exists(n: Nat) {
-//         forall(i: Nat) {
-//             n < i implies a(i) != Real.0
-//         }
-//     }
-// }
+theorem pos_imp_eventually_nonzero(a: Nat -> Real) {
+    converges(a) and limit(a).is_positive
+    implies exists(n: Nat) {
+        forall(i: Nat) {
+            n < i implies a(i) != Real.0
+        }
+    }
+} by {
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n < i implies a(i).is_close(limit(a), limit(a))
+        }
+    }
+    forall(i: Nat) {
+        if n < i {
+            a(i).is_close(limit(a), limit(a))
+            a(i) != Real.0
+        }
+    }
+}
 
 // theorem nonzero_imp_eventually_nonzero(a: Nat -> Real) {
 //     converges(a) and limit(a) != Real.0
