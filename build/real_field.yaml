@@ -1,6 +1,28 @@
 dependencies: 16318960615275231997
-content: 8459306976657276177
+content: 9357492418904027411
 blocks:
+  mul_reciprocal:
+    rat:
+    - mul_inv_cancels_right
+    real_base:
+    - Real.0
+    - Real.1
+    real_field:
+    - Real.reciprocal
+    - eventually_nonzero
+    - nonzero_imp_eventually_nonzero
+    - recip_rat_seq
+    - recip_rat_seq_converges
+    real_ring:
+    - eq_imp_limit
+    - eventual_eq
+    - lift_rat_seq_converges
+    - lift_seq_elt
+    - limit_rat
+    - limit_rat_mul_rat_seq
+    - limit_rat_rat_seq
+    - mul_rat_seq
+    - rat_seq_converges_to
   neg_recip_rat_seq:
     rat:
     - Rat.div
@@ -35,8 +57,6 @@ blocks:
     real_set:
     - flip_flip
   pos_imp_eventually_nonzero:
-    nat:
-    - Nat.lt
     real_base:
     - Real.lt
     - add_zero_left

@@ -1,6 +1,6 @@
 from nat import Nat
 from rat import Rat
-from real_ring import lift_seq, converges, converges_to, limit, cauchy_bound, eventual_lb, tail_bound, neg_rat_seq, limit_rat, rat_seq, mul_rat_seq
+from real_ring import lift_seq, converges, converges_to, limit, cauchy_bound, eventual_lb, tail_bound, neg_rat_seq, limit_rat, rat_seq, mul_rat_seq, eventual_eq
 from real_series import Real, neg_seq
 numerals Real
 
@@ -164,7 +164,7 @@ class Real {
 define eventually_nonzero(a: Nat -> Real) -> Bool {
     exists(n: Nat) {
         forall(i: Nat) {
-            n < i implies a(i) != Real.0
+            n <= i implies a(i) != Real.0
         }
     }
 }
@@ -175,11 +175,11 @@ theorem pos_imp_eventually_nonzero(a: Nat -> Real) {
 } by {
     let n: Nat satisfy {
         forall(i: Nat) {
-            n < i implies a(i).is_close(limit(a), limit(a))
+            n <= i implies a(i).is_close(limit(a), limit(a))
         }
     }
     forall(i: Nat) {
-        if n < i {
+        if n <= i {
             a(i).is_close(limit(a), limit(a))
             a(i) != Real.0
         }
@@ -198,11 +198,11 @@ theorem nonzero_imp_eventually_nonzero(a: Nat -> Real) {
         limit(neg_seq(a)).is_positive
         let n: Nat satisfy {
             forall(i: Nat) {
-                n < i implies neg_seq(a)(i) != Real.0
+                n <= i implies neg_seq(a)(i) != Real.0
             }
         }
         forall(i: Nat) {
-            if n < i {
+            if n <= i {
                 neg_seq(a)(i) != Real.0
                 a(i) != Real.0
             }
@@ -211,16 +211,35 @@ theorem nonzero_imp_eventually_nonzero(a: Nat -> Real) {
     }
 }
 
-// theorem mul_reciprocal(a: Real) {
-//     a != Real.0 implies a * a.reciprocal = Real.1
-// } by {
-//     a = limit_rat(rat_seq(a))
-//     a.reciprocal = limit_rat(recip_rat_seq(rat_seq(a)))
-//     a * a.reciprocal = limit_rat(rat_seq(a)) * limit_rat(recip_rat_seq(rat_seq(a)))
-//     let n: Nat satisfy {
-//         forall(i: Nat) {
-//             n < i implies rat_seq(a, i) != Rat.0
-//         }
-//     }
-//     a * a.reciprocal = limit_rat(mul_rat_seq(rat_seq(a), recip_rat_seq(rat_seq(a))))
-// }
+theorem mul_reciprocal(a: Real) {
+    a != Real.0 implies a * a.reciprocal = Real.1
+} by {
+    a = limit_rat(rat_seq(a))
+    a.reciprocal = limit_rat(recip_rat_seq(rat_seq(a)))
+    a * a.reciprocal = limit_rat(rat_seq(a)) * limit_rat(recip_rat_seq(rat_seq(a)))
+    limit(lift_seq(rat_seq(a))) = a
+    limit(lift_seq(rat_seq(a))) != Real.0
+    let n: Nat satisfy {
+        forall(i: Nat) {
+            n <= i implies lift_seq(rat_seq(a))(i) != Real.0
+        }
+    }
+
+    // We want to show that the product of the sequences is eventually
+    // just a constant one.
+    let prod: Nat -> Rat = mul_rat_seq(rat_seq(a), recip_rat_seq(rat_seq(a)))
+
+    forall(i: Nat) {
+        if n <= i {
+            rat_seq(a, i) != Rat.0
+            rat_seq(a, i) * recip_rat_seq(rat_seq(a), i) = Rat.1
+            prod(i) = Rat.1
+            lift_seq(prod)(i) = Real.1
+        }
+    }
+    eventual_eq(lift_seq(prod), Real.1)
+
+    limit_rat(rat_seq(a)) * limit_rat(recip_rat_seq(rat_seq(a))) = limit_rat(mul_rat_seq(rat_seq(a), recip_rat_seq(rat_seq(a))))
+    a * a.reciprocal = limit_rat(mul_rat_seq(rat_seq(a), recip_rat_seq(rat_seq(a))))
+    a * a.reciprocal = limit_rat(prod)
+}
