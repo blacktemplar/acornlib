@@ -1,5 +1,5 @@
-dependencies: 9921623715020406581
-content: 3877145440304377637
+dependencies: 10272947712817722884
+content: 11670008325870517156
 blocks:
   '11':
     rat:
@@ -21,6 +21,10 @@ blocks:
   Rat.AddSemigroup:
     rat:
     - add_assoc
+  Rat.Field:
+    rat:
+    - mul_inv_cancels_right
+    - zero_recip
   Rat.Monoid:
     rat:
     - mul_comm
@@ -1943,3 +1947,8 @@ blocks:
     - Rat.0
     - Rat.num
     - denom_one_is_reduced
+  zero_recip:
+    rat:
+    - Rat.reciprocal
+    - reduce
+    - zero_num

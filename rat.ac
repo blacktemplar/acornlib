@@ -2223,6 +2223,10 @@ theorem mul_div_swap(a: Rat, b: Rat, c: Rat) {
     a * b / c = (a / c) * b
 }
 
+theorem zero_recip(a: Rat) {
+    Rat.0.reciprocal = Rat.0
+}
+
 // Demonstrating that Rat is a ring.
 
 from add_semigroup import AddSemigroup
@@ -2278,4 +2282,15 @@ instance Rat: AddCommGroup {
 from ring import Ring
 
 instance Rat: Ring {
+}
+
+from comm_ring import CommRing
+
+instance Rat: CommRing {
+}
+
+from field import Field
+
+instance Rat: Field {
+    let inverse: Rat -> Rat = Rat.reciprocal
 }
