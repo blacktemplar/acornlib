@@ -1,5 +1,5 @@
 dependencies: 14038966884547195677
-content: 696613409384216232
+content: 2209463909546569377
 blocks:
   Real.AddCommSemigroup:
     real_base:
@@ -1310,6 +1310,13 @@ blocks:
     - mul_pos_pos
     - mul_zero_left
     - pos_lte_imp_pos
+  square_zero_imp_zero:
+    real_base:
+    - Real.is_negative
+    - zero_not_positive
+    real_ring:
+    - mul_neg_neg
+    - mul_pos_pos
   sub_both_eq_sub_add:
     real_base:
     - Real.sub

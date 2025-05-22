@@ -1,6 +1,23 @@
-dependencies: 18231255388038749361
-content: 7355730277518123036
+dependencies: 4000795468738189031
+content: 9634951964090895789
 blocks:
+  abs_sq_zero_imp_zero:
+    complex:
+    - Complex.0
+    - Complex.abs_squared
+    - Complex.new
+    real_base:
+    - Real.gt
+    - Real.gte
+    - Real.lt
+    - add_comm
+    - add_zero_right
+    - lte_add_left
+    - lte_both_ways_imp_eq
+    - not_lte_imp_gt
+    real_ring:
+    - square_nonneg
+    - square_zero_imp_zero
   abs_squared_conj:
     complex:
     - Complex.abs_squared
@@ -159,19 +176,6 @@ blocks:
     - add_comm
     real_ring:
     - real_mul_comm
-  mul_comm_with_mul_real:
-    complex:
-    - Complex.im
-    - Complex.mul
-    - Complex.mul_real
-    - Complex.new
-    - Complex.re
-    real_ring:
-    - mul_assoc
-    - mul_distrib_left
-    - mul_distrib_right
-    - mul_sub_distrib_right
-    - real_mul_comm
   mul_one_left:
     complex:
     - mul_comm
@@ -194,6 +198,17 @@ blocks:
     - mul_zero_left
     - mul_zero_right
     - real_mul_comm
+  mul_reciprocal:
+    complex:
+    - Complex.1
+    - Complex.from_real
+    - Complex.reciprocal
+    - abs_sq_zero_imp_zero
+    - abs_squared_conj
+    - mul_assoc
+    - real_mul_lifts
+    real_field:
+    - mul_reciprocal
   mul_three_im:
     complex:
     - Complex.im
@@ -227,3 +242,33 @@ blocks:
     - mul_sub_distrib_left
     - sub_both_eq_sub_add
     - sub_either_order
+  real_add_lifts:
+    complex:
+    - Complex.add
+    - Complex.from_real
+    - Complex.im
+    - Complex.new
+    - Complex.re
+    - add_comm
+    real_base:
+    - Real.add
+    - add_comm
+    - add_zero_left
+  real_mul_lifts:
+    complex:
+    - Complex.from_real
+    - Complex.im
+    - Complex.mul
+    - Complex.new
+    - Complex.re
+    - mul_comm
+    real_base:
+    - Real.sub
+    - add_comm
+    - add_zero_left
+    - add_zero_right
+    - neg_zero
+    real_ring:
+    - mul_zero_left
+    - mul_zero_right
+    - real_mul_comm

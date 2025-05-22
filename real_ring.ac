@@ -2122,6 +2122,19 @@ theorem mul_abs(a: Real, b: Real) {
     }
 }
 
+theorem square_zero_imp_zero(a: Real) {
+    a * a = Real.0 implies a = Real.0
+} by {
+    if a.is_positive {
+        (a * a).is_positive
+        false
+    }
+    if a.is_negative {
+        (a * a).is_positive
+        false
+    }
+}
+
 // Demonstrating that Real is a ring.
 
 from add_semigroup import AddSemigroup
