@@ -3,7 +3,7 @@ from rat import Rat
 from util import compose, is_constant
 from real_base import min
 from real_ring import lift_seq, converges, cauchy_bound, converges_to, limit, rat_seq, limit_rat, seq_close, tail_bound
-from real_series import Real
+from real_field import Real
  
 // This file proves theorems about uniform convergence.
 

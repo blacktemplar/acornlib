@@ -253,3 +253,9 @@ from field import Field
 instance Real: Field {
     let inverse: Real -> Real = Real.reciprocal
 }
+
+class Real {
+    define div(self, other: Real) -> Real {
+        self * other.reciprocal
+    }
+}

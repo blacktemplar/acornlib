@@ -346,3 +346,13 @@ theorem conj_add(a: Complex, b: Complex) {
 
     (a + b).conj = a.conj + b.conj
 }
+
+class Complex {
+    define mul_real(self, r: Real) -> Complex {
+        Complex.new(self.re * r, self.im * r)
+    }
+
+    define div_real(self, r: Real) -> Complex {
+        Complex.new(self.re / r, self.im / r)
+    }
+}
