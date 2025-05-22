@@ -93,13 +93,17 @@ theorem add_assoc(a: Complex, b: Complex, c: Complex) {
     final_left = final_right
 }
 
-theorem add_zero(a: Complex) { 
+theorem add_zero_right(a: Complex) { 
     a + Complex.0 = a 
 } by {
     a.re + Real.0 = a.re
     a.im + Real.0 = a.im
     Complex.new(a.re + Real.0, a.im + Real.0) = Complex.new(a.re, a.im)
     a + Complex.0 = a
+}
+
+theorem add_zero_left(a: Complex) {
+    Complex.0 + a = a
 }
 
 // Multiplication properties
@@ -316,7 +320,7 @@ theorem abs_squared_nonneg(a: Complex) {
 }
 
 // Multiplicative identity
-theorem mul_one(a: Complex) { 
+theorem mul_one_right(a: Complex) { 
     a * Complex.1 = a 
 } by {
     // Expand the multiplication
@@ -331,6 +335,10 @@ theorem mul_one(a: Complex) {
     // Simplify using real number properties
     a * Complex.1 = Complex.new(a.re, a.im)
     a * Complex.1 = a
+}
+
+theorem mul_one_left(a: Complex) {
+    Complex.1 * a = a 
 }
 
 // Conjugate distribution over addition
@@ -353,6 +361,33 @@ class Complex {
     }
 
     define div_real(self, r: Real) -> Complex {
-        Complex.new(self.re / r, self.im / r)
+        self.mul_real(r.reciprocal)
+    }
+
+    define reciprocal(self) -> Complex {
+        self.conj.div_real(self.abs_squared)
     }
 }
+
+theorem mul_comm_with_mul_real(a: Complex, b: Complex, r: Real) {
+    (a * b).mul_real(r) = a.mul_real(r) * b
+} by {
+    // Real part
+    (a * b).mul_real(r).re = (a.re * b.re - a.im * b.im) * r
+    a.mul_real(r).re = a.re * r
+    a.mul_real(r).im = a.im * r
+    (a.mul_real(r) * b).re = (a.re * r) * b.re - (a.im * r) * b.im
+    (a * b).mul_real(r).re = (a.mul_real(r) * b).re
+
+    // Imaginary part
+    (a * b).im = (a.re * b.im + a.im * b.re)
+    (a * b).mul_real(r).im = (a.re * b.im + a.im * b.re) * r
+    (a.mul_real(r) * b).im = (a.re * r) * b.im + (a.im * r) * b.re
+    (a * b).mul_real(r).im = (a.mul_real(r) * b).im
+}
+
+
+// theorem mul_reciprocal(a: Complex) {
+//     a != Complex.0 implies a * a.reciprocal = Complex.1
+// } by {
+// }
