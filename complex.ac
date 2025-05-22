@@ -227,12 +227,15 @@ theorem mul_three_im(a: Complex, b: Complex, c: Complex) {
     ((a * b) * c).im = a.re * b.re * c.im + a.re * b.im * c.re - a.im * b.im * c.im + a.im * b.re * c.re 
 }
 
-// theorem mul_assoc(a: Complex, b: Complex, c: Complex) {
-//     (a * b) * c = a * (b * c)
-// } by {
-//     // The real parts are equal
-//     // The imaginary parts are equal
-// }
+theorem mul_assoc(a: Complex, b: Complex, c: Complex) {
+    (a * b) * c = a * (b * c)
+} by {
+    // The real parts are equal
+    ((a * b) * c).re = (a * (b * c)).re
+
+    // The imaginary parts are equal
+    ((a * b) * c).im = (a * (b * c)).im
+}
 
 // Properties of i
 theorem i_squared {
