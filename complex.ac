@@ -241,6 +241,31 @@ theorem mul_assoc(a: Complex, b: Complex, c: Complex) {
     ((a * b) * c).im = (a * (b * c)).im
 }
 
+class Complex {
+    define neg(self) -> Complex {
+        Complex.new(-self.re, -self.im)
+    }
+}
+
+theorem neg_one {
+    -Complex.1 = Complex.new(-Real.1, Real.0)
+} by {
+    (-Complex.1).re = -Real.1
+    (-Complex.1).im = Real.0
+}
+
+theorem neg_re(a: Complex) {
+    -(a.re) = (-a).re
+}
+
+theorem neg_im(a: Complex) {
+    -(a.im) = (-a).im
+}
+
+theorem neg_one_lifts {
+    -Complex.1 = Complex.from_real(-Real.1)
+}
+
 // Properties of i
 theorem i_squared {
     Complex.i * Complex.i = Complex.new(-Real.1, Real.0)
@@ -377,6 +402,10 @@ theorem real_add_lifts(a: Real, b: Real) {
     Complex.from_real(a + b) = Complex.new(a + b, Real.0)
 }
 
+theorem neg_eq_mul_neg_one(a: Complex) {
+    -a = (-Complex.1) * a
+}
+
 theorem abs_sq_zero_imp_zero(a: Complex) {
     a.abs_squared = Real.0 implies a = Complex.0
 } by {
@@ -399,4 +428,110 @@ theorem mul_reciprocal(a: Complex) {
     a * a.reciprocal = Complex.from_real(a.abs_squared) * Complex.from_real(a.abs_squared.reciprocal)
     a * a.reciprocal = Complex.from_real(a.abs_squared * a.abs_squared.reciprocal)
     a.abs_squared != Real.0
+}
+
+theorem mul_right_cancel(a: Complex, b: Complex, c: Complex) {
+    a * c = b * c and c != Complex.0 implies a = b
+} by {
+    a * c * c.reciprocal = b * c * c.reciprocal
+    a * (c * c.reciprocal) = b * (c * c.reciprocal)
+    c * c.reciprocal = Complex.1
+}
+
+theorem mul_left_cancel(a: Complex, b: Complex, c: Complex) {
+    a * b = a * c and a != Complex.0 implies b = c
+}
+
+theorem reciprocal_lifts(a: Real) {
+    Complex.from_real(a).reciprocal = Complex.from_real(a.reciprocal)
+} by {
+    if a = Real.0 {
+        Complex.from_real(a).reciprocal = Complex.0
+        Complex.from_real(a.reciprocal) = Complex.0
+        Complex.from_real(a).reciprocal = Complex.from_real(a.reciprocal)
+    } else {
+        Complex.from_real(a) != Complex.0
+        Complex.from_real(a) * Complex.from_real(a).reciprocal = Complex.1
+        Complex.from_real(a) * Complex.from_real(a.reciprocal) = Complex.1
+        Complex.from_real(a) * Complex.from_real(a).reciprocal = Complex.from_real(a) * Complex.from_real(a.reciprocal)
+        Complex.from_real(a).reciprocal = Complex.from_real(a.reciprocal)
+    }
+}
+
+theorem zero_reciprocal {
+    Complex.0.reciprocal = Complex.0
+}
+
+class Complex {
+    define div(self, other: Complex) -> Complex {
+        self * other.reciprocal
+    }
+}
+
+// Demonstrating that Complex is a field.
+
+from add_semigroup import AddSemigroup
+
+instance Complex: AddSemigroup {
+    let add: (Complex, Complex) -> Complex = Complex.add
+}
+
+from add_comm_semigroup import AddCommSemigroup
+
+instance Complex: AddCommSemigroup {
+}
+
+from add_monoid import AddMonoid
+
+instance Complex: AddMonoid {
+    let zero: Complex = Complex.0
+}
+
+from add_comm_monoid import AddCommMonoid
+
+instance Complex: AddCommMonoid {
+}
+
+from semigroup import Semigroup
+
+instance Complex: Semigroup {
+    let mul: (Complex, Complex) -> Complex = Complex.mul
+}
+
+from monoid import Monoid
+
+instance Complex: Monoid {
+    let e: Complex = Complex.1
+}
+
+from semiring import Semiring
+
+instance Complex: Semiring {
+}
+
+from add_group import AddGroup
+
+instance Complex: AddGroup {
+    let neg: Complex -> Complex = Complex.neg
+}
+
+from add_comm_group import AddCommGroup
+
+instance Complex: AddCommGroup {
+}
+
+from ring import Ring
+
+instance Complex: Ring {
+}
+
+from comm_ring import CommRing
+
+instance Complex: CommRing {
+}
+
+from field import Field
+
+instance Complex: Field {
+    let inverse: Complex -> Complex = Complex.reciprocal
 }

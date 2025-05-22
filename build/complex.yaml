@@ -1,6 +1,40 @@
-dependencies: 4000795468738189031
-content: 9634951964090895789
+dependencies: 7534521933246208048
+content: 10609529083565169979
 blocks:
+  Complex.AddCommSemigroup:
+    complex:
+    - add_comm
+  Complex.AddGroup:
+    complex:
+    - Complex.0
+    - Complex.add
+    - neg_im
+    - neg_re
+    real_base:
+    - add_neg_eq_zero
+  Complex.AddMonoid:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    complex:
+    - add_zero_left
+  Complex.AddSemigroup:
+    complex:
+    - add_assoc
+  Complex.Field:
+    complex:
+    - mul_reciprocal
+    - zero_reciprocal
+  Complex.Monoid:
+    complex:
+    - mul_comm
+    - mul_one_left
+  Complex.Semigroup:
+    complex:
+    - mul_assoc
+  Complex.Semiring:
+    complex:
+    - distrib
+    - mul_comm
   abs_sq_zero_imp_zero:
     complex:
     - Complex.0
@@ -176,6 +210,10 @@ blocks:
     - add_comm
     real_ring:
     - real_mul_comm
+  mul_left_cancel:
+    complex:
+    - mul_comm
+    - mul_right_cancel
   mul_one_left:
     complex:
     - mul_comm
@@ -208,6 +246,13 @@ blocks:
     - mul_assoc
     - real_mul_lifts
     real_field:
+    - mul_reciprocal
+  mul_right_cancel:
+    complex:
+    - Complex.new
+    - mul_assoc
+    - mul_comm
+    - mul_one_left
     - mul_reciprocal
   mul_three_im:
     complex:
@@ -242,6 +287,37 @@ blocks:
     - mul_sub_distrib_left
     - sub_both_eq_sub_add
     - sub_either_order
+  neg_eq_mul_neg_one:
+    complex:
+    - Complex.mul
+    - Complex.new
+    - mul_one_left
+    - neg_im
+    - neg_re
+    real_ring:
+    - mul_neg_left
+    - mul_neg_right
+  neg_im:
+    complex:
+    - Complex.im
+    - Complex.neg
+  neg_one:
+    complex:
+    - Complex.1
+    - Complex.im
+    - Complex.neg
+    - Complex.new
+    - Complex.re
+    real_base:
+    - neg_zero
+  neg_one_lifts:
+    complex:
+    - Complex.from_real
+    - neg_one
+  neg_re:
+    complex:
+    - Complex.neg
+    - Complex.re
   real_add_lifts:
     complex:
     - Complex.add
@@ -272,3 +348,44 @@ blocks:
     - mul_zero_left
     - mul_zero_right
     - real_mul_comm
+  reciprocal_lifts:
+    complex:
+    - Complex.0
+    - Complex.1
+    - Complex.abs_squared
+    - Complex.conj
+    - Complex.from_real
+    - Complex.i
+    - Complex.im
+    - Complex.mul
+    - Complex.new
+    - Complex.re
+    - Complex.reciprocal
+    - conj_conj
+    - i_squared
+    - mul_comm
+    - mul_left_cancel
+    - mul_reciprocal
+    - real_mul_lifts
+    real_base:
+    - Real.sub
+    - add_zero_left
+    - add_zero_right
+    - neg_neg
+    - neg_zero
+    real_field:
+    - Real.reciprocal
+    - mul_reciprocal
+    - zero_reciprocal
+    real_ring:
+    - mul_distrib_right
+    - mul_one_left
+    - mul_one_right
+    - real_mul_comm
+  zero_reciprocal:
+    complex:
+    - Complex.0
+    - Complex.from_real
+    - reciprocal_lifts
+    real_field:
+    - zero_reciprocal
