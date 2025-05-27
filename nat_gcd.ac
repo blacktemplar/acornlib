@@ -73,7 +73,7 @@ theorem no_infinite_decreasing(f: Nat -> Nat) {
         forall(x: Nat) {
             not (f(x) <= f(x.suc))
         }
-        let h: Nat -> Bool = function(x: Nat) { x + f(x) <= f(0) }
+        let h = function(x: Nat) { x + f(x) <= f(0) }
         Nat.induction(h)
         0 + f(0) <= f(0)
         h(0)
@@ -95,7 +95,7 @@ theorem no_infinite_decreasing(f: Nat -> Nat) {
         h(f(0).suc)
         f(0).suc + f(f(0).suc) <= f(0)
         f(0).suc <= f(0).suc + f(f(0).suc)
-        let z: Nat = f(0).suc + f(f(0).suc)
+        let z = f(0).suc + f(f(0).suc)
         z <= f(0)
         f(0).suc <= z
         f(0).suc <= f(0)
@@ -114,10 +114,10 @@ theorem dtz_terminates(f: Nat -> Nat) {
 theorem gcd_terminates(p: Pair<Nat, Nat>) {
     exists(n: Nat) { gcd_step_n(p, n).second = 0 }
 } by {
-    let f: Nat -> Nat = function(x: Nat) { gcd_step_n(p, x).second }
+    let f = function(x: Nat) { gcd_step_n(p, x).second }
     forall(x: Nat) {
         if f(x) != 0 {
-            let q: Pair<Nat, Nat> = gcd_step_n(p, x)
+            let q = gcd_step_n(p, x)
             gcd_step_n(p, x.suc) = gcd_step(gcd_step_n(p, x))
             gcd_step_n(p, x.suc) = gcd_step(q)
             f(x.suc) = gcd_step_n(p, x.suc).second
@@ -150,7 +150,7 @@ theorem num_gcd_steps_terminates(p: Pair<Nat, Nat>) {
     gcd_step_n(p, num_gcd_steps(p)).second = 0
 } by {
     exists(n: Nat) { is_min(gcd_termination(p), n) }
-    let f: Nat -> Bool = gcd_termination(p)
+    let f = gcd_termination(p)
     is_min(f, num_gcd_steps(p))
     gcd_termination(p)(num_gcd_steps(p))
 }
@@ -185,7 +185,7 @@ theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
 theorem divides_gcd_step_n(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
     divides_both(d, p) implies divides_both(d, gcd_step_n(p, n))
 } by {
-    let f: Nat -> Bool = function(x: Nat) { divides_both(d, gcd_step_n(p, x)) }
+    let f = function(x: Nat) { divides_both(d, gcd_step_n(p, x)) }
     divides_both(d, gcd_step_n(p, 0))
     f(0)
     forall(x: Nat) {
@@ -240,7 +240,7 @@ theorem divides_both_unstep(a: Nat, p: Pair<Nat, Nat>) {
 theorem divides_gcd_step_n_converse(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
     divides_both(d, gcd_step_n(p, n)) implies divides_both(d, p)
 } by {
-    let f: Nat -> Bool = function(x: Nat) {
+    let f = function(x: Nat) {
         divides_gcd_step_n_converse(d, p, x)
     }
     Nat.induction(f)
@@ -276,7 +276,7 @@ theorem divides_gcd_pair_converse(d: Nat, p: Pair<Nat, Nat>) {
 theorem gcd_divides(d: Nat, a: Nat, b: Nat) {
     divides(d, gcd(a, b)) implies divides(d, a) and divides(d, b)
 } by {
-    let p: Pair<Nat, Nat> = Pair<Nat, Nat>.new(a, b)
+    let p = Pair<Nat, Nat>.new(a, b)
     p.first = a
     p.second = b
     divides(d, gcd_pair(p))
@@ -346,8 +346,8 @@ define mod_maintains(f: Nat -> Bool) -> Bool {
 theorem mod_maintains_imp_gcd(f: Nat -> Bool, a: Nat, b: Nat) {
     mod_maintains(f) and f(a) and f(b) implies f(gcd(a, b))
 } by {
-    let p: Pair<Nat, Nat> = Pair<Nat, Nat>.new(a, b)
-    let g: Nat -> Bool = function(n: Nat) {
+    let p = Pair<Nat, Nat>.new(a, b)
+    let g = function(n: Nat) {
         f(gcd_step_n(p, n).first) and f(gcd_step_n(p, n).second)
     }
     gcd_step_n(p, 0).first = a

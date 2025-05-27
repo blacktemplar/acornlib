@@ -41,7 +41,7 @@ theorem denom_positive(r: Rat) {
 }
 
 class Rat {
-    let from_int: Int -> Rat = function(n: Int) {
+    let from_int = function(n: Int) {
         Rat.new(n, Int.1)
     }
 }
@@ -100,8 +100,8 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         gcd(a1, b1) = Int.1
 
         // To reduce we also need to swap signs if the denominator is negative
-        let a2: Int = a1 * int.unit_sign(b1)
-        let b2: Int = b1 * int.unit_sign(b1)
+        let a2 = a1 * int.unit_sign(b1)
+        let b2 = b1 * int.unit_sign(b1)
         b2 = Int.from_nat(int.abs(b1))
         b2 != Int.0
         (a1 * int.unit_sign(b1)) * b1 = (b1 * int.unit_sign(b1)) * a1
@@ -112,7 +112,7 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         b2 != Int.0
         is_reduced(a2, b2)
 
-        let r: Rat = Rat.new(a2, b2)
+        let r = Rat.new(a2, b2)
         r.num = a2
         r.denom = b2
         cross_equals(r.num, r.denom, a2, b2)
@@ -293,7 +293,7 @@ theorem unreduce_right(a: Int, b: Int) {
         reduce(a, b).num * d = a and reduce(a, b).denom * d = b
     }
 } by {
-    let r: Rat = reduce(a, b)
+    let r = reduce(a, b)
     cross_equals(r.num, r.denom, a, b)
     r.num * b = a * r.denom
     int.gcd(r.num, r.denom) = Int.1
@@ -332,10 +332,10 @@ theorem cross_eq_imp_reduce_eq(a: Int, b: Int, c: Int, d: Int) {
 } by {
     b != Int.0
     d != Int.0
-    let rab: Rat = reduce(a, b)
+    let rab = reduce(a, b)
     cross_equals(rab.num, rab.denom, a, b)
     cross_equals(rab.num, rab.denom, c, d)
-    let rcd: Rat = reduce(c, d)
+    let rcd = reduce(c, d)
     cross_equals(reduce(c, d).num, rcd.denom, c, d)
     cross_equals(rcd.num, rcd.denom, c, d)
     c * rab.denom = rab.num * d
@@ -359,7 +359,7 @@ theorem mul_reduced_int_right(a: Int, b: Int, c: Int) {
         reduce(a * c, b) = Rat.0
         reduce(a, b) * Rat.from_int(c) = reduce(a * c, b)
     } else {
-        let r: Rat = reduce(a, b)
+        let r = reduce(a, b)
         r * Rat.from_int(c) = reduce(r.num * c, r.denom)
         cross_equals(r.num, r.denom, a, b)
         r.num * b = r.denom * a
@@ -402,7 +402,7 @@ theorem mul_reduced_nondegen(a: Int, b: Int, c: Int, d: Int) {
     f != Int.0
 
     // Simplify numerator
-    let nums: Int = reduce(a, b).num * reduce(c, d).num
+    let nums = reduce(a, b).num * reduce(c, d).num
     (reduce(a, b).num * e) * (reduce(c, d).num * f) = a * c
     reduce(a, b).num * e * reduce(c, d).num * f = a * c
     (reduce(a, b).num * reduce(c, d).num) * e * f = a * c
@@ -1719,7 +1719,7 @@ theorem lt_some_nat(a: Rat) {
     let i: Int satisfy {
         a < Rat.from_int(i)
     }
-    let n: Nat = int.abs(i)
+    let n = int.abs(i)
     i <= Int.from_nat(n)
     Rat.from_int(i) <= Rat.from_nat(n)
 }
@@ -1779,7 +1779,7 @@ theorem some_mul_lt(a: Rat, b: Rat) {
     }
 } by {
     if a = Rat.0 {
-        let eps: Rat = b
+        let eps = b
         eps.is_positive
         a * eps = Rat.0
         a * eps < b
@@ -1789,7 +1789,7 @@ theorem some_mul_lt(a: Rat, b: Rat) {
         let c: Rat satisfy {
             c.is_positive and c < b
         }
-        let eps: Rat = c / a
+        let eps = c / a
         eps.is_positive
         a * eps = c
         a * eps < b
@@ -1848,7 +1848,7 @@ theorem finite_seq_abs_bounded(a: Nat -> Rat, n: Nat) {
         }
     }
 } by {
-    let f: Nat -> Bool = finite_seq_abs_bounded(a)
+    let f = finite_seq_abs_bounded(a)
     let zero_bound: Rat satisfy {
         a(Nat.0).abs < zero_bound
     }
@@ -2232,7 +2232,7 @@ theorem zero_recip(a: Rat) {
 from add_semigroup import AddSemigroup
 
 instance Rat: AddSemigroup {
-    let add: (Rat, Rat) -> Rat = Rat.add
+    let add = Rat.add
 }
 
 from add_comm_semigroup import AddCommSemigroup
@@ -2242,7 +2242,7 @@ instance Rat: AddCommSemigroup
 from add_monoid import AddMonoid
 
 instance Rat: AddMonoid {
-    let zero: Rat = Rat.0
+    let zero = Rat.0
 }
 
 from add_comm_monoid import AddCommMonoid
@@ -2252,13 +2252,13 @@ instance Rat: AddCommMonoid
 from semigroup import Semigroup
 
 instance Rat: Semigroup {
-    let mul: (Rat, Rat) -> Rat = Rat.mul
+    let mul = Rat.mul
 }
 
 from monoid import Monoid
 
 instance Rat: Monoid {
-    let e: Rat = Rat.1
+    let e = Rat.1
 }
 
 from semiring import Semiring
@@ -2268,7 +2268,7 @@ instance Rat: Semiring
 from add_group import AddGroup
 
 instance Rat: AddGroup {
-    let neg: Rat -> Rat = Rat.neg
+    let neg = Rat.neg
 }
 
 from add_comm_group import AddCommGroup
@@ -2286,5 +2286,5 @@ instance Rat: CommRing
 from field import Field
 
 instance Rat: Field {
-    let inverse: Rat -> Rat = Rat.reciprocal
+    let inverse = Rat.reciprocal
 }

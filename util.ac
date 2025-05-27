@@ -32,7 +32,7 @@ theorem is_constant_imp_eq_constant<T, U>(f: T -> U) {
     let t: T satisfy {
         true
     }
-    let u: U = f(t)
+    let u = f(t)
     forall(x: T) {
         f(x) = u
         constant<T, U>(u)(x) = f(x)

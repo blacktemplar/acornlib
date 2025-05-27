@@ -66,13 +66,13 @@ theorem gt_has_no_greatest(r: Rat) {
             is_greatest(r.gt, q)
         }
         r > q
-        let diff: Rat = r - q
+        let diff = r - q
         diff.is_positive
         q + diff = r
 
         // z will be a counterexample.
         // It's constructed to be larger than q.
-        let z: Rat = q + diff / Rat.2
+        let z = q + diff / Rat.2
         (diff / Rat.2).is_positive
         q < z
 
@@ -103,7 +103,7 @@ structure Real {
 }
 
 class Real {
-    let from_rat: Rat -> Real = function(r: Rat) {
+    let from_rat = function(r: Rat) {
         Real.new(r.gt)
     }
 
@@ -612,17 +612,17 @@ theorem add_gt_from_rat_imp_rat_add_gt(p: Rat, q: Rat, r: Rat) {
 theorem rat_add_gt_imp_add_gt_from_rat(p: Rat, q: Rat, r: Rat) {
     p + q > r implies add_gt(Real.from_rat(p), Real.from_rat(q), r)
 } by {
-    let d: Rat = p + q - r
+    let d = p + q - r
     d.is_positive
     d + r = p + q
     p + q = r + d
     p + q - d = r + d - d
     p + q - d = r
-    let rp: Rat = p - d / Rat.2
+    let rp = p - d / Rat.2
     (d / Rat.2).is_positive
     rp < p
     Real.from_rat(p).gt_rat(rp)
-    let rq: Rat = q - d / Rat.2
+    let rq = q - d / Rat.2
     rq < q
     Real.from_rat(q).gt_rat(rq)
     rp + rq = (p - d / Rat.2) + (q - d / Rat.2)
@@ -783,7 +783,7 @@ theorem gt_some_rat(a: Real) {
 }
 
 class Real {
-    let from_int: Int -> Real = function(n: Int) {
+    let from_int = function(n: Int) {
         Real.from_rat(Rat.from_int(n))
     }
 }
@@ -853,7 +853,7 @@ theorem floor_exists(a: Real) {
         Real.from_int(m) <= a
 
         // Now we define the function to induct on.
-        let f: Nat -> Bool = function(k: Nat) {
+        let f = function(k: Nat) {
             Real.from_int(m + Int.from_nat(k)) <= a
         }
         f(Nat.0)
@@ -943,7 +943,7 @@ theorem lt_add_pos_rat(a: Real, r: Rat) {
     a <= a + Real.from_rat(r)
     if a = a + Real.from_rat(r) {
         // We can keep sticking on r's. Induct on f:
-        let f: Nat -> Bool = function(k: Nat) {
+        let f = function(k: Nat) {
             a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(k)))
         }
 
@@ -1021,7 +1021,7 @@ theorem add_rat_eps_between(a: Real, b: Real) {
         Real.from_rat(r1) < Real.from_rat(r2) and Real.from_rat(r2) < b
     }
     r1 + (r2 - r1) = r2
-    let eps: Rat = r2 - r1
+    let eps = r2 - r1
     r1 < r2
     eps.is_positive
     r1 + eps = r2
@@ -1040,7 +1040,7 @@ theorem lt_add_right(a: Real, b: Real, c: Real) {
     let r: Rat satisfy {
         r.is_positive and a + Real.from_rat(r) < b
     }
-    let hr: Real = Real.from_rat(r / Rat.2)
+    let hr = Real.from_rat(r / Rat.2)
     a < a + Real.from_rat(r / Rat.2)
     a < a + hr
     c < c + Real.from_rat(r / Rat.2)
@@ -1304,7 +1304,7 @@ theorem rat_window(a: Real, eps: Rat) {
     let top: Rat satisfy {
         a < Real.from_rat(top) and Real.from_rat(top) < a + Real.from_rat(eps)
     }
-    let r: Rat = top + -eps
+    let r = top + -eps
     r + eps = top
     Real.from_rat(r + eps) < a + Real.from_rat(eps)
     exists(k0: Real) { Real.from_rat(r) + k0 < a + k0 }
@@ -1779,7 +1779,7 @@ theorem rat_upper(x: Real, eps: Rat) {
     let r1: Rat satisfy {
         x < Real.from_rat(r1)
     }
-    let r: Rat = r1 + eps
+    let r = r1 + eps
     if x.is_close(Real.from_rat(r), Real.from_rat(eps)) {
         x < Real.from_rat(r) - Real.from_rat(eps)
         x < Real.from_rat(r - eps)
@@ -1798,7 +1798,7 @@ theorem rat_lower(x: Real, eps: Rat) {
     let r1: Rat satisfy {
         Real.from_rat(r1) < x
     }
-    let r: Rat = r1 - eps
+    let r = r1 - eps
     if x.is_close(Real.from_rat(r), Real.from_rat(eps)) {
         Real.from_rat(r) + Real.from_rat(eps) < x
         Real.from_rat(r + eps) < x

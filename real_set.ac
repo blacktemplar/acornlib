@@ -147,7 +147,7 @@ theorem ub_imp_lub(s: Real -> Bool, x: Real) {
     }
 } by {
     is_dedekind_cut(sup_cut(s))
-    let y: Real = Real.new(sup_cut(s))
+    let y = Real.new(sup_cut(s))
     
     // Part 1: Show y is an upper bound of s
     forall(z: Real) {
@@ -195,7 +195,7 @@ define flip(f: Real -> Bool, x: Real) -> Bool {
 theorem flip_flip(f: Real -> Bool) {
     flip(flip(f)) = f
 } by {
-    let ff: Real -> Bool = flip(f)
+    let ff = flip(f)
     forall(x: Real) {
         flip(ff, x) = ff(-x)
         flip(flip(f), x) = flip(f)(-x)

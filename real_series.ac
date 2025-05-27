@@ -153,7 +153,7 @@ theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
 
             // Since the sequence converges to limit(a), there must be a point
             // after which all sequence values are < ub
-            let eps: Real = ub - limit(a)
+            let eps = ub - limit(a)
             eps.is_positive
 
             // By the definition of convergence, find a point where the sequence
@@ -260,7 +260,7 @@ theorem monotone_convergence_principle(a: Nat -> Real, b: Real) {
             }
             
             // Since l is the least upper bound, l-eps2 is not an upper bound
-            let x: Real = l - eps2
+            let x = l - eps2
             x < l
             not is_upper_bound(a, x)
             
@@ -552,7 +552,7 @@ theorem partial_tail_sub(a: Nat -> Real, m: Nat, n: Nat) {
     partial(tail(a, m), n) = partial(a, m + n) - partial(a, m)
 }
 
-let const_seq: Real -> (Nat -> Real) = constant<Nat, Real>
+let const_seq = constant<Nat, Real>
 
 theorem const_seq_n(a: Real, n: Nat) {
     const_seq(a)(n) = a
@@ -617,7 +617,7 @@ theorem tail_imp_converges_to(a: Nat -> Real, n: Nat) {
             let n1: Nat satisfy {
                 tail_bound(tail(a, n), limit(tail(a, n)), n1, eps)
             }
-            let n2: Nat = n + n1
+            let n2 = n + n1
 
             forall(i: Nat) {
                 if n2 <= i {
@@ -641,7 +641,7 @@ theorem tail_partial_converges(a: Nat -> Real, k: Nat) {
     converges(partial(a)) implies
     converges_to(partial(tail(a, k)), limit(partial(a)) - partial(a, k))
 } by {
-    let target: Real = limit(partial(a)) - partial(a, k)
+    let target = limit(partial(a)) - partial(a, k)
     forall(eps: Real) {
         if eps.is_positive {
             let n: Nat satisfy {

@@ -22,7 +22,7 @@ theorem recip_rat_seq_pos_converges(a: Nat -> Rat, b: Real) {
     let b_lb: Rat satisfy {
         Rat.0 < b_lb and Real.from_rat(b_lb) < b
     }
-    let lsa: Nat -> Real = lift_seq(a)
+    let lsa = lift_seq(a)
     eventual_lb(lsa, Real.from_rat(b_lb))
     let n1: Nat satisfy {
         forall(i: Nat) {
@@ -83,7 +83,7 @@ theorem recip_rat_seq_pos_converges(a: Nat -> Rat, b: Real) {
                     // So their diff is small
                     lift_seq(a, i).is_close(lift_seq(a, j), Real.from_rat(eps3) + Real.from_rat(eps3))
                     a(i).is_close(a(j), eps2)
-                    let diff: Rat = a(j) - a(i)
+                    let diff = a(j) - a(i)
                     diff.abs < eps2
 
                     // Both terms are non-zero
@@ -95,7 +95,7 @@ theorem recip_rat_seq_pos_converges(a: Nat -> Rat, b: Real) {
                     a(j) != Rat.0
 
                     // So their product is large
-                    let prod: Rat = a(i) * a(j)
+                    let prod = a(i) * a(j)
                     b_lb * b_lb <= prod
                     b_lb * b_lb <= prod.abs
                     (b_lb * b_lb).is_positive
@@ -227,7 +227,7 @@ theorem mul_reciprocal(a: Real) {
 
     // We want to show that the product of the sequences is eventually
     // just a constant one.
-    let prod: Nat -> Rat = mul_rat_seq(rat_seq(a), recip_rat_seq(rat_seq(a)))
+    let prod = mul_rat_seq(rat_seq(a), recip_rat_seq(rat_seq(a)))
 
     forall(i: Nat) {
         if n <= i {
@@ -251,7 +251,7 @@ theorem zero_reciprocal {
 from field import Field
 
 instance Real: Field {
-    let inverse: Real -> Real = Real.reciprocal
+    let inverse = Real.reciprocal
 }
 
 class Real {

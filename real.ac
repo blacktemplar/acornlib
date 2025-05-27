@@ -78,7 +78,7 @@ theorem limit_compose_uniform(f: Real -> Real, a: Nat -> Real) {
     implies
     converges_to(compose(f, a), f(limit(a)))
 } by {
-    let fa: Nat -> Real = compose(f, a)
+    let fa = compose(f, a)
     forall(eps: Real) {
         if eps.is_positive {
             let delta: Real satisfy {
@@ -108,7 +108,7 @@ theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
     implies
     converges_to(compose(f, a), f(r))
 } by {
-    let fa: Nat -> Real = compose(f, a)
+    let fa = compose(f, a)
     forall(eps: Real) {
         if eps.is_positive {
             let delta: Rat satisfy {
@@ -172,7 +172,7 @@ theorem lift_uniform_is_uniform(f: Rat -> Real) {
             forall(a: Real, b: Real) {
                 if a.is_close(b, Real.from_rat(delta)) {
                     // f(a_i) is approximately f(a)
-                    let fas: Nat -> Real = compose(f, rat_seq(a))
+                    let fas = compose(f, rat_seq(a))
                     converges(fas)
                     converges_to(fas, limit(fas))
                     let n1: Nat satisfy {
@@ -183,7 +183,7 @@ theorem lift_uniform_is_uniform(f: Rat -> Real) {
                     }
 
                     // f(b_i) is approximately f(b)
-                    let fbs: Nat -> Real = compose(f, rat_seq(b))
+                    let fbs = compose(f, rat_seq(b))
                     converges(fbs)
                     converges_to(fbs, limit(fbs))
                     let n2: Nat satisfy {
@@ -243,7 +243,7 @@ theorem uniform_ne_imp_rat_ne(f: Real -> Real, g: Real -> Real) {
     let x: Real satisfy {
         f(x) != g(x)
     }
-    let eps: Real = (f(x) - g(x)).abs
+    let eps = (f(x) - g(x)).abs
     eps.is_positive
     not f(x).is_close(g(x), eps)
     let eps2: Real satisfy {
@@ -338,7 +338,7 @@ theorem lift_inc_is_inc(f: Rat -> Real) {
     implies
     increasing(lift_uc(f))
 } by {
-    let lf: Real -> Real = lift_uc(f)
+    let lf = lift_uc(f)
     uniform(lf)
     forall(r: Rat) {
         lf(Real.from_rat(r)) = f(r)
@@ -381,7 +381,7 @@ theorem lift_inc_is_inc(f: Rat -> Real) {
             }
 
             // Delta satisfies all these conditions
-            let delta_min: Real = min(delta1, delta2)
+            let delta_min = min(delta1, delta2)
             delta_min.is_positive
             let delta: Real satisfy {
                 delta.is_positive and
@@ -522,7 +522,7 @@ theorem compose_uniform(f: Real -> Real, g: Real -> Real) {
 theorem rat_mul_uniform(r: Rat) {
     rat_uniform(compose(Real.from_rat, r.mul))
 } by {
-    let mul_r: Rat -> Real = compose(Real.from_rat, r.mul)
+    let mul_r = compose(Real.from_rat, r.mul)
     forall(eps: Real) {
         if eps.is_positive {
             Real.0 < eps
