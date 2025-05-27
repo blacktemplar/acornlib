@@ -48,7 +48,7 @@ class Complex {
 }
 
 // Alias for convenience
-let i: Complex = Complex.i
+let i = Complex.i
 
 // Theorems for complex numbers
 
@@ -66,15 +66,15 @@ theorem add_assoc(a: Complex, b: Complex, c: Complex) {
     (a + b) + c = a + (b + c) 
 } by {
     // Component-wise expansion
-    let left_re1: Real = (a + b).re + c.re
-    let left_im1: Real = (a + b).im + c.im
-    let left_re2: Real = (a.re + b.re) + c.re
-    let left_im2: Real = (a.im + b.im) + c.im
+    let left_re1 = (a + b).re + c.re
+    let left_im1 = (a + b).im + c.im
+    let left_re2 = (a.re + b.re) + c.re
+    let left_im2 = (a.im + b.im) + c.im
 
-    let right_re1: Real = a.re + (b + c).re
-    let right_im1: Real = a.im + (b + c).im
-    let right_re2: Real = a.re + (b.re + c.re)
-    let right_im2: Real = a.im + (b.im + c.im)
+    let right_re1 = a.re + (b + c).re
+    let right_im1 = a.im + (b + c).im
+    let right_re2 = a.re + (b.re + c.re)
+    let right_im2 = a.im + (b.im + c.im)
 
     // Apply real number associativity
     left_re2 = a.re + (b.re + c.re)  // Real.assoc_add
@@ -84,8 +84,8 @@ theorem add_assoc(a: Complex, b: Complex, c: Complex) {
     right_im2 = a.im + (b.im + c.im)
 
     // Build final complexes
-    let final_left: Complex = Complex.new(left_re2, left_im2)
-    let final_right: Complex = Complex.new(right_re2, right_im2)
+    let final_left = Complex.new(left_re2, left_im2)
+    let final_right = Complex.new(right_re2, right_im2)
 
     // Component-wise equality
     final_left.re = final_right.re
