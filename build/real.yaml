@@ -1,5 +1,5 @@
-dependencies: 5350533341285693232
-content: 8704863691727505843
+dependencies: 4884863682561661354
+content: 14757576947182430487
 blocks:
   add_continuous2:
     real:
@@ -167,7 +167,6 @@ blocks:
     - rat_condition
     - rat_uniform
     real_base:
-    - Real.from_rat
     - close_imp_eps_pos
     - close_reals_imp_close_rats
     real_ring:

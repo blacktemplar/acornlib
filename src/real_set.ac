@@ -90,6 +90,7 @@ theorem sup_cut_is_lower(s: Real -> Bool, ub: Real) {
 } by {
     forall(x: Rat, y: Rat) {
         if sup_cut(s, y) and x < y {
+            not is_upper_bound(s, Real.from_rat(y))
             let z: Real satisfy {
                 s(z) and z > Real.from_rat(y)
             }      
@@ -116,6 +117,7 @@ theorem sup_cut_not_has_greatest(s: Real -> Bool, ub: Real) {
             s(z) and z > Real.from_rat(q)
         }
         
+        Real.from_rat(q) < z
         let q_prime: Rat satisfy {
             q < q_prime and Real.from_rat(q_prime) < z
         }

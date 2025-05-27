@@ -121,9 +121,9 @@ theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
 
             forall(i: Nat) {
                 if n <= i {
-                    tail_bound(lift_seq(a), Real.new(r.gt), n, Real.from_rat(delta))
-                    lift_seq(a, i).is_close(Real.new(r.gt), Real.from_rat(delta))
-                    lift_seq(a)(i).is_close(Real.from_rat(r), Real.from_rat(delta))
+                    let s = lift_seq(a)
+                    tail_bound(s, Real.from_rat(r), n, Real.from_rat(delta))
+                    s(i).is_close(Real.from_rat(r), Real.from_rat(delta))
                     a(i).is_close(r, delta)
                     f(a(i)).is_close(f(r), eps)
                     compose(f, a)(i).is_close(f(r), eps)

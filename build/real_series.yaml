@@ -1,4 +1,4 @@
-dependencies: 7843252340801621038
+dependencies: 8218383305382012815
 content: 16932305276248391759
 blocks:
   add_seq_converges:
@@ -295,6 +295,9 @@ blocks:
   partial_suc:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
+    add_group:
+    - inverse_add
+    - inverse_inverse
     add_monoid:
     - AddMonoid.add_identity_right
     list:
@@ -306,8 +309,8 @@ blocks:
     - range
     - sum
     - sum_add
-    real_base:
-    - add_comm
+    real_ring:
+    - mul_neg_one_left
   partial_tail:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
@@ -387,8 +390,8 @@ blocks:
     real_series:
     - tail
   tail_partial:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
+    real_base:
+    - add_comm
     real_ring:
     - add_seq
     real_series:
@@ -405,8 +408,9 @@ blocks:
     real_base:
     - Real.is_close
     - Real.new
-    - Real.sub
+    - add_comm
     - sub_cancels
+    - swap_minus_plus
     real_ring:
     - converges_imp_converges_to
     - converges_to

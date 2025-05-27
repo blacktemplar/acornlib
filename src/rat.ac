@@ -1682,7 +1682,8 @@ theorem iop_recip(n: Nat) {
 } by {
     Rat.1.is_positive
     Rat.from_nat(n) >= Rat.0
-    (Rat.1 + Rat.from_nat(n)).is_positive
+    Rat.0 <= Rat.from_nat(n)
+    (Rat.1 + Rat.from_nat(n)).is_positive 
     (Rat.1 + Rat.from_nat(n)) != Rat.0
     (Rat.1 + Rat.from_nat(n)).reciprocal = iop(n)
 }

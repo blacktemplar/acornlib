@@ -1,4 +1,4 @@
-dependencies: 18012861748437900933
+dependencies: 4112745462002108740
 content: 2641870022821609426
 blocks:
   Real.AddCommSemigroup:
@@ -1155,8 +1155,6 @@ blocks:
   neg_is_zero_sub:
     rat:
     - Rat.sub
-    - neg_sub
-    - sub_zero
     - zero_minus
     real_ring:
     - const_rat_seq
