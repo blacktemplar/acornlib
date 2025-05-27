@@ -478,8 +478,7 @@ instance Complex: AddSemigroup {
 
 from add_comm_semigroup import AddCommSemigroup
 
-instance Complex: AddCommSemigroup {
-}
+instance Complex: AddCommSemigroup
 
 from add_monoid import AddMonoid
 
@@ -489,8 +488,7 @@ instance Complex: AddMonoid {
 
 from add_comm_monoid import AddCommMonoid
 
-instance Complex: AddCommMonoid {
-}
+instance Complex: AddCommMonoid
 
 from semigroup import Semigroup
 
@@ -506,8 +504,7 @@ instance Complex: Monoid {
 
 from semiring import Semiring
 
-instance Complex: Semiring {
-}
+instance Complex: Semiring
 
 from add_group import AddGroup
 
@@ -517,18 +514,15 @@ instance Complex: AddGroup {
 
 from add_comm_group import AddCommGroup
 
-instance Complex: AddCommGroup {
-}
+instance Complex: AddCommGroup
 
 from ring import Ring
 
-instance Complex: Ring {
-}
+instance Complex: Ring
 
 from comm_ring import CommRing
 
-instance Complex: CommRing {
-}
+instance Complex: CommRing
 
 from field import Field
 

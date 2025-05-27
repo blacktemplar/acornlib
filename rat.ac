@@ -2237,8 +2237,7 @@ instance Rat: AddSemigroup {
 
 from add_comm_semigroup import AddCommSemigroup
 
-instance Rat: AddCommSemigroup {
-}
+instance Rat: AddCommSemigroup
 
 from add_monoid import AddMonoid
 
@@ -2248,8 +2247,7 @@ instance Rat: AddMonoid {
 
 from add_comm_monoid import AddCommMonoid
 
-instance Rat: AddCommMonoid {
-}
+instance Rat: AddCommMonoid
 
 from semigroup import Semigroup
 
@@ -2265,8 +2263,7 @@ instance Rat: Monoid {
 
 from semiring import Semiring
 
-instance Rat: Semiring {
-}
+instance Rat: Semiring
 
 from add_group import AddGroup
 
@@ -2276,18 +2273,15 @@ instance Rat: AddGroup {
 
 from add_comm_group import AddCommGroup
 
-instance Rat: AddCommGroup {
-}
+instance Rat: AddCommGroup
 
 from ring import Ring
 
-instance Rat: Ring {
-}
+instance Rat: Ring
 
 from comm_ring import CommRing
 
-instance Rat: CommRing {
-}
+instance Rat: CommRing
 
 from field import Field
 

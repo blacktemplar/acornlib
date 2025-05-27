@@ -1,5 +1,5 @@
 dependencies: 2757672515259828220
-content: 3345478052628617364
+content: 4563387237923051538
 blocks:
   Nat.AddCommSemigroup:
     nat:
@@ -29,8 +29,8 @@ blocks:
     - add_zero_left
   add_cancels_left:
     nat:
-    - Nat.Nat.suc
     - Nat.induction
+    - Nat.suc
     - add_suc_left
     - add_zero_left
   add_cancels_right:
@@ -85,8 +85,8 @@ blocks:
     - Nat.add
   add_to_zero:
     nat:
-    - Nat.Nat.suc
     - Nat.induction
+    - Nat.suc
     - add_suc_left
     - add_zero_left
   add_zero_left:
@@ -205,8 +205,8 @@ blocks:
     - sub_right_distrib
   divides_suc:
     nat:
-    - Nat.Nat.suc
     - Nat.lte
+    - Nat.suc
     - add_cancels_left
     - add_comm
     - add_one_left
@@ -403,9 +403,9 @@ blocks:
     - lt_not_symm
   lt_add_suc:
     nat:
-    - Nat.Nat.suc
     - Nat.lt
     - Nat.lte
+    - Nat.suc
     - add_cancels_left
     - add_identity_right
   lt_and_lte:
@@ -503,7 +503,7 @@ blocks:
     - zero_or_suc
   lt_suc_right:
     nat:
-    - Nat.Nat.suc
+    - Nat.suc
     - lt_cancel_suc
     - lt_suc_left
   lt_trans:
@@ -521,8 +521,8 @@ blocks:
     - lte_trans
   lte_cancel_suc:
     nat:
-    - Nat.Nat.suc
     - Nat.lte
+    - Nat.suc
     - add_suc_left
   lte_exp:
     nat:
@@ -789,12 +789,12 @@ blocks:
     - sub_add
   suc_ne:
     nat:
-    - Nat.Nat.suc
     - Nat.induction
+    - Nat.suc
   suc_suc_ne:
     nat:
-    - Nat.Nat.suc
     - Nat.induction
+    - Nat.suc
   three_neq_zero:
     nat:
     - Nat.3

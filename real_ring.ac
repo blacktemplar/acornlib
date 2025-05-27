@@ -2145,8 +2145,7 @@ instance Real: AddSemigroup {
 
 from add_comm_semigroup import AddCommSemigroup
 
-instance Real: AddCommSemigroup {
-}
+instance Real: AddCommSemigroup
 
 from add_monoid import AddMonoid
 
@@ -2156,8 +2155,7 @@ instance Real: AddMonoid {
 
 from add_comm_monoid import AddCommMonoid
 
-instance Real: AddCommMonoid {
-}
+instance Real: AddCommMonoid
 
 from semigroup import Semigroup
 
@@ -2173,8 +2171,7 @@ instance Real: Monoid {
 
 from semiring import Semiring
 
-instance Real: Semiring {
-}
+instance Real: Semiring
 
 from add_group import AddGroup
 
@@ -2184,15 +2181,12 @@ instance Real: AddGroup {
 
 from add_comm_group import AddCommGroup
 
-instance Real: AddCommGroup {
-}
+instance Real: AddCommGroup
 
 from ring import Ring
 
-instance Real: Ring {
-}
+instance Real: Ring
 
 from comm_ring import CommRing
 
-instance Real: CommRing {
-}
+instance Real: CommRing

@@ -1,5 +1,5 @@
-dependencies: 8732162957689439123
-content: 10044841111035163713
+dependencies: 5340741004245885825
+content: 5672916681191349872
 blocks:
   Int.AddCommSemigroup:
     int:
@@ -101,7 +101,7 @@ blocks:
   abs_neg_nat:
     int:
     - Int.0
-    - Int.Int.neg_suc
+    - Int.neg_suc
     - abs
     - neg_nat
     - neg_nat_zero
@@ -471,13 +471,12 @@ blocks:
   fix_neg:
     int:
     - Int.0
-    - Int.Int.neg_suc
     - Int.neg
+    - Int.neg_suc
     - neg_nat
   from_eq_neg_from:
     int:
     - Int.0
-    - Int.Int.from_nat
     - abs
     - abs_from_nat
     - abs_neg
@@ -1284,9 +1283,9 @@ blocks:
   one_pos:
     int:
     - Int.1
-    - Int.Int.neg_suc
     - Int.is_negative
     - Int.is_positive
+    - Int.neg_suc
     - neg_from_nat
     - neg_nat_suc
     nat:
@@ -1596,7 +1595,7 @@ blocks:
     - add_comm
   sub_nat_imp_add:
     int:
-    - Int.Int.from_nat
+    - Int.from_nat
     - from_eq_neg_from
     - sub_nat_add_right
     - sub_nat_eq_helper

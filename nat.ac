@@ -1526,8 +1526,7 @@ instance Nat: AddSemigroup {
 
 from add_comm_semigroup import AddCommSemigroup
 
-instance Nat: AddCommSemigroup {
-}
+instance Nat: AddCommSemigroup
 
 from add_monoid import AddMonoid
 
@@ -1537,8 +1536,7 @@ instance Nat: AddMonoid {
 
 from add_comm_monoid import AddCommMonoid
 
-instance Nat: AddCommMonoid {
-}
+instance Nat: AddCommMonoid
 
 from semigroup import Semigroup
 
@@ -1554,5 +1552,4 @@ instance Nat: Monoid {
 
 from semiring import Semiring
 
-instance Nat: Semiring {
-}
+instance Nat: Semiring

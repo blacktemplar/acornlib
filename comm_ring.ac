@@ -1,5 +1,4 @@
 from add_comm_group import AddCommGroup
 from ring import Ring
 
-typeclass C: CommRing extends Ring, AddCommGroup {
-}
+typeclass CommRing extends Ring, AddCommGroup
