@@ -1,4 +1,4 @@
-dependencies: 15237346506739522894
+dependencies: 3878481633455537732
 content: 16932305276248391759
 blocks:
   add_seq_converges:
@@ -316,9 +316,6 @@ blocks:
     - AddCommSemigroup.commutative
     add_semigroup:
     - AddSemigroup.add_associative
-    int:
-    - sub_nat_negate_imp_add
-    - sub_nat_zero_left
     nat_base:
     - Nat.add
     - Nat.induction

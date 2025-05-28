@@ -1,10 +1,25 @@
 from nat import Nat
-from list import sum, map
+from list import List, sum, map, range
+from monoid import pow
 from add_comm_group import AddCommGroup
 from semiring import Semiring
 
 typeclass Ring extends Semiring, AddCommGroup
 
+theorem mul_zero_left<R: Ring>(a: R) {
+    R.zero * a = R.zero
+} by {
+    R.zero + R.zero = R.zero
+    (R.zero + R.zero) * a = R.zero * a
+}
+
+theorem mul_zero_right<R: Ring>(a: R) {
+    a * R.zero = R.zero
+} by {
+    R.zero + R.zero = R.zero
+    a * (R.zero + R.zero) = a * R.zero
+}
+
 // theorem geometric_sum<R: Ring>(a: R, n: Nat) {
-//     (a + -R.e) * sum(map(a.pow, Nat.range(n))) = a.pow(n) + -R.e
+//     (a + -R.e) * sum(map(range(n), pow(a))) = pow(a, n) + -R.e
 // }

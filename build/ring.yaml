@@ -1,3 +1,19 @@
-dependencies: 17436344960292309816
-content: 8245944035261151439
-blocks: {}
+dependencies: 10201361576607843239
+content: 14916165890253046651
+blocks:
+  mul_zero_left:
+    add_group:
+    - right_cancel
+    add_monoid:
+    - AddMonoid.add_identity_left
+    - AddMonoid.add_identity_right
+    semiring:
+    - Semiring.distrib_right
+  mul_zero_right:
+    add_group:
+    - right_cancel
+    add_monoid:
+    - AddMonoid.add_identity_left
+    - AddMonoid.add_identity_right
+    semiring:
+    - Semiring.distrib_left

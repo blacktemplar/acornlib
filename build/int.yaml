@@ -1,4 +1,4 @@
-dependencies: 8239094727213750774
+dependencies: 14881083963040443530
 content: 15201950436835912586
 blocks:
   Int.AddCommSemigroup:
@@ -232,7 +232,6 @@ blocks:
     - add_part_sub_nat
     - add_sub_nat_left
     - sub_nat_eq
-    - sub_nat_imp_add_eq
     nat_base:
     - add_assoc
     - add_comm
@@ -273,9 +272,7 @@ blocks:
     - neg_part_from
     - neg_sub_nat
     - pos_part_from
-    - sub_nat_add_cancel_left
     - sub_nat_eq
-    - sub_nat_imp_add_eq
     nat_base:
     - add_assoc
     - add_comm
