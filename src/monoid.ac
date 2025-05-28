@@ -14,3 +14,50 @@ typeclass M: Monoid extends Semigroup {
         M.e * a = a
     }
 }
+
+from nat_base import Nat
+
+define pow<M: Monoid>(base: M, exp: Nat) -> M {
+    match exp {
+        Nat.0 {
+            M.e
+        }
+        Nat.suc(n) {
+            base * pow(base, n)
+        }
+    }
+}
+
+// Proof that a^n * a^m = a^(n+m)
+theorem pow_add<M: Monoid>(a: M, n: Nat, m: Nat) {
+    pow(a, n) * pow(a, m) = pow(a, n + m)
+} by {
+    // Define a helper function for induction
+    define f(x: Nat) -> Bool { pow_add(a, x, m) }
+
+    // Base case: a^0 * a^m = a^(0+m)
+    pow(a, Nat.0) * pow(a, m) = M.e * pow(a, m)
+    pow(a, Nat.0) * pow(a, m) = pow(a, m)
+    pow(a, Nat.0 + m) = pow(a, m)
+    pow_add(a, Nat.0, m)
+    f(Nat.0)
+
+    // Inductive step
+    forall(x: Nat) {
+        if f(x) {
+            pow_add(a, x, m)
+            pow(a, x) * pow(a, m) = pow(a, x + m)
+
+            // Now prove for x.suc
+            pow(a, x.suc) * pow(a, m) = (a * pow(a, x)) * pow(a, m)
+            pow(a, x.suc) * pow(a, m) = a * (pow(a, x) * pow(a, m))
+            pow(a, x.suc) * pow(a, m) = a * pow(a, x + m)
+            pow(a, x.suc) * pow(a, m) = pow(a, (x + m).suc)
+            pow(a, x.suc) * pow(a, m) = pow(a, x.suc + m)
+            pow_add(a, x.suc, m)
+            f(x.suc)
+        }
+    }
+
+    pow_add(a, n, m)
+}

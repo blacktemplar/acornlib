@@ -1,4 +1,4 @@
-dependencies: 11381608273848804361
+dependencies: 3518348655355768144
 content: 10107126293132173130
 blocks:
   Real.Field:
@@ -90,7 +90,7 @@ blocks:
     - neg_seq_converges_to
     - neg_seq_lifts
   recip_rat_seq_pos_converges:
-    nat:
+    nat_base:
     - Nat.lt
     - Nat.lte
     - add_comm

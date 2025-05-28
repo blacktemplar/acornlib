@@ -1,4 +1,4 @@
-dependencies: 13634192160592073881
+dependencies: 2974281022522204466
 content: 7152753295385444785
 blocks:
   add_assoc:
@@ -21,7 +21,7 @@ blocks:
     - List.induction
     - List.length
     - nil_add
-    nat:
+    nat_base:
     - add_suc_left
     - add_zero_left
   add_nil:
@@ -33,7 +33,7 @@ blocks:
     - List.length
     - add_length
     - length_zero_imp_nil
-    nat:
+    nat_base:
     - add_to_zero
   append_not_nil:
     list:
@@ -48,7 +48,7 @@ blocks:
     - List.singleton
     - add_length
     - range
-    nat:
+    nat_base:
     - Nat.1
     - Nat.induction
     - add_comm
@@ -57,7 +57,7 @@ blocks:
     list:
     - List.length
     - List.new
-    nat:
+    nat_base:
     - Nat.suc
   map_add:
     list:
@@ -87,7 +87,7 @@ blocks:
     - List.induction
     - List.length
     - List.unique
-    nat:
+    nat_base:
     - Nat.lt
     - lt_imp_lte_suc
     - lt_suc

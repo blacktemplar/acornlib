@@ -1,4 +1,5 @@
-from nat import Nat, divides, mod
+from nat_base import divides, mod, strong_induction, true_below, is_prime, is_composite
+from nat import Nat
 from pair import Pair
 numerals Nat
 
@@ -39,9 +40,9 @@ theorem has_min(f: Nat -> Bool, n: Nat) {
     f(n) implies exists(m: Nat) { is_min(f, m) }
 } by {
     define g(x: Nat) -> Bool { has_min(f, x) }
-    nat.strong_induction(g)
+    strong_induction(g)
     forall(k: Nat) {
-        if nat.true_below(g, k) {
+        if true_below(g, k) {
             if f(k) {
                 if false_below(f, k) {
                     is_min(f, k)
@@ -455,7 +456,7 @@ theorem cofactor(a: Nat, b: Nat, af: Nat, bf: Nat) {
 }
 
 theorem gcd_of_prime(p: Nat, n: Nat) {
-    nat.is_prime(p) implies gcd(p, n) = 1 or divides(p, n)
+    is_prime(p) implies gcd(p, n) = 1 or divides(p, n)
 } by {
     divides(gcd(p, n), p)
     let d: Nat satisfy {
@@ -468,7 +469,7 @@ theorem gcd_of_prime(p: Nat, n: Nat) {
     } else {
         if gcd(p, n) > 1 {
             d > 1
-            nat.is_composite(p)
+            is_composite(p)
             false
         }
         gcd(p, n) != 0

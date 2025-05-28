@@ -1,3 +1,4 @@
+import nat_base
 from nat import Nat
 from int import Int, gcd
 
@@ -128,13 +129,13 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
     gcd(r1.num, r1.denom) = Int.1
     int.divides(r1.denom, r1.num * r2.denom)
     int.divides(r1.denom, r2.denom)
-    nat.divides(int.abs(r1.denom), int.abs(r2.denom))
+    nat_base.divides(int.abs(r1.denom), int.abs(r2.denom))
 
     // The r2 fields divide into the r1 ones
     gcd(r2.num, r2.denom) = Int.1
     int.divides(r2.denom, r2.num * r1.denom)
     int.divides(r2.denom, r1.denom)
-    nat.divides(int.abs(r2.denom), int.abs(r1.denom))
+    nat_base.divides(int.abs(r2.denom), int.abs(r1.denom))
 
     // Prove int equality from nat equality
     int.abs(r1.denom) = int.abs(r2.denom)

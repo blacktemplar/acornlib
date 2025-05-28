@@ -1,3 +1,14 @@
-dependencies: 13710097313946584507
-content: 5441687335325174778
-blocks: {}
+dependencies: 13828296859853921403
+content: 15783799830538502041
+blocks:
+  pow_add:
+    monoid:
+    - Monoid.mul_identity_left
+    - pow
+    nat_base:
+    - Nat.add
+    - Nat.induction
+    - add_comm
+    - add_suc_left
+    semigroup:
+    - Semigroup.mul_associative

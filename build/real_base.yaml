@@ -1,4 +1,4 @@
-dependencies: 17367279784755745839
+dependencies: 4336435712941535212
 content: 4522404987061449419
 blocks:
   '98':
@@ -371,7 +371,7 @@ blocks:
     - neg_zero
     - plus_abs_gte_zero
     - pos_part_from
-    nat:
+    nat_base:
     - Nat.induction
     - add_comm
     - add_one_left
@@ -666,7 +666,7 @@ blocks:
     - Int.abs
     - add_from_nat
     - member_abs_pos
-    nat:
+    nat_base:
     - Nat.induction
     - add_one_left
     rat:

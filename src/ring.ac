@@ -1,4 +1,10 @@
+from nat import Nat
+from list import sum, map
 from add_comm_group import AddCommGroup
 from semiring import Semiring
 
 typeclass Ring extends Semiring, AddCommGroup
+
+// theorem geometric_sum<R: Ring>(a: R, n: Nat) {
+//     (a + -R.e) * sum(map(a.pow, Nat.range(n))) = a.pow(n) + -R.e
+// }

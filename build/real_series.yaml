@@ -1,4 +1,4 @@
-dependencies: 8218383305382012815
+dependencies: 15237346506739522894
 content: 16932305276248391759
 blocks:
   add_seq_converges:
@@ -73,7 +73,7 @@ blocks:
     - sub_nat_imp_add
     - sub_nat_negate_imp_add
     - sub_nat_zero_left
-    nat:
+    nat_base:
     - Nat.induction
     - Nat.lte
     - add_comm
@@ -92,7 +92,7 @@ blocks:
     real_series:
     - is_increasing
   increasing_convergent_bounded_by_limit:
-    nat:
+    nat_base:
     - Nat.lt
     - lt_not_symm
     - lt_or_lte
@@ -254,7 +254,7 @@ blocks:
     - AddCommSemigroup.commutative
     add_semigroup:
     - AddSemigroup.add_associative
-    nat:
+    nat_base:
     - Nat.induction
     real_base:
     - add_comm
@@ -266,7 +266,7 @@ blocks:
     - partial_suc
     - partial_zero
   partial_mul_seq_comm:
-    nat:
+    nat_base:
     - Nat.induction
     real_ring:
     - mul_distrib_right
@@ -282,7 +282,7 @@ blocks:
     - map
     - partial
     - range
-    nat:
+    nat_base:
     - Nat.induction
     real_base:
     - Real.lte
@@ -319,10 +319,9 @@ blocks:
     int:
     - sub_nat_negate_imp_add
     - sub_nat_zero_left
-    nat:
+    nat_base:
     - Nat.add
     - Nat.induction
-    - add_comm
     real_base:
     - sub_cancels
     real_ring:
@@ -368,7 +367,7 @@ blocks:
     - is_upper_bound
     - seq_lte
   tail_converges_to:
-    nat:
+    nat_base:
     - Nat.lte
     - add_comm
     - gte_each_of_three
@@ -380,7 +379,7 @@ blocks:
     real_series:
     - tail
   tail_imp_converges_to:
-    nat:
+    nat_base:
     - Nat.lte
     - add_assoc
     real_ring:
@@ -399,9 +398,7 @@ blocks:
     - partial_tail
     - tail
   tail_partial_converges:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
-    nat:
+    nat_base:
     - Nat.lte
     - add_comm
     - lte_trans
