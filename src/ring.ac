@@ -20,6 +20,29 @@ theorem mul_zero_right<R: Ring>(a: R) {
     a * (R.zero + R.zero) = a * R.zero
 }
 
+theorem mul_neg_left<R: Ring>(a: R, b: R) {
+    -a * b = -(a * b)
+} by {
+    -a * b + a * b = R.zero
+    (-a + a) * b = R.zero
+    R.zero * b = R.zero
+}
+
+theorem mul_neg_right<R: Ring>(a: R, b: R) {
+    a * -b = -(a * b)
+} by {
+    a * -b + a * b = R.zero
+    a * (-b + b) = R.zero
+    a * R.zero = R.zero
+}
+
+theorem mul_neg_neg<R: Ring>(a: R, b: R) {
+    -a * -b = a * b
+} by {
+    -a * -b = -(a * -b)
+    -a * -b = --(a * b)
+}
+
 // theorem geometric_sum<R: Ring>(a: R, n: Nat) {
 //     (a + -R.e) * sum(map(range(n), pow(a))) = pow(a, n) + -R.e
 // }

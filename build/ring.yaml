@@ -1,6 +1,34 @@
 dependencies: 10201361576607843239
-content: 14916165890253046651
+content: 10781240787308972472
 blocks:
+  mul_neg_left:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.inverse_right
+    - inverse_left
+    - right_cancel
+    ring:
+    - mul_zero_left
+    semiring:
+    - Semiring.distrib_right
+  mul_neg_neg:
+    add_group:
+    - inverse_inverse
+    ring:
+    - mul_neg_left
+    - mul_neg_right
+  mul_neg_right:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.inverse_right
+    - inverse_left
+    - right_cancel
+    ring:
+    - mul_zero_right
+    semiring:
+    - Semiring.distrib_left
   mul_zero_left:
     add_group:
     - right_cancel
