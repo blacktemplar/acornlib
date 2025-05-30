@@ -1,5 +1,5 @@
 dependencies: 2974281022522204466
-content: 6017883460617063917
+content: 967616591686496273
 blocks:
   add_assoc:
     list:
@@ -89,6 +89,14 @@ blocks:
     - List.add
     - List.induction
     - sum
+  sum_append:
+    add_monoid:
+    - AddMonoid.add_identity_right
+    list:
+    - List.append
+    - List.singleton
+    - sum
+    - sum_add
   unique_length:
     list:
     - List.induction
