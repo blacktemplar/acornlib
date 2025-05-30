@@ -7,10 +7,10 @@ typeclass F: Field extends CommRing {
 
     // Just always define the field inverse so that the inverse of zero is zero.
     field_inverse_zero {
-        F.zero.inverse = F.zero
+        F.0.inverse = F.0
     }
 
     field_inverse(f: F) {
-        f != F.zero implies f * f.inverse = F.e
+        f != F.0 implies f * f.inverse = F.e
     }
 }

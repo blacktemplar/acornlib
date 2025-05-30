@@ -244,7 +244,7 @@ from add_comm_monoid import AddCommMonoid
 define sum<A: AddCommMonoid>(items: List<A>) -> A {
     match items {
         List.nil {
-            A.zero
+            A.0
         }
         List.cons(head, tail) {
             head + sum(tail)
@@ -268,8 +268,8 @@ theorem sum_add<A: AddCommMonoid>(left: List<A>, right: List<A>) {
 
     // Base case: sum(nil + right) = sum(nil) + sum(right)
     sum(List.nil<A> + right) = sum(right)
-    sum(List.nil<A>) = A.zero
-    A.zero + sum(right) = sum(right)
+    sum(List.nil<A>) = A.0
+    A.0 + sum(right) = sum(right)
     p(List.nil)
 
     // Inductive step

@@ -5,24 +5,24 @@ typeclass A: AddGroup extends AddMonoid {
     neg: A -> A
 
     inverse_right(a: A) {
-        a + -a = A.zero
+        a + -a = A.0
     }
 }
 
 // This direction is proven rather than assumed
 theorem inverse_left<A: AddGroup>(a: A) {
-    -a + a = A.zero
+    -a + a = A.0
 } by {
     (-a + a) + -a = -a
     (-a + a) + -a + --a = -a + --a
     (-a + a) + (-a + --a) = -a + --a
-    (-a + a) + A.zero = A.zero
+    (-a + a) + A.0 = A.0
 }
 
 theorem inverse_inverse<A: AddGroup>(a: A) {
     --a = a
 } by {
-    a + -a = A.zero
+    a + -a = A.0
     a + -a + --a = --a
 }
 
@@ -41,7 +41,7 @@ theorem right_cancel<A: AddGroup>(a: A, b: A, c: A) {
 theorem inverse_add<A: AddGroup>(a: A, b: A) {
     -(a + b) = -b + -a
 } by {
-    -(a + b) + (a + b) = A.zero
+    -(a + b) + (a + b) = A.0
     -(a + b) + a = -b
 }
 

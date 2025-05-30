@@ -2230,7 +2230,7 @@ instance Int: AddCommSemigroup
 from add_monoid import AddMonoid
 
 instance Int: AddMonoid {
-    let zero: Int = Int.0
+    let 0: Int = Int.0
 }
 
 from add_comm_monoid import AddCommMonoid

@@ -1,5 +1,5 @@
-dependencies: 2974281022522204466
-content: 967616591686496273
+dependencies: 3149867474182041931
+content: 11249789401881702997
 blocks:
   add_assoc:
     list:
@@ -15,6 +15,7 @@ blocks:
     - List.add
     - List.contains
     - List.induction
+    - nil_add
   add_length:
     list:
     - List.add

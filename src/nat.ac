@@ -18,7 +18,7 @@ instance Nat: AddCommSemigroup
 from add_monoid import AddMonoid
 
 instance Nat: AddMonoid {
-    let zero: Nat = Nat.0
+    let 0: Nat = Nat.0
 }
 
 from add_comm_monoid import AddCommMonoid

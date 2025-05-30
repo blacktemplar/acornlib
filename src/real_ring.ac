@@ -2150,7 +2150,7 @@ instance Real: AddCommSemigroup
 from add_monoid import AddMonoid
 
 instance Real: AddMonoid {
-    let zero: Real = Real.0
+    let 0: Real = Real.0
 }
 
 from add_comm_monoid import AddCommMonoid

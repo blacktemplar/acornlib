@@ -7,33 +7,33 @@ from semiring import Semiring
 typeclass Ring extends Semiring, AddCommGroup
 
 theorem mul_zero_left<R: Ring>(a: R) {
-    R.zero * a = R.zero
+    R.0 * a = R.0
 } by {
-    R.zero + R.zero = R.zero
-    (R.zero + R.zero) * a = R.zero * a
+    R.0 + R.0 = R.0
+    (R.0 + R.0) * a = R.0 * a
 }
 
 theorem mul_zero_right<R: Ring>(a: R) {
-    a * R.zero = R.zero
+    a * R.0 = R.0
 } by {
-    R.zero + R.zero = R.zero
-    a * (R.zero + R.zero) = a * R.zero
+    R.0 + R.0 = R.0
+    a * (R.0 + R.0) = a * R.0
 }
 
 theorem mul_neg_left<R: Ring>(a: R, b: R) {
     -a * b = -(a * b)
 } by {
-    -a * b + a * b = R.zero
-    (-a + a) * b = R.zero
-    R.zero * b = R.zero
+    -a * b + a * b = R.0
+    (-a + a) * b = R.0
+    R.0 * b = R.0
 }
 
 theorem mul_neg_right<R: Ring>(a: R, b: R) {
     a * -b = -(a * b)
 } by {
-    a * -b + a * b = R.zero
-    a * (-b + b) = R.zero
-    a * R.zero = R.zero
+    a * -b + a * b = R.0
+    a * (-b + b) = R.0
+    a * R.0 = R.0
 }
 
 theorem mul_neg_neg<R: Ring>(a: R, b: R) {
@@ -46,17 +46,17 @@ theorem mul_neg_neg<R: Ring>(a: R, b: R) {
 theorem mul_neg_one_left<R: Ring>(a: R) {
     -R.e * a = -a
 } by {
-    -R.e * a + R.e * a = R.zero
-    (-R.e + R.e) * a = R.zero
-    R.zero * a = R.zero
+    -R.e * a + R.e * a = R.0
+    (-R.e + R.e) * a = R.0
+    R.0 * a = R.0
 }
 
 theorem mul_neg_one_right<R: Ring>(a: R) {
     a * -R.e = -a
 } by {
-    a * -R.e + a * R.e = R.zero
-    a * (-R.e + R.e) = R.zero
-    a * R.zero = R.zero
+    a * -R.e + a * R.e = R.0
+    a * (-R.e + R.e) = R.0
+    a * R.0 = R.0
 }
 
 // theorem geometric_sum<R: Ring>(a: R, n: Nat) {

@@ -483,7 +483,7 @@ instance Complex: AddCommSemigroup
 from add_monoid import AddMonoid
 
 instance Complex: AddMonoid {
-    let zero: Complex = Complex.0
+    let 0: Complex = Complex.0
 }
 
 from add_comm_monoid import AddCommMonoid
