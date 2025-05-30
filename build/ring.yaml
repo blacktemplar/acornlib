@@ -1,5 +1,5 @@
-dependencies: 373795220939059696
-content: 10781240787308972472
+dependencies: 449707178834517729
+content: 10715770451215564894
 blocks:
   mul_neg_left:
     add_comm_semigroup:
@@ -18,6 +18,30 @@ blocks:
     ring:
     - mul_neg_left
     - mul_neg_right
+  mul_neg_one_left:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.inverse_right
+    - inverse_left
+    monoid:
+    - Monoid.mul_identity_left
+    ring:
+    - mul_neg_left
+    semiring:
+    - Semiring.distrib_right
+  mul_neg_one_right:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.inverse_right
+    - inverse_left
+    monoid:
+    - Monoid.mul_identity_right
+    ring:
+    - mul_neg_right
+    semiring:
+    - Semiring.distrib_left
   mul_neg_right:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
