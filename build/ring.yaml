@@ -1,6 +1,31 @@
 dependencies: 9852303876083073740
-content: 10446759848460766391
+content: 8416523245203681637
 blocks:
+  geometric_sum:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.inverse_right
+    add_monoid:
+    - AddMonoid.add_identity_left
+    add_semigroup:
+    - AddSemigroup.add_associative
+    list:
+    - map
+    - map_append
+    - range
+    - sum
+    - sum_append
+    monoid:
+    - pow
+    nat_base:
+    - Nat.induction
+    ring:
+    - mul_neg_one_left
+    - mul_zero_right
+    semiring:
+    - Semiring.distrib_left
+    - Semiring.distrib_right
   mul_neg_left:
     add_comm_semigroup:
     - AddCommSemigroup.commutative

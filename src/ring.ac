@@ -59,6 +59,63 @@ theorem mul_neg_one_right<R: Ring>(a: R) {
     a * R.0 = R.0
 }
 
-// theorem geometric_sum<R: Ring>(a: R, n: Nat) {
-//     (a + -R.1) * sum(map(range(n), pow(a))) = pow(a, n) + -R.1
-// }
+theorem geometric_sum<R: Ring>(a: R, n: Nat) {
+    (a + -R.1) * sum(map(range(n), pow(a))) = pow(a, n) + -R.1
+} by {
+    define f(x: Nat) -> Bool {
+        (a + -R.1) * sum(map(range(x), pow(a))) = pow(a, x) + -R.1
+    }
+
+    // Base case: n = 0
+    // range(0) = []
+    // sum(map([], pow(a))) = 0
+    // (a + -R.1) * 0 = 0
+    // pow(a, 0) + -R.1 = R.1 + -R.1 = 0
+    range(Nat.0) = List.nil<Nat>
+    map(List.nil<Nat>, pow(a)) = List.nil<R>
+    sum(List.nil<R>) = R.0
+    (a + -R.1) * R.0 = R.0
+    pow(a, Nat.0) = R.1
+    R.1 + -R.1 = R.0
+    f(Nat.0)
+
+    // Inductive step
+    forall(x: Nat) {
+        if f(x) {
+            // Induction hypothesis: (a + -R.1) * sum(map(range(x), pow(a))) = pow(a, x) + -R.1
+            
+            // range(x.suc) = range(x).append(x)
+            range(x.suc) = range(x).append(x)
+            map(range(x.suc), pow(a)) = map(range(x).append(x), pow(a))
+            map(range(x).append(x), pow(a)) = map(range(x), pow(a)).append(pow(a, x))
+            
+            // sum of appended list
+            sum(map(range(x), pow(a)).append(pow(a, x))) = sum(map(range(x), pow(a))) + pow(a, x)
+            
+            // Left side: (a + -R.1) * sum(map(range(x.suc), pow(a)))
+            (a + -R.1) * sum(map(range(x.suc), pow(a))) = (a + -R.1) * (sum(map(range(x), pow(a))) + pow(a, x))
+            (a + -R.1) * (sum(map(range(x), pow(a))) + pow(a, x)) = (a + -R.1) * sum(map(range(x), pow(a))) + (a + -R.1) * pow(a, x)
+            
+            // Use induction hypothesis
+            (a + -R.1) * sum(map(range(x), pow(a))) + (a + -R.1) * pow(a, x) = (pow(a, x) + -R.1) + (a + -R.1) * pow(a, x)
+            
+            // Simplify (a + -R.1) * pow(a, x)
+            (a + -R.1) * pow(a, x) = a * pow(a, x) + -R.1 * pow(a, x)
+            a * pow(a, x) = pow(a, x.suc)
+            -R.1 * pow(a, x) = -pow(a, x)
+            (a + -R.1) * pow(a, x) = pow(a, x.suc) + -pow(a, x)
+            
+            // Combine terms
+            (pow(a, x) + -R.1) + (pow(a, x.suc) + -pow(a, x)) = pow(a, x) + -R.1 + pow(a, x.suc) + -pow(a, x)
+            pow(a, x) + -pow(a, x) = R.0
+            pow(a, x) + -R.1 + pow(a, x.suc) + -pow(a, x) = -R.1 + pow(a, x.suc)
+            -R.1 + pow(a, x.suc) = pow(a, x.suc) + -R.1
+            
+            // Therefore
+            (a + -R.1) * sum(map(range(x.suc), pow(a))) = pow(a, x.suc) + -R.1
+            f(x.suc)
+        }
+    }
+    
+    f(n)
+}
