@@ -335,6 +335,10 @@ theorem map_add<T, U>(left: List<T>, right: List<T>, f: T -> U) {
     }
 }
 
+theorem map_append<T, U>(initial: List<T>, last: T, f: T -> U) {
+    map(initial.append(last), f) = map(initial, f).append(f(last))
+}
+
 theorem add_assoc<T>(a: List<T>, b: List<T>, c: List<T>) {
     (a + b) + c = a + (b + c)
 } by {
