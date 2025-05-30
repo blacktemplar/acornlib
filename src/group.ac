@@ -7,24 +7,24 @@ typeclass G: Group extends Monoid {
 
     // We only need right-inverse, we can prove left-inverse from it.
     inverse_right(a: G) {
-        a * a.inverse = G.e
+        a * a.inverse = G.1
     }
 }
 
 // This direction is proven rather than assumed
 theorem inverse_left<G: Group>(a: G) {
-    a.inverse * a = G.e
+    a.inverse * a = G.1
 } by {
     (a.inverse * a) * a.inverse = a.inverse
     (a.inverse * a) * a.inverse * a.inverse.inverse = a.inverse * a.inverse.inverse
     (a.inverse * a) * (a.inverse * a.inverse.inverse) = a.inverse * a.inverse.inverse
-    (a.inverse * a) * G.e = G.e
+    (a.inverse * a) * G.1 = G.1
 }
 
 theorem inverse_inverse<G: Group>(a: G) {
     a.inverse.inverse = a
 } by {
-    a * a.inverse = G.e
+    a * a.inverse = G.1
     a * a.inverse * a.inverse.inverse = a.inverse.inverse
 }
 
@@ -43,7 +43,7 @@ theorem right_cancel<G: Group>(a: G, b: G, c: G) {
 theorem inverse_mul<G: Group>(a: G, b: G) {
     (a * b).inverse = b.inverse * a.inverse
 } by {
-    (a * b).inverse * (a * b) = G.e
+    (a * b).inverse * (a * b) = G.1
     (a * b).inverse * a = b.inverse
 }
 
@@ -56,7 +56,7 @@ define is_hom<G: Group, H: Group>(f: G -> H) -> Bool {
 
 // The trivial homomorphism maps every element of G to the identity element of H.
 let trivial_hom<G: Group, H: Group>: G -> H = function(a: G) {
-    H.e
+    H.1
 }
 
 theorem trivial_hom_is_hom<G: Group, H: Group>(a: G, b: G) {

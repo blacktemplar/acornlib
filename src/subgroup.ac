@@ -4,7 +4,7 @@ from group import Group
 // its group.
 
 define identity_constraint<G: Group>(contains: G -> Bool) -> Bool {
-    contains(G.e)
+    contains(G.1)
 }
 
 define closure_constraint<G: Group>(contains: G -> Bool) -> Bool {
@@ -24,7 +24,7 @@ define subgroup_constraint<G: Group>(contains: G -> Bool) -> Bool {
 }
 
 define is_identity<G: Group>(g: G) -> Bool {
-    g = G.e
+    g = G.1
 }
 
 theorem identity_subgroup_constraint<G: Group> {
@@ -44,5 +44,5 @@ structure Subgroup<G: Group> {
 let identity_subgroup<G: Group>: Subgroup<G> = Subgroup.new(is_identity<G>)
 
 theorem identity_subgroup_only_has_identity<G: Group>(g: G) {
-    identity_subgroup<G>.contains(g) implies g = G.e
+    identity_subgroup<G>.contains(g) implies g = G.1
 }

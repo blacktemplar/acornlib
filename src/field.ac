@@ -11,6 +11,6 @@ typeclass F: Field extends CommRing {
     }
 
     field_inverse(f: F) {
-        f != F.0 implies f * f.inverse = F.e
+        f != F.0 implies f * f.inverse = F.1
     }
 }

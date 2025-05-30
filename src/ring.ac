@@ -44,21 +44,21 @@ theorem mul_neg_neg<R: Ring>(a: R, b: R) {
 }
 
 theorem mul_neg_one_left<R: Ring>(a: R) {
-    -R.e * a = -a
+    -R.1 * a = -a
 } by {
-    -R.e * a + R.e * a = R.0
-    (-R.e + R.e) * a = R.0
+    -R.1 * a + R.1 * a = R.0
+    (-R.1 + R.1) * a = R.0
     R.0 * a = R.0
 }
 
 theorem mul_neg_one_right<R: Ring>(a: R) {
-    a * -R.e = -a
+    a * -R.1 = -a
 } by {
-    a * -R.e + a * R.e = R.0
-    a * (-R.e + R.e) = R.0
+    a * -R.1 + a * R.1 = R.0
+    a * (-R.1 + R.1) = R.0
     a * R.0 = R.0
 }
 
 // theorem geometric_sum<R: Ring>(a: R, n: Nat) {
-//     (a + -R.e) * sum(map(range(n), pow(a))) = pow(a, n) + -R.e
+//     (a + -R.1) * sum(map(range(n), pow(a))) = pow(a, n) + -R.1
 // }

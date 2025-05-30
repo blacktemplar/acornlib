@@ -2246,7 +2246,7 @@ instance Int: Semigroup {
 from monoid import Monoid
 
 instance Int: Monoid {
-    let e: Int = Int.1
+    let 1: Int = Int.1
 }
 
 from semiring import Semiring

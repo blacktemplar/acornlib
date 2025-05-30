@@ -2260,7 +2260,7 @@ instance Rat: Semigroup {
 from monoid import Monoid
 
 instance Rat: Monoid {
-    let e = Rat.1
+    let 1 = Rat.1
 }
 
 from semiring import Semiring

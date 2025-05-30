@@ -499,7 +499,7 @@ instance Complex: Semigroup {
 from monoid import Monoid
 
 instance Complex: Monoid {
-    let e: Complex = Complex.1
+    let 1: Complex = Complex.1
 }
 
 from semiring import Semiring

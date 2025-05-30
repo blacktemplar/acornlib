@@ -34,7 +34,7 @@ instance Nat: Semigroup {
 from monoid import Monoid
 
 instance Nat: Monoid {
-    let e: Nat = Nat.1
+    let 1: Nat = Nat.1
 }
 
 from semiring import Semiring

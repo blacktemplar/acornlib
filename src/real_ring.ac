@@ -2166,7 +2166,7 @@ instance Real: Semigroup {
 from monoid import Monoid
 
 instance Real: Monoid {
-    let e: Real = Real.1
+    let 1: Real = Real.1
 }
 
 from semiring import Semiring

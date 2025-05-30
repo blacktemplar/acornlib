@@ -2,16 +2,16 @@ from semigroup import Semigroup
 
 // A multiplicative monoid is a multiplicative semigroup with an identity element.
 typeclass M: Monoid extends Semigroup {
-    e: M
+    1: M
     
     // The identity element must satisfy the identity property
     mul_identity_right(a: M) {
-        a * M.e = a
+        a * M.1 = a
     }
     
     // Other direction of the identity property
     mul_identity_left(a: M) {
-        M.e * a = a
+        M.1 * a = a
     }
 }
 
@@ -20,7 +20,7 @@ from nat_base import Nat
 define pow<M: Monoid>(base: M, exp: Nat) -> M {
     match exp {
         Nat.0 {
-            M.e
+            M.1
         }
         Nat.suc(n) {
             base * pow(base, n)
@@ -36,7 +36,7 @@ theorem pow_add<M: Monoid>(a: M, n: Nat, m: Nat) {
     define f(x: Nat) -> Bool { pow_add(a, x, m) }
 
     // Base case: a^0 * a^m = a^(0+m)
-    pow(a, Nat.0) * pow(a, m) = M.e * pow(a, m)
+    pow(a, Nat.0) * pow(a, m) = M.1 * pow(a, m)
     pow(a, Nat.0) * pow(a, m) = pow(a, m)
     pow(a, Nat.0 + m) = pow(a, m)
     pow_add(a, Nat.0, m)
