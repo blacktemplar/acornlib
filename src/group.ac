@@ -51,7 +51,7 @@ from nat import Nat
 
 define has_finite_order<G: Group>(g: G) -> Bool {
     exists(n: Nat) {
-        pow(g, n) = G.1
+        n != Nat.0 and pow(g, n) = G.1
     }
 }
 

@@ -1,5 +1,5 @@
-dependencies: 12774900792602289601
-content: 7311384374437310599
+dependencies: 13659877637497964323
+content: 9158101852970431759
 blocks:
   lt_trans:
     order:
@@ -25,6 +25,16 @@ blocks:
     - LeftOrderedGroup.left_invariance
     - lt
     - lt_trans
+  ordered_imp_torsion_free:
+    group:
+    - has_finite_order
+    - is_torsion_free
+    order:
+    - LinearOrder.totality
+    ordered_group:
+    - lt
+    - one_lt_pow
+    - pow_lt_one
   pow_lt_one:
     group:
     - left_cancel

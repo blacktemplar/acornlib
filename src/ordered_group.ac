@@ -76,23 +76,25 @@ typeclass G: OrderedGroup extends LeftOrderedGroup {
     }
 }
 
-// theorem ordered_imp_torsion_free<G: OrderedGroup>(g: G) {
-//     is_torsion_free<G>
-// } by {
-//     forall(g: G) {
-//         if has_finite_order(g) {
-//             let n: Nat satisfy {
-//                 pow(g, n) = G.1
-//             }
-//             if g != G.1 {
-//                 if G.1 <= g {
-//                     false
-//                 } else {
-//                     g <= G.1
-//                     false
-//                 }
-//             }
-//             g = G.1
-//         }
-//     }
-// }
+// Ordered groups must be torsion-free.
+theorem ordered_imp_torsion_free<G: OrderedGroup>(g: G) {
+    is_torsion_free<G>
+} by {
+    forall(g: G) {
+        if has_finite_order(g) {
+            let n: Nat satisfy {
+                pow(g, n) = G.1
+            }
+            if g != G.1 {
+                if lt(G.1, g) {
+                    lt(G.1, pow(g, n))
+                    false
+                } else {
+                    lt(g, G.1)
+                    false
+                }
+            }
+            g = G.1
+        }
+    }
+}
