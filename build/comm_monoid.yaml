@@ -1,4 +1,4 @@
-dependencies: 14806015432435637962
+dependencies: 4045288430412211157
 content: 11604878860180762211
 blocks:
   pow_distrib_mul:
@@ -7,7 +7,10 @@ blocks:
     monoid:
     - Monoid.mul_identity_left
     - pow
+    - pow_add
+    - pow_one
     nat_base:
     - Nat.induction
+    - add_one_right
     semigroup:
     - Semigroup.mul_associative
