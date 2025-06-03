@@ -1,0 +1,98 @@
+from nat import Nat
+from group import Group, has_finite_order, is_torsion_free
+from monoid import pow
+from order import PartialOrder, LinearOrder
+
+typeclass G: LeftOrderedGroup extends Group, LinearOrder {
+    left_invariance(a: G, b: G, c: G) {
+        a <= b implies c * a <= c * b
+    }
+}
+
+define lt<G: LeftOrderedGroup>(a: G, b: G) -> Bool {
+    a <= b and a != b
+}
+
+theorem lt_trans<G: LeftOrderedGroup>(a: G, b: G, c: G) {
+    lt(a, b) and lt(b, c) implies lt(a, c)
+} by {
+    a <= b and a != b
+    b <= c and b != c
+    a <= c and a != c
+}
+
+theorem one_lt_pow<G: LeftOrderedGroup>(a: G, n: Nat) {
+    lt(G.1, a) and n != Nat.0 implies lt(G.1, pow(a, n))
+} by {
+    // Define a helper function for induction
+    define f(x: Nat) -> Bool { 
+        lt(G.1, pow(a, x.suc))
+    }
+    f(Nat.0)
+    forall(x: Nat) {
+        if f(x) {
+            lt(G.1, pow(a, x.suc))
+            a * G.1 <= a * pow(a, x.suc)
+            lt(a * G.1, a * pow(a, x.suc))
+            lt(a, a * pow(a, x.suc))
+            lt(G.1, pow(a, x.suc.suc))
+            f(x.suc)
+        }
+    }
+    let n_pred: Nat satisfy {
+        n_pred.suc = n
+    }
+    f(n_pred)
+}
+
+theorem pow_lt_one<G: LeftOrderedGroup>(a: G, n: Nat) {
+    lt(a, G.1) and n != Nat.0 implies lt(pow(a, n), G.1)
+} by {
+    // Define a helper function for induction
+    define f(x: Nat) -> Bool { 
+        lt(pow(a, x.suc), G.1)
+    }
+    f(Nat.0)
+    forall(x: Nat) {
+        if f(x) {
+            lt(pow(a, x.suc), G.1)
+            pow(a, x.suc) != G.1
+            pow(a, x.suc) <= G.1
+            a * pow(a, x.suc) <= a * G.1
+            lt(a * pow(a, x.suc), a * G.1)
+            lt(a * pow(a, x.suc), a)
+            f(x.suc)
+        }
+    }
+    let n_pred: Nat satisfy {
+        n_pred.suc = n
+    }
+    f(n_pred)
+}
+
+typeclass G: OrderedGroup extends LeftOrderedGroup {
+    right_invariance(a: G, b: G, c: G) {
+        a <= b implies a * c <= b * c
+    }
+}
+
+// theorem ordered_imp_torsion_free<G: OrderedGroup>(g: G) {
+//     is_torsion_free<G>
+// } by {
+//     forall(g: G) {
+//         if has_finite_order(g) {
+//             let n: Nat satisfy {
+//                 pow(g, n) = G.1
+//             }
+//             if g != G.1 {
+//                 if G.1 <= g {
+//                     false
+//                 } else {
+//                     g <= G.1
+//                     false
+//                 }
+//             }
+//             g = G.1
+//         }
+//     }
+// }

@@ -1,4 +1,4 @@
-from monoid import Monoid
+from monoid import Monoid, pow
 
 // A group is a monoid that also has inverses.
 typeclass G: Group extends Monoid {
@@ -45,6 +45,18 @@ theorem inverse_mul<G: Group>(a: G, b: G) {
 } by {
     (a * b).inverse * (a * b) = G.1
     (a * b).inverse * a = b.inverse
+}
+
+from nat import Nat
+
+define has_finite_order<G: Group>(g: G) -> Bool {
+    exists(n: Nat) {
+        pow(g, n) = G.1
+    }
+}
+
+let is_torsion_free<G: Group> = forall(g: G) {
+    has_finite_order(g) implies g = G.1
 }
 
 // A predicate to check whether a function is a homomorphism.

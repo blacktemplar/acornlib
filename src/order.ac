@@ -1,0 +1,21 @@
+typeclass P: PartialOrder {
+    lte: (P, P) -> Bool
+
+    reflexive(a: P) {
+        a <= a
+    }
+
+    transitive(a: P, b: P, c: P) {
+        a <= b and b <= c implies a <= c
+    }
+
+    antisymmetric(a: P, b: P) {
+        a <= b and b <= a implies a = b
+    }
+}
+
+typeclass L: LinearOrder extends PartialOrder {
+    totality(a: L, b: L) {
+        a <= b or b <= a
+    }
+}

@@ -1,0 +1,44 @@
+dependencies: 12774900792602289601
+content: 7311384374437310599
+blocks:
+  lt_trans:
+    order:
+    - PartialOrder.antisymmetric
+    - PartialOrder.transitive
+    ordered_group:
+    - lt
+  one_lt_pow:
+    group:
+    - left_cancel
+    monoid:
+    - Monoid.mul_identity_right
+    - pow_add
+    - pow_one
+    nat_base:
+    - Nat.induction
+    - add_one_left
+    - add_one_right
+    - add_zero_left
+    - one_plus_five
+    - zero_or_suc
+    ordered_group:
+    - LeftOrderedGroup.left_invariance
+    - lt
+    - lt_trans
+  pow_lt_one:
+    group:
+    - left_cancel
+    monoid:
+    - Monoid.mul_identity_right
+    - pow
+    - pow_one
+    nat_base:
+    - Nat.induction
+    - add_one_right
+    - add_zero_left
+    - one_plus_five
+    - zero_or_suc
+    ordered_group:
+    - LeftOrderedGroup.left_invariance
+    - lt
+    - lt_trans
