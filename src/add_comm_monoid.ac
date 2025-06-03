@@ -1,7 +1,7 @@
 from add_comm_semigroup import AddCommSemigroup
 from add_monoid import AddMonoid
 
-// AddCommMonoid represents a commutative, additive monoid.
+/// AddCommMonoid represents a commutative, additive monoid.
 typeclass M: AddCommMonoid extends AddCommSemigroup, AddMonoid {
     // All the properties are provided by the base typeclasses.
 }

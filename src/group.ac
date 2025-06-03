@@ -1,6 +1,6 @@
 from monoid import Monoid, pow
 
-// A group is a monoid that also has inverses.
+/// A group is a monoid that also has inverses.
 typeclass G: Group extends Monoid {
     // The inverse operation
     inverse: G -> G
@@ -66,7 +66,7 @@ define is_hom<G: Group, H: Group>(f: G -> H) -> Bool {
     }
 }
 
-// The trivial homomorphism maps every element of G to the identity element of H.
+/// The trivial homomorphism maps every element of G to the identity element of H.
 let trivial_hom<G: Group, H: Group>: G -> H = function(a: G) {
     H.1
 }

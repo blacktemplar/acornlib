@@ -1,7 +1,7 @@
 from add_comm_monoid import AddCommMonoid
 from add_group import AddGroup
 
-// AddCommGroup represents an Abelian group. It's a commutative, additive group.
+/// AddCommGroup represents an Abelian group. It's a commutative, additive group.
 typeclass M: AddCommGroup extends AddCommMonoid, AddGroup {
     // All the properties are provided by the base typeclasses.
 }

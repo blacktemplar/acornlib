@@ -1,4 +1,4 @@
-// An additive semigroup is associative, and that's about it.
+/// An additive semigroup is associative, and that's about it.
 typeclass A: AddSemigroup {
     add: (A, A) -> A
 

@@ -1,6 +1,6 @@
 from semigroup import Semigroup
 
-// Extending the multiplicative semigroup with commutativity.
+/// Extending the multiplicative semigroup with commutativity.
 typeclass S: CommSemigroup extends Semigroup {
     commutative(a: S, b: S) {
         a * b = b * a

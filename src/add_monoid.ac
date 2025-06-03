@@ -1,6 +1,6 @@
 from add_semigroup import AddSemigroup
 
-// An additive monoid is an additive semigroup with an identity element.
+/// An additive monoid is an additive semigroup with an identity element.
 typeclass A: AddMonoid extends AddSemigroup {
     0: A
 

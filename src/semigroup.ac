@@ -1,5 +1,5 @@
-// The default semigroup uses the multiplication operator..
-// For an additive semigroup, see add_semigroup.ac.
+/// The default semigroup uses the multiplication operator..
+/// For an additive semigroup, see add_semigroup.ac.
 typeclass S: Semigroup {
     // The semigroup operation
     mul: (S, S) -> S

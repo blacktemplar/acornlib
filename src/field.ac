@@ -1,7 +1,7 @@
 from nat import Nat
 from comm_ring import CommRing
 
-// A field is a commutative ring with multiplicative inverses for all non-zero elements.
+/// A field is a commutative ring with multiplicative inverses for all non-zero elements.
 typeclass F: Field extends CommRing {
     inverse: F -> F
 
