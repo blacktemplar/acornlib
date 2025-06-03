@@ -3,6 +3,8 @@ from group import Group, has_finite_order, is_torsion_free
 from monoid import pow
 from order import PartialOrder, LinearOrder
 
+/// A left-ordered group is a group with a left-invariant order.
+/// This means that if `a <= b`, then `c * a <= c * b` for any c in the group.
 typeclass G: LeftOrderedGroup extends Group, LinearOrder {
     left_invariance(a: G, b: G, c: G) {
         a <= b implies c * a <= c * b
