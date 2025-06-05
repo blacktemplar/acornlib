@@ -50,7 +50,7 @@ structure FiniteSet<T> {
     finite_constraint(contains)
 }
 
-class FiniteSet<T> {
+attributes FiniteSet<T> {
     let from_list: List<T> -> FiniteSet<T> = function(ts: List<T>) {
         FiniteSet.new(ts.contains)
     }

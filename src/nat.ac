@@ -1,6 +1,6 @@
 from nat_base import Nat 
 
-class Nat {
+attributes Nat {
 }
 
 // Demonstrating that Nat is a semiring.

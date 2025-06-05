@@ -1662,7 +1662,7 @@ theorem mul_rat_eq_seq(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat, d: Nat -> Ra
     eq_seq(mul_rat_seq(c, b), mul_rat_seq(c, d))
 }
 
-class Real {
+attributes Real {
     define mul(self, other: Real) -> Real {
         limit_rat(mul_rat_seq(rat_seq(self), rat_seq(other)))
     }

@@ -27,7 +27,7 @@ theorem abs_from_nat(n: Nat) {
     abs(Int.from_nat(n)) = n
 }
 
-class Int {
+attributes Int {
     let 0: Int = Int.from_nat(Nat.0)
     let 1: Int = Int.from_nat(Nat.1)
     let 2: Int = Int.from_nat(Nat.2)
@@ -78,7 +78,7 @@ theorem abs_neg_nat(n: Nat) {
     }
 }
 
-class Int {
+attributes Int {
     define neg(self) -> Int {
         match self {
             Int.from_nat(n) {
@@ -391,7 +391,7 @@ theorem sub_nat_double_cancel_right(p: Nat, q: Nat, r: Nat, s: Nat, t: Nat) {
 // Now that we've proven a bunch of stuff about sub_nat, we define the positive and negative parts so that we can
 // represent each integer as a sub_nat, and start defining useful functions on integers.
 
-class Int {
+attributes Int {
     define is_negative(self) -> Bool {
         self != Int.from_nat(abs(self))
     }
@@ -507,7 +507,7 @@ theorem add_part_sub_nat(r: Nat, s: Nat) { r + neg_part(sub_nat(r, s)) = s + pos
 
 // Addition, and theorems about addition
 
-class Int {
+attributes Int {
     define add(self, other: Int) -> Int {
         sub_nat(pos_part(self) + pos_part(other), neg_part(self) + neg_part(other))
     }
@@ -745,7 +745,7 @@ theorem add_comm_4(a: Int, b: Int, c: Int, d: Int) { (a + b) + (c + d) = (a + c)
 
 // Subtraction, and theorems about subtraction
 
-class Int {
+attributes Int {
     define sub(self, other: Int) -> Int {
         self + -(other)
     }
@@ -915,7 +915,7 @@ theorem mul_nat_from_nat_left(a: Nat, b: Nat) { mul_nat(Int.from_nat(a), b) = In
 
 // Integer-integer multiplication
 
-class Int {
+attributes Int {
     define mul(self, n: Int) -> Int {
         if n.is_positive {
             mul_nat(self, abs(n))
@@ -1289,7 +1289,7 @@ theorem mul_assoc(a: Int, b: Int, c: Int) { a * b * c = a * (b * c) } by {
 
 // Comparison operators
 
-class Int {
+attributes Int {
     define lt(self, b: Int) -> Bool {
         (b - self).is_positive
     }
@@ -2076,7 +2076,7 @@ theorem plus_abs_gte_zero(n: Int) {
     }
 }
 
-class Int {
+attributes Int {
     // Note that 0^0 = 1.
     define exp(self, b: Nat) -> Int {
         match b {
@@ -2187,7 +2187,7 @@ theorem exp_abs_eq_abs_exp(a: Int, n: Nat) {
     f(n)
 }
 
-class Int {
+attributes Int {
     define abs(self) -> Int {
         Int.from_nat(abs(self))
     }

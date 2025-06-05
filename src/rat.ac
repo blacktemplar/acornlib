@@ -17,7 +17,7 @@ structure Rat {
     is_reduced(num, denom)
 }
 
-class Rat {
+attributes Rat {
     let 0: Rat = Rat.new(Int.0, Int.1)
 }
 
@@ -41,7 +41,7 @@ theorem denom_positive(r: Rat) {
     r.denom > Int.0
 }
 
-class Rat {
+attributes Rat {
     let from_int = function(n: Int) {
         Rat.new(n, Int.1)
     }
@@ -150,7 +150,7 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
     r1.num = r2.num
 }
 
-class Rat {
+attributes Rat {
     let 1: Rat = Rat.from_int(Int.1)
     let 2: Rat = Rat.from_int(Int.2)
     let 3: Rat = Rat.from_int(Int.3)
@@ -868,7 +868,7 @@ theorem lt_add_pos(a: Rat, b: Rat) {
     (a + b) - a = b
 }
 
-class Rat {
+attributes Rat {
     define abs(self) -> Rat {
         if self.is_negative {
             -self
@@ -1555,7 +1555,7 @@ theorem lt_rhs_div_pos(a: Rat, b: Rat, c: Rat) {
     b / c * c = b
 }
 
-class Rat {
+attributes Rat {
     define is_close(self, other: Rat, eps: Rat) -> Bool {
         (self - other).abs < eps
     }
@@ -1624,7 +1624,7 @@ theorem bounds_imp_close(a: Rat, b: Rat, eps: Rat) {
     }
 }
 
-class Rat {
+attributes Rat {
     let from_nat: Nat -> Rat = function(n: Nat) {
         Rat.from_int(Int.from_nat(n))
     }

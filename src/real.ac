@@ -7,7 +7,7 @@ from real_field import Real
  
 // This file proves theorems about uniform convergence.
 
-class Real {
+attributes Real {
     // Placeholder to let other modules import Real from here.
 }
 

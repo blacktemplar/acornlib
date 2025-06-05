@@ -5,7 +5,7 @@ structure Complex {
     im: Real
 }
 
-class Complex {
+attributes Complex {
     let from_real: Real -> Complex = function(r: Real) {
         Complex.new(r, Real.0)
     }
@@ -241,7 +241,7 @@ theorem mul_assoc(a: Complex, b: Complex, c: Complex) {
     ((a * b) * c).im = (a * (b * c)).im
 }
 
-class Complex {
+attributes Complex {
     define neg(self) -> Complex {
         Complex.new(-self.re, -self.im)
     }
@@ -380,7 +380,7 @@ theorem conj_add(a: Complex, b: Complex) {
     (a + b).conj = a.conj + b.conj
 }
 
-class Complex {
+attributes Complex {
     define reciprocal(self) -> Complex {
         self.conj * Complex.from_real(self.abs_squared.reciprocal)
     }
@@ -462,7 +462,7 @@ theorem zero_reciprocal {
     Complex.0.reciprocal = Complex.0
 }
 
-class Complex {
+attributes Complex {
     define div(self, other: Complex) -> Complex {
         self * other.reciprocal
     }

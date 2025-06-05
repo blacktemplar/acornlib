@@ -5,7 +5,7 @@ from real_ring import Real, converges, converges_to, limit
 
 // This file proves theorems about sets of real numbers.
 
-class Real {
+attributes Real {
     // Placeholder to let other modules import Real from here.
 }
 

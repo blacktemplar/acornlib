@@ -8,7 +8,7 @@ from real_base import lte_abs, abs_neg, lte_add_left, lte_add_right, lte_trans
 
 // This file defines infinite series and proves theorems about them.
 
-class Real {
+attributes Real {
     // Placeholder to let other modules import Real from here.
 }
 

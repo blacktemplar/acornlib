@@ -3,7 +3,7 @@ structure Pair<T, U> {
     second: U
 }
 
-class Pair<T, U> {
+attributes Pair<T, U> {
     define swap(self) -> Pair<U, T> {
         Pair.new(self.second, self.first)
     }

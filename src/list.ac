@@ -6,7 +6,7 @@ inductive List<T> {
     cons(T, List<T>)
 }
 
-class List<T> {
+attributes List<T> {
     // Adding two lists concatenates them
     define add(self, other: List<T>) -> List<T> {
         match self {
@@ -72,7 +72,7 @@ theorem add_contains_right<T>(left: List<T>, right: List<T>, item: T) {
     }
 }
 
-class List<T> {
+attributes List<T> {
     define contains_every(self) -> Bool {
         forall(x: T) {
             self.contains(x)
@@ -105,7 +105,7 @@ theorem add_length<T>(left: List<T>, right: List<T>) {
     }
 }
 
-class List<T> {
+attributes List<T> {
     let singleton: T -> List<T> = function(x: T) {
         List.cons(x, List.nil<T>)
     }
@@ -148,7 +148,7 @@ theorem unique_length<T>(list: List<T>) {
     }
 }
 
-class List<T> {
+attributes List<T> {
     define append(self, item: T) -> List<T> {
         self + List.singleton(item)
     }
@@ -166,7 +166,7 @@ define range(n: Nat) -> List<Nat> {
     }
 }
 
-class List<T> {
+attributes List<T> {
     let range: Nat -> List<Nat> = range
 
     define filter(self, f: T -> Bool) -> List<T> {

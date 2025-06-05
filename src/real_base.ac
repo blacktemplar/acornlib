@@ -102,7 +102,7 @@ structure Real {
     is_dedekind_cut(gt_rat)
 }
 
-class Real {
+attributes Real {
     let from_rat = function(r: Rat) {
         Real.new(r.gt)
     }
@@ -398,7 +398,7 @@ theorem add_gt_is_dedekind_cut(z1: Real, z2: Real) {
     is_dedekind_cut(add_gt(z1, z2))
 }
 
-class Real {
+attributes Real {
     define add(self, other: Real) -> Real {
         Real.new(add_gt(self, other))
     }
@@ -782,7 +782,7 @@ theorem gt_some_rat(a: Real) {
     }
 }
 
-class Real {
+attributes Real {
     let from_int = function(n: Int) {
         Real.from_rat(Rat.from_int(n))
     }
@@ -893,7 +893,7 @@ let floor(a: Real) -> n: Int satisfy {
     Real.from_int(n) <= a and a < Real.from_int(n + Int.1)
 }
 
-class Real {
+attributes Real {
     let 1: Real = Real.from_rat(Rat.1)
 }
 
@@ -1150,7 +1150,7 @@ theorem neg_gt_is_dedekind_cut(a: Real) {
     is_dedekind_cut(neg_gt(a))
 }
 
-class Real {
+attributes Real {
     define neg(self) -> Real {
         Real.new(neg_gt(self))
     }
@@ -1371,7 +1371,7 @@ theorem neg_distrib(a: Real, b: Real) {
     -(a + b) = -a + -b
 }
 
-class Real {
+attributes Real {
     define sub(self, other: Real) -> Real {
         self + -other
     }
@@ -1650,7 +1650,7 @@ theorem abs_from_rat(p: Rat) {
     }
 }
 
-class Real {
+attributes Real {
     define is_close(self, other: Real, eps: Real) -> Bool {
         (self - other).abs < eps
     }

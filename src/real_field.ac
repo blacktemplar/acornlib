@@ -151,7 +151,7 @@ theorem recip_rat_seq_converges(a: Nat -> Rat, b: Real) {
     }
 }
 
-class Real {
+attributes Real {
     define reciprocal(self) -> Real {
         if self = Real.0 {
             Real.0
@@ -254,7 +254,7 @@ instance Real: Field {
     let inverse = Real.reciprocal
 }
 
-class Real {
+attributes Real {
     define div(self, other: Real) -> Real {
         self * other.reciprocal
     }
