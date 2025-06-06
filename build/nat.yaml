@@ -1,24 +1,24 @@
-dependencies: 5256519380448608250
-content: 14837764860415067938
+dependencies: 9511832564619308054
+content: 18241781476899972381
 blocks:
   Nat.AddCommSemigroup:
-    nat_base:
+    nat.nat_base:
     - add_comm
   Nat.AddMonoid:
-    nat_base:
+    nat.nat_base:
     - Nat.add
     - add_zero_left
   Nat.AddSemigroup:
-    nat_base:
+    nat.nat_base:
     - add_assoc
   Nat.Monoid:
-    nat_base:
+    nat.nat_base:
     - mul_comm
     - mul_one_left
   Nat.Semigroup:
-    nat_base:
+    nat.nat_base:
     - mul_assoc
   Nat.Semiring:
-    nat_base:
+    nat.nat_base:
     - distrib_left
     - distrib_right

@@ -1,4 +1,4 @@
-dependencies: 10331204647412383298
+dependencies: 7127733845631672107
 content: 7012641617956002193
 blocks:
   lt_trans:
@@ -14,7 +14,7 @@ blocks:
     - Monoid.mul_identity_right
     - pow_add
     - pow_one
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     - add_one_left
     - add_one_right
@@ -42,7 +42,7 @@ blocks:
     - Monoid.mul_identity_right
     - pow
     - pow_one
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     - add_one_right
     - add_zero_left

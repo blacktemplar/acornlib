@@ -1,87 +1,87 @@
-dependencies: 351816422975656526
-content: 15638375463993691294
+dependencies: 17766939778424384499
+content: 4855389768093940475
 blocks:
   all_false_below:
-    nat_base:
+    nat.nat_base:
     - gt_each_of_three_swapped
-    nat_gcd:
+    nat.nat_gcd:
     - false_below
   cofactor:
-    nat_base:
+    nat.nat_base:
     - divides
     - divides_cancel_left
     - divides_mul
     - divides_mul_left
     - mul_comm
     - mul_to_one
-    nat_gcd:
+    nat.nat_gcd:
     - divides_gcd
     - gcd_comm
     - gcd_divides_right
   divides_both_step:
-    nat_base:
+    nat.nat_base:
     - divides_mod
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both
     - gcd_step
     pair:
     - Pair.first
     - Pair.second
   divides_both_unstep:
-    nat_base:
+    nat.nat_base:
     - divides_unmod
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both
     - gcd_step
     pair:
     - Pair.first
     - Pair.second
   divides_gcd:
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both
     - gcd
     pair:
     - Pair.first
     - Pair.second
   divides_gcd_pair:
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both
     - divides_gcd_step_n
     - gcd_pair
   divides_gcd_pair_converse:
-    nat_base:
+    nat.nat_base:
     - Nat.mul
     - divides
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both
     - divides_gcd_step_n_converse
     - gcd_pair
     - num_gcd_steps_terminates
   divides_gcd_step_n:
-    nat_base:
+    nat.nat_base:
     - Nat.induction
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both_step
     - gcd_step_n
   divides_gcd_step_n_converse:
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both_unstep
     - gcd_step_n
   dtz_terminates:
-    nat_base:
+    nat.nat_base:
     - lte_imp_not_lt
-    nat_gcd:
+    nat.nat_gcd:
     - decreasing_to_zero
     - no_infinite_decreasing
   gcd_comm:
-    nat_base:
+    nat.nat_base:
     - divides_symm
-    nat_gcd:
+    nat.nat_gcd:
     - divides_gcd
     - gcd_divides_left
     - gcd_divides_right
   gcd_divides:
-    nat_gcd:
+    nat.nat_gcd:
     - divides_both
     - divides_gcd_pair_converse
     - gcd
@@ -89,60 +89,60 @@ blocks:
     - Pair.first
     - Pair.second
   gcd_divides_left:
-    nat_base:
+    nat.nat_base:
     - divides_self
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_divides
   gcd_divides_right:
-    nat_base:
+    nat.nat_base:
     - divides_self
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_divides
   gcd_is_gcd:
-    nat_base:
+    nat.nat_base:
     - divides_lte
     - zero_divides
-    nat_gcd:
+    nat.nat_gcd:
     - divides_gcd
     - gcd_divides_left
   gcd_mult_left:
-    nat_base:
+    nat.nat_base:
     - Nat.mul
     - mod
     - mod_mul
     - mul_comm
     - mul_zero_left
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_comm
     - gcd_mult_left_nonzero
     - gcd_zero_right
   gcd_mult_left_nonzero:
-    nat_base:
+    nat.nat_base:
     - divides
     - divides_cancel_left
     - divides_mul_left
     - divides_symm
-    nat_gcd:
+    nat.nat_gcd:
     - divides_gcd
     - gcd_comm
     - gcd_divides_left
     - gcd_divides_right
   gcd_mult_right:
-    nat_base:
+    nat.nat_base:
     - mul_comm
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_comm
   gcd_nonzero_left:
-    nat_base:
+    nat.nat_base:
     - zero_divides
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_divides_left
   gcd_nonzero_right:
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_comm
     - gcd_nonzero_left
   gcd_of_prime:
-    nat_base:
+    nat.nat_base:
     - Nat.1
     - Nat.gt
     - divides
@@ -154,27 +154,27 @@ blocks:
     - mul_zero_left
     - not_lt_zero
     - trichotomy
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_comm
     - gcd_divides
     - gcd_divides_right
     - gcd_nonzero_left
   gcd_one_left:
-    nat_base:
+    nat.nat_base:
     - divides
     - mul_to_one
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_divides_left
   gcd_one_right:
-    nat_base:
+    nat.nat_base:
     - divides
     - mul_to_one
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_divides_right
   gcd_terminates:
-    nat_base:
+    nat.nat_base:
     - mod
-    nat_gcd:
+    nat.nat_gcd:
     - decreasing_to_zero
     - dtz_terminates
     - gcd_step
@@ -182,32 +182,32 @@ blocks:
     pair:
     - Pair.second
   gcd_zero_left:
-    nat_base:
+    nat.nat_base:
     - divides_symm
-    nat_gcd:
+    nat.nat_gcd:
     - divides_gcd
     - gcd_divides_left
     - gcd_divides_right
     - gcd_zero_right
   gcd_zero_right:
-    nat_base:
+    nat.nat_base:
     - Nat.mul
     - divides
     - divides_symm
     - mul_one_right
-    nat_gcd:
+    nat.nat_gcd:
     - divides_gcd
     - gcd_divides_left
   has_min:
-    nat_base:
+    nat.nat_base:
     - true_below
-    nat_gcd:
+    nat.nat_gcd:
     - false_below
     - is_min
   mod_maintains_imp_gcd:
-    nat_base:
+    nat.nat_base:
     - Nat.induction
-    nat_gcd:
+    nat.nat_gcd:
     - gcd
     - gcd_pair
     - gcd_step
@@ -217,7 +217,7 @@ blocks:
     - Pair.first
     - Pair.second
   no_infinite_decreasing:
-    nat_base:
+    nat.nat_base:
     - Nat.lte
     - add_comm
     - add_suc_left
@@ -231,12 +231,12 @@ blocks:
     - mod_by_zero
     - mod_lte
   num_gcd_steps:
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_terminates
     - gcd_termination
     - has_min
   num_gcd_steps_terminates:
-    nat_gcd:
+    nat.nat_gcd:
     - gcd_termination
     - is_min
     - num_gcd_steps

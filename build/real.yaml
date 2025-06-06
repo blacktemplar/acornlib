@@ -1,4 +1,4 @@
-dependencies: 13456765774972977731
+dependencies: 5039758160915619437
 content: 12491698231977352133
 blocks:
   add_continuous2:
@@ -130,7 +130,7 @@ blocks:
     - rat_seq_is_close
     - smaller_rat_eps
   lift_uniform_is_uniform:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     real:
     - lift_uc
@@ -192,7 +192,7 @@ blocks:
     real.real_ring:
     - neg_is_close
   rat_mul_uniform:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     rat:
     - Rat.is_close

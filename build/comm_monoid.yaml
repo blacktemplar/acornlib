@@ -1,5 +1,5 @@
-dependencies: 882311259222801554
-content: 12199286860559037227
+dependencies: 10072983038581853577
+content: 4977826674766616481
 blocks:
   pow_distrib_mul:
     comm_semigroup:
@@ -9,7 +9,7 @@ blocks:
     - pow
     - pow_add
     - pow_one
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     - add_one_right
     semigroup:

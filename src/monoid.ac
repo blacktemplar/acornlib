@@ -15,7 +15,7 @@ typeclass M: Monoid extends Semigroup {
     }
 }
 
-from nat_base import Nat
+from nat.nat_base import Nat
 
 define pow<M: Monoid>(base: M, exp: Nat) -> M {
     match exp {

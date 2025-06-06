@@ -1,4 +1,4 @@
-dependencies: 8530662718832954779
+dependencies: 8959612854278421474
 content: 8052185813678268606
 blocks:
   Real.AddCommSemigroup:
@@ -96,7 +96,7 @@ blocks:
     - add_rat_seq
     - mul_rat_seq
   add_rat_seq_is_add:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     real.real_base:
@@ -123,7 +123,7 @@ blocks:
     - eq_seq_symm
     - limit_rat
   cauch_imp_ub:
-    nat_base:
+    nat.nat_base:
     - lte_ref
     real.real_base:
     - Real.lt
@@ -168,7 +168,7 @@ blocks:
     real.real_ring:
     - cauchy_gt_rat
   cauchy_gt_not_everything:
-    nat_base:
+    nat.nat_base:
     - Nat.lte
     - lt_diff
     - lt_or_lte
@@ -199,7 +199,7 @@ blocks:
     - converges
     - eventual_lb
   cauchy_gt_something:
-    nat_base:
+    nat.nat_base:
     - lte_ref
     rat:
     - iop_pos
@@ -223,7 +223,7 @@ blocks:
     - converges
     - eventual_lb
   cauchy_imp_lb:
-    nat_base:
+    nat.nat_base:
     - lte_ref
     real.real_base:
     - Real.lt
@@ -236,7 +236,7 @@ blocks:
     - Real.is_close
     - lt_trans
   close_limit_imp_seqs_get_close:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     real.real_base:
@@ -278,7 +278,7 @@ blocks:
     - lift_seq_elt
     - tail_bound
   convergent_seqs_get_close:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     real.real_base:
@@ -295,18 +295,16 @@ blocks:
   converges_imp_abs_bounded:
     rat:
     - Rat.abs
-    - Rat.lte
     - abs_non_neg
     - bounding_both
     - lt_trans
-    - lte_lt_trans
     real.real_ring:
     - converges_imp_bounded
     - converges_to_imp_converges
     - neg_rat_seq
     - neg_seq_converges
   converges_imp_bounded:
-    nat_base:
+    nat.nat_base:
     - Nat.lte
     - lt_diff
     - lt_or_lte
@@ -336,7 +334,7 @@ blocks:
     - from_rat_pos
     - lift_seq_elt
   converges_imp_converges_to:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     real.real_base:
@@ -603,7 +601,7 @@ blocks:
     real.real_ring:
     - lt_imp_minus_pos
   iop_limit:
-    nat_base:
+    nat.nat_base:
     - add_zero_left
     rat:
     - iop_gets_lt
@@ -650,7 +648,7 @@ blocks:
     - cauchy_gt_rat
     - limit
   lb_lte_ub:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     real.real_base:
     - lte_trans
@@ -658,7 +656,7 @@ blocks:
     - eventual_lb
     - eventual_ub
   lb_ub_imp_eq:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     real.real_base:
@@ -685,7 +683,7 @@ blocks:
     util:
     - compose
   limit_add_seq:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     real.real_base:
@@ -990,7 +988,7 @@ blocks:
     - mul_neg_pos
     - real_mul_comm
   mul_pos_pos:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     rat:
@@ -1027,7 +1025,7 @@ blocks:
     real.real_ring:
     - mul_rat_seq
   mul_rat_seq_converges:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     - lte_trans
     rat:
@@ -1172,7 +1170,7 @@ blocks:
     - limit_rat
     - neg_seq_converges
   neg_seq_converges:
-    nat_base:
+    nat.nat_base:
     - lte_trans
     real.real_base:
     - Real.is_close
@@ -1344,7 +1342,6 @@ blocks:
     real.real_base:
     - Real.gt
     - Real.sub
-    - add_comm
     - lt_add_left
     - lt_swap_neg
   sub_lte:

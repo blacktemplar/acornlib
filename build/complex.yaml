@@ -1,4 +1,4 @@
-dependencies: 3335854703170748165
+dependencies: 633571643882883374
 content: 12125980173968016285
 blocks:
   Complex.AddCommSemigroup:
@@ -66,7 +66,6 @@ blocks:
     - add_neg_eq_zero
     - neg_neg
     real.real_ring:
-    - Real.mul
     - mul_neg_right
     - real_mul_comm
   abs_squared_nonneg:
@@ -172,7 +171,6 @@ blocks:
     - Complex.re
     - neg_one
     real.real_base:
-    - Real.add
     - Real.neg
     - Real.sub
     - add_zero_left
@@ -232,7 +230,6 @@ blocks:
     - add_zero_right
     - neg_zero
     real.real_ring:
-    - Real.mul
     - mul_one_left
     - mul_zero_left
     - mul_zero_right
@@ -346,7 +343,6 @@ blocks:
     - add_zero_right
     - neg_zero
     real.real_ring:
-    - Real.mul
     - mul_zero_left
     - mul_zero_right
     - real_mul_comm

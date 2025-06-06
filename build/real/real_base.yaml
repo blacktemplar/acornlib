@@ -1,4 +1,4 @@
-dependencies: 5481410028103053061
+dependencies: 1119174682836245148
 content: 12016941217366076299
 blocks:
   '98':
@@ -368,7 +368,7 @@ blocks:
     - neg_zero
     - plus_abs_gte_zero
     - pos_part_from
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     - add_comm
     - add_one_left
@@ -663,7 +663,7 @@ blocks:
     - Int.abs
     - add_from_nat
     - member_abs_pos
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     - add_one_left
     rat:
@@ -931,11 +931,9 @@ blocks:
     - from_rat_maintains_lt
     - gt_from_rat_imp_gt_rat
     - gt_imp_not_lte
-    - gt_rat_sorts
     - lt_rat_neg
     - neg_gt
     - neg_gt_is_dedekind_cut
-    - not_gt_rat_self
     - not_lte_imp_gt
     - rat_between_reals
   neg_gt_has_no_greatest:
@@ -1141,12 +1139,10 @@ blocks:
     - Rat.gt
     real.real_base:
     - Real.gt
-    - Real.gte
     - Real.lte
     - gt_from_rat_imp_gt_rat
     - gt_imp_from_rat_gt
     - gt_rat_imp_gt_from_rat
-    - not_lt_imp_gte
     - not_lte_imp_gt
     - rat_between_rat_and_real
     - rat_separating

@@ -1,4 +1,4 @@
-from nat_base import divides, mod, strong_induction, true_below, is_prime, is_composite
+from nat.nat_base import divides, mod, strong_induction, true_below, is_prime, is_composite
 from nat import Nat
 from pair import Pair
 numerals Nat

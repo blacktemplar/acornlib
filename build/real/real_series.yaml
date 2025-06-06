@@ -1,4 +1,4 @@
-dependencies: 9237959172729544731
+dependencies: 1316014058282961386
 content: 4804575235455563016
 blocks:
   add_seq_converges:
@@ -72,7 +72,7 @@ blocks:
     - sub_nat_imp_add
     - sub_nat_negate_imp_add
     - sub_nat_zero_left
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     - Nat.lte
     - add_comm
@@ -91,7 +91,7 @@ blocks:
     real.real_series:
     - is_increasing
   increasing_convergent_bounded_by_limit:
-    nat_base:
+    nat.nat_base:
     - Nat.lt
     - lt_not_symm
     - lt_or_lte
@@ -251,9 +251,12 @@ blocks:
   partial_add_seq_comm:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
+    add_monoid:
+    - AddMonoid.add_identity_left
+    - AddMonoid.add_identity_right
     add_semigroup:
     - AddSemigroup.add_associative
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     real.real_base:
     - add_comm
@@ -265,7 +268,9 @@ blocks:
     - partial_suc
     - partial_zero
   partial_mul_seq_comm:
-    nat_base:
+    add_monoid:
+    - AddMonoid.add_identity_right
+    nat.nat_base:
     - Nat.induction
     real.real_ring:
     - mul_zero_right
@@ -273,6 +278,8 @@ blocks:
     - mul_seq
     - partial_suc
     - partial_zero
+    ring:
+    - mul_zero_right
     semiring:
     - Semiring.distrib_left
   partial_seq_lte:
@@ -280,7 +287,7 @@ blocks:
     - map
     - partial
     - range
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     real.real_base:
     - Real.lte
@@ -304,7 +311,10 @@ blocks:
     - AddCommSemigroup.commutative
     add_semigroup:
     - AddSemigroup.add_associative
-    nat_base:
+    int:
+    - sub_nat_negate_imp_add
+    - sub_nat_zero_left
+    nat.nat_base:
     - Nat.add
     - Nat.induction
     real.real_base:
@@ -361,7 +371,7 @@ blocks:
     - Real.is_negative
     - Real.lte
   tail_converges_to:
-    nat_base:
+    nat.nat_base:
     - Nat.lte
     - add_comm
     - gte_each_of_three
@@ -373,7 +383,7 @@ blocks:
     real.real_series:
     - tail
   tail_imp_converges_to:
-    nat_base:
+    nat.nat_base:
     - Nat.lte
     - add_assoc
     real.real_ring:
@@ -392,7 +402,9 @@ blocks:
     - partial_tail
     - tail
   tail_partial_converges:
-    nat_base:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    nat.nat_base:
     - Nat.lte
     - add_comm
     - lte_trans

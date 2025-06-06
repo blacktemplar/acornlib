@@ -1,4 +1,4 @@
-import nat_base
+import nat.nat_base
 from nat import Nat
 from int import Int, gcd
 

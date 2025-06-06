@@ -1,5 +1,5 @@
-dependencies: 16553017103877165836
-content: 3774056482940413713
+dependencies: 12088628356058799088
+content: 12409098654286917852
 blocks:
   '12':
     rat:
@@ -354,18 +354,15 @@ blocks:
     - reduce_idempotent
   cross_eq_imp_eq:
     int:
-    - abs_from_nat
+    - Int.abs
     - div_imp_div_abs
     - divides
     - euclids_lemma
     - gcd_comm
+    - member_abs_pos
     - mul_cancel_right
-    - neg_part
-    - sub_nat_add_cancel_right
-    - sub_nat_parts
-    - sub_nat_zero_right
     - zero_not_pos
-    nat_base:
+    nat.nat_base:
     - divides_symm
     rat:
     - Rat.constraint
@@ -487,7 +484,7 @@ blocks:
     - reduce
     - zero_denom
   finite_seq_abs_bounded:
-    nat_base:
+    nat.nat_base:
     - Nat.induction
     - Nat.lt
     - lt_imp_lte_suc
@@ -549,7 +546,7 @@ blocks:
     - neg_nat_zero
     - neg_neg
     - neg_zero
-    nat_base:
+    nat.nat_base:
     - add_to_zero
     - bounded_sub
     rat:
@@ -558,6 +555,7 @@ blocks:
     - Rat.from_nat
     - Rat.gt
     - Rat.lte
+    - from_int_num
     - nat_lt_imp_rat_lt
   gt_cancel_pos_mul_left:
     rat:
@@ -634,7 +632,7 @@ blocks:
     - mul_cancels_right
     - mul_comm
   iop_gets_lt:
-    nat_base:
+    nat.nat_base:
     - Nat.lt
     rat:
     - Rat.lte
@@ -1723,7 +1721,7 @@ blocks:
     - mul_one_left
     - mul_pos_pos
   some_mul_lt:
-    nat_base:
+    nat.nat_base:
     - gte_each_of_three
     rat:
     - Rat.div
@@ -1809,7 +1807,7 @@ blocks:
     - Int.3
     - pos_part
     - pos_part_from
-    nat_base:
+    nat.nat_base:
     - one_plus_three
     - three_neq_zero
     rat:
@@ -1831,7 +1829,7 @@ blocks:
     - Int.2
     - Int.3
     - add_from_nat
-    nat_base:
+    nat.nat_base:
     - add_comm
     - one_plus_two
     rat:
@@ -1887,7 +1885,7 @@ blocks:
     - abs_from_nat
     - abs_zero
     - one_plus_one
-    nat_base:
+    nat.nat_base:
     - one_plus_two
     - two_neq_zero
     rat:

@@ -1,5 +1,5 @@
-import nat_base
-import nat_gcd
+import nat.nat_base
+import nat.nat_gcd
 from nat import Nat
 
 inductive Int {
