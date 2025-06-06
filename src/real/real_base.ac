@@ -1375,7 +1375,41 @@ attributes Real {
     define sub(self, other: Real) -> Real {
         self + -other
     }
+}
 
+// Additive algebraic structure.
+
+from add_semigroup import AddSemigroup
+
+instance Real: AddSemigroup {
+    let add: (Real, Real) -> Real = Real.add
+}
+
+from add_comm_semigroup import AddCommSemigroup
+
+instance Real: AddCommSemigroup
+
+from add_monoid import AddMonoid
+
+instance Real: AddMonoid {
+    let 0: Real = Real.0
+}
+
+from add_comm_monoid import AddCommMonoid
+
+instance Real: AddCommMonoid
+
+from add_group import AddGroup
+
+instance Real: AddGroup {
+    let neg: Real -> Real = Real.neg
+}
+
+from add_comm_group import AddCommGroup
+
+instance Real: AddCommGroup
+
+attributes Real {
     define abs(self) -> Real {
         if self.is_negative {
             -self

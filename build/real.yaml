@@ -1,4 +1,4 @@
-dependencies: 1127911634570725845
+dependencies: 4602645300988684552
 content: 12491698231977352133
 blocks:
   add_continuous2:
@@ -195,6 +195,7 @@ blocks:
     nat.nat_base:
     - gte_each_of_three
     rat:
+    - Rat.gte
     - Rat.is_close
     - Rat.lte
     - iop_gets_lt

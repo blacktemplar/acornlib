@@ -2144,27 +2144,7 @@ theorem square_zero_imp_zero(a: Real) {
     }
 }
 
-// Demonstrating that Real is a ring.
-
-from add_semigroup import AddSemigroup
-
-instance Real: AddSemigroup {
-    let add: (Real, Real) -> Real = Real.add
-}
-
-from add_comm_semigroup import AddCommSemigroup
-
-instance Real: AddCommSemigroup
-
-from add_monoid import AddMonoid
-
-instance Real: AddMonoid {
-    let 0: Real = Real.0
-}
-
-from add_comm_monoid import AddCommMonoid
-
-instance Real: AddCommMonoid
+// Multiplicative algebraic structure.
 
 from semigroup import Semigroup
 
@@ -2181,16 +2161,6 @@ instance Real: Monoid {
 from semiring import Semiring
 
 instance Real: Semiring
-
-from add_group import AddGroup
-
-instance Real: AddGroup {
-    let neg: Real -> Real = Real.neg
-}
-
-from add_comm_group import AddCommGroup
-
-instance Real: AddCommGroup
 
 from ring import Ring
 

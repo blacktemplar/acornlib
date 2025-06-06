@@ -1,24 +1,6 @@
-dependencies: 5547479960752662817
-content: 8052185813678268606
+dependencies: 15742635228722365650
+content: 3674944452234531403
 blocks:
-  Real.AddCommSemigroup:
-    real.real_base:
-    - add_comm
-  Real.AddGroup:
-    real.real_base:
-    - Real.sub
-    - sub_cancels
-    - sub_moves_sides
-    real.real_ring:
-    - sub_zero_imp_eq
-  Real.AddMonoid:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
-    real.real_base:
-    - add_zero_left
-  Real.AddSemigroup:
-    real.real_base:
-    - add_assoc
   Real.Monoid:
     real.real_ring:
     - mul_one_left
@@ -295,9 +277,11 @@ blocks:
   converges_imp_abs_bounded:
     rat:
     - Rat.abs
+    - Rat.lte
     - abs_non_neg
     - bounding_both
     - lt_trans
+    - lte_lt_trans
     real.real_ring:
     - converges_imp_bounded
     - converges_to_imp_converges

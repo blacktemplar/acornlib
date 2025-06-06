@@ -1,9 +1,26 @@
-dependencies: 14476826828940153824
-content: 12016941217366076299
+dependencies: 17583435264992851798
+content: 15804145136495107537
 blocks:
   '98':
     real.real_base:
     - gt_is_dedekind_cut
+  Real.AddCommSemigroup:
+    real.real_base:
+    - add_comm
+  Real.AddGroup:
+    real.real_base:
+    - Real.lt
+    - add_neg_gte_zero
+    - add_neg_lte_zero
+    - gte_imp_not_lt
+  Real.AddMonoid:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    real.real_base:
+    - add_zero_left
+  Real.AddSemigroup:
+    real.real_base:
+    - add_assoc
   abs_from_rat:
     rat:
     - Rat.abs
