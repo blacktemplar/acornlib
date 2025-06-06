@@ -1,5 +1,5 @@
-dependencies: 1467256197578615317
-content: 3674944452234531403
+dependencies: 12051555541113338561
+content: 14498545890883657357
 blocks:
   Real.Monoid:
     real.real_ring:
@@ -44,8 +44,8 @@ blocks:
     - lt_add_right
     - sub_cancels
   add_neg_is_sub:
-    rat:
-    - Rat.sub
+    add_group:
+    - AddGroup.sub
     real.real_ring:
     - add_rat_seq
     - neg_rat_seq
@@ -384,10 +384,7 @@ blocks:
     add_monoid:
     - AddMonoid.add_identity_right
     real.real_base:
-    - Real.add
     - Real.gt
-    - add_comm
-    - add_zero_left
     - pos_gt_zero
     real.real_ring:
     - add_gt_imp_gt_sub
@@ -1140,7 +1137,6 @@ blocks:
     - close_comm
   neg_is_zero_sub:
     rat:
-    - Rat.sub
     - neg_sub
     - sub_zero
     - zero_minus
@@ -1332,8 +1328,6 @@ blocks:
     - sub_zero_imp_eq
     - zero_rat_seq_is_zero
   sub_lt_is_gt:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
     add_group:
     - AddGroup.sub
     real.real_base:

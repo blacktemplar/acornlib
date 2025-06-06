@@ -1368,6 +1368,13 @@ define sub_rat_seq(a: Nat -> Rat, b: Nat -> Rat, n: Nat) -> Rat {
 
 theorem add_neg_is_sub(a: Nat -> Rat, b: Nat -> Rat) {
     add_rat_seq(a, neg_rat_seq(b)) = sub_rat_seq(a, b)
+} by {
+    forall(n: Nat) {
+        add_rat_seq(a, neg_rat_seq(b), n) = a(n) + -b(n)
+        sub_rat_seq(a, b, n) = a(n) - b(n)
+        a(n) + -b(n) = a(n) - b(n)
+        add_rat_seq(a, neg_rat_seq(b), n) = sub_rat_seq(a, b, n)
+    }
 }
 
 define const_rat_seq(a: Rat, n: Nat) -> Rat {

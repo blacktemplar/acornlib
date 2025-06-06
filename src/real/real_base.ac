@@ -1329,6 +1329,7 @@ theorem add_neg_lte_zero(a: Real) {
         -a < Real.from_rat(-b)
         a + -a < Real.from_rat(b + r) + Real.from_rat(-b)
         a + -a < Real.from_rat(b + r + -b)
+        b + r + -b = r
         a + -a < Real.from_rat(r)
         false
     }
@@ -1349,6 +1350,10 @@ theorem add_neg_gte_zero(a: Real) {
         a > Real.from_rat(b)
         -a > -Real.from_rat(b + -r)
         a + -a > Real.from_rat(b) + -Real.from_rat(b + -r)
+        not a >= Real.from_rat(b + -r)
+        not a >= -Real.from_rat(-b + r)
+        a < -Real.from_rat(-b + r)
+        Real.from_rat(-b + r) < -a
         a + -a > Real.from_rat(b) + Real.from_rat(-b + r)
         a + -a > Real.from_rat(b + -b + r)
         a + -a > Real.from_rat(r)

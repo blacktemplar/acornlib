@@ -648,12 +648,6 @@ from add_comm_group import AddCommGroup
 instance Rat: AddCommGroup
 
 attributes Rat {
-    define sub(self, other: Rat) -> Rat {
-        self + -other
-    }
-}
-
-attributes Rat {
     define lt(self, other: Rat) -> Bool {
         (other - self).is_positive
     }
@@ -1238,8 +1232,8 @@ theorem add_half_half(r: Rat) {
 theorem lt_neg(p: Rat, q: Rat) {
     p < q implies -q < -p
 } by {
-    q + -p > Rat.0
-    --q + -p > Rat.0
+    (q - p).is_positive
+    (-p - -q).is_positive
 }
 
 theorem lt_lte_trans(a: Rat, b: Rat, c: Rat) {
@@ -1850,6 +1844,10 @@ theorem close_mul_pos(a: Rat, b: Rat, eps: Rat, r: Rat) {
 
 theorem close_neg(a: Rat, b: Rat, eps: Rat) {
     a.is_close(b, eps) implies (-a).is_close(-b, eps)
+} by {
+    (a - b).abs < eps
+    (-a - -b).abs = (b - a).abs
+    (-a - -b).abs < eps
 }
 
 theorem lte_mul_nonneg(a: Rat, b: Rat, c: Rat) {

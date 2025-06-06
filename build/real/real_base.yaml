@@ -1,5 +1,5 @@
-dependencies: 4224402114505037549
-content: 12445006132632402085
+dependencies: 17942801040602587316
+content: 15467573507569589374
 blocks:
   '98':
     real.real_base:
@@ -207,21 +207,26 @@ blocks:
     - gte_imp_not_lt
   add_neg_gte_zero:
     rat:
-    - Rat.sub
     - add_assoc
-    - add_comm
     - add_inv_cancels_right
     - add_zero_left
+    - distrib_left
+    - mul_neg_one_left
     - neg_neg_is_pos
     - neg_sub
+    - sub_add
+    - sub_zero
+    - zero_minus
     real.real_base:
     - Real.from_rat
     - Real.gt
+    - Real.gte
     - Real.lt
     - add_comm
     - add_from_rat
     - add_lt_lt
     - gt_imp_not_lte
+    - gte_imp_not_lt
     - lt_rat_neg
     - lt_swap_neg
     - lt_zero_imp_neg
@@ -233,9 +238,10 @@ blocks:
   add_neg_lte_zero:
     rat:
     - Rat.gt
-    - Rat.sub
+    - add_assoc
     - add_comm
-    - minus_cancels_plus
+    - add_inv_cancels_left
+    - add_zero_left
     - zero_lt_imp_pos
     real.real_base:
     - Real.gt
@@ -311,7 +317,6 @@ blocks:
     real.real_base:
     - Real.gt
     - Real.is_close
-    - add_comm
     - close_comm
     - lt_add_right
     - lte_abs
@@ -332,7 +337,6 @@ blocks:
     - AddGroup.sub
     rat:
     - Rat.is_close
-    - Rat.sub
     real.real_base:
     - Real.gt
     - Real.is_close
@@ -345,7 +349,6 @@ blocks:
     - AddGroup.sub
     rat:
     - Rat.is_close
-    - Rat.sub
     real.real_base:
     - Real.gt
     - Real.is_close
@@ -485,15 +488,15 @@ blocks:
     - Real.lt
     - lte_both_ways_imp_eq
   gt_is_cut:
+    add_group:
+    - AddGroup.sub
+    - inverse_inverse
     rat:
     - Rat.gt
-    - Rat.sub
-    - add_cancels_sub
-    - add_comm
     - gt_minus_pos
-    - neg_sub
     - not_lt_both_ways
     - one_is_pos
+    - sub_add_quasi_cancel
     real.real_base:
     - is_cut
   gt_is_dedekind_cut:
@@ -541,9 +544,11 @@ blocks:
     - gt_rat_sorts
     - not_gt_rat_self
   gt_rat_neg:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.sub
     rat:
-    - Rat.sub
-    - add_comm
     - gt_minus_pos
     - neg_sub
     real.real_base:
@@ -963,13 +968,12 @@ blocks:
   neg_gt_has_no_greatest:
     rat:
     - Rat.lte
-    - Rat.sub
     - add_inv_cancels_right
+    - distrib_right
     - lt_add_pos
+    - mul_neg_one_right
     - not_lt_both_ways
     - not_lt_self
-    - sub_add
-    - zero_minus
     real.real_base:
     - Real.0
     - Real.from_rat
@@ -1116,12 +1120,16 @@ blocks:
     - Real.abs
     - Real.is_negative
   rat_add_gt_imp_add_gt_from_rat:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.sub
+    add_semigroup:
+    - AddSemigroup.add_associative
     rat:
     - Rat.div
     - Rat.gt
     - Rat.lt
-    - Rat.sub
-    - add_assoc
     - add_cancels_sub
     - add_comm
     - add_half_half
@@ -1217,10 +1225,7 @@ blocks:
     - gte_imp_not_lt
     - lte_or_gte
   rat_upper:
-    add_group:
-    - AddGroup.sub
     rat:
-    - Rat.sub
     - minus_cancels_plus
     real.real_base:
     - Real.lt
@@ -1229,12 +1234,14 @@ blocks:
     - gt_imp_not_lte
     - lt_add_pos_rat
     - lt_trans
-    - neg_from_rat
     - rat_window
+    - sub_cancels
   rat_window:
     rat:
-    - Rat.sub
-    - add_cancels_sub
+    - add_assoc
+    - add_comm
+    - add_inv_cancels_right
+    - add_zero_left
     real.real_base:
     - add_from_rat
     - lt_add_converse
