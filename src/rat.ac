@@ -179,10 +179,6 @@ attributes Rat {
                self.denom * other.denom)
     }
 
-    define sub(self, other: Rat) -> Rat {
-        self + -other
-    }
-
     define mul(self, other: Rat) -> Rat {
         reduce(self.num * other.num, self.denom * other.denom)
     }
@@ -195,22 +191,6 @@ attributes Rat {
     // This is the weird version where dividing by zero gives you zero
     define div(self, other: Rat) -> Rat {
         self * other.reciprocal
-    }
-
-    define lt(self, other: Rat) -> Bool {
-        (other - self).is_positive
-    }
-
-    define lte(self, other: Rat) -> Bool {
-        self < other or self = other
-    }
-
-    define gt(self, other: Rat) -> Bool {
-        other < self
-    }
-
-    define gte(self, other: Rat) -> Bool {
-        other <= self
     }
 
     define read(self, other: Rat) -> Rat { Rat.10 * self + other }
@@ -633,6 +613,62 @@ theorem add_inv_cancels_right(a: Rat, b: Rat) {
 
 theorem add_inv_cancels_left(a: Rat, b: Rat) {
     -a + a = Rat.0
+}
+
+// The additive algebraic structure.
+
+from add_semigroup import AddSemigroup
+
+instance Rat: AddSemigroup {
+    let add = Rat.add
+}
+
+from add_comm_semigroup import AddCommSemigroup
+
+instance Rat: AddCommSemigroup
+
+from add_monoid import AddMonoid
+
+instance Rat: AddMonoid {
+    let 0 = Rat.0
+}
+
+from add_comm_monoid import AddCommMonoid
+
+instance Rat: AddCommMonoid
+
+from add_group import AddGroup
+
+instance Rat: AddGroup {
+    let neg = Rat.neg
+}
+
+from add_comm_group import AddCommGroup
+
+instance Rat: AddCommGroup
+
+attributes Rat {
+    define sub(self, other: Rat) -> Rat {
+        self + -other
+    }
+}
+
+attributes Rat {
+    define lt(self, other: Rat) -> Bool {
+        (other - self).is_positive
+    }
+
+    define lte(self, other: Rat) -> Bool {
+        self < other or self = other
+    }
+
+    define gt(self, other: Rat) -> Bool {
+        other < self
+    }
+
+    define gte(self, other: Rat) -> Bool {
+        other <= self
+    }
 }
 
 theorem sub_self(a: Rat) {
@@ -2229,27 +2265,7 @@ theorem zero_recip(a: Rat) {
     Rat.0.reciprocal = Rat.0
 }
 
-// Demonstrating that Rat is a ring.
-
-from add_semigroup import AddSemigroup
-
-instance Rat: AddSemigroup {
-    let add = Rat.add
-}
-
-from add_comm_semigroup import AddCommSemigroup
-
-instance Rat: AddCommSemigroup
-
-from add_monoid import AddMonoid
-
-instance Rat: AddMonoid {
-    let 0 = Rat.0
-}
-
-from add_comm_monoid import AddCommMonoid
-
-instance Rat: AddCommMonoid
+// The multiplicative algebraic structure.
 
 from semigroup import Semigroup
 
@@ -2266,16 +2282,6 @@ instance Rat: Monoid {
 from semiring import Semiring
 
 instance Rat: Semiring
-
-from add_group import AddGroup
-
-instance Rat: AddGroup {
-    let neg = Rat.neg
-}
-
-from add_comm_group import AddCommGroup
-
-instance Rat: AddCommGroup
 
 from ring import Ring
 

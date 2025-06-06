@@ -1,5 +1,5 @@
 dependencies: 552588039825958048
-content: 12409098654286917852
+content: 5587708398933546789
 blocks:
   '12':
     rat:
@@ -11,13 +11,12 @@ blocks:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
     rat:
-    - add_cancels_sub
-    - zero_minus
+    - add_inv_cancels_left
   Rat.AddMonoid:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
     rat:
-    - add_cancels_sub
     - add_zero_left
-    - sub_zero
   Rat.AddSemigroup:
     rat:
     - add_assoc
