@@ -321,12 +321,19 @@ attributes Complex {
     }
 }
 
+theorem mul_from_real(c: Complex, r: Real) {
+    c * Complex.from_real(r) = Complex.new(c.re * r, c.im * r)
+} by {
+    c * Complex.from_real(r) = c * Complex.new(r, Real.0)
+    c * Complex.new(r, Real.0) = Complex.new(c.re * r - c.im * Real.0, c.re * Real.0 + c.im * r)
+    c * Complex.from_real(r) = Complex.new(c.re * r, c.im * r)
+}
+
 theorem real_mul_lifts(a: Real, b: Real) {
     Complex.from_real(a * b) = Complex.from_real(a) * Complex.from_real(b)
 } by {
     Complex.from_real(a * b) = Complex.new(a * b, Real.0)
     Complex.from_real(a) * Complex.from_real(b) = Complex.new(a, Real.0) * Complex.new(b, Real.0)
-    Complex.from_real(a * b) = Complex.new(a * b, Real.0)
 }
 
 theorem real_add_lifts(a: Real, b: Real) {

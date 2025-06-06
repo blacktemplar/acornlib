@@ -1371,12 +1371,6 @@ theorem neg_distrib(a: Real, b: Real) {
     -(a + b) = -a + -b
 }
 
-attributes Real {
-    define sub(self, other: Real) -> Real {
-        self + -other
-    }
-}
-
 // Additive algebraic structure.
 
 from add_semigroup import AddSemigroup

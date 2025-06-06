@@ -1,4 +1,4 @@
-dependencies: 8971154498031342315
+dependencies: 7098983798536317023
 content: 4804575235455563016
 blocks:
   add_seq_converges:
@@ -189,17 +189,21 @@ blocks:
     util:
     - constant
   neg_seq_cancels:
+    add_group:
+    - AddGroup.sub
+    - inverse_inverse
+    monoid:
+    - Monoid.mul_identity_left
     real.real_base:
-    - Real.sub
     - neg_neg
     - sub_moves_sides
     real.real_ring:
     - add_seq
-    - mul_neg_left
-    - mul_one_left
     real.real_series:
     - mul_seq
     - neg_seq
+    ring:
+    - mul_neg_left
   neg_seq_converges:
     real.real_ring:
     - converges_to_imp_converges
@@ -324,8 +328,8 @@ blocks:
     - partial_tail_rewrite
     - tail_imp_converges_to
   partial_tail_rewrite:
-    real.real_base:
-    - Real.sub
+    add_group:
+    - AddGroup.sub
     real.real_ring:
     - add_seq
     real.real_series:
