@@ -1,19 +1,17 @@
 dependencies: 16117990509638169390
-content: 7655463712901825690
+content: 10451837198561349956
 blocks:
   Int.AddCommSemigroup:
     int:
-    - sub_add_left
-    - sub_imp_add
+    - add_comm
   Int.AddGroup:
     int:
-    - sub_imp_add
-    - sub_zero_left
+    - add_neg
   Int.AddMonoid:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
     int:
     - add_zero_right
-    - sub_negate_imp_add
-    - sub_zero_left
   Int.AddSemigroup:
     int:
     - add_assoc
@@ -328,7 +326,6 @@ blocks:
     - neg_zero
     nat.nat_gcd:
     - cofactor
-    - gcd_nonzero_right
   div_abs:
     int:
     - abs_alt_decomp

@@ -1,4 +1,4 @@
-dependencies: 12088628356058799088
+dependencies: 552588039825958048
 content: 12409098654286917852
 blocks:
   '12':
@@ -555,7 +555,6 @@ blocks:
     - Rat.from_nat
     - Rat.gt
     - Rat.lte
-    - from_int_num
     - nat_lt_imp_rat_lt
   gt_cancel_pos_mul_left:
     rat:

@@ -1,4 +1,4 @@
-dependencies: 1316014058282961386
+dependencies: 8278541389215559880
 content: 4804575235455563016
 blocks:
   add_seq_converges:
@@ -251,9 +251,6 @@ blocks:
   partial_add_seq_comm:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
-    add_monoid:
-    - AddMonoid.add_identity_left
-    - AddMonoid.add_identity_right
     add_semigroup:
     - AddSemigroup.add_associative
     nat.nat_base:
@@ -268,8 +265,6 @@ blocks:
     - partial_suc
     - partial_zero
   partial_mul_seq_comm:
-    add_monoid:
-    - AddMonoid.add_identity_right
     nat.nat_base:
     - Nat.induction
     real.real_ring:
@@ -278,8 +273,6 @@ blocks:
     - mul_seq
     - partial_suc
     - partial_zero
-    ring:
-    - mul_zero_right
     semiring:
     - Semiring.distrib_left
   partial_seq_lte:
@@ -311,9 +304,6 @@ blocks:
     - AddCommSemigroup.commutative
     add_semigroup:
     - AddSemigroup.add_associative
-    int:
-    - sub_nat_negate_imp_add
-    - sub_nat_zero_left
     nat.nat_base:
     - Nat.add
     - Nat.induction
@@ -402,8 +392,6 @@ blocks:
     - partial_tail
     - tail
   tail_partial_converges:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
     nat.nat_base:
     - Nat.lte
     - add_comm
