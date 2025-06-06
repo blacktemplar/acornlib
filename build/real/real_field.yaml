@@ -2,21 +2,21 @@ dependencies: 2263135931431964656
 content: 10410134997102956350
 blocks:
   Real.Field:
-    real_field:
+    real.real_field:
     - mul_reciprocal
     - zero_reciprocal
   mul_reciprocal:
     rat:
     - mul_inv_cancels_right
-    real_base:
-    - Real.0
-    - Real.1
-    real_field:
+    real.real_field:
     - Real.reciprocal
     - eventually_nonzero
     - nonzero_imp_eventually_nonzero
     - recip_rat_seq
     - recip_rat_seq_converges
+    real_base:
+    - Real.0
+    - Real.1
     real_ring:
     - eq_imp_limit
     - eventual_eq
@@ -36,19 +36,19 @@ blocks:
     - neg_sub
     - sub_zero
     - zero_minus
-    real_field:
+    real.real_field:
     - recip_rat_seq
     real_ring:
     - neg_rat_seq
   nonzero_imp_eventually_nonzero:
+    real.real_field:
+    - eventually_nonzero
+    - pos_imp_eventually_nonzero
     real_base:
     - Real.is_negative
     - neg_neg
     - neg_neg_is_pos
     - neg_zero
-    real_field:
-    - eventually_nonzero
-    - pos_imp_eventually_nonzero
     real_ring:
     - converges_imp_converges_to
     - converges_to_unique
@@ -61,24 +61,24 @@ blocks:
     real_set:
     - flip_flip
   pos_imp_eventually_nonzero:
+    real.real_field:
+    - eventually_nonzero
     real_base:
     - Real.lt
     - add_zero_left
     - close_imp_bounds
-    real_field:
-    - eventually_nonzero
     real_ring:
     - converges_imp_converges_to
     - converges_to
     - tail_bound
   recip_rat_seq_converges:
+    real.real_field:
+    - neg_recip_rat_seq
+    - recip_rat_seq_pos_converges
     real_base:
     - Real.is_negative
     - neg_neg
     - neg_neg_is_pos
-    real_field:
-    - neg_recip_rat_seq
-    - recip_rat_seq_pos_converges
     real_ring:
     - converges_imp_converges_to
     - converges_to_imp_converges
@@ -125,13 +125,13 @@ blocks:
     - times_two
     - two_is_pos
     - zero_lt_imp_pos
+    real.real_field:
+    - recip_rat_seq
     real_base:
     - Real.new
     - add_from_rat
     - close_rats_imp_close_reals
     - close_reals_imp_close_rats
-    real_field:
-    - recip_rat_seq
     real_ring:
     - cauchy_bound
     - close_and_lt_imp_close
@@ -146,5 +146,5 @@ blocks:
     - smaller_rat_eps
     - tail_bound
   zero_reciprocal:
-    real_field:
+    real.real_field:
     - Real.reciprocal

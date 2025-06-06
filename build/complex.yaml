@@ -1,4 +1,4 @@
-dependencies: 14916230538151621227
+dependencies: 7336439217427542451
 content: 433756774651187746
 blocks:
   Complex.AddCommSemigroup:
@@ -245,7 +245,7 @@ blocks:
     - abs_squared_conj
     - mul_assoc
     - real_mul_lifts
-    real_field:
+    real.real_field:
     - mul_reciprocal
   mul_right_cancel:
     complex:
@@ -367,16 +367,16 @@ blocks:
     - mul_left_cancel
     - mul_reciprocal
     - real_mul_lifts
+    real.real_field:
+    - Real.reciprocal
+    - mul_reciprocal
+    - zero_reciprocal
     real_base:
     - Real.sub
     - add_zero_left
     - add_zero_right
     - neg_neg
     - neg_zero
-    real_field:
-    - Real.reciprocal
-    - mul_reciprocal
-    - zero_reciprocal
     real_ring:
     - mul_distrib_right
     - mul_one_left
@@ -387,5 +387,5 @@ blocks:
     - Complex.0
     - Complex.from_real
     - reciprocal_lifts
-    real_field:
+    real.real_field:
     - zero_reciprocal
