@@ -1,4 +1,4 @@
-dependencies: 2263135931431964656
+dependencies: 10215370095824659437
 content: 9350589584635398746
 blocks:
   Real.Field:
@@ -49,6 +49,8 @@ blocks:
     - neg_seq
     - neg_seq_converges
     - neg_seq_converges_to
+    real.real_set:
+    - flip_flip
     real_base:
     - Real.is_negative
     - neg_neg
@@ -58,8 +60,6 @@ blocks:
     - converges_imp_converges_to
     - converges_to_unique
     - mul_neg_one_left
-    real_set:
-    - flip_flip
   pos_imp_eventually_nonzero:
     real.real_field:
     - eventually_nonzero

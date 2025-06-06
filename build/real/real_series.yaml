@@ -1,5 +1,5 @@
 dependencies: 11909587590599326343
-content: 17033929220765015697
+content: 14819274761204674392
 blocks:
   add_seq_converges:
     real_ring:
@@ -437,7 +437,7 @@ blocks:
     real.real_series:
     - image
     - is_upper_bound
-    real_set:
+    real.real_set:
     - is_upper_bound
   ub_imp_lub:
     real.real_series:
@@ -445,11 +445,11 @@ blocks:
     - is_least_upper_bound
     - is_upper_bound
     - ub_imp_image_ub
-    real_base:
-    - Real.gte
-    - gte_imp_not_lt
-    real_set:
+    real.real_set:
     - is_least_upper_bound
     - is_nonempty
     - is_upper_bound
     - ub_imp_lub
+    real_base:
+    - Real.gte
+    - gte_imp_not_lt

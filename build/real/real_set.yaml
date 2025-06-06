@@ -2,36 +2,36 @@ dependencies: 9270617779145984790
 content: 5381867351814206305
 blocks:
   flip_flip:
+    real.real_set:
+    - flip
     real_base:
     - neg_neg
-    real_set:
-    - flip
   glb_imp_flip_lub:
-    real_base:
-    - Real.gt
-    - Real.gte
-    - gte_imp_not_lt
-    - lt_neg_swap_neg
-    - not_lte_imp_gt
-    real_set:
+    real.real_set:
     - flip_flip
     - is_greatest_lower_bound
     - is_least_upper_bound
     - is_lower_bound
     - lb_imp_flip_ub
     - ub_imp_flip_lb
+    real_base:
+    - Real.gt
+    - Real.gte
+    - gte_imp_not_lt
+    - lt_neg_swap_neg
+    - not_lte_imp_gt
   lb_imp_flip_ub:
+    real.real_set:
+    - flip
+    - is_lower_bound
+    - is_upper_bound
     real_base:
     - Real.gt
     - gt_imp_not_lte
     - neg_lt_swap_neg
     - not_lte_imp_gt
-    real_set:
-    - flip
-    - is_lower_bound
-    - is_upper_bound
   lb_imp_glb:
-    real_set:
+    real.real_set:
     - flip
     - flip_flip
     - is_nonempty
@@ -39,22 +39,26 @@ blocks:
     - lub_imp_flip_glb
     - ub_imp_lub
   lub_imp_flip_glb:
-    real_base:
-    - Real.gt
-    - Real.gte
-    - gte_imp_not_lt
-    - neg_lt_swap_neg
-    - not_lte_imp_gt
-    real_set:
+    real.real_set:
     - flip_flip
     - is_greatest_lower_bound
     - is_least_upper_bound
     - is_upper_bound
     - lb_imp_flip_ub
     - ub_imp_flip_lb
+    real_base:
+    - Real.gt
+    - Real.gte
+    - gte_imp_not_lt
+    - neg_lt_swap_neg
+    - not_lte_imp_gt
   sup_cut_is_cut:
     rat:
     - iop_pos
+    real.real_set:
+    - is_nonempty
+    - is_upper_bound
+    - sup_cut
     real_base:
     - Real.gt
     - Real.gte
@@ -69,34 +73,34 @@ blocks:
     - not_lte_imp_gt
     - rat_dual_upper_bound
     - rat_lower
-    real_set:
-    - is_nonempty
-    - is_upper_bound
-    - sup_cut
   sup_cut_is_dedekind_cut:
-    real_base:
-    - is_dedekind_cut
-    real_set:
+    real.real_set:
     - sup_cut_is_cut
     - sup_cut_is_lower
     - sup_cut_not_has_greatest
-  sup_cut_is_lower:
     real_base:
-    - Real.gt
-    - Real.lt
-    - from_rat_maintains_lt
-    - gt_imp_not_lte
-    - is_lower
-    - lt_lte_trans
-    - not_lte_imp_gt
-    real_set:
+    - is_dedekind_cut
+  sup_cut_is_lower:
+    rat:
+    - Rat.lte
+    real.real_set:
     - is_upper_bound
     - sup_cut
+    real_base:
+    - Real.gt
+    - from_rat_maintains_lte
+    - gt_imp_not_lte
+    - is_lower
+    - lte_lt_trans
+    - not_lte_imp_gt
   sup_cut_not_has_greatest:
     rat:
     - lt_add_pos
     - lt_lte_trans
     - not_lt_both_ways
+    real.real_set:
+    - is_upper_bound
+    - sup_cut
     real_base:
     - Real.gt
     - Real.gte
@@ -106,20 +110,22 @@ blocks:
     - has_greatest
     - is_greatest
     - not_lte_imp_gt
-    real_set:
-    - is_upper_bound
-    - sup_cut
   ub_imp_flip_lb:
+    real.real_set:
+    - flip
+    - is_lower_bound
+    - is_upper_bound
     real_base:
     - Real.gt
     - gt_imp_not_lte
     - lt_neg_swap_neg
     - not_lte_imp_gt
-    real_set:
-    - flip
-    - is_lower_bound
-    - is_upper_bound
   ub_imp_lub:
+    real.real_set:
+    - is_least_upper_bound
+    - is_upper_bound
+    - sup_cut
+    - sup_cut_is_dedekind_cut
     real_base:
     - Real.gt
     - Real.gt_rat
@@ -130,8 +136,3 @@ blocks:
     - lt_lte_trans
     - not_lte_imp_gt
     - rat_between_reals_gt
-    real_set:
-    - is_least_upper_bound
-    - is_upper_bound
-    - sup_cut
-    - sup_cut_is_dedekind_cut
