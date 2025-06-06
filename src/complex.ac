@@ -120,99 +120,34 @@ theorem mul_comm(a: Complex, b: Complex) {
 theorem distrib(a: Complex, b: Complex, c: Complex) { 
     a * (b + c) = a * b + a * c 
 } by {
-    // Expand left side: a * (b + c)
-    let left: Complex = a * Complex.new(b.re + c.re, b.im + c.im)
-    left = Complex.new(
-        a.re * (b.re + c.re) - a.im * (b.im + c.im),
-        a.re * (b.im + c.im) + a.im * (b.re + c.re)
-    )
+    let left = a * (b + c)
+    let right = a * b + a * c
 
-    // Expand right side: a*b + a*c
-    let ab: Complex = a * b
-    let ac: Complex = a * c
-    let right: Complex = Complex.new(ab.re + ac.re, ab.im + ac.im)
+    // Simplify left.re
+    left.re = a.re * (b + c).re - a.im * (b + c).im
+    a.re * (b + c).re = a.re * b.re + a.re * c.re
+    a.im * (b + c).im = a.im * b.im + a.im * c.im
+    left.re = a.re * b.re + a.re * c.re - a.im * b.im - a.im * c.im
 
-    // Expand each component step by step
-    // Real part
-    let left_re_expanded: Real = a.re * (b.re + c.re) - a.im * (b.im + c.im)
-    let left_re_distributed: Real = a.re*b.re + a.re*c.re - a.im*b.im - a.im*c.im
+    // Simplify left.im
+    left.im = a.re * (b + c).im + a.im * (b + c).re
+    a.re * (b + c).im = a.re * b.im + a.re * c.im
+    a.im * (b + c).re = a.im * b.re + a.im * c.re
+    left.im = a.re * b.im + a.re * c.im + a.im * b.re + a.im * c.re
 
-    let right_re_part1: Real = a.re*b.re - a.im*b.im
-    let right_re_part2: Real = a.re*c.re - a.im*c.im
-    let right_re_expanded: Real = right_re_part1 + right_re_part2
+    // Simplify right.re
+    right.re = (a * b).re + (a * c).re
+    (a * b).re = a.re * b.re - a.im * b.im
+    (a * c).re = a.re * c.re - a.im * c.im
+    right.re = (a.re * b.re - a.im * b.im) + (a.re * c.re - a.im * c.im)
+    right.re = left.re
 
-    // Imaginary part
-    let left_im_expanded: Real = a.re * (b.im + c.im) + a.im * (b.re + c.re)
-    let left_im_distributed: Real = a.re*b.im + a.re*c.im + a.im*b.re + a.im*c.re
-
-    let right_im_part1: Real = a.re*b.im + a.im*b.re
-    let right_im_part2: Real = a.re*c.im + a.im*c.re
-    let right_im_expanded: Real = right_im_part1 + right_im_part2
-
-    // Real number arithmetic confirms equality
-    // Break down the expanded forms step by step
-    let sum_a_re_b_re: Real = a.re * b.re
-    let sum_a_re_c_re: Real = a.re * c.re
-    let sum_a_im_b_im: Real = a.im * b.im
-    let sum_a_im_c_im: Real = a.im * c.im
-
-    // Left side real part expansion using real number properties
-    a.re * (b.re + c.re) = a.re * b.re + a.re * c.re
-    a.im * (b.im + c.im) = a.im * b.im + a.im * c.im
-    left_re_expanded = a.re * (b.re + c.re) - a.im * (b.im + c.im)
-    left_re_expanded = a.re * b.re + a.re * c.re - a.im * b.im - a.im * c.im
-    left_re_expanded = sum_a_re_b_re + sum_a_re_c_re - sum_a_im_b_im - sum_a_im_c_im
-
-    // Right side real part
-    right_re_part1 = sum_a_re_b_re - sum_a_im_b_im
-    right_re_part2 = sum_a_re_c_re - sum_a_im_c_im
-    right_re_expanded = right_re_part1 + right_re_part2
-    right_re_expanded = sum_a_re_b_re - sum_a_im_b_im + sum_a_re_c_re - sum_a_im_c_im
-
-    // Confirm real part equality
-    left_re_expanded = right_re_expanded
-
-    // Do the same for imaginary part
-    let sum_a_re_b_im: Real = a.re * b.im
-    let sum_a_re_c_im: Real = a.re * c.im
-    let sum_a_im_b_re: Real = a.im * b.re
-    let sum_a_im_c_re: Real = a.im * c.re
-
-    // Left side imaginary part using real number properties
-    a.re * (b.im + c.im) = a.re * b.im + a.re * c.im
-    a.im * (b.re + c.re) = a.im * b.re + a.im * c.re
-    left_im_expanded = a.re * (b.im + c.im) + a.im * (b.re + c.re)
-    left_im_expanded = sum_a_re_b_im + sum_a_re_c_im + sum_a_im_b_re + sum_a_im_c_re
-
-    // Right side imaginary part
-    right_im_part1 = sum_a_re_b_im + sum_a_im_b_re
-    right_im_part2 = sum_a_re_c_im + sum_a_im_c_re
-    right_im_expanded = right_im_part1 + right_im_part2
-    right_im_expanded = sum_a_re_b_im + sum_a_im_b_re + sum_a_re_c_im + sum_a_im_c_re
-
-    // Confirm imaginary part equality
-    left_im_expanded = right_im_expanded
-
-    // Final equality using the confirmed components
-    // Compare the components directly
-    Complex.new(left_re_expanded, left_im_expanded) = Complex.new(right_re_expanded, right_im_expanded)
-
-    // Using definition of complex multiplication
-    let ab_re: Real = a.re*b.re - a.im*b.im
-    let ab_im: Real = a.re*b.im + a.im*b.re
-    let ac_re: Real = a.re*c.re - a.im*c.im
-    let ac_im: Real = a.re*c.im + a.im*c.re
-
-    // These match the definition we defined earlier
-    ab = Complex.new(ab_re, ab_im)
-    ac = Complex.new(ac_re, ac_im)
-
-    // The original complex expressions are equal by component equality
-    left.re = right.re
-    left.im = right.im
-
-    // Therefore
-    a * (b + c) = a * b + a * c
+    // Simplify right.im
+    right.im = (a * b).im + (a * c).im
+    (a * b).im = a.re * b.im + a.im * b.re
+    (a * c).im = a.re * c.im + a.im * c.re
+    right.im = (a.re * b.im + a.im * b.re) + (a.re * c.im + a.im * c.re)
+    right.im = left.im
 }
 
 theorem mul_three_re(a: Complex, b: Complex, c: Complex) {

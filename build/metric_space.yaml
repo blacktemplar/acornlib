@@ -1,5 +1,5 @@
-dependencies: 46407676336850991
-content: 11156348535475454218
+dependencies: 2321557575532671285
+content: 12259608317998882369
 blocks:
   Color.MetricSpace:
     metric_space:
@@ -10,7 +10,7 @@ blocks:
   discrete_dist_zero_imp_eq:
     metric_space:
     - discrete
-    real_base:
+    real.real_base:
     - Real.lt
     - add_zero_left
     - lt_add_one
@@ -24,27 +24,34 @@ blocks:
     metric_space:
     - discrete
     - discrete_self_distance_is_zero
-    real_base:
-    - Real.is_negative
+    - zero_lte_discrete
+    real.real_base:
     - Real.lt
     - add_comm
     - add_zero_left
     - lt_add_one
     - lte_add_right
     - lte_lt_trans
-    - lte_or_gte
     - lte_self
-    real_ring:
-    - non_neg_imp_zero_lte
   distance_non_negative:
     metric_space:
     - MetricSpace.self_distance_is_zero
     - MetricSpace.symmetric
     - MetricSpace.triangle
-    real_base:
+    real.real_base:
     - Real.add
     - Real.gte
-    real_ring:
+    real.real_ring:
     - add_neg_neg
     - non_neg_imp_zero_lte
     - zero_lte_imp_non_neg
+  zero_lte_discrete:
+    metric_space:
+    - discrete
+    real.real_base:
+    - Real.gte
+    - Real.is_negative
+    real.real_ring:
+    - mul_one_left
+    - non_neg_imp_zero_lte
+    - square_nonneg

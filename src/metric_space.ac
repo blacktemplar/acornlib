@@ -43,6 +43,16 @@ define discrete<T>(x: T, y: T) -> Real {
     }
 }
 
+theorem zero_lte_discrete<T>(x: T, y: T) {
+    0 <= discrete(x, y)
+} by {
+    if x = y {
+        0 <= discrete(x, y)
+    } else {
+        0 <= discrete(x, y)
+    }
+}
+
 theorem discrete_self_distance_is_zero<T>(x: T) {
     discrete(x, x) = 0
 }

@@ -1,11 +1,13 @@
-dependencies: 11909587590599326343
-content: 14819274761204674392
+dependencies: 9237959172729544731
+content: 4804575235455563016
 blocks:
   add_seq_converges:
-    real_ring:
+    real.real_ring:
     - converges_to_imp_converges
     - limit_add_seq
   comparison_test:
+    real.real_base:
+    - lte_trans
     real.real_series:
     - is_lower_bound
     - monotone_convergence_principle
@@ -14,22 +16,20 @@ blocks:
     - partial_seq_lte
     - seq_lte
     - seq_lte_ub
-    real_base:
-    - lte_trans
   const_converges:
-    real_ring:
+    real.real_ring:
     - eq_converges
     - eventual_eq
     util:
     - constant
   const_converges_to:
+    real.real_ring:
+    - converges_imp_converges_to
     real.real_series:
     - const_converges
     - const_limit
-    real_ring:
-    - converges_imp_converges_to
   const_limit:
-    real_ring:
+    real.real_ring:
     - eq_imp_limit
     - eventual_eq
     util:
@@ -40,32 +40,32 @@ blocks:
     util:
     - constant
   conv_add_imp_conv_left:
+    real.real_base:
+    - add_comm
+    real.real_ring:
+    - add_seq
     real.real_series:
     - conv_add_imp_conv_right
-    real_base:
-    - add_comm
-    real_ring:
-    - add_seq
   conv_add_imp_conv_right:
+    real.real_base:
+    - add_comm
+    real.real_ring:
+    - add_seq
     real.real_series:
     - add_seq_converges
     - neg_seq_cancels
     - neg_seq_converges
-    real_base:
-    - add_comm
-    real_ring:
-    - add_seq
   converges_const_seq:
-    real.real_series:
-    - const_seq_n
-    real_ring:
+    real.real_ring:
     - eq_converges
     - eventual_eq
+    real.real_series:
+    - const_seq_n
   converges_mul_seq:
+    real.real_ring:
+    - converges_to_imp_converges
     real.real_series:
     - mul_seq_converges_to
-    real_ring:
-    - converges_to_imp_converges
   distant_increasing:
     int:
     - sub_nat
@@ -84,21 +84,18 @@ blocks:
     - lt_imp_lt_suc
     - lt_or_lte
     - lte_imp_not_lt
-    real.real_series:
-    - is_increasing
-    real_base:
+    real.real_base:
     - Real.lte
     - lte_self
     - lte_trans
+    real.real_series:
+    - is_increasing
   increasing_convergent_bounded_by_limit:
     nat_base:
     - Nat.lt
     - lt_not_symm
     - lt_or_lte
-    real.real_series:
-    - distant_increasing
-    - is_upper_bound
-    real_base:
+    real.real_base:
     - Real.gt
     - Real.gte
     - Real.is_close
@@ -111,18 +108,16 @@ blocks:
     - rat_between_reals_gt
     - sub_cancels
     - swap_minus_plus
-    real_ring:
+    real.real_ring:
     - converges_imp_converges_to
     - converges_to
     - lt_imp_minus_pos
     - tail_bound
-  monotone_convergence_principle:
     real.real_series:
     - distant_increasing
-    - is_least_upper_bound
     - is_upper_bound
-    - ub_imp_lub
-    real_base:
+  monotone_convergence_principle:
+    real.real_base:
     - Real.gt
     - Real.is_close
     - Real.lt
@@ -133,31 +128,34 @@ blocks:
     - lte_lt_trans
     - not_lte_imp_gt
     - self_close
-    real_ring:
+    real.real_ring:
     - cauchy_bound
     - converges
     - eps_lt_half
     - is_close_triangle
+    real.real_series:
+    - distant_increasing
+    - is_least_upper_bound
+    - is_upper_bound
+    - ub_imp_lub
   mul_seq_combine:
-    real.real_series:
-    - mul_seq
-    real_ring:
+    real.real_ring:
     - mul_assoc
-  mul_seq_comm:
     real.real_series:
     - mul_seq
-    real_ring:
+  mul_seq_comm:
+    real.real_ring:
     - mul_assoc
     - real_mul_comm
-  mul_seq_converges_to:
     real.real_series:
     - mul_seq
-    real_base:
+  mul_seq_converges_to:
+    real.real_base:
     - Real.is_close
     - Real.lt
     - abs_not_neg
     - lte_lt_trans
-    real_ring:
+    real.real_ring:
     - converges_imp_converges_to
     - converges_to
     - exists_small_mul_variant
@@ -165,121 +163,116 @@ blocks:
     - mul_abs
     - mul_sub_distrib_right
     - tail_bound
+    real.real_series:
+    - mul_seq
   mul_seq_neg_one_converges_converse:
+    real.real_base:
+    - neg_neg
+    real.real_ring:
+    - converges_to_imp_converges
+    - mul_assoc
+    - mul_neg_one_right
     real.real_series:
     - mul_seq
     - mul_seq_converges_to
     - mul_seq_one
-    real_base:
-    - neg_neg
-    real_ring:
-    - converges_to_imp_converges
-    - mul_assoc
-    - mul_neg_one_right
   mul_seq_one:
-    real.real_series:
-    - mul_seq
-    real_ring:
+    real.real_ring:
     - mul_one_left
-  mul_seq_zero:
     real.real_series:
     - mul_seq
-    real_ring:
+  mul_seq_zero:
+    real.real_ring:
     - mul_zero_left
+    real.real_series:
+    - mul_seq
     util:
     - constant
   neg_seq_cancels:
-    real.real_series:
-    - mul_seq
-    - neg_seq
-    real_base:
+    real.real_base:
     - Real.sub
     - neg_neg
     - sub_moves_sides
-    real_ring:
+    real.real_ring:
     - add_seq
     - mul_neg_left
     - mul_one_left
+    real.real_series:
+    - mul_seq
+    - neg_seq
   neg_seq_converges:
+    real.real_ring:
+    - converges_to_imp_converges
     real.real_series:
     - neg_seq_converges_to
-    real_ring:
-    - converges_to_imp_converges
   neg_seq_converges_converse:
     real.real_series:
     - neg_seq_converges
     - neg_seq_neg_seq
   neg_seq_converges_to:
+    real.real_ring:
+    - mul_neg_one_left
     real.real_series:
     - mul_seq_converges_to
     - neg_seq
-    real_ring:
-    - mul_neg_one_left
   neg_seq_lifts:
-    real.real_series:
-    - mul_seq
-    - neg_seq
-    real_base:
+    real.real_base:
     - neg_from_rat
     - neg_neg
-    real_ring:
+    real.real_ring:
     - lift_seq_elt
     - mul_neg_one_left
     - neg_rat_seq
-  neg_seq_neg_seq:
     real.real_series:
     - mul_seq
     - neg_seq
-    real_base:
+  neg_seq_neg_seq:
+    real.real_base:
     - neg_neg
-    real_ring:
+    real.real_ring:
     - mul_neg_left
     - mul_neg_one_left
     - mul_one_left
+    real.real_series:
+    - mul_seq
+    - neg_seq
   nonneg_partial_bounded_above:
     real.real_series:
     - increasing_convergent_bounded_by_limit
     - nonneg_partial_increasing
   nonneg_partial_increasing:
+    real.real_base:
+    - add_zero_right
+    - lte_add_left
     real.real_series:
     - is_increasing
     - is_lower_bound
     - partial_suc
-    real_base:
-    - add_zero_right
-    - lte_add_left
   partial_add_seq_comm:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
-    add_monoid:
-    - AddMonoid.add_identity_left
-    - AddMonoid.add_identity_right
     add_semigroup:
     - AddSemigroup.add_associative
     nat_base:
     - Nat.induction
+    real.real_base:
+    - add_comm
+    - sub_moves_sides
+    real.real_ring:
+    - add_seq
+    - sub_zero_imp_eq
     real.real_series:
     - partial_suc
     - partial_zero
-    real_base:
-    - add_comm
-    - sub_moves_sides
-    real_ring:
-    - add_seq
-    - sub_zero_imp_eq
   partial_mul_seq_comm:
-    add_monoid:
-    - AddMonoid.add_identity_right
     nat_base:
     - Nat.induction
+    real.real_ring:
+    - mul_zero_right
     real.real_series:
     - mul_seq
     - partial_suc
     - partial_zero
-    real_ring:
-    - mul_zero_right
-    ring:
-    - mul_zero_right
     semiring:
     - Semiring.distrib_left
   partial_seq_lte:
@@ -289,14 +282,14 @@ blocks:
     - range
     nat_base:
     - Nat.induction
-    real.real_series:
-    - partial_suc
-    - seq_lte
-    real_base:
+    real.real_base:
     - Real.lte
     - lte_add_left
     - lte_add_right
     - lte_trans
+    real.real_series:
+    - partial_suc
+    - seq_lte
   partial_suc:
     list:
     - List.append
@@ -311,44 +304,41 @@ blocks:
     - AddCommSemigroup.commutative
     add_semigroup:
     - AddSemigroup.add_associative
-    int:
-    - sub_nat_negate_imp_add
-    - sub_nat_zero_left
     nat_base:
     - Nat.add
     - Nat.induction
+    real.real_base:
+    - sub_cancels
+    real.real_ring:
+    - sub_zero_imp_eq
     real.real_series:
     - partial_suc
     - partial_zero
     - tail
-    real_base:
-    - sub_cancels
-    real_ring:
-    - sub_zero_imp_eq
   partial_tail_conv_imp_partial_conv:
+    real.real_ring:
+    - converges_to_imp_converges
     real.real_series:
     - conv_add_imp_conv_left
     - converges_const_seq
     - partial_tail_rewrite
     - tail_imp_converges_to
-    real_ring:
-    - converges_to_imp_converges
   partial_tail_rewrite:
+    real.real_base:
+    - Real.sub
+    real.real_ring:
+    - add_seq
     real.real_series:
     - const_seq_n
     - partial_tail_sub
     - tail
-    real_base:
-    - Real.sub
-    real_ring:
-    - add_seq
   partial_tail_sub:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
+    real.real_base:
+    - sub_moves_sides
     real.real_series:
     - partial_tail
-    real_base:
-    - sub_moves_sides
   partial_zero:
     list:
     - map
@@ -356,17 +346,17 @@ blocks:
     - range
     - sum
   seq_lte_ub:
+    real.real_base:
+    - lte_trans
     real.real_series:
     - is_upper_bound
     - seq_lte
-    real_base:
-    - lte_trans
   sum_abs_le_abs_sum:
     list:
     - List.induction
     - map
     - sum
-    real_base:
+    real.real_base:
     - Real.abs
     - Real.is_negative
     - Real.lte
@@ -376,52 +366,50 @@ blocks:
     - add_comm
     - gte_each_of_three
     - lte_trans
-    real.real_series:
-    - tail
-    real_ring:
+    real.real_ring:
     - converges_imp_converges_to
     - converges_to
     - tail_bound
+    real.real_series:
+    - tail
   tail_imp_converges_to:
     nat_base:
     - Nat.lte
     - add_assoc
-    real.real_series:
-    - tail
-    real_ring:
+    real.real_ring:
     - converges_imp_converges_to
     - converges_to
     - tail_bound
+    real.real_series:
+    - tail
   tail_partial:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
+    real.real_ring:
+    - add_seq
     real.real_series:
     - const_seq_n
     - partial_tail
     - tail
-    real_ring:
-    - add_seq
   tail_partial_converges:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
     nat_base:
     - Nat.lte
     - add_comm
     - lte_trans
-    real.real_series:
-    - partial_tail
-    - partial_tail_sub
-    real_base:
+    real.real_base:
     - Real.is_close
     - Real.new
     - add_comm
     - sub_cancels
     - swap_minus_plus
-    real_ring:
+    real.real_ring:
     - converges_imp_converges_to
     - converges_to
     - sub_both_eq_sub_add
     - tail_bound
+    real.real_series:
+    - partial_tail
+    - partial_tail_sub
   tail_zero:
     int:
     - sub_nat_negate_imp_add
@@ -429,7 +417,7 @@ blocks:
     real.real_series:
     - tail
   triangle_ineq:
-    real_base:
+    real.real_base:
     - Real.abs
     - lte_abs
     - neg_distrib
@@ -440,6 +428,9 @@ blocks:
     real.real_set:
     - is_upper_bound
   ub_imp_lub:
+    real.real_base:
+    - Real.lt
+    - lt_lte_trans
     real.real_series:
     - image
     - is_least_upper_bound
@@ -450,6 +441,3 @@ blocks:
     - is_nonempty
     - is_upper_bound
     - ub_imp_lub
-    real_base:
-    - Real.gte
-    - gte_imp_not_lt

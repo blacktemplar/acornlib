@@ -3,8 +3,8 @@ from nat import Nat
 from rat import Rat
 from list import partial, sum, map, List, range
 import real.real_set
-from real_ring import Real, converges, converges_to, limit, cauchy_bound, tail_bound, add_seq, lift_seq, neg_rat_seq
-from real_base import lte_abs, abs_neg, lte_add_left, lte_add_right, lte_trans
+from real.real_ring import Real, converges, converges_to, limit, cauchy_bound, tail_bound, add_seq, lift_seq, neg_rat_seq
+from real.real_base import lte_abs, abs_neg, lte_add_left, lte_add_right, lte_trans
 
 // This file defines infinite series and proves theorems about them.
 

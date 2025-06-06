@@ -1,7 +1,7 @@
 from nat import Nat
 from rat import Rat
 from util import compose
-from real_base import Real, min, max, is_cut, is_lower, is_greatest, has_greatest, is_dedekind_cut
+from real.real_base import Real, min, max, is_cut, is_lower, is_greatest, has_greatest, is_dedekind_cut
 
 // This file uses Cauchy sequences to define multiplication, and uses that to demonstrate that
 // real numbers are a ring.
@@ -346,7 +346,7 @@ theorem cauchy_imp_lb(q: Nat -> Real, n: Nat, eps: Real) {
     forall(i: Nat) {
         if n <= i {
             q(i).is_close(q(n), eps)
-            q(i) >= q(n) - eps
+            q(n) - eps <= q(i)
         }
     }
 }
@@ -591,6 +591,14 @@ theorem sub_lt_is_gt(a: Real, b: Real, c: Real) {
     -c < -b
     a + -c < a + -b
     a + -b > a - c
+}
+
+theorem smaller_pos(a: Real) {
+    a.is_positive implies exists(b: Real) {
+        b.is_positive and b < a
+    }
+} by {
+    a > Real.0
 }
 
 theorem converges_imp_converges_to(q: Nat -> Real) {
@@ -1003,6 +1011,7 @@ theorem close_limit_imp_seqs_get_close(a: Nat -> Real, b: Nat -> Real, eps: Real
                 a(i).is_close(b(i), eps4 + eps4 + eps2)
                 eps3 + eps2 < eps
                 eps4 + eps4 + eps2 < eps3 + eps2
+                eps2 + eps3 <= eps
                 eps4 + eps4 + eps2 < eps
                 (a(i) - b(i)).abs < eps
                 a(i).is_close(b(i), eps)
