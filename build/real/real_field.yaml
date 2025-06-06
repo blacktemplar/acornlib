@@ -1,5 +1,5 @@
 dependencies: 2263135931431964656
-content: 10410134997102956350
+content: 9350589584635398746
 blocks:
   Real.Field:
     real.real_field:
@@ -44,6 +44,11 @@ blocks:
     real.real_field:
     - eventually_nonzero
     - pos_imp_eventually_nonzero
+    real.real_series:
+    - mul_seq
+    - neg_seq
+    - neg_seq_converges
+    - neg_seq_converges_to
     real_base:
     - Real.is_negative
     - neg_neg
@@ -53,11 +58,6 @@ blocks:
     - converges_imp_converges_to
     - converges_to_unique
     - mul_neg_one_left
-    real_series:
-    - mul_seq
-    - neg_seq
-    - neg_seq_converges
-    - neg_seq_converges_to
     real_set:
     - flip_flip
   pos_imp_eventually_nonzero:
@@ -75,6 +75,10 @@ blocks:
     real.real_field:
     - neg_recip_rat_seq
     - recip_rat_seq_pos_converges
+    real.real_series:
+    - neg_seq_converges_converse
+    - neg_seq_converges_to
+    - neg_seq_lifts
     real_base:
     - Real.is_negative
     - neg_neg
@@ -85,10 +89,6 @@ blocks:
     - converges_to_unique
     - limit_rat
     - neg_seq_converges
-    real_series:
-    - neg_seq_converges_converse
-    - neg_seq_converges_to
-    - neg_seq_lifts
   recip_rat_seq_pos_converges:
     nat_base:
     - Nat.lt

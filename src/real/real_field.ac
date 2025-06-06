@@ -1,7 +1,7 @@
 from nat import Nat
 from rat import Rat
 from real_ring import lift_seq, converges, converges_to, limit, cauchy_bound, eventual_lb, tail_bound, neg_rat_seq, limit_rat, rat_seq, mul_rat_seq, eventual_eq
-from real_series import Real, neg_seq
+from real.real_series import Real, neg_seq
 numerals Real
 
 // This file defines real division and proves theorems about it.
