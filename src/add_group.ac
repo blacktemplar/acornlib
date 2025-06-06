@@ -9,6 +9,12 @@ typeclass A: AddGroup extends AddMonoid {
     }
 }
 
+attributes A: AddGroup {
+    define sub(self, other: A) -> A {
+        self + -other
+    }
+}
+
 // This direction is proven rather than assumed
 theorem inverse_left<A: AddGroup>(a: A) {
     -a + a = A.0

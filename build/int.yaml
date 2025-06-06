@@ -1,5 +1,5 @@
-dependencies: 16117990509638169390
-content: 10451837198561349956
+dependencies: 1773066214577734269
+content: 9518280919823495478
 blocks:
   Int.AddCommSemigroup:
     int:
@@ -180,9 +180,7 @@ blocks:
   add_neg_nonpos:
     int:
     - Int.is_positive
-    - add_comm
     - add_pos_nonneg
-    - add_zero_left
     - add_zero_right
     - neg_distrib
     - neg_neg
@@ -236,7 +234,6 @@ blocks:
     - add_part_sub_nat
     - add_sub_nat_left
     - sub_nat_eq
-    - sub_nat_imp_add_eq
     nat.nat_base:
     - add_assoc
     - add_comm
@@ -277,9 +274,7 @@ blocks:
     - neg_part_from
     - neg_sub_nat
     - pos_part_from
-    - sub_nat_add_cancel_left
     - sub_nat_eq
-    - sub_nat_imp_add_eq
     nat.nat_base:
     - add_assoc
     - add_comm
@@ -626,16 +621,18 @@ blocks:
     - mul_pos_pos
     - mul_sub_distrib_right
   lt_not_ref:
+    add_group:
+    - AddGroup.inverse_right
+    - AddGroup.sub
     int:
     - Int.lt
-    - Int.sub
-    - add_neg
     - zero_not_pos
   lt_trans:
+    add_group:
+    - AddGroup.sub
     int:
     - Int.is_positive
     - Int.lt
-    - Int.sub
     - neg_sub
     - nonpos_lt_pos
     - pos_is_not_neg
@@ -1073,13 +1070,15 @@ blocks:
     - pos_is_not_neg
     - zero_not_pos
   mul_sub_distrib_left:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - mul_distrib_left
     - mul_neg_right
   mul_sub_distrib_right:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - mul_distrib_right
     - mul_neg_left
   mul_units:
@@ -1127,12 +1126,12 @@ blocks:
     int:
     - Int.is_positive
     - Int.lt
-    - Int.sub
     - add_comm
     - add_zero_left
     - add_zero_right
     - mul_one_left
     - neg_neg
+    - neg_sub
     - nonpos_lt_pos
     - nonzero_pos_or_neg
     - pos_is_not_neg
@@ -1221,11 +1220,11 @@ blocks:
     - Int.is_positive
     - Int.lt
     - Int.lte
-    - Int.sub
     - add_assoc
     - add_comm
     - add_eq_zero
     - add_neg
+    - lte_add_left
     - mul_neg_left
     - mul_one_left
     - mul_sub_distrib_right
@@ -1250,10 +1249,9 @@ blocks:
     - neg_or_pos
   nonpos_lt_pos:
     int:
-    - Int.is_positive
     - Int.lt
-    - Int.sub
-    - add_pos_nonneg
+    - add_nonpos_nonpos
+    - sub_imp_add
   nonpos_lte_nonneg:
     int:
     - Int.lte
@@ -1483,8 +1481,9 @@ blocks:
     - nonzero_pos_or_neg
     - sq_eq_mul
   sub_add_cancel_left:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - add_assoc
     - add_comm
     - sub_add_right
@@ -1493,8 +1492,9 @@ blocks:
     - add_comm
     - sub_add_cancel_left
   sub_add_left:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - add_assoc
     - add_neg
     - add_zero_right
@@ -1504,8 +1504,9 @@ blocks:
     - sub_add_left
     - sub_anticomm
   sub_anticomm:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - add_comm
     - neg_distrib
     - neg_neg
@@ -1518,14 +1519,19 @@ blocks:
     int:
     - sub_imp_add
   sub_eq_zero:
+    add_group:
+    - AddGroup.sub
+    - inverse_inverse
     int:
-    - Int.sub
     - add_eq_zero
-    - neg_neg
   sub_imp_add:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.sub
+    add_semigroup:
+    - AddSemigroup.add_associative
     int:
-    - Int.sub
-    - add_assoc
     - add_comm
     - sub_add_left
   sub_nat_add_cancel_left:
@@ -1692,17 +1698,19 @@ blocks:
     - sub_zero_left
     - sub_zero_right
   sub_self:
-    int:
-    - Int.sub
-    - add_neg
+    add_group:
+    - AddGroup.inverse_right
+    - AddGroup.sub
   sub_zero_left:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - add_comm
     - add_zero_right
   sub_zero_right:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - add_zero_right
     - neg_zero
   times_two:
@@ -1742,7 +1750,6 @@ blocks:
   triangle_nonpos_lte_nonneg:
     int:
     - Int.is_negative
-    - Int.sub
     - abs
     - add_comm
     - add_from_nat
@@ -1750,9 +1757,10 @@ blocks:
     - neg_part_neg
     - pos_part
     - pos_part_neg
-    - sub_imp_add
+    - sub_add_left
     - sub_nat_parts
     - sub_nat_zero_right
+    - sub_negate_imp_add
     nat.nat_base:
     - Nat.lte
     - add_assoc

@@ -1,4 +1,4 @@
-dependencies: 552588039825958048
+dependencies: 381360261427814895
 content: 5587708398933546789
 blocks:
   '12':
@@ -175,8 +175,9 @@ blocks:
     - add_comm
     - add_inv_cancels_right
   add_inv_cancels_right:
+    add_group:
+    - AddGroup.sub
     int:
-    - Int.sub
     - add_comm
     - mul_neg_left
     - sub_self
@@ -186,6 +187,8 @@ blocks:
     - neg_denom
     - neg_num
     - reduce_zero_num
+    ring:
+    - mul_neg_left
   add_neg_lt:
     rat:
     - Rat.lt
@@ -1772,8 +1775,8 @@ blocks:
     - mul_comm
     - sub_distrib
   sub_from_int:
-    int:
-    - Int.sub
+    add_group:
+    - AddGroup.sub
     rat:
     - Rat.from_int
     - Rat.neg

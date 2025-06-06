@@ -777,12 +777,6 @@ instance Int: AddCommGroup
 
 // Subtraction, and theorems about subtraction
 
-attributes Int {
-    define sub(self, other: Int) -> Int {
-        self + -(other)
-    }
-}
-
 theorem sub_zero_right(a: Int) { a - 0 = a } by {
     a - 0 = a + -(0)
     a - 0 = a + 0
@@ -1411,6 +1405,7 @@ theorem triangle_nonpos_lte_nonneg(a: Int, b: Int) {
     Int.from_nat(n) + Int.from_nat(abs(b)) = Int.from_nat(abs(a))
     Int.from_nat(n) + -b = Int.from_nat(abs(a))
     Int.from_nat(n) + -b = a
+    a - Int.from_nat(n) = -b
     a + b = Int.from_nat(n)
     abs(a + b) = n
     n <= abs(a)
