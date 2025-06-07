@@ -1,5 +1,5 @@
 dependencies: 7894951231397190119
-content: 4063826900854807718
+content: 17284851933267484106
 blocks:
   add_assoc:
     list:
@@ -42,6 +42,14 @@ blocks:
     - List.cons
     - List.singleton
     - add_to_nil
+  drop_cancels_add:
+    list:
+    - List.add
+    - List.drop
+    - List.induction
+    - List.length
+    - nil_add
+    - tail_cancels_cons
   drop_one:
     list:
     - List.drop

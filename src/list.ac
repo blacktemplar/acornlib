@@ -495,3 +495,7 @@ theorem drop_cancels_add<T>(a: List<T>, b: List<T>) {
         }
     }
 }
+
+// theorem drop_twice<T>(a: List<T>, m: Nat, n: Nat) {
+//     a.drop(m).drop(n) = a.drop(m + n)
+// }
