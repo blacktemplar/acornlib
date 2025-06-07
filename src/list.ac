@@ -454,6 +454,18 @@ attributes List<T> {
     }
 }
 
-// theorem drop_zero<T>(list: List<T>) {
-//     list.drop(Nat.0) = list
+theorem tail_cancels_cons<T>(a: T, b: List<T>) {
+    List.cons(a, b).tail = b
+}
+
+theorem drop_zero<T>(a: List<T>) {
+    a.drop(Nat.0) = a
+}
+
+theorem drop_one<T>(a: List<T>) {
+    a.drop(Nat.1) = a.tail
+}
+
+// theorem drop_cancels_add<T>(a: List<T>, b: List<T>) {
+//     (a + b).drop(a.length) = b
 // }
