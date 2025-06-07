@@ -1,4 +1,4 @@
-dependencies: 381360261427814895
+dependencies: 3984333880020466018
 content: 6779863193520402232
 blocks:
   '12':
@@ -729,7 +729,6 @@ blocks:
     rat:
     - Rat.lt
     - add_assoc
-    - add_comm
     - add_inv_cancels_right
     - add_zero_left
   lt_both_pos:

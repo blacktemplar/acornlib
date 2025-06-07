@@ -1,4 +1,4 @@
-dependencies: 1773066214577734269
+dependencies: 16682465548138762178
 content: 9518280919823495478
 blocks:
   Int.AddCommSemigroup:
@@ -1126,11 +1126,7 @@ blocks:
     int:
     - Int.is_positive
     - Int.lt
-    - add_comm
-    - add_zero_left
-    - add_zero_right
     - mul_one_left
-    - neg_neg
     - neg_sub
     - nonpos_lt_pos
     - nonzero_pos_or_neg
@@ -1532,7 +1528,6 @@ blocks:
     add_semigroup:
     - AddSemigroup.add_associative
     int:
-    - add_comm
     - sub_add_left
   sub_nat_add_cancel_left:
     int:

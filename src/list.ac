@@ -185,7 +185,6 @@ attributes List<T> {
     }
 }
 
-// Let's see if any LLM can prove this theorem.
 theorem length_range(n: Nat) {
     List.range(n).length = n
 } by {
@@ -428,3 +427,33 @@ theorem map_map<T, U, V>(items: List<T>, f: T -> U, g: U -> V) {
         }
     }
 }
+
+attributes List<T> {
+    // Drop the first element from a list.
+    define tail(self) -> List<T> {
+        match self {
+            List.nil {
+                List.nil<T>
+            }
+            List.cons(h, t) {
+                t
+            }
+        }
+    }
+
+    // Drop the first n elements from a list.
+    define drop(self, n: Nat) -> List<T> {
+        match n {
+            Nat.0 {
+                self
+            }
+            Nat.suc(pred) {
+                self.tail.drop(pred)
+            }
+        }
+    }
+}
+
+// theorem drop_zero<T>(list: List<T>) {
+//     list.drop(Nat.0) = list
+// }
