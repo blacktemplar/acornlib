@@ -534,3 +534,15 @@ theorem drop_twice<T>(a: List<T>, m: Nat, n: Nat) {
 
     f(m)
 }
+
+attributes Nat {
+    // The natural numbers from self to n, not including n.
+    define until(self, n: Nat) -> List<Nat> {
+        List.range(n).drop(self)
+    }
+
+    // The natural numbers from self to n, inclusive.
+    define upto(self, n: Nat) -> List<Nat> {
+        self.until(n.suc)
+    }
+}
