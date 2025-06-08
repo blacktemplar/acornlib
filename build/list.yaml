@@ -1,5 +1,5 @@
 dependencies: 7894951231397190119
-content: 17284851933267484106
+content: 11976829373562403147
 blocks:
   add_assoc:
     list:
@@ -56,6 +56,14 @@ blocks:
     - drop_zero
     nat.nat_base:
     - Nat.1
+  drop_twice:
+    list:
+    - List.drop
+    - drop_zero
+    nat.nat_base:
+    - Nat.add
+    - add_comm
+    - add_suc_left
   drop_zero:
     list:
     - List.drop
