@@ -14,8 +14,40 @@ typeclass P: PartialOrder {
     }
 }
 
+attributes P: PartialOrder {
+    define lt(self, other: P) -> Bool {
+        self <= other and self != other
+    }
+
+    define gte(self, other: P) -> Bool {
+        other <= self
+    }
+
+    define gt(self, other: P) -> Bool {
+        other < self
+    }
+}
+
 typeclass L: LinearOrder extends PartialOrder {
     totality(a: L, b: L) {
         a <= b or b <= a
+    }
+}
+
+attributes L: LinearOrder {
+    define min(self, other: L) -> L {
+        if self <= other {
+            self
+        } else {
+            other
+        }
+    }
+
+    define max(self, other: L) -> L {
+        if other <= self {
+            self
+        } else {
+            other
+        }
     }
 }
