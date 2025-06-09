@@ -1,5 +1,5 @@
-dependencies: 0
-content: 16526594572672005903
+dependencies: 17629958998001048482
+content: 5573464507336229189
 blocks:
   add_assoc:
     nat.nat_base:
@@ -89,10 +89,8 @@ blocks:
   distrib_left:
     nat.nat_base:
     - Nat.induction
-    - Nat.mul
     - add_comm
     - add_comm_4
-    - mul_comm
     - mul_suc_left
     - mul_suc_right
     - mul_zero_left
@@ -229,7 +227,6 @@ blocks:
     - lt_suc_left
     - mul_comm
     - mul_suc_left
-    - mul_suc_right
   divisor_lt:
     nat.nat_base:
     - Nat.lt
@@ -246,7 +243,6 @@ blocks:
     - has_prime_divisor
     - is_prime
     - lt_imp_lt_suc
-    - lt_not_symm
     - lt_or_lte
     - lt_suc
     - lte_one_factorial
@@ -647,10 +643,8 @@ blocks:
     - Nat.gt
     - Nat.lt
     - Nat.mul
-    - add_one_left
     - add_one_right
     - add_zero_left
-    - add_zero_right
     - lt_imp_lte_suc
     - lt_mul_both
     - lt_suc
@@ -676,6 +670,18 @@ blocks:
   mul_zero_right:
     nat.nat_base:
     - Nat.mul
+  nat_antisymmetric:
+    nat.nat_base:
+    - Nat.lt
+    - lte_imp_not_lt
+  nat_reflexive:
+    nat.nat_base:
+    - Nat.lte
+    - lt_diff
+    - lt_or_lte
+  nat_transitive:
+    nat.nat_base:
+    - lte_trans
   not_lt_zero:
     nat.nat_base:
     - Nat.lt

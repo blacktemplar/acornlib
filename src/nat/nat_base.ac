@@ -1515,3 +1515,23 @@ theorem one_plus_four {
 theorem one_plus_five {
     1 + 5 = 6
 }
+
+// Theorems for ordering.
+theorem nat_reflexive(a: Nat) {
+    a <= a
+}
+
+theorem nat_transitive(a: Nat, b: Nat, c: Nat) {
+    a <= b and b <= c implies a <= c
+}
+
+theorem nat_antisymmetric(a: Nat, b: Nat) {
+    a <= b and b <= a implies a = b
+}
+
+from order import PartialOrder
+
+// TODO: figure out how the prover can handle this
+// instance Nat: PartialOrder {
+//     let lte = Nat.lte
+// }
