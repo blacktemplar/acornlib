@@ -1,4 +1,4 @@
-dependencies: 2715446615417329727
+dependencies: 3426332415797562608
 content: 7012641617956002193
 blocks:
   lt_trans:
@@ -7,6 +7,9 @@ blocks:
     - PartialOrder.transitive
     ordered_group:
     - lt
+    util:
+    - is_antisymmetric
+    - is_transitive
   one_lt_pow:
     group:
     - left_cancel

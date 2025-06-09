@@ -1,16 +1,18 @@
+from util import is_reflexive, is_transitive, is_antisymmetric
+
 typeclass P: PartialOrder {
     lte: (P, P) -> Bool
 
-    reflexive(a: P) {
-        a <= a
+    reflexive {
+        is_reflexive(P.lte)
     }
 
-    transitive(a: P, b: P, c: P) {
-        a <= b and b <= c implies a <= c
+    transitive {
+        is_transitive(P.lte)
     }
 
-    antisymmetric(a: P, b: P) {
-        a <= b and b <= a implies a = b
+    antisymmetric {
+        is_antisymmetric(P.lte)
     }
 }
 

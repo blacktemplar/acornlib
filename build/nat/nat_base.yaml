@@ -1,6 +1,16 @@
-dependencies: 17629958998001048482
-content: 5573464507336229189
+dependencies: 12417006478148301217
+content: 4127914618786786161
 blocks:
+  Nat.LinearOrder:
+    nat.nat_base:
+    - Nat.lte
+    - lt_diff
+    - lt_or_lte
+  Nat.PartialOrder:
+    nat.nat_base:
+    - nat_is_antisymmetric
+    - nat_is_reflexive
+    - nat_is_transitive
   add_assoc:
     nat.nat_base:
     - Nat.induction
@@ -670,18 +680,24 @@ blocks:
   mul_zero_right:
     nat.nat_base:
     - Nat.mul
-  nat_antisymmetric:
+  nat_is_antisymmetric:
     nat.nat_base:
     - Nat.lt
     - lte_imp_not_lt
-  nat_reflexive:
+    util:
+    - is_antisymmetric
+  nat_is_reflexive:
     nat.nat_base:
-    - Nat.lte
-    - lt_diff
+    - Nat.lt
     - lt_or_lte
-  nat_transitive:
+    util:
+    - is_reflexive
+  nat_is_transitive:
     nat.nat_base:
+    - add_zero_left
     - lte_trans
+    util:
+    - is_transitive
   not_lt_zero:
     nat.nat_base:
     - Nat.lt

@@ -1517,21 +1517,26 @@ theorem one_plus_five {
 }
 
 // Theorems for ordering.
-theorem nat_reflexive(a: Nat) {
-    a <= a
+
+
+from util import is_reflexive, is_transitive, is_antisymmetric
+
+theorem nat_is_reflexive {
+    is_reflexive(Nat.lte)
 }
 
-theorem nat_transitive(a: Nat, b: Nat, c: Nat) {
-    a <= b and b <= c implies a <= c
+theorem nat_is_transitive {
+    is_transitive(Nat.lte)
 }
 
-theorem nat_antisymmetric(a: Nat, b: Nat) {
-    a <= b and b <= a implies a = b
+theorem nat_is_antisymmetric {
+    is_antisymmetric(Nat.lte)
 }
 
-from order import PartialOrder
+from order import PartialOrder, LinearOrder
 
-// TODO: figure out how the prover can handle this
-// instance Nat: PartialOrder {
-//     let lte = Nat.lte
-// }
+instance Nat: PartialOrder {
+    let lte = Nat.lte
+}
+
+instance Nat: LinearOrder

@@ -38,3 +38,31 @@ theorem is_constant_imp_eq_constant<T, U>(f: T -> U) {
         constant<T, U>(u)(x) = f(x)
     }
 }
+
+define is_reflexive<T>(f: (T, T) -> Bool) -> Bool {
+    forall(t: T) {
+        f(t, t)
+    }
+}
+
+define is_symmetric<T>(f: (T, T) -> Bool) -> Bool {
+    forall(x: T, y: T) {
+        f(x, y) implies f(y, x)
+    }
+}
+
+define is_transitive<T>(f: (T, T) -> Bool) -> Bool {
+    forall(x: T, y: T, z: T) {
+        f(x, y) and f(y, z) implies f(x, z)
+    }
+}
+
+define is_antisymmetric<T>(f: (T, T) -> Bool) -> Bool {
+    forall(x: T, y: T) {
+        f(x, y) and f(y, x) implies x = y
+    }
+}
+
+define is_equivalence<T>(f: (T, T) -> Bool) -> Bool {
+    is_reflexive(f) and is_symmetric(f) and is_transitive(f)
+}
