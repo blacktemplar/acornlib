@@ -1,5 +1,5 @@
 dependencies: 7894951231397190119
-content: 1767884817634384574
+content: 9862369183722515186
 blocks:
   add_assoc:
     list:
@@ -110,6 +110,20 @@ blocks:
   nil_add:
     list:
     - List.add
+  range_add_until:
+    add_monoid:
+    - AddMonoid.add_identity_right
+    list:
+    - List.append
+    - Nat.until
+    - add_assoc
+    - length_range
+    - range
+    nat.nat_base:
+    - Nat.add
+    - Nat.induction
+    - Nat.lte
+    - add_suc_right
   sum_add:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
