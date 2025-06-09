@@ -1,5 +1,5 @@
-dependencies: 7894951231397190119
-content: 9862369183722515186
+dependencies: 1938476097164536427
+content: 13622736290593311071
 blocks:
   add_assoc:
     list:
@@ -50,6 +50,28 @@ blocks:
     - List.length
     - nil_add
     - tail_cancels_cons
+  drop_last_all:
+    list:
+    - List.drop_last
+    - List.induction
+    - List.length
+    nat.nat_base:
+    - lt_suc
+  drop_last_cancels_add:
+    list:
+    - List.add
+    - List.drop_last
+    - List.induction
+    - add_length
+    - nil_add
+    nat.nat_base:
+    - Nat.lte
+    - add_cancels_right
+    - add_comm
+  drop_last_zero:
+    list:
+    - List.drop_last
+    - List.induction
   drop_one:
     list:
     - List.drop
@@ -111,8 +133,6 @@ blocks:
     list:
     - List.add
   range_add_until:
-    add_monoid:
-    - AddMonoid.add_identity_right
     list:
     - List.append
     - Nat.until
