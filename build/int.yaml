@@ -1,5 +1,5 @@
-dependencies: 1997564962075678923
-content: 9518280919823495478
+dependencies: 7678761649335572377
+content: 9026747758624015830
 blocks:
   Int.AddCommSemigroup:
     int:
@@ -15,10 +15,18 @@ blocks:
   Int.AddSemigroup:
     int:
     - add_assoc
+  Int.LinearOrder:
+    int:
+    - int_total
   Int.Monoid:
     int:
     - mul_comm
     - mul_one_left
+  Int.PartialOrder:
+    int:
+    - int_is_antisymmetric
+    - int_is_reflexive
+    - int_is_transitive
   Int.Semigroup:
     int:
     - mul_assoc
@@ -565,6 +573,30 @@ blocks:
     - nonzero_pos_or_neg
     nat.nat_gcd:
     - gcd_nonzero_right
+  int_is_antisymmetric:
+    int:
+    - Int.lte
+    - lt_and_lte
+    - lt_not_ref
+    util:
+    - is_antisymmetric
+  int_is_reflexive:
+    int:
+    - Int.lte
+    util:
+    - is_reflexive
+  int_is_transitive:
+    int:
+    - lte_trans
+    - neg_neg
+    util:
+    - is_transitive
+  int_total:
+    int:
+    - Int.lt
+    - Int.lte
+    - sub_eq_zero
+    - sub_zero_left
   lt_add_left:
     int:
     - Int.lt

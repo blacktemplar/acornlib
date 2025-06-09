@@ -1,5 +1,5 @@
-dependencies: 2376057807601837301
-content: 15467573507569589374
+dependencies: 17422081133925485696
+content: 5379338514796013250
 blocks:
   '98':
     real.real_base:
@@ -21,6 +21,14 @@ blocks:
   Real.AddSemigroup:
     real.real_base:
     - add_assoc
+  Real.LinearOrder:
+    real.real_base:
+    - lte_or_gte
+  Real.PartialOrder:
+    real.real_base:
+    - real_is_antisymmetric
+    - real_is_reflexive
+    - real_is_transitive
   abs_from_rat:
     rat:
     - Rat.abs
@@ -132,6 +140,7 @@ blocks:
     - gt_rat_imp_gt_from_rat
   add_gt_is_cut:
     rat:
+    - Rat.lte
     - add_comm
     - adding_lts
     - lt_add_right
@@ -156,9 +165,10 @@ blocks:
     - add_cancels_sub
     - add_comm
     - add_neg_lt
+    - lt_lte_trans
     - neg_pos_is_neg
     - neg_sub
-    - not_lt_both_ways
+    - not_lt_self
     real.real_base:
     - add_gt
     - gt_rat_sorts
@@ -184,20 +194,20 @@ blocks:
     - is_lower
   add_lt_lt:
     rat:
+    - Rat.gt
     - adding_lts
     real.real_base:
     - Real.gt
     - Real.lt
     - add_from_rat
+    - from_rat_gt_imp_gt
     - from_rat_maintains_lt
     - gt_from_rat_imp_gt_rat
-    - gt_rat_sorts
     - lt_lte_trans
     - lte_add_left
     - lte_add_right
     - lte_lt_trans
     - lte_trans
-    - not_gt_rat_self
     - rat_between_reals
   add_neg_eq_zero:
     real.real_base:
@@ -260,6 +270,7 @@ blocks:
     - rat_window
   add_rat_eps_between:
     rat:
+    - Rat.gt
     - Rat.lt
     - add_cancels_sub
     - add_comm
@@ -267,11 +278,10 @@ blocks:
     - Real.gt
     - Real.lt
     - add_from_rat
+    - from_rat_gt_imp_gt
     - gt_from_rat_imp_gt_rat
-    - gt_rat_sorts
     - lt_add_rat_right
     - lt_lte_trans
-    - not_gt_rat_self
     - rat_between_reals
   add_zero_left:
     real.real_base:
@@ -348,6 +358,7 @@ blocks:
     add_group:
     - AddGroup.sub
     rat:
+    - Rat.gt
     - Rat.is_close
     real.real_base:
     - Real.gt
@@ -356,13 +367,12 @@ blocks:
     - abs_from_rat
     - abs_neg
     - add_from_rat
+    - from_rat_gt_imp_gt
     - gt_from_rat_imp_gt_rat
-    - gt_rat_sorts
     - lt_swap_neg
     - neg_from_rat
     - neg_lt_neg_swap_neg
     - neg_neg
-    - not_gt_rat_self
   exists_gte_rat:
     real.real_base:
     - Real.constraint
@@ -451,6 +461,7 @@ blocks:
   gt_from_rat_imp_gt_rat:
     rat:
     - Rat.gt
+    - Rat.lte
     real.real_base:
     - Real.gt
     - Real.lt
@@ -541,7 +552,7 @@ blocks:
     - Real.lt
     - Real.lte
     - from_rat_gt_imp_gt
-    - gt_rat_sorts
+    - lte_or_gte
     - not_gt_rat_self
   gt_rat_neg:
     add_comm_semigroup:
@@ -565,8 +576,8 @@ blocks:
     - not_lte_imp_gt
   gt_rat_sorts:
     rat:
-    - Rat.gt
-    - trichotomy
+    - Rat.lte
+    - rat_total
     real.real_base:
     - Real.constraint
     - Real.new
@@ -803,6 +814,7 @@ blocks:
     int:
     - Int.lt
     rat:
+    - Rat.gt
     - Rat.is_positive
     - Rat.lt
     - from_int_num
@@ -810,9 +822,8 @@ blocks:
     real.real_base:
     - Real.from_int
     - Real.gt
+    - from_rat_gt_imp_gt
     - gt_from_rat_imp_gt_rat
-    - gt_rat_sorts
-    - not_gt_rat_self
   lt_some_rat:
     rat:
     - lt_add_pos
@@ -886,7 +897,9 @@ blocks:
     - not_lt_imp_gte
   lte_or_gte:
     rat:
-    - not_lt_both_ways
+    - Rat.lte
+    - lt_lte_trans
+    - not_lt_self
     real.real_base:
     - Real.lte
     - gt_rat_sorts
@@ -1246,16 +1259,32 @@ blocks:
     - lt_add_converse
     - lt_add_pos_rat
     - rat_between_reals
+  real_is_antisymmetric:
+    real.real_base:
+    - lte_both_ways_imp_eq
+    util:
+    - is_antisymmetric
+  real_is_reflexive:
+    real.real_base:
+    - Real.lte
+    util:
+    - is_reflexive
+  real_is_transitive:
+    real.real_base:
+    - Real.new
+    - lte_trans
+    util:
+    - is_transitive
   real_neg_imp_rat_neg:
     rat:
+    - Rat.gt
     - lt_zero_imp_neg
     real.real_base:
+    - Real.0
     - Real.gt
-    - Real.is_positive
+    - from_rat_gt_imp_gt
     - gt_from_rat_imp_gt_rat
-    - gt_rat_sorts
     - neg_lt_zero
-    - zero_not_positive
   self_close:
     real.real_base:
     - lt_add_pos

@@ -1,5 +1,5 @@
-dependencies: 6276659399042052648
-content: 6779863193520402232
+dependencies: 7727695605562645776
+content: 17789367124369139347
 blocks:
   '12':
     rat:
@@ -24,10 +24,18 @@ blocks:
     rat:
     - mul_inv_cancels_right
     - zero_recip
+  Rat.LinearOrder:
+    rat:
+    - rat_total
   Rat.Monoid:
     rat:
     - mul_comm
     - mul_one_left
+  Rat.PartialOrder:
+    rat:
+    - rat_is_antisymmetric
+    - rat_is_reflexive
+    - rat_is_transitive
   Rat.Semigroup:
     rat:
     - mul_assoc
@@ -1476,6 +1484,23 @@ blocks:
     - denom_positive
     - neg_denom
     - reduce_pos_pos
+  rat_is_antisymmetric:
+    rat:
+    - Rat.lte
+    - not_lt_both_ways
+    util:
+    - is_antisymmetric
+  rat_is_reflexive:
+    rat:
+    - Rat.lte
+    util:
+    - is_reflexive
+  rat_is_transitive:
+    rat:
+    - add_zero_left
+    - lte_trans
+    util:
+    - is_transitive
   rat_neg_one:
     rat:
     - Rat.1
@@ -1485,6 +1510,10 @@ blocks:
     - from_int_num
     - neg_denom
     - neg_num
+  rat_total:
+    rat:
+    - Rat.gt
+    - Rat.lte
   recip_diff:
     rat:
     - cancel_to_reciprocal

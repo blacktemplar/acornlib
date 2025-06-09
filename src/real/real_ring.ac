@@ -1576,6 +1576,8 @@ theorem mul_zero_rat_seq(a: Nat -> Rat, z: Nat -> Rat) {
                     (lift_seq(z, i) + Real.0).is_close(Real.0, eps2)
                     lift_seq(z, i).abs < eps2
                     Real.from_rat(z(i).abs) < Real.from_rat(reps2)
+                    Real.from_rat(reps2) > Real.from_rat(z(i).abs)
+                    reps2 > z(i).abs
                     z(i).abs < reps2
                     (a(i) * z(i)).abs < ub * reps2
                     ub * reps2 = reps

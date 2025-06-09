@@ -1,5 +1,5 @@
-dependencies: 381804912441649656
-content: 14498545890883657357
+dependencies: 17868182061342323448
+content: 293356906092535065
 blocks:
   Real.Monoid:
     real.real_ring:
@@ -1080,6 +1080,7 @@ blocks:
   mul_zero_rat_seq:
     rat:
     - Rat.div
+    - Rat.gt
     - abs_nonneg
     - lt_pos_mul_lt_pos
     - mul_cancels_div_left
@@ -1093,11 +1094,10 @@ blocks:
     - Real.is_close
     - abs_from_rat
     - add_from_rat_zero
+    - from_rat_gt_imp_gt
     - from_rat_maintains_lt
     - gt_from_rat_imp_gt_rat
-    - gt_rat_sorts
     - lt_trans
-    - not_gt_rat_self
     - sub_cancels
     real.real_ring:
     - abs_lt_imp_close_to_zero
