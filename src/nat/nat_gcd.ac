@@ -3,7 +3,8 @@ from nat import Nat
 from pair import Pair
 numerals Nat
 
-// One step is taking the pair (a, b) and replacing with (b, a mod b).
+/// Performs one step of the Euclidean algorithm for computing GCD.
+/// Takes the pair (a, b) and replaces it with (b, a mod b).
 define gcd_step(p: Pair<Nat, Nat>) -> Pair<Nat, Nat> {
     if p.second = 0 {
         p
@@ -12,7 +13,7 @@ define gcd_step(p: Pair<Nat, Nat>) -> Pair<Nat, Nat> {
     }
 }
 
-// n steps of the gcd algorithm.
+/// Performs n steps of the Euclidean GCD algorithm.
 define gcd_step_n(p: Pair<Nat, Nat>, n: Nat) -> Pair<Nat, Nat> {
     match n {
         Nat.0 {
@@ -24,13 +25,14 @@ define gcd_step_n(p: Pair<Nat, Nat>, n: Nat) -> Pair<Nat, Nat> {
     }
 }
 
+/// True if a predicate is false for all values below n.
 define false_below(f: Nat -> Bool, n: Nat) -> Bool { forall(x: Nat) { x < n implies not f(x) } }
 
 theorem all_false_below(f: Nat -> Bool) {
     forall(x: Nat) { false_below(f, x) } implies forall(x: Nat) { not f(x) }
 }
 
-// is_min(f, m) tells you whether m is the smallest value for which f is true.
+/// True if m is the smallest natural number for which the predicate f is true.
 define is_min(f: Nat -> Bool, m: Nat) -> Bool {
     f(m) and false_below(f, m)
 }

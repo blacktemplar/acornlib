@@ -11,6 +11,7 @@ typeclass G: LeftOrderedGroup extends Group, LinearOrder {
     }
 }
 
+/// True if a is strictly less than b in the group order.
 define lt<G: LeftOrderedGroup>(a: G, b: G) -> Bool {
     a <= b and a != b
 }
@@ -72,6 +73,7 @@ theorem pow_lt_one<G: LeftOrderedGroup>(a: G, n: Nat) {
     f(n_pred)
 }
 
+/// An ordered group has both left and right invariance of the order under multiplication.
 typeclass G: OrderedGroup extends LeftOrderedGroup {
     right_invariance(a: G, b: G, c: G) {
         a <= b implies a * c <= b * c

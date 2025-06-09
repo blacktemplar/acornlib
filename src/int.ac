@@ -2,6 +2,8 @@ import nat.nat_base
 import nat.nat_gcd
 from nat import Nat
 
+/// Integer numbers including negative values.
+/// Represented as either a natural number or the negation of a successor.
 inductive Int {
     // The normal x -> x map
     from_nat(Nat)
@@ -12,6 +14,7 @@ inductive Int {
 
 let from_nat = Int.from_nat
 
+/// Yields the absolute value of an integer as a natural number.
 define abs(a: Int) -> Nat {
     match a {
         Int.from_nat(n) {
@@ -43,6 +46,7 @@ attributes Int {
 
 numerals Int
 
+/// Converts a natural number to its negative integer equivalent.
 define neg_nat(n: Nat) -> Int {
     if n = Nat.0 {
         0

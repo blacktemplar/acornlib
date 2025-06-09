@@ -4,6 +4,8 @@ from monoid import pow
 from add_comm_group import AddCommGroup
 from semiring import Semiring
 
+/// A ring is a structure with two operations (addition and multiplication) where addition forms an abelian group,
+/// multiplication forms a monoid, and multiplication distributes over addition.
 typeclass Ring extends Semiring, AddCommGroup
 
 theorem mul_zero_left<R: Ring>(a: R) {

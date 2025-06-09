@@ -6,15 +6,15 @@ from real.real_base import Real, min, max, is_cut, is_lower, is_greatest, has_gr
 // This file uses Cauchy sequences to define multiplication, and uses that to demonstrate that
 // real numbers are a ring.
 
-// The bound on the end of a sequence that's part of the Cauchy convergence condition.
-// Separating it out like this makes convergence a bit clearer to prove.
+/// The bound on the end of a sequence that's part of the Cauchy convergence condition.
+/// Separating it out like this makes convergence a bit clearer to prove.
 define cauchy_bound(q: Nat -> Real, n: Nat, eps: Real) -> Bool {
     forall(i: Nat, j: Nat) {
         n <= i and n <= j implies q(i).is_close(q(j), eps)
     }
 }
 
-// The Cauchy condition for the convergence of a sequence.
+/// The Cauchy condition for the convergence of a sequence.
 define converges(q: Nat -> Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(n: Nat) {
@@ -23,7 +23,7 @@ define converges(q: Nat -> Real) -> Bool {
     }
 }
 
-// lb is eventually a lower bound of this sequence.
+/// lb is eventually a lower bound of this sequence.
 define eventual_lb(q: Nat -> Real, lb: Real) -> Bool {
     exists(n: Nat) {
         forall(i: Nat) {
@@ -32,7 +32,7 @@ define eventual_lb(q: Nat -> Real, lb: Real) -> Bool {
     }
 }
 
-// For demonstrating the equivalent of Cauchy sequences and Dedekind cuts.
+/// For demonstrating the equivalent of Cauchy sequences and Dedekind cuts.
 define cauchy_gt_rat(q: Nat -> Real, r: Rat) -> Bool {
     exists(lb: Real) {
         lb > Real.from_rat(r) and eventual_lb(q, lb)

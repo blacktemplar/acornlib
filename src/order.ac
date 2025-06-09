@@ -1,5 +1,7 @@
 from util import is_reflexive, is_transitive, is_antisymmetric
 
+/// A partial order is a relation that is reflexive, transitive, and antisymmetric.
+/// Not all elements need to be comparable.
 typeclass P: PartialOrder {
     lte: (P, P) -> Bool
 
@@ -17,19 +19,23 @@ typeclass P: PartialOrder {
 }
 
 attributes P: PartialOrder {
+    /// Strict less-than comparison.
     define lt(self, other: P) -> Bool {
         self <= other and self != other
     }
 
+    /// Greater-than-or-equal-to comparison.
     define gte(self, other: P) -> Bool {
         other <= self
     }
 
+    /// Strict greater-than comparison.
     define gt(self, other: P) -> Bool {
         other < self
     }
 }
 
+/// A linear order (total order) is a partial order where all elements are comparable.
 typeclass L: LinearOrder extends PartialOrder {
     totality(a: L, b: L) {
         a <= b or b <= a
@@ -37,6 +43,7 @@ typeclass L: LinearOrder extends PartialOrder {
 }
 
 attributes L: LinearOrder {
+    /// Yields the smaller of two elements.
     define min(self, other: L) -> L {
         if self <= other {
             self
@@ -45,6 +52,7 @@ attributes L: LinearOrder {
         }
     }
 
+    /// Yields the larger of two elements.
     define max(self, other: L) -> L {
         if other <= self {
             self

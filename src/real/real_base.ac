@@ -5,7 +5,7 @@ from rat import Rat
 // This file contains the initial definition of real numbers, based on Dedekind cuts.
 // It handles addition, negation, subtraction, and ordering.
 
-// Using the Dedekind cut definition of reals.
+/// True if a function on rationals partitions them into two non-empty sets.
 define is_cut(f: Rat -> Bool) -> Bool {
     exists(x: Rat) {
         f(x)
@@ -14,24 +14,28 @@ define is_cut(f: Rat -> Bool) -> Bool {
     }
 }
 
+/// True if a set is downward-closed (contains all smaller elements).
 define is_lower(f: Rat -> Bool) -> Bool {
     forall(x: Rat, y: Rat) {
         f(y) and x < y implies f(x)
     }
 }
 
+/// True if x is the greatest element in the set defined by f.
 define is_greatest(f: Rat -> Bool, x: Rat) -> Bool {
     f(x) and forall(y: Rat) {
         f(y) implies y <= x
     }
 }
 
+/// True if the set defined by f has a greatest element.
 define has_greatest(f: Rat -> Bool) -> Bool {
     exists(x: Rat) {
         is_greatest(f, x)
     }
 }
 
+/// True if a function represents a valid Dedekind cut defining a real number.
 define is_dedekind_cut(f: Rat -> Bool) -> Bool {
     is_cut(f) and is_lower(f) and not has_greatest(f)
 }

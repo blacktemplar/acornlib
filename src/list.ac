@@ -2,13 +2,15 @@ import nat.nat_base
 from nat import Nat
 numerals Nat
 
+/// A generic list data structure that can hold elements of any type.
+/// Lists are constructed using nil (empty list) and cons (prepending an element).
 inductive List<T> {
     nil
     cons(T, List<T>)
 }
 
 attributes List<T> {
-    // Adding two lists concatenates them
+    /// Concatenates two lists together.
     define add(self, other: List<T>) -> List<T> {
         match self {
             List.nil {
@@ -20,7 +22,7 @@ attributes List<T> {
         }
     }
 
-    // Whether this list contains a particular item.
+    /// True if this list contains the given item.
     define contains(self, item: T) -> Bool {
         match self {
             List.nil {
@@ -74,12 +76,14 @@ theorem add_contains_right<T>(left: List<T>, right: List<T>, item: T) {
 }
 
 attributes List<T> {
+    /// True if this list contains every element of type T.
     define contains_every(self) -> Bool {
         forall(x: T) {
             self.contains(x)
         }
     }
 
+    /// Yields the number of elements in the list.
     define length(self) -> Nat {
         match self {
             List.nil {
@@ -111,8 +115,8 @@ attributes List<T> {
         List.cons(x, List.nil<T>)
     }
 
-    // Remove all the duplicates in the list.
-    // The last one is kept, to make the implementation simpler.
+    /// Removes all duplicate elements from the list.
+    /// When duplicates exist, the last occurrence is kept.
     define unique(self) -> List<T> {
         match self {
             List.nil {
@@ -150,12 +154,13 @@ theorem unique_length<T>(list: List<T>) {
 }
 
 attributes List<T> {
+    /// Appends a single element to the end of the list.
     define append(self, item: T) -> List<T> {
         self + List.singleton(item)
     }
 }
 
-// A list of the numbers from 0 to n-1.
+/// Creates a list of natural numbers from 0 to n-1.
 define range(n: Nat) -> List<Nat> {
     match n {
         Nat.0 {
@@ -170,6 +175,7 @@ define range(n: Nat) -> List<Nat> {
 attributes List<T> {
     let range: Nat -> List<Nat> = range
 
+    /// Filters the list, keeping only elements that satisfy the given predicate.
     define filter(self, f: T -> Bool) -> List<T> {
         match self {
             List.nil {
@@ -228,6 +234,7 @@ theorem length_range(n: Nat) {
     f(n)
 }
 
+/// Applies a function to each element of a list, creating a new list of results.
 define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
     match items {
         List.nil {
@@ -241,6 +248,7 @@ define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
 
 from add_comm_monoid import AddCommMonoid
 
+/// Computes the sum of all elements in a list (requires elements to form an additive commutative monoid).
 define sum<A: AddCommMonoid>(items: List<A>) -> A {
     match items {
         List.nil {
@@ -252,9 +260,8 @@ define sum<A: AddCommMonoid>(items: List<A>) -> A {
     }
 }
 
-// The partial sums of an infinite series.
-// partial(a) gives a new infinite sequence, where the nth
-// element is the sum of the first n elements of a.
+/// Computes the partial sum of a series up to index n.
+/// Returns the sum of f(0) + f(1) + ... + f(n-1).
 define partial<A: AddCommMonoid>(f: Nat -> A, n: Nat) -> A {
     sum(map(List.range(n), f))
 }
@@ -430,7 +437,8 @@ theorem map_map<T, U, V>(items: List<T>, f: T -> U, g: U -> V) {
 }
 
 attributes List<T> {
-    // Drop the first element from a list.
+    /// Yields the list without its first element.
+    /// Yields nil for an empty list.
     define tail(self) -> List<T> {
         match self {
             List.nil {
@@ -442,7 +450,7 @@ attributes List<T> {
         }
     }
 
-    // Drop the first n elements from a list.
+    /// Removes the first n elements from the list.
     define drop(self, n: Nat) -> List<T> {
         match n {
             Nat.0 {
@@ -537,7 +545,7 @@ theorem drop_twice<T>(a: List<T>, m: Nat, n: Nat) {
 }
 
 attributes List<T> {
-    // Drop the last n elements from a list.
+    /// Removes the last n elements from the list.
     define drop_last(self, n: Nat) -> List<T> {
         match self {
             List.nil {
@@ -619,12 +627,12 @@ theorem drop_last_cancels_add<T>(a: List<T>, b: List<T>) {
 }
 
 attributes Nat {
-    // The natural numbers from self to n, not including n.
+    /// Creates a list of natural numbers from self to n-1 (exclusive of n).
     define until(self, n: Nat) -> List<Nat> {
         List.range(n).drop(self)
     }
 
-    // The natural numbers from self to n, inclusive.
+    /// Creates a list of natural numbers from self to n (inclusive).
     define upto(self, n: Nat) -> List<Nat> {
         self.until(n.suc)
     }

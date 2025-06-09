@@ -10,6 +10,7 @@ typeclass A: AddGroup extends AddMonoid {
 }
 
 attributes A: AddGroup {
+    /// Subtracts one element from another using additive inverse.
     define sub(self, other: A) -> A {
         self + -other
     }

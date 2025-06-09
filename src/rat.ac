@@ -2,6 +2,8 @@ import nat.nat_base
 from nat import Nat
 from int import Int, gcd
 
+/// True if a fraction a/b is in reduced form (lowest terms).
+/// The denominator must be positive and gcd(a,b) must be 1.
 define is_reduced(a: Int, b: Int) -> Bool {
     b > Int.0 and gcd(a, b) = Int.1
 }
@@ -10,6 +12,8 @@ theorem denom_one_is_reduced(a: Int) {
     is_reduced(a, Int.1)
 }
 
+/// Rational numbers represented as fractions in reduced form.
+/// The constraint ensures the fraction is always in lowest terms with positive denominator.
 structure Rat {
     num: Int
     denom: Int
@@ -55,8 +59,8 @@ theorem from_int_denom(n: Int) {
     Rat.from_int(n).denom = Int.1
 }
 
-// We have to check the denominators are not zero, because 0/0
-// checks as cross-equals with everything, so we have to disclude it.
+/// True if two fractions a/b and c/d are equal using cross multiplication.
+/// Requires non-zero denominators to avoid the 0/0 edge case.
 define cross_equals(a: Int, b: Int, c: Int, d: Int) -> Bool {
     b != Int.0 and d != Int.0 and a * d = c * b
 }
@@ -73,7 +77,8 @@ theorem cross_equals_trans(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int) {
     a * f = b * e
 }
 
-// Either zero, or a / b reduced to simplest form.
+/// Reduces a fraction a/b to its simplest form as a Rat.
+/// Yields 0 if b = 0 (treating division by zero as zero).
 let reduce(a: Int, b: Int) -> r: Rat satisfy {
     if b = Int.0 {
         r = Rat.0

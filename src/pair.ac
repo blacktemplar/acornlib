@@ -1,9 +1,11 @@
+/// An ordered pair of two values, possibly of different types.
 structure Pair<T, U> {
     first: T
     second: U
 }
 
 attributes Pair<T, U> {
+    /// Swaps the first and second elements of the pair.
     define swap(self) -> Pair<U, T> {
         Pair.new(self.second, self.first)
     }

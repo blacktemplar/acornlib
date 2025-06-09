@@ -1,6 +1,8 @@
 from real import Real
 numerals Real
 
+/// A metric space is a set equipped with a distance function that satisfies specific axioms.
+/// The distance function must be non-negative, symmetric, and satisfy the triangle inequality.
 typeclass M: MetricSpace {
     // Every metric space must have a distance function
     distance: (M, M) -> Real
@@ -34,7 +36,7 @@ theorem distance_non_negative<M: MetricSpace>(x: M, y: M) {
     0 <= x.distance(y)
 }
 
-// The discrete metric
+/// The discrete metric assigns distance 0 to identical elements and distance 1 to distinct elements.
 define discrete<T>(x: T, y: T) -> Real {
     if x = y {
         0
@@ -87,7 +89,7 @@ theorem discrete_triangle<T>(x: T, y: T, z: T) {
     }
 }
 
-// Any type can be a metric space with respect to the discrete metric.
+/// A simple enumeration type used as an example of a metric space with the discrete metric.
 inductive Color {
     red
     green

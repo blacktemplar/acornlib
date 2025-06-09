@@ -3,26 +3,31 @@ from group import Group
 // We define subgroups with the "bundled subgroups" technique, so a subgroup "carries along"
 // its group.
 
+/// True if a subset contains the identity element.
 define identity_constraint<G: Group>(contains: G -> Bool) -> Bool {
     contains(G.1)
 }
 
+/// True if a subset is closed under the group operation.
 define closure_constraint<G: Group>(contains: G -> Bool) -> Bool {
     forall(a: G, b: G) {
         contains(a) and contains(b) implies contains(a * b)
     }
 }
 
+/// True if a subset is closed under taking inverses.
 define inverse_constraint<G: Group>(contains: G -> Bool) -> Bool {
     forall(a: G) {
         contains(a) implies contains(a.inverse)
     }
 }
 
+/// True if a subset satisfies all the requirements to be a subgroup.
 define subgroup_constraint<G: Group>(contains: G -> Bool) -> Bool {
     identity_constraint(contains) and closure_constraint(contains) and inverse_constraint(contains)
 }
 
+/// True if an element is the identity element of the group.
 define is_identity<G: Group>(g: G) -> Bool {
     g = G.1
 }
@@ -35,12 +40,14 @@ theorem identity_subgroup_constraint<G: Group> {
     inverse_constraint(is_identity<G>)
 }
 
+/// A subgroup of a group G, represented as a subset that is closed under the group operations.
 structure Subgroup<G: Group> {
     contains: G -> Bool
 } constraint {
     subgroup_constraint(contains)
 }
 
+/// The trivial subgroup containing only the identity element.
 let identity_subgroup<G: Group>: Subgroup<G> = Subgroup.new(is_identity<G>)
 
 theorem identity_subgroup_only_has_identity<G: Group>(g: G) {

@@ -11,14 +11,14 @@ attributes Real {
     // Placeholder to let other modules import Real from here.
 }
 
-// The condition for uniform continuity on the rationals.
+/// True if f satisfies the delta-epsilon condition for uniform continuity on rationals.
 define rat_condition(f: Rat -> Real, delta: Rat, eps: Real) -> Bool {
     forall(r1: Rat, r2: Rat) {
         r1.is_close(r2, delta) implies f(r1).is_close(f(r2), eps)
     }
 }
 
-// The definition of uniform continuity on the rationals.
+/// True if f is uniformly continuous on the rational numbers.
 define rat_uniform(f: Rat -> Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(delta: Rat) {
@@ -57,14 +57,14 @@ theorem uniform_imp_seq(f: Rat -> Real, q: Nat -> Rat) {
     }
 }
 
-// The condition for uniform continuity on the reals.
+/// True if f satisfies the delta-epsilon condition for uniform continuity on reals.
 define uniform_condition(f: Real -> Real, delta: Real, eps: Real) -> Bool {
     forall(r1: Real, r2: Real) {
         r1.is_close(r2, delta) implies f(r1).is_close(f(r2), eps)
     }
 }
 
-// The definition of uniform continuity on the reals.
+/// True if f is uniformly continuous on the real numbers.
 define uniform(f: Real -> Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(delta: Real) {
@@ -137,8 +137,7 @@ theorem limit_compose_rat_uniform(f: Rat -> Real, a: Nat -> Rat, r: Rat) {
     converges_to(fa, f(r))
 }
 
-// Lifting a uniformly continuous function of rationals
-// to a function over the reals.
+/// Extends a uniformly continuous function on rationals to a function on reals.
 define lift_uc(f: Rat -> Real, x: Real) -> Real {
     limit(compose(f, rat_seq(x)))
 }
@@ -277,12 +276,14 @@ theorem uniform_ne_imp_rat_ne(f: Real -> Real, g: Real -> Real) {
     }
 }
 
+/// True if f is strictly increasing on the rational numbers.
 define rat_increasing(f: Rat -> Real) -> Bool {
     forall(r1: Rat, r2: Rat) {
         r1 < r2 implies f(r1) < f(r2)
     }
 }
 
+/// True if f is strictly increasing on the real numbers.
 define increasing(f: Real -> Real) -> Bool {
     forall(x: Real, y: Real) {
         x < y implies f(x) < f(y)
@@ -604,6 +605,7 @@ theorem neg_uniform {
 
 
 
+/// Pointwise addition of two real-valued functions.
 define add_fns<T>(f: T -> Real, g: T -> Real, t: T) -> Real {
     f(t) + g(t)
 }
@@ -648,6 +650,7 @@ theorem add_fns_uniform(f: Real -> Real, g: Real -> Real) {
 // Historically we proved some theorems around continuity and 2d continuity here.
 // But this might not be the best order to prove things in.
 // Same for the uniform continuity theorems.
+/// True if f satisfies the delta-epsilon condition for continuity at (x,y).
 define continuous2_condition(f: (Real, Real) -> Real, x: Real, y: Real, delta: Real, eps: Real) -> Bool {
     forall(x1: Real, y1: Real) {
         x1.is_close(x, delta) and y1.is_close(y, delta) implies
@@ -655,6 +658,7 @@ define continuous2_condition(f: (Real, Real) -> Real, x: Real, y: Real, delta: R
     }
 }
 
+/// True if the two-variable function f is continuous at the point (x,y).
 define continuous2_at(f: (Real, Real) -> Real, x: Real, y: Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(delta: Real) {
@@ -664,6 +668,7 @@ define continuous2_at(f: (Real, Real) -> Real, x: Real, y: Real) -> Bool {
     }
 }
 
+/// True if the two-variable function f is continuous everywhere.
 define continuous2(f: (Real, Real) -> Real) -> Bool {
     forall(x: Real, y: Real) {
         continuous2_at(f, x, y)
@@ -694,6 +699,7 @@ theorem add_continuous2 {
     }
 }
 
+/// True if f satisfies the delta-epsilon condition for continuity at x.
 define continuous_condition(f: Real -> Real, x: Real, delta: Real, eps: Real) -> Bool {
     forall(x1: Real) {
         x1.is_close(x, delta) implies
@@ -701,6 +707,7 @@ define continuous_condition(f: Real -> Real, x: Real, delta: Real, eps: Real) ->
     }
 }
 
+/// True if f is continuous at the point x.
 define continuous_at(f: Real -> Real, x: Real) -> Bool {
     forall(eps: Real) {
         eps.is_positive implies exists(delta: Real) {
@@ -709,6 +716,7 @@ define continuous_at(f: Real -> Real, x: Real) -> Bool {
     }
 }
 
+/// True if f is continuous everywhere on the reals.
 define continuous(f: Real -> Real) -> Bool {
     forall(x: Real) {
         continuous_at(f, x)

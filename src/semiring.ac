@@ -1,6 +1,9 @@
 from add_comm_monoid import AddCommMonoid
 from monoid import Monoid
 
+/// A semiring is like a ring but without additive inverses.
+/// It has two operations where addition forms a commutative monoid, multiplication forms a monoid,
+/// and multiplication distributes over addition.
 typeclass S: Semiring extends AddCommMonoid, Monoid {
     distrib_left(a: S, b: S, c: S) {
         a * (b + c) = (a * b) + (a * c)

@@ -1,15 +1,19 @@
 from nat import Nat
 numerals Nat
 
+/// A multiset (bag) that can contain multiple copies of the same element.
+/// Each element has a multiplicity indicating how many times it appears.
 structure Multiset<T> {
     multiplicity: T -> Nat
 }
 
 attributes Multiset<T> {
+    /// True if the multiset contains at least one copy of the given item.
     define contains(self, item: T) -> Bool {
         self.multiplicity(item) != 0
     }
 
+    /// Adds one more copy of the given item to the multiset.
     define insert(self, item: T) -> Multiset<T> {
         Multiset.new(function(x: T) {
             if x = item {
@@ -20,12 +24,14 @@ attributes Multiset<T> {
         })
     }
 
+    /// True if the multiset is empty (contains no elements).
     define is_empty(self) -> Bool {
         forall(x: T) {
             self.multiplicity(x) = 0
         }
     }
 
+    /// True if any element appears more than once in the multiset.
     define has_duplicates(self) -> Bool {
         exists(x: T) {
             self.multiplicity(x) > 1

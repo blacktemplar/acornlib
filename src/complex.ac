@@ -1,5 +1,7 @@
 from real import Real
 
+/// Complex numbers consist of a real part and an imaginary part.
+/// They extend the real numbers and satisfy the equation i² = -1.
 structure Complex {
     re: Real
     im: Real
@@ -14,20 +16,22 @@ attributes Complex {
     let 1: Complex = Complex.new(Real.1, Real.0)
     let i: Complex = Complex.new(Real.0, Real.1)
 
+    /// True if this complex number has no imaginary component.
     define is_real(self) -> Bool {
         self.im = Real.0
     }
 
+    /// True if this complex number is purely imaginary (no real component).
     define is_imaginary(self) -> Bool {
         self.re = Real.0 and self.im != Real.0
     }
 
-    // Addition of complex numbers
+    /// Adds two complex numbers component-wise.
     define add(self, other: Complex) -> Complex {
         Complex.new(self.re + other.re, self.im + other.im)
     }
 
-    // Multiplication of complex numbers
+    /// Multiplies two complex numbers using the formula (a+bi)(c+di) = (ac-bd)+(ad+bc)i.
     define mul(self, other: Complex) -> Complex {
         // (a + bi) * (c + di) = (ac - bd) + (ad + bc)i
         Complex.new(
@@ -36,12 +40,12 @@ attributes Complex {
         )
     }
 
-    // Complex conjugate
+    /// Yields the complex conjugate (negates the imaginary part).
     define conj(self) -> Complex {
         Complex.new(self.re, -self.im)
     }
 
-    // Absolute value squared (|z|²)
+    /// Computes the squared magnitude |z|² = re² + im².
     define abs_squared(self) -> Real {
         self.re * self.re + self.im * self.im
     }
@@ -177,6 +181,7 @@ theorem mul_assoc(a: Complex, b: Complex, c: Complex) {
 }
 
 attributes Complex {
+    /// Yields the additive inverse of this complex number.
     define neg(self) -> Complex {
         Complex.new(-self.re, -self.im)
     }
@@ -316,6 +321,8 @@ theorem conj_add(a: Complex, b: Complex) {
 }
 
 attributes Complex {
+    /// Computes the multiplicative inverse (1/z) for non-zero complex numbers.
+    /// Yields 0 when applied to 0 (division by zero yields zero).
     define reciprocal(self) -> Complex {
         self.conj * Complex.from_real(self.abs_squared.reciprocal)
     }
@@ -405,6 +412,8 @@ theorem zero_reciprocal {
 }
 
 attributes Complex {
+    /// Divides this complex number by another.
+    /// Division by zero returns zero (making this a total function).
     define div(self, other: Complex) -> Complex {
         self * other.reciprocal
     }

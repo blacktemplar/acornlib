@@ -1,7 +1,7 @@
-dependencies: 3973616296423952196
-content: 14123583249579234090
+dependencies: 14975507744714940659
+content: 8943067662399480149
 blocks:
-  '77':
+  '80':
     group:
     - trivial_hom_is_hom
   inverse_inverse:

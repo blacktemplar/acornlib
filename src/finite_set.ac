@@ -1,9 +1,12 @@
 from list import List
 
+/// A constant function that always returns false, regardless of input.
 define const_false<T>(x: T) -> Bool {
     false
 }
 
+/// True if a boolean function represents a finite set.
+/// A function satisfies the finite constraint if there exists a finite list containing all elements for which the function returns true.
 define finite_constraint<T>(contains: T -> Bool) -> Bool {
     exists(superset: List<T>) {
         forall(x: T) {
@@ -20,6 +23,7 @@ theorem list_contains_satisfies_finite_constraint<T>(ts: List<T>) {
     finite_constraint(ts.contains)
 }
 
+/// Creates a new function that returns true for the given item and delegates to the original function for all other inputs.
 define functional_insert<T>(f: T -> Bool, item: T, x: T) -> Bool {
     if x = item {
         true
@@ -32,6 +36,7 @@ theorem functional_insert_satisfies_finite_constraint<T>(f: T -> Bool, item: T) 
     finite_constraint(f) implies finite_constraint(functional_insert(f, item))
 }
 
+/// Creates a new function that returns false for the given item and delegates to the original function for all other inputs.
 define functional_remove<T>(f: T -> Bool, item: T, x: T) -> Bool {
     if x = item {
         false
@@ -44,6 +49,8 @@ theorem functional_remove_satisfies_finite_constraint<T>(f: T -> Bool, item: T) 
     finite_constraint(f) implies finite_constraint(functional_remove(f, item))
 }
 
+/// A finite set represented as a boolean membership function.
+/// The constraint ensures that only finitely many elements are members.
 structure FiniteSet<T> {
     contains: T -> Bool
 } constraint {
@@ -55,18 +62,19 @@ attributes FiniteSet<T> {
         FiniteSet.new(ts.contains)
     }
 
+    /// True if the set contains no elements.
     define is_empty(self) -> Bool {
         forall(x: T) {
             not self.contains(x)
         }
     }
 
-    // If the item isn't present, this is a no-op.
+    /// Removes an element from the set. If the item isn't present, this is a no-op.
     define remove(self, item: T) -> FiniteSet<T> {
         FiniteSet.new(functional_remove(self.contains, item))
     }
 
-    // If the item is already present, this is a no-op.
+    /// Adds an element to the set. If the item is already present, this is a no-op.
     define insert(self, item: T) -> FiniteSet<T> {
         FiniteSet.new(functional_insert(self.contains, item))
     }
