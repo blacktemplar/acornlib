@@ -1,4 +1,4 @@
-dependencies: 14270616557074073123
+dependencies: 3899363343700031541
 content: 6205175164476790830
 blocks:
   flip_flip:
@@ -59,12 +59,10 @@ blocks:
     - Real.gt
     - Real.gte
     - Real.lt
-    - gt_imp_not_lte
     - gte_imp_not_lt
     - is_cut
     - lt_lte_trans
     - lte_lt_trans
-    - lte_or_gte
     - max
     - not_lte_imp_gt
     - rat_dual_upper_bound

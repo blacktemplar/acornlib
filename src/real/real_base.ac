@@ -123,18 +123,6 @@ attributes Real {
             self.gt_rat(r) implies other.gt_rat(r)
         }
     }
-
-    define lt(self, other: Real) -> Bool {
-        self != other and self.lte(other)
-    }
-
-    define gte(self, other: Real) -> Bool {
-        other.lte(self)
-    }
-
-    define gt(self, other: Real) -> Bool {
-        other.lt(self)
-    }
 }
 
 theorem lte_self(r: Real) {
@@ -191,6 +179,44 @@ theorem lte_both_ways_imp_eq(a: Real, b: Real) {
     }
     a.gt_rat = b.gt_rat
     a = b
+}
+
+// The real numbers form a total order.
+
+from util import is_reflexive, is_transitive, is_antisymmetric
+
+theorem real_is_reflexive {
+    is_reflexive(Real.lte)
+}
+
+theorem real_is_transitive {
+    is_transitive(Real.lte)
+}
+
+theorem real_is_antisymmetric {
+    is_antisymmetric(Real.lte)
+}
+
+from order import PartialOrder, LinearOrder
+
+instance Real: PartialOrder {
+    let lte = Real.lte
+}
+
+instance Real: LinearOrder
+
+attributes Real {
+    define lt(self, other: Real) -> Bool {
+        self != other and self.lte(other)
+    }
+
+    define gte(self, other: Real) -> Bool {
+        other.lte(self)
+    }
+
+    define gt(self, other: Real) -> Bool {
+        other.lt(self)
+    }
 }
 
 theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
@@ -1479,32 +1505,6 @@ theorem abs_not_neg(a: Real) {
         not a.abs.is_negative
     }
 }
-
-
-// The real numbers form a total order.
-
-from util import is_reflexive, is_transitive, is_antisymmetric
-
-theorem real_is_reflexive {
-    is_reflexive(Real.lte)
-}
-
-theorem real_is_transitive {
-    is_transitive(Real.lte)
-}
-
-theorem real_is_antisymmetric {
-    is_antisymmetric(Real.lte)
-}
-
-from order import PartialOrder, LinearOrder
-
-instance Real: PartialOrder {
-    let lte = Real.lte
-}
-
-instance Real: LinearOrder
-
 
 define min(a: Real, b: Real) -> Real {
     if a < b {

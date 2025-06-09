@@ -1,4 +1,4 @@
-dependencies: 17868182061342323448
+dependencies: 2614382661789741242
 content: 293356906092535065
 blocks:
   Real.Monoid:
@@ -187,11 +187,9 @@ blocks:
     - add_zero_left
     - close_comm
     - close_imp_bounds
-    - gt_imp_not_lte
     - gt_zero_imp_pos
     - lt_add_one
     - lt_lte_trans
-    - lte_or_gte
     - neg_lt_rat
     - rat_lower
     - rat_window

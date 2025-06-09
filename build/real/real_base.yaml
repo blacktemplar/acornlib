@@ -1,5 +1,5 @@
 dependencies: 17422081133925485696
-content: 5379338514796013250
+content: 10636118705414661791
 blocks:
   '98':
     real.real_base:
@@ -1235,7 +1235,6 @@ blocks:
     - Real.lte
     - Real.new
     - gte_imp_not_lt
-    - lte_or_gte
   rat_upper:
     rat:
     - minus_cancels_plus

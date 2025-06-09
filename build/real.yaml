@@ -1,4 +1,4 @@
-dependencies: 17775320924531757975
+dependencies: 9799385220806054536
 content: 12491698231977352133
 blocks:
   add_continuous2:
@@ -101,13 +101,11 @@ blocks:
     - uniform
     - uniform_condition
     real.real_base:
-    - Real.gt
     - Real.lt
     - add_assoc
     - add_from_rat
     - add_rat_eps_between
     - close_imp_bounds
-    - gt_imp_not_lte
     - lt_add_converse
     - lt_add_left
     - lt_add_rat_left
@@ -116,7 +114,6 @@ blocks:
     - lt_min_imp_lt_left
     - lt_min_imp_lt_right
     - lte_add_left
-    - lte_or_gte
     - min_pos_pos
     - rat_between_reals
     - rat_intersect
