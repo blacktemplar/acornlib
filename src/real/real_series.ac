@@ -808,6 +808,12 @@ theorem sum_abs_le_abs_sum(items: List<Real>) {
     }
 }
 
+// Use the LinearOrder typeclass everywhere first.
+// theorem diff_partial(a: Nat -> Real, m: Nat, n: Nat) {
+//     (partial(a, m) - partial(a, n)).abs = sum(m.min(n).until(m.max(n)).map(a))
+// }
+
+// Prove diff_partial first so that we can simplify partial closeness.
 // theorem abs_conv_imp_conv(a: Nat -> Real) {
 //     converges(partial(compose(Real.abs, a)))
 //     implies
