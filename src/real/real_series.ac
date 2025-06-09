@@ -1,4 +1,4 @@
-from util import constant
+from util import constant, compose
 from nat import Nat
 from rat import Rat
 from list import partial, sum, map, List, range
@@ -807,3 +807,24 @@ theorem sum_abs_le_abs_sum(items: List<Real>) {
         }
     }
 }
+
+// theorem abs_conv_imp_conv(a: Nat -> Real) {
+//     converges(partial(compose(Real.abs, a)))
+//     implies
+//     converges(partial(a))
+// } by {
+//     let q = partial(compose(Real.abs, a))
+//     forall(eps: Real) {
+//         if eps.is_positive {
+//             let n: Nat satisfy {
+//                 cauchy_bound(q, n, eps)
+//             }
+//             forall(i: Nat, j: Nat) {
+//                 if n <= i and n <= j {
+//                     q(i).is_close(q(j), eps)
+//                 }
+//             }
+//             cauchy_bound(partial(a), n, eps)
+//         }
+//     }
+// }
