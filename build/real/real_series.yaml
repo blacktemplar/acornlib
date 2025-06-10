@@ -1,4 +1,4 @@
-dependencies: 9687471867081251256
+dependencies: 15639219048862598836
 content: 3625633815587037890
 blocks:
   add_seq_converges:
@@ -67,11 +67,6 @@ blocks:
     real.real_series:
     - mul_seq_converges_to
   distant_increasing:
-    int:
-    - sub_nat
-    - sub_nat_imp_add
-    - sub_nat_negate_imp_add
-    - sub_nat_zero_left
     nat.nat_base:
     - Nat.induction
     - Nat.lte
@@ -415,7 +410,7 @@ blocks:
     - partial_tail
     - partial_tail_sub
   tail_zero:
-    int:
+    int.int_base:
     - sub_nat_negate_imp_add
     - sub_nat_zero_left
     real.real_series:

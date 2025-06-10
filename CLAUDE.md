@@ -10,6 +10,26 @@ acorn
 
 to run the verifier. This should be run after every change, to make sure the proof is verifiable.
 
+## Documentation Style
+
+Every type, typeclass, and attribute should have a doc comment, starting with `///`.
+
+Comments should be written using mathematical language, not using programming language.
+
+```acorn
+// Good:
+/// The smaller of two elements.
+
+// Bad: "returns" is what a programmer would say.
+/// Returns the smaller of two elements.
+
+// Good:
+/// True if f is continuous everywhere on the reals.
+
+// Bad: "checks" is what a programmer would say.
+/// Checks if f is continuous everywhere on the reals.
+```
+
 ## Tips
 
 Before proving a theorem, consider whether there is a lemma that could be factored out into a separate theorem. If there is, ask the user whether they would prefer you to prove the lemma first.

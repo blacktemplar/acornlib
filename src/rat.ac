@@ -319,6 +319,7 @@ theorem cross_eq_imp_reduce_eq(a: Int, b: Int, c: Int, d: Int) {
     b != Int.0
     d != Int.0
     let rab = reduce(a, b)
+    cross_equals(reduce(a, b).num, rab.denom, a, b)
     cross_equals(rab.num, rab.denom, a, b)
     cross_equals(rab.num, rab.denom, c, d)
     let rcd = reduce(c, d)
@@ -335,6 +336,8 @@ theorem reduce_eq_imp_cross_eq(a: Int, b: Int, c: Int, d: Int) {
 } by {
     cross_equals(reduce(a, b).num, reduce(a, b).denom, a, b)
     cross_equals(reduce(c, d).num, reduce(c, d).denom, c, d)
+    cross_equals(reduce(a, b).num, reduce(c, d).denom, a, b)
+    cross_equals(a, b, reduce(a, b).num, reduce(c, d).denom)
 }
 
 theorem mul_reduced_int_right(a: Int, b: Int, c: Int) {
@@ -497,6 +500,7 @@ theorem add_reduce_right(r: Rat, a: Int, b: Int) {
     c != Int.0
     r + reduce(a, b) = reduce(r.num * reduce(a, b).denom + r.denom * reduce(a, b).num,
                               reduce(a, b).denom * r.denom)
+    forall(x0: Int, x1: Int) { reduce(x0 * c, x1 * c) = reduce(x0, x1) }
     r + reduce(a, b) = reduce((r.num * reduce(a, b).denom + r.denom * reduce(a, b).num) * c,
                               reduce(a, b).denom * r.denom * c)
     r + reduce(a, b) = reduce(r.num * reduce(a, b).denom * c + r.denom * reduce(a, b).num * c,
@@ -674,11 +678,16 @@ theorem sub_self(a: Rat) {
     a - a = Rat.0
 }
 
+theorem reduce_one_one {
+    reduce(Int.1, Int.1) = Rat.1
+}
+
 theorem reduce_self(n: Int) {
     n != Int.0 implies reduce(n, n) = Rat.1
 } by {
     Rat.1 = Rat.new(Int.1, Int.1)
     cross_equals(Int.1, Int.1, n, n)
+    reduce(n, n) = reduce(Int.1, Int.1)
     reduce(n, n) = Rat.1
 }
 
@@ -1270,6 +1279,7 @@ theorem lt_imp_rat_between(a: Rat, b: Rat) {
 } by {
     a / Rat.2 < b / Rat.2
     a < (a + b) * Rat.2.reciprocal
+    a / Rat.2 + b / Rat.2 < b
     (a + b) * Rat.2.reciprocal < b
 }
 

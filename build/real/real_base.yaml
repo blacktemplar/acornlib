@@ -1,7 +1,7 @@
-dependencies: 2319820468296905461
-content: 7952194252078242008
+dependencies: 10642977797204482571
+content: 16233518458798020503
 blocks:
-  '102':
+  '103':
     real.real_base:
     - gt_is_dedekind_cut
   Real.AddCommSemigroup:
@@ -388,22 +388,23 @@ blocks:
     - floor_exists
   floor_exists:
     int:
-    - Int.1
     - Int.gte
+    - add_lte
+    - lt_not_ref
+    - lte_abs
+    - lte_and_lt
+    - plus_abs_gte_zero
+    int.int_base:
+    - Int.1
     - abs_neg_nat
     - add_assoc
     - add_comm
     - add_from_nat
-    - add_lte
     - add_zero_right
-    - lt_not_ref
-    - lte_abs
-    - lte_and_lt
     - neg_from_nat
     - neg_nat_zero
     - neg_neg
     - neg_zero
-    - plus_abs_gte_zero
     - pos_part_from
     nat.nat_base:
     - Nat.induction
@@ -644,8 +645,6 @@ blocks:
     - add_comm
     - lt_add_right
   lt_add_one:
-    int:
-    - add_comm
     rat:
     - Rat.1
     real.real_base:
@@ -684,6 +683,7 @@ blocks:
     int:
     - div_pos_imp_lte
     - divides
+    int.int_base:
     - mul_one_right
     rat:
     - Rat.1
@@ -698,11 +698,12 @@ blocks:
     - lte_add_left
   lt_add_pos_rat:
     int:
+    - Int.abs
+    - member_abs_pos
+    int.int_base:
     - Int.0
     - Int.1
-    - Int.abs
     - add_from_nat
-    - member_abs_pos
     nat.nat_base:
     - Nat.induction
     - add_one_left

@@ -1,0 +1,939 @@
+dependencies: 18117661568141849794
+content: 17918465436740016767
+blocks:
+  Int.AddCommSemigroup:
+    int.int_base:
+    - add_comm
+  Int.AddGroup:
+    int.int_base:
+    - add_neg
+  Int.AddMonoid:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    int.int_base:
+    - add_zero_right
+  Int.AddSemigroup:
+    int.int_base:
+    - add_assoc
+  abs_from_nat:
+    int.int_base:
+    - abs
+  abs_mul:
+    int.int_base:
+    - abs
+    - abs_from_nat
+    - abs_neg
+    - mul_comm
+    - mul_nat_from_nat_left
+    - mul_nat_from_nat_right
+    - mul_neg_right
+    - mul_nonneg_nonneg
+    - mul_nonpos_nonpos
+    - neg_neg
+    - neg_part
+    - non_pos_is_neg_abs
+    - pos_is_not_neg
+    - pos_part
+    - sub_nat_parts
+    - sub_nat_zero_right
+    nat.nat_base:
+    - mul_comm
+  abs_neg:
+    int.int_base:
+    - abs
+    - abs_from_nat
+    - abs_neg_nat
+    - neg_from_nat
+    - neg_nat_suc
+    - neg_neg_suc
+  abs_neg_nat:
+    int.int_base:
+    - Int.0
+    - Int.neg_suc
+    - abs
+    - neg_nat
+    - neg_nat_zero
+    nat.nat_base:
+    - Nat.1
+    - Nat.sub
+    - add_one_right
+    - bounded_sub
+    - lt_suc_right
+    - not_lt_zero
+  abs_zero:
+    int.int_base:
+    - Int.0
+    - abs
+  add_assoc:
+    int.int_base:
+    - Int.add
+    - add_sub_nat
+    - add_sub_nat_left
+    - add_sub_nat_right
+    - sub_nat_parts
+  add_comm:
+    int.int_base:
+    - Int.add
+    nat.nat_base:
+    - add_comm
+  add_comm_4:
+    int.int_base:
+    - add_assoc
+    - add_comm
+  add_eq_zero:
+    int.int_base:
+    - Int.0
+    - Int.add
+    - neg_part_neg
+    - pos_part_neg
+    - sub_nat_eq
+    - sub_nat_imp_add
+    - sub_nat_parts
+    nat.nat_base:
+    - add_imp_sub
+    - sub_zero
+  add_from_nat:
+    int.int_base:
+    - add_sub_nat_left_pos
+    - sub_nat_zero_right
+  add_left_cancel:
+    int.int_base:
+    - add_comm
+    - add_right_cancel
+  add_neg:
+    int.int_base:
+    - Int.add
+    - neg_part_neg
+    - neg_sub_nat
+    - pos_part_neg
+    - sub_nat_self
+    nat.nat_base:
+    - add_comm
+  add_neg_nonpos:
+    int.int_base:
+    - Int.is_positive
+    - add_pos_nonneg
+    - add_zero_right
+    - neg_distrib
+    - neg_neg
+    - neg_part
+    - neg_part_neg
+    - pos_part
+    - pos_part_neg
+    - sub_nat_parts
+  add_nonneg_nonneg:
+    int.int_base:
+    - add_comm
+    - add_pos_nonneg
+    - add_zero_right
+    - nonzero_pos_or_neg
+    - pos_is_not_neg
+  add_nonpos_nonpos:
+    int.int_base:
+    - add_comm
+    - add_neg_nonpos
+    - add_zero_right
+    - nonzero_pos_or_neg
+    - pos_is_not_neg
+  add_part_sub_nat:
+    int.int_base:
+    - sub_nat_imp_add_eq
+    - sub_nat_parts
+  add_pos_nonneg:
+    int.int_base:
+    - Int.is_negative
+    - add_from_nat
+    - add_zero_right
+    - neg_from_nat
+    - neg_nat_zero
+    - neg_neg
+    - neg_zero
+    - nonzero_pos_or_neg
+    - pos_is_not_neg
+    - pos_part
+    - pos_part_from
+    - sub_nat_add_left
+    nat.nat_base:
+    - add_to_zero
+  add_right_cancel:
+    int.int_base:
+    - Int.add
+    - sub_nat_double_cancel_left
+    - sub_nat_double_cancel_right
+    - sub_nat_parts
+  add_sub_nat:
+    int.int_base:
+    - add_part_sub_nat
+    - add_sub_nat_left
+    - sub_nat_eq
+    nat.nat_base:
+    - add_assoc
+    - add_comm
+    - add_comm_4
+  add_sub_nat_3_left:
+    int.int_base:
+    - add_sub_nat
+  add_sub_nat_3_right:
+    int.int_base:
+    - add_sub_nat
+  add_sub_nat_assoc:
+    int.int_base:
+    - add_sub_nat
+    nat.nat_base:
+    - add_assoc
+  add_sub_nat_left:
+    int.int_base:
+    - Int.is_negative
+    - add_sub_nat_left_neg
+    - add_sub_nat_left_pos
+    - neg_part
+    - neg_sub_nat
+    - non_pos_is_neg_abs
+    - pos_is_not_neg
+    - pos_part
+    nat.nat_base:
+    - add_comm
+    - add_zero_left
+  add_sub_nat_left_neg:
+    int.int_base:
+    - add_sub_nat_left_pos
+    - neg_distrib
+    - neg_sub_nat
+  add_sub_nat_left_pos:
+    int.int_base:
+    - Int.add
+    - add_part_sub_nat
+    - neg_part_from
+    - neg_sub_nat
+    - pos_part_from
+    - sub_nat_eq
+    nat.nat_base:
+    - add_assoc
+    - add_comm
+    - add_zero_left
+  add_sub_nat_right:
+    int.int_base:
+    - add_comm
+    - add_sub_nat_left
+    nat.nat_base:
+    - add_comm
+  add_zero_left:
+    int.int_base:
+    - Int.add
+    - Int.is_negative
+    - neg_part_from
+    - pos_part
+    - sub_nat_negate_imp_add
+    - sub_nat_parts
+    - sub_nat_zero_left
+    - zero_not_neg
+    - zero_not_pos
+  add_zero_right:
+    int.int_base:
+    - Int.add
+    - Int.is_negative
+    - neg_part_from
+    - pos_part
+    - sub_nat_negate_imp_add
+    - sub_nat_parts
+    - sub_nat_zero_left
+    - zero_not_neg
+    - zero_not_pos
+    nat.nat_base:
+    - add_comm
+  fix_neg:
+    int.int_base:
+    - Int.0
+    - Int.neg
+    - Int.neg_suc
+    - neg_nat
+  from_eq_neg_from:
+    int.int_base:
+    - Int.0
+    - Int.from_nat
+    - abs
+    - abs_from_nat
+    - abs_neg
+    - abs_neg_nat
+    - fix_neg
+    - neg_from_nat
+  mul_comm:
+    int.int_base:
+    - mul_nonneg_nonneg
+    - mul_nonneg_nonpos
+    - mul_nonpos_nonneg
+    - mul_nonpos_nonpos
+    - pos_is_not_neg
+    - sub_nat_add_left
+    - sub_nat_zero_left
+    nat.nat_base:
+    - mul_comm
+  mul_distrib_left:
+    int.int_base:
+    - mul_comm
+    - mul_distrib_right
+  mul_distrib_nonneg_right:
+    int.int_base:
+    - Int.is_negative
+    - add_comm
+    - mul_comm
+    - mul_nat_distrib_right
+    - mul_nat_from_nat_right
+    - mul_nonneg_right
+  mul_distrib_right:
+    int.int_base:
+    - Int.is_positive
+    - mul_comm
+    - mul_distrib_nonneg_right
+    - mul_neg_right
+    - neg_distrib
+    - neg_neg
+    - neg_part
+    - neg_part_neg
+    - pos_is_not_neg
+    - pos_part
+    - pos_part_neg
+    - sub_nat_parts
+  mul_nat_distrib_right:
+    int.int_base:
+    - add_comm_4
+    - mul_nat_suc
+    - mul_nat_zero_right
+    - sub_add_left
+    - sub_eq_zero
+  mul_nat_from_nat_left:
+    int.int_base:
+    - Int.0
+    - Int.is_negative
+    - abs
+    - abs_neg
+    - abs_neg_nat
+    - mul_nat
+    - mul_nat_zero_left
+    - neg_from_nat
+    - neg_nat
+    - neg_nat_zero
+    - neg_neg
+    - neg_zero
+    - pos_part
+    - pos_part_from
+    - sub_nat_zero_right
+    nat.nat_base:
+    - Nat.new
+    - mul_comm
+    - mul_zero_left
+  mul_nat_from_nat_right:
+    int.int_base:
+    - Int.0
+    - Int.mul
+    - abs_from_nat
+    - from_eq_neg_from
+    - mul_nat_zero_right
+    - mul_zero_right
+    - non_pos_is_neg_abs
+  mul_nat_negate_left:
+    int.int_base:
+    - Int.is_positive
+    - abs_neg
+    - mul_nat
+    - mul_nat_nonpos_left
+    - neg_neg
+    - non_pos_is_neg_abs
+    - pos_is_not_neg
+    nat.nat_base:
+    - add_zero_left
+  mul_nat_nonneg_suc:
+    int.int_base:
+    - Int.is_negative
+    - add_comm
+    - add_from_nat
+    - mul_nat
+    - sub_nat_add_left
+    nat.nat_base:
+    - add_comm
+    - mul_suc_right
+  mul_nat_nonpos_left:
+    int.int_base:
+    - Int.0
+    - abs_zero
+    - mul_nat
+    - mul_nat_zero_left
+    - neg_zero
+    - non_pos_is_neg_abs
+    - nonzero_pos_or_neg
+    - sub_nat_add_right
+    nat.nat_base:
+    - mul_comm
+    - mul_zero_left
+  mul_nat_suc:
+    int.int_base:
+    - Int.is_positive
+    - add_eq_zero
+    - add_neg
+    - mul_nat_negate_left
+    - mul_nat_nonneg_suc
+    - neg_distrib
+    - neg_neg
+    - neg_part
+    - neg_part_neg
+    - pos_is_not_neg
+    - pos_part
+    - pos_part_neg
+    - sub_nat_parts
+  mul_nat_zero_left:
+    int.int_base:
+    - abs_from_nat
+    - mul_nat
+    - sub_nat_self
+    - sub_nat_zero_right
+    - zero_not_neg
+    - zero_not_pos
+    nat.nat_base:
+    - mul_comm
+    - mul_zero_left
+  mul_nat_zero_right:
+    int.int_base:
+    - Int.0
+    - mul_nat
+    - sub_nat_self
+    - sub_nat_zero_left
+    nat.nat_base:
+    - Nat.mul
+    - mul_comm
+    - mul_zero_left
+  mul_neg_left:
+    int.int_base:
+    - Int.mul
+    - mul_comm
+    - mul_nat_from_nat_right
+    - mul_nat_negate_left
+    - neg_neg
+    - neg_part
+    - non_pos_is_neg_abs
+    - pos_part
+    - sub_nat_parts
+    - sub_nat_zero_right
+  mul_neg_right:
+    int.int_base:
+    - mul_comm
+    - mul_neg_left
+  mul_nonneg_nonneg:
+    int.int_base:
+    - Int.is_negative
+    - mul_nat_from_nat_left
+    - mul_nonneg_right
+  mul_nonneg_nonneg_nonneg:
+    int.int_base:
+    - Int.is_negative
+    - abs_from_nat
+    - mul_nonneg_nonneg
+  mul_nonneg_nonpos:
+    int.int_base:
+    - Int.is_negative
+    - Int.mul
+    - mul_nat_from_nat_left
+    - sub_zero_left
+  mul_nonneg_nonpos_nonpos:
+    int.int_base:
+    - Int.is_positive
+    - mul_nonneg_nonpos
+    - neg_neg
+    - neg_part
+    - pos_is_not_neg
+    - pos_part_from
+    - pos_part_neg
+    - sub_nat_zero_left
+    - sub_nat_zero_right
+  mul_nonneg_right:
+    int.int_base:
+    - Int.mul
+    - abs_zero
+    - mul_nat_zero_right
+    - mul_zero_right
+    - nonzero_pos_or_neg
+  mul_nonpos_nonneg:
+    int.int_base:
+    - mul_nat_from_nat_left
+    - mul_nat_negate_left
+    - mul_nonneg_right
+    - non_pos_is_neg_abs
+  mul_nonpos_nonneg_nonpos:
+    int.int_base:
+    - Int.is_positive
+    - mul_nonpos_nonneg
+    - neg_neg
+    - neg_part
+    - pos_is_not_neg
+    - pos_part_from
+    - pos_part_neg
+    - sub_nat_zero_left
+    - sub_nat_zero_right
+  mul_nonpos_nonpos:
+    int.int_base:
+    - Int.mul
+    - mul_nat_from_nat_left
+    - mul_nat_negate_left
+    - neg_neg
+    - neg_sub_nat
+    - non_pos_is_neg_abs
+    - sub_nat_zero_left
+    - sub_nat_zero_right
+  mul_nonpos_nonpos_nonneg:
+    int.int_base:
+    - Int.is_negative
+    - abs_from_nat
+    - mul_nonpos_nonpos
+  mul_one_left:
+    int.int_base:
+    - mul_comm
+    - mul_one_right
+  mul_one_right:
+    int.int_base:
+    - Int.1
+    - Int.is_negative
+    - add_zero_left
+    - mul_nat
+    - mul_nat_from_nat_right
+    - mul_nat_nonpos_left
+    - mul_nat_zero_right
+    - neg_from_nat
+    - non_pos_is_neg_abs
+    - one_pos
+    - pos_is_not_neg
+    - sub_nat_zero_right
+    nat.nat_base:
+    - mul_comm
+    - mul_one_left
+  mul_sub_distrib_left:
+    add_group:
+    - AddGroup.sub
+    int.int_base:
+    - mul_distrib_left
+    - mul_neg_right
+  mul_sub_distrib_right:
+    add_group:
+    - AddGroup.sub
+    int.int_base:
+    - mul_distrib_right
+    - mul_neg_left
+  mul_zero_left:
+    int.int_base:
+    - Int.mul
+    - mul_nat_zero_left
+    - mul_nonneg_nonpos_nonpos
+    - mul_nonpos_nonpos_nonneg
+    - mul_zero_right
+    - neg_zero
+    - nonzero_pos_or_neg
+    - zero_not_pos
+  mul_zero_right:
+    int.int_base:
+    - Int.mul
+    - abs_zero
+    - mul_nat_zero_right
+    - neg_zero
+    - zero_not_pos
+  neg_distrib:
+    int.int_base:
+    - Int.add
+    - neg_part_neg
+    - neg_sub_nat
+    - pos_part_neg
+    nat.nat_base:
+    - add_comm
+  neg_from_nat:
+    int.int_base:
+    - Int.neg
+  neg_nat_suc:
+    int.int_base:
+    - neg_nat
+    nat.nat_base:
+    - Nat.add
+    - Nat.lt
+    - add_comm
+    - add_imp_sub
+    - add_one_left
+    - lt_add_suc
+  neg_nat_zero:
+    int.int_base:
+    - neg_nat
+  neg_neg:
+    int.int_base:
+    - Int.0
+    - Int.neg
+    - neg_from_nat
+    - neg_nat
+    - neg_nat_suc
+    - neg_nat_zero
+    - neg_neg_suc
+    - neg_zero
+    nat.nat_base:
+    - add_comm
+    - add_imp_sub
+    - add_one_left
+    - zero_or_suc
+  neg_neg_suc:
+    int.int_base:
+    - Int.neg
+  neg_or_pos:
+    int.int_base:
+    - abs
+    - abs_neg_nat
+    - neg_from_nat
+    - neg_nat_suc
+  neg_part_from:
+    int.int_base:
+    - abs
+    - neg_part
+    - pos_part
+    - pos_part_from
+  neg_part_neg:
+    int.int_base:
+    - neg_neg
+    - pos_part_neg
+  neg_sub:
+    int.int_base:
+    - sub_anticomm
+  neg_sub_nat:
+    int.int_base:
+    - neg_neg
+    - neg_zero
+    - sub_nat
+    - sub_nat_self
+    nat.nat_base:
+    - Nat.lt
+    - Nat.lte
+    - lt_diff
+    - lt_imp_lt_suc
+    - lt_imp_lte_suc
+    - lte_cancel_suc
+    - lte_imp_not_lt
+    - trichotomy
+  neg_zero:
+    int.int_base:
+    - Int.0
+    - Int.neg
+    - neg_nat_zero
+  non_pos_is_neg_abs:
+    int.int_base:
+    - Int.is_negative
+    - Int.is_positive
+    - abs_neg
+    - neg_or_pos
+  nonzero_pos_or_neg:
+    int.int_base:
+    - Int.is_negative
+    - Int.is_positive
+    - abs_neg
+    - fix_neg
+  one_neq_zero:
+    int.int_base:
+    - Int.1
+    - abs_from_nat
+    - abs_zero
+    nat.nat_base:
+    - Nat.lt
+    - add_one_right
+    - add_zero_left
+    - lt_suc
+  one_pos:
+    int.int_base:
+    - Int.1
+    - Int.is_negative
+    - Int.is_positive
+    - Int.neg_suc
+    - neg_from_nat
+    - neg_nat_suc
+    nat.nat_base:
+    - Nat.1
+  parts_of_add:
+    int.int_base:
+    - Int.add
+    - add_part_sub_nat
+    - parts_sub_nat
+    nat.nat_base:
+    - add_comm
+  parts_sub_nat:
+    int.int_base:
+    - sub_nat_imp_add_eq
+    - sub_nat_parts
+  pos_is_not_neg:
+    int.int_base:
+    - Int.is_negative
+    - Int.is_positive
+    - abs_neg
+    - neg_neg
+    - neg_or_pos
+    - sub_nat_zero_right
+  pos_part_from:
+    int.int_base:
+    - abs
+    - abs_from_nat
+    - from_eq_neg_from
+    - non_pos_is_neg_abs
+    - pos_part
+  pos_part_neg:
+    int.int_base:
+    - Int.is_positive
+    - abs
+    - abs_neg
+    - abs_zero
+    - neg_neg
+    - neg_part
+    - neg_zero
+    - nonzero_pos_or_neg
+    - pos_is_not_neg
+    - pos_part
+    - sub_nat_parts
+    - sub_nat_zero_right
+  sub_add_cancel_left:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.sub
+    int.int_base:
+    - add_assoc
+    - sub_add_right
+  sub_add_cancel_right:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    int.int_base:
+    - sub_add_cancel_left
+  sub_add_left:
+    add_group:
+    - AddGroup.inverse_right
+    - AddGroup.sub
+    add_monoid:
+    - AddMonoid.add_identity_right
+    add_semigroup:
+    - AddSemigroup.add_associative
+  sub_add_right:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    int.int_base:
+    - sub_add_left
+    - sub_anticomm
+  sub_anticomm:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.sub
+    - inverse_inverse
+    int.int_base:
+    - neg_distrib
+  sub_cancel_left:
+    int.int_base:
+    - sub_anticomm
+    - sub_imp_add
+    - sub_negate_imp_add
+  sub_cancel_right:
+    int.int_base:
+    - sub_imp_add
+  sub_eq_zero:
+    add_group:
+    - AddGroup.sub
+    - inverse_inverse
+    int.int_base:
+    - add_eq_zero
+  sub_imp_add:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.sub
+    add_semigroup:
+    - AddSemigroup.add_associative
+    int.int_base:
+    - sub_add_left
+  sub_nat_add_cancel_left:
+    int.int_base:
+    - sub_nat_add_cancel_right
+    nat.nat_base:
+    - add_comm
+  sub_nat_add_cancel_right:
+    int.int_base:
+    - sub_nat_eq
+    nat.nat_base:
+    - add_assoc
+    - add_comm
+  sub_nat_add_left:
+    int.int_base:
+    - sub_nat
+    nat.nat_base:
+    - Nat.lte
+    - add_comm
+    - sub_add
+  sub_nat_add_right:
+    int.int_base:
+    - neg_sub_nat
+    - sub_nat_add_left
+    nat.nat_base:
+    - add_comm
+  sub_nat_cancel_left:
+    int.int_base:
+    - neg_sub_nat
+    - sub_nat_cancel_right
+  sub_nat_cancel_right:
+    int.int_base:
+    - neg_sub_nat
+    - sub_nat
+    - sub_nat_add_right
+    - sub_nat_eq_helper
+    - sub_nat_imp_add
+    - sub_nat_negate_imp_add
+    - sub_nat_zero_right
+    nat.nat_base:
+    - Nat.lte
+    - add_cancels_right
+    - add_zero_right
+    - lt_diff
+    - lt_or_lte
+  sub_nat_double_cancel_left:
+    int.int_base:
+    - sub_nat_eq
+    - sub_nat_imp_add_eq
+    nat.nat_base:
+    - add_assoc
+    - add_cancels_right
+    - add_comm
+  sub_nat_double_cancel_right:
+    int.int_base:
+    - sub_nat_eq
+    - sub_nat_imp_add_eq
+    nat.nat_base:
+    - add_assoc
+    - add_cancels_right
+    - add_comm
+  sub_nat_eq:
+    int.int_base:
+    - neg_sub_nat
+    - sub_nat_eq_helper
+    nat.nat_base:
+    - Nat.lte
+    - lt_diff
+    - lt_or_lte
+  sub_nat_eq_helper:
+    int.int_base:
+    - sub_nat_add_left
+    nat.nat_base:
+    - Nat.lte
+    - add_assoc
+    - add_cancels_left
+    - add_comm
+  sub_nat_imp_add:
+    int.int_base:
+    - Int.from_nat
+    - from_eq_neg_from
+    - sub_nat_add_right
+    - sub_nat_eq_helper
+    - sub_nat_zero_right
+    nat.nat_base:
+    - Nat.add
+    - Nat.lte
+    - add_zero_right
+    - lt_diff
+    - lt_or_lte
+  sub_nat_imp_add_eq:
+    int.int_base:
+    - neg_sub_nat
+    - sub_nat_imp_add_eq_helper
+    nat.nat_base:
+    - Nat.lte
+    - lt_diff
+    - lt_or_lte
+  sub_nat_imp_add_eq_helper:
+    int.int_base:
+    - sub_nat
+    - sub_nat_eq_helper
+    - sub_nat_imp_add
+    - sub_nat_zero_right
+    nat.nat_base:
+    - add_assoc
+    - add_cancels_right
+    - add_comm
+    - add_zero_right
+  sub_nat_negate_imp_add:
+    int.int_base:
+    - abs
+    - from_eq_neg_from
+    - neg_sub_nat
+    - sub_nat
+    - sub_nat_add_right
+    - sub_nat_eq_helper
+    - sub_nat_imp_add
+    - sub_nat_zero_left
+    - sub_nat_zero_right
+    nat.nat_base:
+    - Nat.add
+    - Nat.lte
+    - add_zero_right
+    - lt_diff
+    - lt_or_lte
+  sub_nat_parts:
+    int.int_base:
+    - Int.is_negative
+    - neg_part
+    - neg_sub_nat
+    - non_pos_is_neg_abs
+    - pos_is_not_neg
+    - pos_part
+    - sub_nat_zero_left
+    - sub_nat_zero_right
+  sub_nat_self:
+    int.int_base:
+    - Int.0
+    - sub_nat
+    nat.nat_base:
+    - lte_ref
+    - sub_self
+  sub_nat_zero_left:
+    int.int_base:
+    - Int.0
+    - neg_zero
+    - sub_nat
+    - sub_nat_zero_right
+    nat.nat_base:
+    - only_zero_lte_zero
+    - sub_zero
+  sub_nat_zero_right:
+    int.int_base:
+    - sub_nat
+    nat.nat_base:
+    - Nat.lte
+    - add_zero_left
+    - sub_zero
+  sub_negate_imp_add:
+    add_group:
+    - inverse_inverse
+    add_monoid:
+    - AddMonoid.add_identity_right
+    int.int_base:
+    - neg_sub
+    - sub_imp_add
+  sub_self:
+    add_group:
+    - AddGroup.inverse_right
+    - AddGroup.sub
+  sub_zero_left:
+    add_group:
+    - AddGroup.sub
+    add_monoid:
+    - AddMonoid.add_identity_right
+    int.int_base:
+    - add_comm
+  sub_zero_right:
+    add_group:
+    - AddGroup.sub
+    add_monoid:
+    - AddMonoid.add_identity_right
+    int.int_base:
+    - neg_zero
+  zero_not_neg:
+    int.int_base:
+    - Int.0
+    - Int.is_negative
+    - abs_zero
+  zero_not_pos:
+    int.int_base:
+    - Int.is_positive
+    - neg_zero
+    - zero_not_neg

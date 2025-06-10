@@ -1,5 +1,5 @@
-dependencies: 3805076183642553410
-content: 13068187078094773685
+dependencies: 3201811392375833995
+content: 3156160668184198254
 blocks:
   '16':
     rat:
@@ -93,12 +93,21 @@ blocks:
     - zero_minus
   abs_of_div:
     rat:
+    - Rat.div
     - abs_div
+    - abs_mul_abs
     - abs_non_pos
+    - add_div_distrib
+    - add_zero_left
+    - cancel_positivity_left
     - div_zero
     - not_lt_both_ways
     - pos_imp_zero_lt
+    - sub_self
     - sub_zero
+    - three_is_positive
+    - three_thirds
+    - times_three
     - zero_minus
   abs_reduce_left:
     int:
@@ -129,10 +138,11 @@ blocks:
     - sub_zero
   add_assoc:
     int:
-    - add_assoc
     - mul_assoc
-    - mul_comm
     - mul_zero_imp_factor_zero
+    int.int_base:
+    - add_assoc
+    - mul_comm
     rat:
     - add_reduced_same_denom
     - denom_nonzero
@@ -141,13 +151,13 @@ blocks:
   add_cancels_sub:
     add_group:
     - AddGroup.sub
-    rat:
-    - add_assoc
-    - add_comm
-    - add_inv_cancels_left
-    - add_zero_left
+    - inverse_left
+    add_monoid:
+    - AddMonoid.add_identity_right
+    add_semigroup:
+    - AddSemigroup.add_associative
   add_comm:
-    int:
+    int.int_base:
     - add_comm
     - mul_comm
     rat:
@@ -163,7 +173,7 @@ blocks:
     - half_plus_half
     - times_two
   add_int_eq_int_add:
-    int:
+    int.int_base:
     - add_comm
     - add_zero_left
     - mul_one_left
@@ -185,7 +195,7 @@ blocks:
   add_inv_cancels_right:
     add_group:
     - AddGroup.sub
-    int:
+    int.int_base:
     - add_comm
     - mul_neg_left
     - sub_self
@@ -204,8 +214,9 @@ blocks:
     - sub_add_quasi_cancel
   add_pos_pos:
     int:
-    - add_pos_nonneg
     - mul_pos_pos
+    int.int_base:
+    - add_pos_nonneg
     - pos_is_not_neg
     rat:
     - Rat.add
@@ -214,8 +225,9 @@ blocks:
     - reduce_pos_pos
   add_reduce_right:
     int:
-    - Int.add
     - mul_assoc
+    int.int_base:
+    - Int.add
     - mul_comm
     - mul_distrib_right
     - mul_zero_right
@@ -225,18 +237,19 @@ blocks:
     - unreduce_right
   add_reduced:
     int:
-    - add_comm
     - mul_assoc
+    - mul_zero_imp_factor_zero
+    int.int_base:
+    - add_comm
     - mul_comm
     - mul_distrib_right
-    - mul_zero_imp_factor_zero
     - mul_zero_right
     rat:
     - add_reduce_right
     - reduce_cancels_right
     - unreduce_right
   add_reduced_same_denom:
-    int:
+    int.int_base:
     - mul_comm
     - mul_distrib_right
     rat:
@@ -245,7 +258,7 @@ blocks:
     - reduce
     - reduce_cancels_right
   add_zero_left:
-    int:
+    int.int_base:
     - add_comm
     - mul_one_left
     - mul_one_right
@@ -255,7 +268,7 @@ blocks:
     - add_zero_right
     - zero_denom
   add_zero_right:
-    int:
+    int.int_base:
     - add_comm
     - add_zero_right
     - mul_comm
@@ -283,6 +296,8 @@ blocks:
     - lte_lt_trans
     - trichotomy
   bounds_imp_close:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
     add_group:
     - AddGroup.sub
     rat:
@@ -291,7 +306,6 @@ blocks:
     - Rat.is_close
     - abs_non_neg
     - add_cancels_sub
-    - add_comm
     - lt_cancel_add_right
     - minus_cancels_plus
     - neg_sub
@@ -308,6 +322,8 @@ blocks:
     - mul_zero_right
     - not_pos_and_neg
     - single_trichotomy
+    - sub_self
+    - sub_zero
   cancel_positivity_right:
     rat:
     - cancel_positivity_left
@@ -325,13 +341,14 @@ blocks:
     - neg_abs
     - neg_sub
   close_imp_bounds:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
     add_group:
     - AddGroup.sub
     rat:
     - Rat.gt
     - Rat.is_close
     - add_cancels_sub
-    - add_comm
     - close_comm
     - lt_add_right
     - lte_abs
@@ -358,8 +375,9 @@ blocks:
     - zero_minus
   common_denom:
     int:
-    - mul_comm
     - mul_zero_imp_factor_zero
+    int.int_base:
+    - mul_comm
     rat:
     - denom_nonzero
     - reduce_cancels_right
@@ -373,6 +391,7 @@ blocks:
     - gcd_comm
     - member_abs_pos
     - mul_cancel_right
+    int.int_base:
     - zero_not_pos
     nat.nat_base:
     - divides_symm
@@ -393,6 +412,7 @@ blocks:
     int:
     - mul_assoc
     - mul_cancel_right
+    int.int_base:
     - mul_comm
     rat:
     - cross_equals
@@ -407,8 +427,9 @@ blocks:
     int:
     - Int.gt
     - gcd_one_right
-    - one_pos
     - zero_lt_pos
+    int.int_base:
+    - one_pos
     rat:
     - is_reduced
   denom_positive:
@@ -416,6 +437,7 @@ blocks:
     - Int.gt
     - Int.lt
     - exp_one
+    int.int_base:
     - mul_one_left
     - sub_zero_right
     rat:
@@ -434,7 +456,7 @@ blocks:
     - sub_distrib
     - triangle_ineq
   distrib_left:
-    int:
+    int.int_base:
     - mul_distrib_left
     rat:
     - add_reduced_same_denom
@@ -446,7 +468,7 @@ blocks:
     - distrib_left
     - mul_comm
   div_from_int:
-    int:
+    int.int_base:
     - mul_comm
     - mul_one_left
     - mul_one_right
@@ -457,9 +479,11 @@ blocks:
     - from_int_denom
     - from_int_num
     - mul_comm
+    - mul_one_right
     - mul_reduced
-    - mul_reduced_int_right
+    - mul_reduced_int_left
     - reduce_idempotent
+    - reduce_one_one
   div_neg_neg:
     rat:
     - Rat.div
@@ -480,7 +504,7 @@ blocks:
     - neg_sub
     - pos_ne_zero
     - rat_neg_one
-    - reduce_idempotent
+    - reduce_one_one
     - sub_zero
     - times_two
     - zero_denom
@@ -515,6 +539,7 @@ blocks:
     - division_theorem
     - lt_add_left
     - lte_add_left
+    int.int_base:
     - mul_comm
     - mul_distrib_right
     - mul_one_left
@@ -537,7 +562,7 @@ blocks:
     - not_lt_self
     - pos_imp_zero_lt
   from_int_cancel:
-    int:
+    int.int_base:
     - sub_nat_parts
     rat:
     - from_int_num
@@ -552,7 +577,7 @@ blocks:
     - Rat.num
     - denom_one_is_reduced
   from_nat_nonneg:
-    int:
+    int.int_base:
     - Int.0
     - abs_neg_nat
     - neg_from_nat
@@ -568,6 +593,7 @@ blocks:
     - Rat.from_nat
     - Rat.gt
     - Rat.lte
+    - from_int_num
     - nat_lt_imp_rat_lt
   gt_cancel_pos_mul_left:
     rat:
@@ -662,7 +688,7 @@ blocks:
     - pos_reciprocal
   iop_mul_lt_one:
     rat:
-    - Rat.lt
+    - Rat.gt
     - add_comm
     - distrib_left
     - iop_ne_zero
@@ -719,26 +745,30 @@ blocks:
     - mul_pos_pos
     - trichotomy
   lt_add_pos:
-    add_group:
-    - AddGroup.sub
-    rat:
-    - Rat.lt
-    - add_assoc
-    - add_cancels_sub
-    - add_comm
-    - add_inv_cancels_left
-    - sub_zero
-  lt_add_right:
     add_comm_semigroup:
     - AddCommSemigroup.commutative
     add_group:
     - AddGroup.sub
-    - inverse_add
+    - inverse_left
+    add_monoid:
+    - AddMonoid.add_identity_right
+    add_semigroup:
+    - AddSemigroup.add_associative
     rat:
     - Rat.lt
-    - add_assoc
-    - add_inv_cancels_right
-    - add_zero_left
+  lt_add_right:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    add_group:
+    - AddGroup.inverse_right
+    - AddGroup.sub
+    - inverse_add
+    add_monoid:
+    - AddMonoid.add_identity_right
+    add_semigroup:
+    - AddSemigroup.add_associative
+    rat:
+    - Rat.lt
   lt_both_pos:
     rat:
     - Rat.gt
@@ -800,6 +830,7 @@ blocks:
   lt_imp_rat_between:
     rat:
     - Rat.div
+    - Rat.lt
     - add_comm
     - distrib_right
     - half_plus_half
@@ -836,9 +867,11 @@ blocks:
     - Rat.gt
     - Rat.lt
     - distrib_right
+    - gt_minus_pos
     - mul_pos_pos
     - neg_mul
     - pos_imp_zero_lt
+    - sub_self
     - sub_zero
   lt_neg:
     add_comm_semigroup:
@@ -861,7 +894,7 @@ blocks:
     - sub_distrib
     - zero_lte_abs
   lt_pos_reciprocal:
-    int:
+    int.int_base:
     - zero_not_pos
     rat:
     - Rat.0
@@ -878,7 +911,7 @@ blocks:
     - pos_reciprocal
     - trichotomy
   lt_rhs_div_pos:
-    int:
+    int.int_base:
     - zero_not_pos
     rat:
     - Rat.0
@@ -909,15 +942,11 @@ blocks:
     - add_cancels_sub
     - add_pos_pos
   lt_zero_imp_neg:
-    int:
-    - Int.is_positive
-    - neg_neg
+    add_group:
+    - inverse_inverse
     rat:
-    - Rat.is_negative
-    - Rat.is_positive
     - Rat.lt
-    - Rat.new
-    - neg_num
+    - neg_pos_is_neg
     - zero_minus
   lte_abs:
     rat:
@@ -946,6 +975,7 @@ blocks:
   lte_from_int_mul_denom:
     int:
     - Int.lte
+    int.int_base:
     - mul_one_right
     - one_neq_zero
     rat:
@@ -962,6 +992,7 @@ blocks:
     - lt_trans
   lte_mul_lte:
     rat:
+    - Rat.gte
     - Rat.lte
     - lt_lte_trans
     - lt_pos_mul_lt_pos
@@ -992,12 +1023,12 @@ blocks:
     - trichotomy
   minus_cancels_plus:
     add_group:
+    - AddGroup.inverse_right
     - AddGroup.sub
-    rat:
-    - add_assoc
-    - add_cancels_sub
-    - add_inv_cancels_right
-    - sub_zero
+    add_monoid:
+    - AddMonoid.add_identity_right
+    add_semigroup:
+    - AddSemigroup.add_associative
   mul_assoc:
     int:
     - mul_assoc
@@ -1023,7 +1054,7 @@ blocks:
     - mul_inv_cancels_right
     - mul_one_left
   mul_comm:
-    int:
+    int.int_base:
     - mul_comm
     rat:
     - Rat.mul
@@ -1055,7 +1086,7 @@ blocks:
     - mul_comm
     - recip_mul
   mul_int_eq_int_mul:
-    int:
+    int.int_base:
     - add_zero_left
     - mul_comm
     - mul_one_left
@@ -1072,7 +1103,7 @@ blocks:
     - mul_comm
     - zero_denom
   mul_int_left:
-    int:
+    int.int_base:
     - mul_comm
     rat:
     - mul_comm
@@ -1082,7 +1113,7 @@ blocks:
     - mul_comm
     - mul_int_right_cancel
   mul_int_right:
-    int:
+    int.int_base:
     - mul_comm
     - mul_one_left
     rat:
@@ -1096,6 +1127,7 @@ blocks:
     - mul_assoc
     - mul_cancel_left
     - mul_cancel_right
+    int.int_base:
     - mul_comm
     rat:
     - cross_eq_imp_eq
@@ -1109,8 +1141,9 @@ blocks:
     - mul_inv_cancels_right
   mul_inv_cancels_right:
     int:
-    - mul_comm
     - mul_zero_imp_factor_zero
+    int.int_base:
+    - mul_comm
     rat:
     - Rat.reciprocal
     - denom_nonzero
@@ -1145,7 +1178,7 @@ blocks:
     - mul_lt_lte
     - pos_lte
   mul_neg_neg:
-    int:
+    int.int_base:
     - neg_neg
     rat:
     - Rat.is_negative
@@ -1167,7 +1200,7 @@ blocks:
     - mul_comm
     - mul_neg_one_right
   mul_neg_one_right:
-    int:
+    int.int_base:
     - mul_neg_right
     - mul_one_right
     rat:
@@ -1180,6 +1213,7 @@ blocks:
     - neg_num
     - rat_neg_one
     - reduce_idempotent
+    - zero_denom
   mul_neg_pos:
     rat:
     - Rat.lt
@@ -1207,7 +1241,7 @@ blocks:
     - mul_comm
     - mul_one_right
   mul_one_right:
-    int:
+    int.int_base:
     - mul_one_left
     rat:
     - Rat.1
@@ -1217,6 +1251,7 @@ blocks:
     - from_int_num
     - mul_comm
     - reduce_idempotent
+    - zero_denom
   mul_pos_neg:
     rat:
     - mul_comm
@@ -1230,7 +1265,7 @@ blocks:
     - denom_positive
     - reduce_pos_pos
   mul_reduced:
-    int:
+    int.int_base:
     - mul_zero_left
     rat:
     - mul_comm
@@ -1239,14 +1274,14 @@ blocks:
     - mul_zero_right
     - reduce
   mul_reduced_degen:
-    int:
+    int.int_base:
     - mul_comm
     - mul_zero_left
     rat:
     - mul_zero_right
     - reduce
   mul_reduced_int_left:
-    int:
+    int.int_base:
     - mul_comm
     rat:
     - mul_comm
@@ -1254,6 +1289,7 @@ blocks:
   mul_reduced_int_right:
     int:
     - mul_assoc
+    int.int_base:
     - mul_comm
     - mul_zero_left
     rat:
@@ -1270,9 +1306,11 @@ blocks:
   mul_reduced_nondegen:
     int:
     - mul_assoc
-    - mul_comm
     - mul_zero_imp_factor_zero
+    int.int_base:
+    - mul_comm
     - mul_zero_left
+    - mul_zero_right
     rat:
     - Rat.mul
     - cross_eq_imp_reduce_eq
@@ -1292,7 +1330,7 @@ blocks:
     - not_pos_and_neg
     - zero_minus
   mul_zero_right:
-    int:
+    int.int_base:
     - mul_zero_right
     rat:
     - Rat.0
@@ -1328,8 +1366,9 @@ blocks:
     - zero_minus
   neg_is_reduced:
     int:
-    - abs_neg
     - gcd
+    int.int_base:
+    - abs_neg
     rat:
     - Rat.constraint
     - is_reduced
@@ -1338,7 +1377,7 @@ blocks:
     - mul_assoc
     - mul_neg_one_left
   neg_neg_is_pos:
-    int:
+    int.int_base:
     - Int.is_positive
     - neg_neg
     rat:
@@ -1351,7 +1390,7 @@ blocks:
     - Rat.num
     - neg_is_reduced
   neg_pos_is_neg:
-    int:
+    int.int_base:
     - Int.is_positive
     rat:
     - Rat.is_negative
@@ -1369,18 +1408,12 @@ blocks:
     - recip_recip
     - single_trichotomy
   neg_sub:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
     add_group:
     - AddGroup.sub
-    int:
-    - neg_neg
-    rat:
-    - Rat.neg
-    - Rat.new
-    - add_comm
-    - distrib_right
-    - mul_neg_one_right
-    - neg_denom
-    - neg_num
+    - inverse_add
+    - inverse_inverse
   no_greatest:
     rat:
     - half_is_pos
@@ -1396,7 +1429,7 @@ blocks:
     - lt_trans
     - not_lt_self
   not_lt_self:
-    int:
+    int.int_base:
     - zero_not_pos
     rat:
     - Rat.0
@@ -1406,20 +1439,17 @@ blocks:
     - from_int_num
     - sub_self
   not_pos_and_neg:
-    int:
+    int.int_base:
     - pos_is_not_neg
     rat:
     - Rat.is_negative
     - Rat.is_positive
   one_is_pos:
-    int:
+    int.int_base:
     - one_pos
     rat:
-    - Rat.1
-    - Rat.is_positive
-    - Rat.new
-    - from_int_num
-    - rat_neg_one
+    - reduce_one_one
+    - reduce_pos_pos
   pos_imp_zero_lt:
     rat:
     - Rat.lt
@@ -1433,7 +1463,7 @@ blocks:
     - Rat.gte
     - pos_inverses_lte
   pos_inverses_lt:
-    int:
+    int.int_base:
     - zero_not_pos
     rat:
     - Rat.0
@@ -1448,8 +1478,14 @@ blocks:
     - mul_cancels_div
     - mul_comm
   pos_inverses_lte:
+    int.int_base:
+    - zero_not_pos
     rat:
+    - Rat.0
+    - Rat.from_int
+    - Rat.is_positive
     - Rat.lte
+    - from_int_num
     - inverses_eq
     - not_lt_self
     - pos_imp_zero_lt
@@ -1464,8 +1500,9 @@ blocks:
     int:
     - div_pos_imp_lte
     - divides
-    - mul_comm
     - mul_pos_pos
+    int.int_base:
+    - mul_comm
     rat:
     - Rat.is_positive
     - denom_positive
@@ -1510,6 +1547,7 @@ blocks:
     - from_int_num
     - neg_denom
     - neg_num
+    - reduce_idempotent
   rat_total:
     rat:
     - Rat.gt
@@ -1525,6 +1563,7 @@ blocks:
     - mul_one_left
   recip_mul:
     rat:
+    - Rat.0
     - Rat.div
     - Rat.new
     - Rat.reciprocal
@@ -1543,9 +1582,13 @@ blocks:
     - zero_num
   recip_recip:
     rat:
+    - Rat.div
     - Rat.reciprocal
+    - add_div_distrib
     - reciprocal_inverts
     - reduce
+    - three_thirds
+    - times_three
     - zero_num
   reciprocal_inverts:
     rat:
@@ -1558,13 +1601,9 @@ blocks:
     - mul_zero_right
   reduce:
     int:
-    - Int.1
     - Int.gt
-    - Int.is_negative
     - Int.lte
     - abs_alt_decomp
-    - abs_from_nat
-    - abs_zero
     - abs_zero_imp_zero
     - cofactor
     - divides
@@ -1575,12 +1614,17 @@ blocks:
     - is_unit
     - mul_assoc
     - mul_cancel_right
-    - mul_comm
-    - mul_zero_left
     - nonpos_lte_nonneg
     - one_exp
     - sq_eq_mul
     - unit_sign_is_unit
+    int.int_base:
+    - Int.1
+    - Int.is_negative
+    - abs_from_nat
+    - abs_zero
+    - mul_comm
+    - mul_zero_left
     - zero_not_pos
     rat:
     - Rat.denom
@@ -1591,6 +1635,7 @@ blocks:
   reduce_abs:
     int:
     - Int.abs
+    int.int_base:
     - Int.is_negative
     - abs_from_nat
     - sub_nat_zero_right
@@ -1600,7 +1645,7 @@ blocks:
     - abs_reduce_right
     - reduce_nonneg
   reduce_cancels_left:
-    int:
+    int.int_base:
     - mul_comm
     - neg_neg
     rat:
@@ -1608,8 +1653,9 @@ blocks:
   reduce_cancels_right:
     int:
     - mul_assoc
-    - mul_comm
     - mul_zero_imp_factor_zero
+    int.int_base:
+    - mul_comm
     - mul_zero_left
     rat:
     - cross_eq_imp_reduce_eq
@@ -1627,7 +1673,7 @@ blocks:
     - denom_nonzero
     - reduce
   reduce_lte:
-    int:
+    int.int_base:
     - nonzero_pos_or_neg
     rat:
     - Rat.is_positive
@@ -1642,7 +1688,7 @@ blocks:
     - reduce
     - reduce_self
   reduce_neg_denom:
-    int:
+    int.int_base:
     - add_eq_zero
     - add_neg
     - mul_neg_left
@@ -1663,7 +1709,7 @@ blocks:
     - reduce_idempotent
     - zero_denom
   reduce_neg_num:
-    int:
+    int.int_base:
     - mul_neg_left
     - mul_one_left
     rat:
@@ -1671,7 +1717,7 @@ blocks:
     - mul_reduced_int_left
     - rat_neg_one
   reduce_nonneg:
-    int:
+    int.int_base:
     - neg_sub
     - nonzero_pos_or_neg
     - sub_zero_right
@@ -1687,8 +1733,14 @@ blocks:
     - reduce_zero_num
     - sub_zero
     - zero_minus
+  reduce_one_one:
+    rat:
+    - Rat.1
+    - from_int_denom
+    - from_int_num
+    - reduce_idempotent
   reduce_pos_pos:
-    int:
+    int.int_base:
     - mul_nonneg_nonpos_nonpos
     - mul_nonpos_nonneg_nonpos
     - pos_is_not_neg
@@ -1698,22 +1750,17 @@ blocks:
     - denom_positive
     - unreduce_right
   reduce_self:
-    int:
-    - exp_one
+    int.int_base:
     - mul_comm
-    - mul_one_left
     - one_neq_zero
     rat:
     - Rat.1
     - Rat.from_int
-    - Rat.new
+    - cross_eq_imp_reduce_eq
     - cross_equals
-    - from_int_denom
-    - from_int_num
-    - reduce_cancels_left
-    - reduce_idempotent
+    - reduce_one_one
   reduce_zero_num:
-    int:
+    int.int_base:
     - mul_one_right
     - mul_zero_left
     - one_neq_zero
@@ -1727,7 +1774,7 @@ blocks:
     - reduce_idempotent
     - zero_denom
   single_trichotomy:
-    int:
+    int.int_base:
     - nonzero_pos_or_neg
     rat:
     - Rat.is_negative
@@ -1735,7 +1782,8 @@ blocks:
     - reduce_idempotent
     - reduce_zero_num
   smaller_int_reciprocal:
-    int:
+    int.int_base:
+    - neg_from_nat
     - non_pos_is_neg_abs
     - zero_not_pos
     rat:
@@ -1788,14 +1836,18 @@ blocks:
     add_group:
     - AddGroup.sub
     - inverse_add
-    rat:
-    - add_assoc
+    add_semigroup:
+    - AddSemigroup.add_associative
   sub_add_quasi_cancel:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
     add_group:
+    - AddGroup.inverse_right
     - AddGroup.sub
+    - inverse_add
+    add_semigroup:
+    - AddSemigroup.add_associative
     rat:
-    - add_assoc
-    - add_inv_cancels_right
     - distrib_left
     - mul_neg_one_left
     - zero_minus
@@ -1815,12 +1867,12 @@ blocks:
     add_group:
     - AddGroup.sub
     rat:
-    - Rat.from_int
-    - Rat.neg
-    - Rat.new
     - add_int_eq_int_add
-    - from_int_denom
-    - from_int_num
+    - mul_int_eq_int_mul
+    - mul_neg_one_left
+    - rat_neg_one
+    ring:
+    - mul_neg_one_left
   sub_self:
     add_group:
     - AddGroup.inverse_right
@@ -1832,7 +1884,7 @@ blocks:
     - AddGroup.sub
     add_monoid:
     - AddMonoid.add_identity_right
-    int:
+    int.int_base:
     - neg_zero
     rat:
     - Rat.0
@@ -1841,7 +1893,7 @@ blocks:
     - from_int_num
     - zero_denom
   three_is_positive:
-    int:
+    int.int_base:
     - Int.3
     - pos_part
     - pos_part_from
@@ -1862,7 +1914,7 @@ blocks:
     - three_is_positive
     - times_three
   times_three:
-    int:
+    int.int_base:
     - Int.1
     - Int.2
     - Int.3
@@ -1882,8 +1934,9 @@ blocks:
     - times_two
   times_two:
     int:
-    - mul_one_left
     - times_two
+    int.int_base:
+    - mul_one_left
     rat:
     - Rat.2
     - add_reduced_same_denom
@@ -1892,20 +1945,23 @@ blocks:
   triangle_ineq:
     int:
     - Int.abs
+    - member_triangle
+    int.int_base:
     - Int.is_negative
     - abs_from_nat
-    - member_triangle
     rat:
     - add_reduced_same_denom
     - common_denom
     - reduce_abs
     - reduce_lte
   trichotomy:
+    add_monoid:
+    - AddMonoid.add_identity_right
     rat:
     - Rat.gt
     - Rat.lt
     - add_cancels_sub
-    - add_zero_left
+    - add_comm
     - neg_imp_lt_zero
     - neg_neg_is_pos
     - neg_sub
@@ -1919,10 +1975,11 @@ blocks:
     - times_two
   two_neq_zero:
     int:
+    - one_plus_one
+    int.int_base:
     - Int.2
     - abs_from_nat
     - abs_zero
-    - one_plus_one
     nat.nat_base:
     - one_plus_two
     - two_neq_zero
@@ -1932,7 +1989,7 @@ blocks:
     - Rat.from_int
     - from_int_num
   unreduce_left:
-    int:
+    int.int_base:
     - mul_comm
     rat:
     - unreduce_right
@@ -1943,6 +2000,7 @@ blocks:
     - gcd_comm
     - mul_assoc
     - mul_cancel_right
+    int.int_base:
     - mul_comm
     rat:
     - Rat.constraint

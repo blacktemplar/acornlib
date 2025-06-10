@@ -99,7 +99,8 @@ theorem gt_is_dedekind_cut(r: Rat) {
     gt_has_no_greatest(r)
 }
 
-// Real numbers are defined by a function of which rationals they are greater than.
+/// Real numbers are defined by a Dedekind cut. Specifically, using the `gt_rat` function which
+/// specifies which rationals they are greater than.
 structure Real {
     gt_rat: Rat -> Bool
 } constraint {

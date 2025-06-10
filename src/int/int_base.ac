@@ -31,16 +31,27 @@ theorem abs_from_nat(n: Nat) {
 }
 
 attributes Int {
+    /// The integer zero.
     let 0: Int = Int.from_nat(Nat.0)
+    /// The integer one.
     let 1: Int = Int.from_nat(Nat.1)
+    /// The integer two.
     let 2: Int = Int.from_nat(Nat.2)
+    /// The integer three.
     let 3: Int = Int.from_nat(Nat.3)
+    /// The integer four.
     let 4: Int = Int.from_nat(Nat.4)
+    /// The integer five.
     let 5: Int = Int.from_nat(Nat.5)
+    /// The integer six.
     let 6: Int = Int.from_nat(Nat.6)
+    /// The integer seven.
     let 7: Int = Int.from_nat(Nat.7)
+    /// The integer eight.
     let 8: Int = Int.from_nat(Nat.8)
+    /// The integer nine.
     let 9: Int = Int.from_nat(Nat.9)
+    /// The integer ten.
     let 10: Int = Int.from_nat(Nat.10)
 }
 
@@ -83,6 +94,7 @@ theorem abs_neg_nat(n: Nat) {
 }
 
 attributes Int {
+    /// The negation of an integer.
     define neg(self) -> Int {
         match self {
             Int.from_nat(n) {
@@ -396,10 +408,12 @@ theorem sub_nat_double_cancel_right(p: Nat, q: Nat, r: Nat, s: Nat, t: Nat) {
 // represent each integer as a sub_nat, and start defining useful functions on integers.
 
 attributes Int {
+    /// True if the integer is negative.
     define is_negative(self) -> Bool {
         self != Int.from_nat(abs(self))
     }
 
+    /// True if the integer is positive.
     define is_positive(self) -> Bool {
         (-self).is_negative
     }
@@ -512,6 +526,7 @@ theorem add_part_sub_nat(r: Nat, s: Nat) { r + neg_part(sub_nat(r, s)) = s + pos
 // Addition, and theorems about addition
 
 attributes Int {
+    /// The sum of two integers.
     define add(self, other: Int) -> Int {
         sub_nat(pos_part(self) + pos_part(other), neg_part(self) + neg_part(other))
     }
@@ -946,6 +961,7 @@ theorem mul_nat_from_nat_left(a: Nat, b: Nat) { mul_nat(Int.from_nat(a), b) = In
 // Integer-integer multiplication
 
 attributes Int {
+    /// The product of two integers.
     define mul(self, n: Int) -> Int {
         if n.is_positive {
             mul_nat(self, abs(n))
@@ -954,6 +970,7 @@ attributes Int {
         }
     }
 
+    /// The integer formed by appending a digit to this integer in base 10.
     define read(self, other: Int) -> Int { 10 * self + other }
 }
 
