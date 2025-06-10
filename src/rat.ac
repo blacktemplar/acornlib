@@ -22,6 +22,7 @@ structure Rat {
 }
 
 attributes Rat {
+    /// The rational zero.
     let 0: Rat = Rat.new(Int.0, Int.1)
 }
 
@@ -46,6 +47,7 @@ theorem denom_positive(r: Rat) {
 }
 
 attributes Rat {
+    /// Converts an integer to a rational number.
     let from_int = function(n: Int) {
         Rat.new(n, Int.1)
     }
@@ -156,48 +158,66 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
 }
 
 attributes Rat {
+    /// The rational one.
     let 1: Rat = Rat.from_int(Int.1)
+    /// The rational two.
     let 2: Rat = Rat.from_int(Int.2)
+    /// The rational three.
     let 3: Rat = Rat.from_int(Int.3)
+    /// The rational four.
     let 4: Rat = Rat.from_int(Int.4)
+    /// The rational five.
     let 5: Rat = Rat.from_int(Int.5)
+    /// The rational six.
     let 6: Rat = Rat.from_int(Int.6)
+    /// The rational seven.
     let 7: Rat = Rat.from_int(Int.7)
+    /// The rational eight.
     let 8: Rat = Rat.from_int(Int.8)
+    /// The rational nine.
     let 9: Rat = Rat.from_int(Int.9)
+    /// The rational ten.
     let 10: Rat = Rat.from_int(Int.10)
 
+    /// True if the rational is positive.
     define is_positive(self) -> Bool {
         self.num.is_positive
     }
 
+    /// True if the rational is negative.
     define is_negative(self) -> Bool {
         self.num.is_negative
     }
 
+    /// The negation of a rational number.
     define neg(self) -> Rat {
         Rat.new(-self.num, self.denom)
     }
 
+    /// The sum of two rational numbers.
     define add(self, other: Rat) -> Rat {
         reduce(self.num * other.denom + other.num * self.denom,
                self.denom * other.denom)
     }
 
+    /// The product of two rational numbers.
     define mul(self, other: Rat) -> Rat {
         reduce(self.num * other.num, self.denom * other.denom)
     }
 
-    // This defines the reciprocal of zero to be zero
+    /// The reciprocal of a rational number (1/x).
+    /// The reciprocal of zero is defined to be zero.
     define reciprocal(self) -> Rat {
         reduce(self.denom, self.num)
     }
 
-    // This is the weird version where dividing by zero gives you zero
+    /// The quotient of two rational numbers.
+    /// Division by zero is defined to yield zero.
     define div(self, other: Rat) -> Rat {
         self * other.reciprocal
     }
 
+    /// The rational formed by appending a digit to this rational in base 10.
     define read(self, other: Rat) -> Rat { Rat.10 * self + other }
 }
 
@@ -657,18 +677,22 @@ from add_comm_group import AddCommGroup
 instance Rat: AddCommGroup
 
 attributes Rat {
+    /// True if this rational is less than the other.
     define lt(self, other: Rat) -> Bool {
         (other - self).is_positive
     }
 
+    /// True if this rational is less than or equal to the other.
     define lte(self, other: Rat) -> Bool {
         self < other or self = other
     }
 
+    /// True if this rational is greater than the other.
     define gt(self, other: Rat) -> Bool {
         other < self
     }
 
+    /// True if this rational is greater than or equal to the other.
     define gte(self, other: Rat) -> Bool {
         other <= self
     }
@@ -913,6 +937,7 @@ theorem lt_add_pos(a: Rat, b: Rat) {
 }
 
 attributes Rat {
+    /// The absolute value of a rational number.
     define abs(self) -> Rat {
         if self.is_negative {
             -self
@@ -1601,6 +1626,7 @@ theorem lt_rhs_div_pos(a: Rat, b: Rat, c: Rat) {
 }
 
 attributes Rat {
+    /// True if the absolute difference between two rationals is less than epsilon.
     define is_close(self, other: Rat, eps: Rat) -> Bool {
         (self - other).abs < eps
     }
