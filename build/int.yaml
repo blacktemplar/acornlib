@@ -1,4 +1,4 @@
-dependencies: 5223943975793833156
+dependencies: 5351217709382731224
 content: 11497615271765792959
 blocks:
   Int.LinearOrder:
@@ -95,7 +95,6 @@ blocks:
     - neg_zero
     nat.nat_gcd:
     - cofactor
-    - gcd_nonzero_right
   div_abs:
     int:
     - abs_alt_decomp
@@ -676,11 +675,7 @@ blocks:
     - nonpos_lt_pos
     int.int_base:
     - Int.is_positive
-    - add_comm
-    - add_zero_left
-    - add_zero_right
     - mul_one_left
-    - neg_neg
     - neg_sub
     - nonzero_pos_or_neg
     - pos_is_not_neg
@@ -944,8 +939,6 @@ blocks:
     - lt_not_symm
     - lt_or_lte
   triangle_nonpos_lte_nonneg:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
     add_semigroup:
     - AddSemigroup.add_associative
     int.int_base:

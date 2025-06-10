@@ -2,8 +2,19 @@ import nat.nat_base
 import nat.nat_gcd
 from nat import Nat
 
-/// Integer numbers including negative values.
-/// Represented as either a natural number or the negation of a successor.
+/// The `Int` type represents integers.
+/// It's defined by its two constructors.
+///
+/// ```acorn
+/// inductive Int {
+///     from_nat(Nat) 
+///     neg_suc(Nat)
+/// }
+/// ```
+///
+/// `from_nat` takes a natural number to an integer, which seems intuitive.
+/// `neg_suc` takes `x` to `-(x+1)`, which is somewhat less intuitive. We do this so
+/// that every integer can be represented either as a `from_nat` or a `neg_suc`.
 inductive Int {
     // The normal x -> x map
     from_nat(Nat)
