@@ -1,7 +1,10 @@
 /// Natural numbers, the soul of arithmetic.
 /// We build natural numbers from Acorn's inherent properties of inductive types.
 inductive Nat {
+    /// Zero is a natural number, because it's much more convenient this way.
     0
+
+    /// The successor of a natural number is also a natural number.
     suc(Nat)
 }
 
@@ -17,6 +20,7 @@ attributes Nat {
     let 9: Nat = Nat.8.suc
     let 10: Nat = Nat.9.suc
 
+    /// Addition is defined recursively.
     define add(self, other: Nat) -> Nat {
         match other {
             Nat.0 {
@@ -144,6 +148,7 @@ theorem add_assoc(a: Nat, b: Nat, c: Nat) { a + b + c = a + (b + c) } by {
 }
 
 attributes Nat {
+    /// Multiplication is defined recursively.
     define mul(self, b: Nat) -> Nat {
         match b {
             Nat.0 {
@@ -155,6 +160,7 @@ attributes Nat {
         }
     }
 
+    /// The number formed by appending a digit to this one in base 10.
     define read(self, other: Nat) -> Nat {
         10 * self + other
     }
@@ -303,12 +309,16 @@ theorem mul_one_left(a: Nat) { 1 * a = a }
 // Comparisons
 
 attributes Nat {
+    /// `a <= b` if there's a naturla number that can be added to `a` to get `b`.
     define lte(self, b: Nat) -> Bool { exists(c: Nat) { self + c = b } }
 
+    /// TODO: currently we define this separately, but we could inherit it from `PartialOrder`.
     define lt(self, b: Nat) -> Bool { self <= b and self != b }
 
+    /// TODO: currently we define this separately, but we could inherit it from `PartialOrder`.
     define gt(self, b: Nat) -> Bool { b < self }
 
+    /// TODO: currently we define this separately, but we could inherit it from `PartialOrder`.
     define gte(self, b: Nat) -> Bool { b <= self }
 }
 
@@ -1036,6 +1046,10 @@ let bounded_sub(a: Nat, b: Nat) -> d: Nat satisfy {
 }
 
 attributes Nat {
+    /// Subtraction on natural numbers is defined oddly; it "caps out" at zero.
+    /// If `self < b`, then `self - b = 0`.
+    /// It would be better to define this as "not valid" on some inputs, but
+    /// the language doesn't make that convenient yet.
     define sub(self, b: Nat) -> Nat { bounded_sub(self, b) }
 }
 
