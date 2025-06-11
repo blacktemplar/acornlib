@@ -1,6 +1,8 @@
 /// An ordered pair of two values, possibly of different types.
 structure Pair<T, U> {
+    /// The first element of the pair.
     first: T
+    /// The second element of the pair.
     second: U
 }
 

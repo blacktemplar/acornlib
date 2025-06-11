@@ -1681,6 +1681,7 @@ theorem mul_rat_eq_seq(a: Nat -> Rat, b: Nat -> Rat, c: Nat -> Rat, d: Nat -> Ra
 }
 
 attributes Real {
+    /// The product of two real numbers.
     define mul(self, other: Real) -> Real {
         limit_rat(mul_rat_seq(rat_seq(self), rat_seq(other)))
     }

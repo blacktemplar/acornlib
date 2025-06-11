@@ -102,27 +102,31 @@ theorem gt_is_dedekind_cut(r: Rat) {
 /// Real numbers are defined by a Dedekind cut. Specifically, using the `gt_rat` function which
 /// specifies which rationals they are greater than.
 structure Real {
+    /// True if this real number is greater than the given rational number.
     gt_rat: Rat -> Bool
 } constraint {
     is_dedekind_cut(gt_rat)
 }
 
 attributes Real {
+    /// Converts a rational number to a real number.
     let from_rat = function(r: Rat) {
         Real.new(r.gt)
     }
 
     let 0: Real = Real.from_rat(Rat.0)
 
+    /// True if this real number is positive (greater than zero).
     define is_positive(self) -> Bool {
         self.gt_rat(Rat.0)
     }
 
+    /// True if this real number is negative (less than zero).
     define is_negative(self) -> Bool {
         self != Real.0 and not self.is_positive
     }
 
-    // For reals, <= is the comparison operator by which the others are defined.
+    /// The less-than-or-equal-to relation for real numbers.
     define lte(self, other: Real) -> Bool {
         forall(r: Rat) {
             self.gt_rat(r) implies other.gt_rat(r)
@@ -211,14 +215,17 @@ instance Real: PartialOrder {
 instance Real: LinearOrder
 
 attributes Real {
+    /// True if this real number is strictly less than the other.
     define lt(self, other: Real) -> Bool {
         self != other and self.lte(other)
     }
 
+    /// True if this real number is greater than or equal to the other.
     define gte(self, other: Real) -> Bool {
         other.lte(self)
     }
 
+    /// True if this real number is strictly greater than the other.
     define gt(self, other: Real) -> Bool {
         other.lt(self)
     }
@@ -431,6 +438,7 @@ theorem add_gt_is_dedekind_cut(z1: Real, z2: Real) {
 }
 
 attributes Real {
+    /// The sum of two real numbers.
     define add(self, other: Real) -> Real {
         Real.new(add_gt(self, other))
     }
@@ -815,6 +823,7 @@ theorem gt_some_rat(a: Real) {
 }
 
 attributes Real {
+    /// Converts an integer to a real number.
     let from_int = function(n: Int) {
         Real.from_rat(Rat.from_int(n))
     }
@@ -1183,6 +1192,7 @@ theorem neg_gt_is_dedekind_cut(a: Real) {
 }
 
 attributes Real {
+    /// The negative of this real number.
     define neg(self) -> Real {
         Real.new(neg_gt(self))
     }
@@ -1441,6 +1451,7 @@ from add_comm_group import AddCommGroup
 instance Real: AddCommGroup
 
 attributes Real {
+    /// The absolute value of this real number.
     define abs(self) -> Real {
         if self.is_negative {
             -self
@@ -1449,6 +1460,7 @@ attributes Real {
         }
     }
 
+    /// The sign of this real number as a unit value (`-1` for negative, `1` for non-negative).
     define unit_sign(self) -> Real {
         if self.is_negative {
             -Real.1
@@ -1716,6 +1728,7 @@ theorem abs_from_rat(p: Rat) {
 }
 
 attributes Real {
+    /// True if this real number is within `eps` of the other real number.
     define is_close(self, other: Real, eps: Real) -> Bool {
         (self - other).abs < eps
     }

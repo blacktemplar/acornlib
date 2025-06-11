@@ -42,6 +42,7 @@ theorem identity_subgroup_constraint<G: Group> {
 
 /// A subgroup of a group G, represented as a subset that is closed under the group operations.
 structure Subgroup<G: Group> {
+    /// True if the given element is a member of this subgroup.
     contains: G -> Bool
 } constraint {
     subgroup_constraint(contains)

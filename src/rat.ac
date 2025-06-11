@@ -15,7 +15,9 @@ theorem denom_one_is_reduced(a: Int) {
 /// Rational numbers represented as fractions in reduced form.
 /// The constraint ensures the fraction is always in lowest terms with positive denominator.
 structure Rat {
+    /// The numerator of the rational number.
     num: Int
+    /// The denominator of the rational number (always positive).
     denom: Int
 } constraint {
     is_reduced(num, denom)
@@ -1696,6 +1698,7 @@ theorem bounds_imp_close(a: Rat, b: Rat, eps: Rat) {
 }
 
 attributes Rat {
+    /// Converts a natural number to a rational number.
     let from_nat: Nat -> Rat = function(n: Nat) {
         Rat.from_int(Int.from_nat(n))
     }

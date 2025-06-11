@@ -6,6 +6,7 @@ from order import PartialOrder, LinearOrder
 /// A left-ordered group is a group with a left-invariant order.
 /// This means that if `a <= b`, then `c * a <= c * b` for any c in the group.
 typeclass G: LeftOrderedGroup extends Group, LinearOrder {
+    /// Left multiplication preserves the order relation: if `a ≤ b`, then `c * a ≤ c * b`.
     left_invariance(a: G, b: G, c: G) {
         a <= b implies c * a <= c * b
     }
@@ -75,6 +76,7 @@ theorem pow_lt_one<G: LeftOrderedGroup>(a: G, n: Nat) {
 
 /// An ordered group has both left and right invariance of the order under multiplication.
 typeclass G: OrderedGroup extends LeftOrderedGroup {
+    /// Right multiplication preserves the order relation: if `a ≤ b`, then `a * c ≤ b * c`.
     right_invariance(a: G, b: G, c: G) {
         a <= b implies a * c <= b * c
     }
