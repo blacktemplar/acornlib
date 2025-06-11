@@ -1,4 +1,4 @@
-dependencies: 17196707004170820513
+dependencies: 975617601609887171
 content: 11817594549929257069
 blocks:
   Real.Field:
@@ -6,7 +6,7 @@ blocks:
     - mul_reciprocal
     - zero_reciprocal
   mul_reciprocal:
-    rat:
+    rat.rat_base:
     - mul_inv_cancels_right
     real.real_base:
     - Real.0
@@ -30,8 +30,9 @@ blocks:
     - rat_seq_converges_to
   neg_recip_rat_seq:
     rat:
-    - Rat.div
     - div_negs_cancel
+    rat.rat_base:
+    - Rat.div
     - mul_neg_one_left
     - mul_one_left
     - neg_sub
@@ -101,29 +102,30 @@ blocks:
     - lte_imp_not_lt
     - lte_trans
     rat:
-    - Rat.is_close
     - abs_nonneg
     - abs_of_div
-    - add_half_half
-    - cancel_positivity_right
-    - close_comm
     - iop_gets_lt
     - iop_pos
     - lt_make_left_denom
     - lt_make_right_denom
     - lt_mul_lte
+    - lte_mul_lte
+    - mul_div_swap
+    - pos_ne_zero
+    - recip_diff
+    rat.rat_base:
+    - Rat.is_close
+    - add_half_half
+    - cancel_positivity_right
+    - close_comm
     - lt_trans
     - lte_abs
-    - lte_mul_lte
     - lte_trans
     - mul_comm
-    - mul_div_swap
     - mul_pos_pos
     - not_pos_and_neg
     - pos_imp_zero_lt
     - pos_lte
-    - pos_ne_zero
-    - recip_diff
     - times_two
     - two_is_pos
     - zero_lt_imp_pos

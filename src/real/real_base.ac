@@ -1,5 +1,6 @@
 from nat import Nat
 from int import Int
+import rat.rat_base
 from rat import Rat
 
 // This file contains the initial definition of real numbers, based on Dedekind cuts.
@@ -846,9 +847,9 @@ theorem gt_some_int(a: Real) {
     let r: Rat satisfy {
         a > Real.from_rat(r)
     }
-    Rat.from_int(rat.floor(r)) <= r
-    Real.from_rat(Rat.from_int(rat.floor(r))) <= Real.from_rat(r)
-    Real.from_int(rat.floor(r)) <= Real.from_rat(r)
+    Rat.from_int(rat_base.floor(r)) <= r
+    Real.from_rat(Rat.from_int(rat_base.floor(r))) <= Real.from_rat(r)
+    Real.from_int(rat_base.floor(r)) <= Real.from_rat(r)
 }
 
 theorem lt_some_int(a: Real) {

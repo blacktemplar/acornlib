@@ -1,4 +1,4 @@
-dependencies: 16160624049701573375
+dependencies: 3263879138441356726
 content: 6205175164476790830
 blocks:
   flip_flip:
@@ -79,7 +79,7 @@ blocks:
     - sup_cut_is_lower
     - sup_cut_not_has_greatest
   sup_cut_is_lower:
-    rat:
+    rat.rat_base:
     - Rat.lte
     real.real_base:
     - Real.gt
@@ -92,7 +92,7 @@ blocks:
     - is_upper_bound
     - sup_cut
   sup_cut_not_has_greatest:
-    rat:
+    rat.rat_base:
     - lt_add_pos
     - lt_lte_trans
     - not_lt_both_ways

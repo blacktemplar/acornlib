@@ -1,4 +1,4 @@
-dependencies: 3157230400837626232
+dependencies: 18169005218590749068
 content: 8397219470604727383
 blocks:
   Real.Monoid:
@@ -34,11 +34,12 @@ blocks:
     - self_eq
   exists_small_mul:
     rat:
+    - iop_pos
+    - pos_ne_zero
+    rat.rat_base:
     - Rat.gt
     - cancel_positivity_left
-    - iop_pos
     - mul_cancels_div_left
-    - pos_ne_zero
     - zero_lt_imp_pos
     real.real_base:
     - Real.gt
@@ -223,8 +224,6 @@ blocks:
     - mul_rat_seq_converges
     - mul_right_well_def
   mul_from_rat:
-    rat:
-    - mul_comm
     real.real_ring:
     - Real.mul
     - eq_seq_imp_limit_rat_eq
@@ -238,7 +237,6 @@ blocks:
     - lift_rat_seq_converges
     - mul_rat_eq_seq
     - mul_rat_seq
-    - mul_rat_seq_comm
   mul_neg_left:
     real.real_ring:
     - mul_assoc
@@ -287,7 +285,7 @@ blocks:
     - mul_one_right
     - real_mul_comm
   mul_one_right:
-    rat:
+    rat.rat_base:
     - mul_one_right
     real.real_base:
     - Real.1
@@ -311,6 +309,7 @@ blocks:
     - lte_trans
     rat:
     - lte_mul_lte
+    rat.rat_base:
     - mul_pos_pos
     - not_pos_and_neg
     real.real_base:
@@ -332,7 +331,7 @@ blocks:
     - mul_rat_seq_converges
     - smaller_rat_eps
   mul_seq_assoc:
-    rat:
+    rat.rat_base:
     - mul_assoc
     real.real_seq:
     - mul_rat_seq
@@ -351,7 +350,7 @@ blocks:
     - mul_zero_right
     - real_mul_comm
   mul_zero_right:
-    rat:
+    rat.rat_base:
     - mul_zero_right
     real.real_base:
     - Real.0
@@ -379,12 +378,13 @@ blocks:
     - Real.lte
   real_lte_imp_rat_lte:
     rat:
+    - rat_total
+    rat.rat_base:
     - Rat.lte
-    - trichotomy
     real.real_base:
-    - Real.lte
-    - gt_imp_from_rat_gt
-    - not_gt_rat_self
+    - Real.gt
+    - from_rat_maintains_lt
+    - gt_imp_not_lte
   real_mul_comm:
     real.real_ring:
     - Real.mul

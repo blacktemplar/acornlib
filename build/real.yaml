@@ -1,4 +1,4 @@
-dependencies: 15535869392844422818
+dependencies: 14147172056648727518
 content: 6949477805030986
 blocks:
   add_continuous2:
@@ -50,7 +50,7 @@ blocks:
     util:
     - compose
   constant_is_rat_uniform:
-    rat:
+    rat.rat_base:
     - one_is_pos
     real:
     - rat_condition
@@ -89,7 +89,7 @@ blocks:
     - converges_to_unique
     - rat_seq_converges_to
   lift_inc_is_inc:
-    rat:
+    rat.rat_base:
     - Rat.lte
     - lt_add_pos
     real:
@@ -192,18 +192,19 @@ blocks:
     nat.nat_base:
     - gte_each_of_three
     rat:
+    - iop_gets_lt
+    - iop_pos
+    - lte_mul_nonneg
+    - some_mul_lt
+    rat.rat_base:
     - Rat.gte
     - Rat.is_close
     - Rat.lte
-    - iop_gets_lt
-    - iop_pos
     - lte_lt_trans
-    - lte_mul_nonneg
     - lte_trans
     - mul_comm
     - mul_two_abs
     - neg_abs
-    - some_mul_lt
     - sub_distrib
     - zero_lte_abs
     real:

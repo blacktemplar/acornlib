@@ -1,4 +1,4 @@
-dependencies: 18135638985116718590
+dependencies: 6225513980217795878
 content: 4680704369346001353
 blocks:
   abs_lt_imp_close_to_zero:
@@ -10,8 +10,6 @@ blocks:
     - neg_lt_swap_neg
     - sub_cancels
   add_close:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
     real.real_base:
     - Real.gt
     - add_assoc
@@ -42,18 +40,18 @@ blocks:
     - neg_rat_seq
     - sub_rat_seq
   add_rat_seq_comm:
-    rat:
+    rat.rat_base:
     - add_comm
     real.real_seq:
     - add_rat_seq
   add_rat_seq_distributes_left:
-    rat:
+    rat.rat_base:
     - distrib_right
     real.real_seq:
     - add_rat_seq
     - mul_rat_seq
   add_rat_seq_distributes_right:
-    rat:
+    rat.rat_base:
     - distrib_left
     real.real_seq:
     - add_rat_seq
@@ -95,7 +93,7 @@ blocks:
     - cauchy_bound
     - eventual_ub
   cauchy_gt_has_no_greatest:
-    rat:
+    rat.rat_base:
     - Rat.gt
     - lt_lte_trans
     - not_lt_self
@@ -258,10 +256,11 @@ blocks:
     - tail_bound
   converges_imp_abs_bounded:
     rat:
+    - bounding_both
+    rat.rat_base:
     - Rat.abs
     - Rat.lte
     - abs_non_neg
-    - bounding_both
     - lt_trans
     - lte_lt_trans
     real.real_seq:
@@ -275,15 +274,16 @@ blocks:
     - lt_diff
     - lt_or_lte
     rat:
-    - Rat.gt
     - finite_seq_abs_bounded
     - iop_pos
+    - rat_total
+    rat.rat_base:
+    - Rat.gt
     - lt_lte_trans
     - lt_trans
     - lte_abs
     - lte_lt_trans
     - no_greatest
-    - rat_total
     real.real_base:
     - Real.gt
     - from_rat_gt_imp_gt
@@ -368,13 +368,12 @@ blocks:
     add_monoid:
     - AddMonoid.add_identity_right
     real.real_base:
-    - Real.add
     - Real.gt
     - pos_gt_zero
     real.real_seq:
     - add_gt_imp_gt_sub
   eps_lt_half:
-    rat:
+    rat.rat_base:
     - Rat.gt
     - add_half_half
     - half_pos
@@ -474,10 +473,11 @@ blocks:
     - eventual_ub
   find_less_than_a_third:
     rat:
-    - cancel_positivity_left
     - three_is_positive
     - three_thirds
     - times_three
+    rat.rat_base:
+    - cancel_positivity_left
     real.real_base:
     - Real.gt
     - add_from_rat
@@ -621,7 +621,7 @@ blocks:
     - inverse_inverse
     add_semigroup:
     - AddSemigroup.add_associative
-    rat:
+    rat.rat_base:
     - Rat.div
     - add_half_half
     - half_is_pos
@@ -701,7 +701,7 @@ blocks:
     - mul_left_well_def
     - mul_right_well_def
   mul_rat_seq_comm:
-    rat:
+    rat.rat_base:
     - mul_comm
     real.real_seq:
     - mul_rat_seq
@@ -710,20 +710,20 @@ blocks:
     - gte_each_of_three
     - lte_trans
     rat:
-    - Rat.div
-    - Rat.is_close
-    - Rat.lte
     - abs_nonneg
-    - add_pos_pos
-    - adding_lts
     - bounding_both
     - diff_mul_bound
     - lt_pos_mul_lt_pos
+    - nonneg_lt_imp_pos
+    rat.rat_base:
+    - Rat.div
+    - Rat.is_close
+    - Rat.lte
+    - add_pos_pos
+    - adding_lts
     - lt_trans
     - mul_cancels_div_left
     - mul_pos_pos
-    - neg_abs
-    - nonneg_lt_imp_pos
     - not_lt_both_ways
     - not_pos_and_neg
     - pos_imp_zero_lt
@@ -757,15 +757,16 @@ blocks:
     - sub_rat_seq_is_sub
   mul_zero_rat_seq:
     rat:
-    - Rat.div
-    - Rat.gt
     - abs_nonneg
     - lt_pos_mul_lt_pos
+    - nonneg_lt_imp_pos
+    - pos_ne_zero
+    rat.rat_base:
+    - Rat.div
+    - Rat.gt
     - mul_cancels_div_left
     - mul_pos_pos
     - mul_two_abs
-    - nonneg_lt_imp_pos
-    - pos_ne_zero
     - pos_reciprocal
     real.real_base:
     - Real.gt
@@ -797,7 +798,7 @@ blocks:
     - add_comm
     - close_comm
   neg_is_zero_sub:
-    rat:
+    rat.rat_base:
     - add_comm
     - add_zero_right
     real.real_seq:
@@ -948,8 +949,6 @@ blocks:
     - sub_zero_imp_eq
     - zero_rat_seq_is_zero
   sub_lt_is_gt:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
     add_group:
     - AddGroup.sub
     real.real_base:
@@ -982,7 +981,7 @@ blocks:
     - sub_rat_seq
     - sub_rat_seq_distributes_right
   sub_rat_seq_distributes_right:
-    rat:
+    rat.rat_base:
     - sub_distrib
     real.real_seq:
     - mul_rat_seq
