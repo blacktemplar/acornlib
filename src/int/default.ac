@@ -154,15 +154,25 @@ theorem mul_assoc(a: Int, b: Int, c: Int) { a * b * c = a * (b * c) } by {
 // Comparison operators
 
 attributes Int {
+    /// TODO: currently this is defined independently, but we should be able to just
+    /// inherit this operator from `PartialOrder`.
     define lt(self, b: Int) -> Bool {
         (b - self).is_positive
     }
+
+    /// `a <= b` when `(a - b)` is positive or zero.
     define lte(self, b: Int) -> Bool {
         (self < b) or self = b
     }
+
+    /// TODO: currently this is defined independently, but we should be able to just
+    /// inherit this operator from `PartialOrder`.
     define gt(self, b: Int) -> Bool {
         b < self
     }
+
+    /// TODO: currently this is defined independently, but we should be able to just
+    /// inherit this operator from `PartialOrder`.
     define gte(self, b: Int) -> Bool {
         b <= self
     }
@@ -942,7 +952,8 @@ theorem plus_abs_gte_zero(n: Int) {
 }
 
 attributes Int {
-    // Note that 0^0 = 1.
+    /// Note that 0^0 = 1.
+    /// TODO: we should be able to inherit `pow` from some underlying algebraic structure.
     define exp(self, b: Nat) -> Int {
         match b {
             Nat.0 {
@@ -1053,6 +1064,7 @@ theorem exp_abs_eq_abs_exp(a: Int, n: Nat) {
 }
 
 attributes Int {
+    /// The absolute value of an integer.
     define abs(self) -> Int {
         Int.from_nat(abs(self))
     }

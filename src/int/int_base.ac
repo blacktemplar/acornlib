@@ -16,10 +16,12 @@ from nat import Nat
 /// -2 = Int.neg_suc(Nat.1)
 /// ```
 inductive Int {
-    // The normal x -> x map
+    /// `Int.from_nat` converts a natural number to an integer via the typical embedding.
     from_nat(Nat)
 
-    // x -> -(x+1)
+    /// `Int.neg_suc` converts a natural number `x` into `-(x+1)`.
+    /// This isn't particularly intuitive, it's just to give every integer a unique constructor.
+    /// In particular, `neg_suc` can construct any negative integer, but not zero.
     neg_suc(Nat)
 }
 
