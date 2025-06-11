@@ -3,17 +3,21 @@ from real import Real
 /// Complex numbers consist of a real part and an imaginary part.
 /// They extend the real numbers and satisfy the equation i² = -1.
 structure Complex {
+    /// The real part of the complex number.
     re: Real
+    /// The imaginary part of the complex number.
     im: Real
 }
 
 attributes Complex {
+    /// Converts a real number to a complex number (with zero imaginary part).
     let from_real: Real -> Complex = function(r: Real) {
         Complex.new(r, Real.0)
     }
 
     let 0: Complex = Complex.new(Real.0, Real.0)
     let 1: Complex = Complex.new(Real.1, Real.0)
+    /// The imaginary unit, satisfying `i² = -1`.
     let i: Complex = Complex.new(Real.0, Real.1)
 
     /// True if this complex number has no imaginary component.

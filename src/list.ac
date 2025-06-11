@@ -5,7 +5,9 @@ numerals Nat
 /// A generic list data structure that can hold elements of any type.
 /// Lists are constructed using nil (empty list) and cons (prepending an element).
 inductive List<T> {
+    /// The empty list.
     nil
+    /// Constructs a list by prepending an element to an existing list.
     cons(T, List<T>)
 }
 
@@ -111,6 +113,7 @@ theorem add_length<T>(left: List<T>, right: List<T>) {
 }
 
 attributes List<T> {
+    /// Creates a list containing a single element.
     let singleton: T -> List<T> = function(x: T) {
         List.cons(x, List.nil<T>)
     }
@@ -173,6 +176,7 @@ define range(n: Nat) -> List<Nat> {
 }
 
 attributes List<T> {
+    /// Creates a list of natural numbers from 0 to n-1.
     let range: Nat -> List<Nat> = range
 
     /// Filters the list, keeping only elements that satisfy the given predicate.

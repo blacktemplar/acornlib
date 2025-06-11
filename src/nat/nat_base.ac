@@ -1297,8 +1297,9 @@ theorem three_neq_zero {
     3 != 0
 }
 
-// Note that 0^0 = 1.
 attributes Nat {
+    /// Note that 0^0 = 1.
+    /// TODO: ideally this would use an inherited `pow` from `Monoid`.
     define exp(self, b: Nat) -> Nat {
         match b {
             Nat.0 {
