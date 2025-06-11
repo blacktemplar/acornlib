@@ -1,5 +1,5 @@
-dependencies: 16738567543621138767
-content: 12839552703865809372
+dependencies: 17196707004170820513
+content: 11817594549929257069
 blocks:
   Real.Field:
     real.real_field:
@@ -18,13 +18,14 @@ blocks:
     - recip_rat_seq
     - recip_rat_seq_converges
     real.real_ring:
+    - limit_rat_mul_rat_seq
+    - limit_rat_rat_seq
+    real.real_seq:
     - eq_imp_limit
     - eventual_eq
     - lift_rat_seq_converges
     - lift_seq_elt
     - limit_rat
-    - limit_rat_mul_rat_seq
-    - limit_rat_rat_seq
     - mul_rat_seq
     - rat_seq_converges_to
   neg_recip_rat_seq:
@@ -38,7 +39,7 @@ blocks:
     - zero_minus
     real.real_field:
     - recip_rat_seq
-    real.real_ring:
+    real.real_seq:
     - neg_rat_seq
   nonzero_imp_eventually_nonzero:
     real.real_base:
@@ -50,9 +51,10 @@ blocks:
     - eventually_nonzero
     - pos_imp_eventually_nonzero
     real.real_ring:
+    - mul_neg_one_left
+    real.real_seq:
     - converges_imp_converges_to
     - converges_to_unique
-    - mul_neg_one_left
     real.real_series:
     - mul_seq
     - neg_seq
@@ -67,7 +69,7 @@ blocks:
     - close_imp_bounds
     real.real_field:
     - eventually_nonzero
-    real.real_ring:
+    real.real_seq:
     - converges_imp_converges_to
     - converges_to
     - tail_bound
@@ -79,7 +81,7 @@ blocks:
     real.real_field:
     - neg_recip_rat_seq
     - recip_rat_seq_pos_converges
-    real.real_ring:
+    real.real_seq:
     - converges_imp_converges_to
     - converges_to_imp_converges
     - converges_to_unique
@@ -133,6 +135,8 @@ blocks:
     real.real_field:
     - recip_rat_seq
     real.real_ring:
+    - real_lte_imp_rat_lte
+    real.real_seq:
     - cauchy_bound
     - close_and_lt_imp_close
     - converges
@@ -142,7 +146,6 @@ blocks:
     - is_close_triangle
     - lift_seq_elt
     - lt_converges_to_imp_lb
-    - real_lte_imp_rat_lte
     - smaller_rat_eps
     - tail_bound
   zero_reciprocal:

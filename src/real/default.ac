@@ -2,7 +2,8 @@ from nat import Nat
 from rat import Rat
 from util import compose, is_constant
 from real.real_base import min
-from real.real_ring import lift_seq, converges, cauchy_bound, converges_to, limit, rat_seq, limit_rat, seq_close, tail_bound
+from real.real_seq import cauchy_bound, seq_close, tail_bound
+from real.real_ring import lift_seq, converges, converges_to, limit, rat_seq, limit_rat
 from real.real_field import Real
  
 // This file proves theorems about uniform convergence.
@@ -376,7 +377,7 @@ theorem lift_inc_is_inc(f: Rat -> Real) {
                 delta2b.is_positive and
                 Real.from_rat(r2) + delta2b < y
             }
-            real_ring.eps_smaller_than_both(delta2a, delta2b)
+            real_seq.eps_smaller_than_both(delta2a, delta2b)
             let delta2: Real satisfy {
                 delta2.is_positive and
                 delta2 < delta2a and

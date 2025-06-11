@@ -1,4 +1,4 @@
-dependencies: 16393471028551287567
+dependencies: 10164800617127811184
 content: 2294609913712902020
 blocks:
   Complex.AddCommSemigroup:
@@ -111,7 +111,7 @@ blocks:
     - Real.add
     - add_comm
     - sub_cancels
-    real.real_ring:
+    real.real_seq:
     - sub_zero_imp_eq
   conj_add:
     complex:
@@ -164,6 +164,7 @@ blocks:
     - swap_minus_plus
     real.real_ring:
     - mul_distrib_right
+    real.real_seq:
     - sub_both_eq_sub_add
   i_squared:
     add_group:
@@ -189,13 +190,13 @@ blocks:
     - mul_neg_one_right
     - mul_neg_right
     - real_mul_comm
-    - sub_both_eq_sub_add
     ring:
     - mul_zero_right
     semiring:
     - Semiring.distrib_right
   mul_assoc:
     complex:
+    - Complex.mul
     - Complex.new
     - mul_comm
     - mul_three_im
@@ -206,6 +207,7 @@ blocks:
     real.real_ring:
     - mul_assoc
     - real_mul_comm
+    real.real_seq:
     - sub_either_order
   mul_comm:
     complex:
@@ -306,14 +308,15 @@ blocks:
     - Complex.re
     real.real_base:
     - Real.neg
-    - add_zero_left
     - neg_neg
     real.real_ring:
-    - mul_distrib_left
     - mul_neg_left
     - mul_sub_distrib_left
+    real.real_seq:
     - sub_both_eq_sub_add
     - sub_either_order
+    semiring:
+    - Semiring.distrib_right
   neg_eq_mul_neg_one:
     complex:
     - Complex.mul
