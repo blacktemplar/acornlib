@@ -52,12 +52,14 @@ theorem functional_remove_satisfies_finite_constraint<T>(f: T -> Bool, item: T) 
 /// A finite set represented as a boolean membership function.
 /// The constraint ensures that only finitely many elements are members.
 structure FiniteSet<T> {
+    /// Finite sets are defined by a membership function.
     contains: T -> Bool
 } constraint {
     finite_constraint(contains)
 }
 
 attributes FiniteSet<T> {
+    /// Converts a list to a finite set.
     let from_list: List<T> -> FiniteSet<T> = function(ts: List<T>) {
         FiniteSet.new(ts.contains)
     }

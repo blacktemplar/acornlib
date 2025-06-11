@@ -1,6 +1,9 @@
 /// Optional values that can either contain a value of type T or be empty.
 /// Useful for representing values that may or may not exist.
 inductive Option<T> {
+    /// `Option.none` represents the absence of a value.
     none
+
+    /// `Option.some(value)` represents the presence of a value.
     some(T)
 }

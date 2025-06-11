@@ -3,13 +3,17 @@ from comm_ring import CommRing
 
 /// A field is a commutative ring with multiplicative inverses for all non-zero elements.
 typeclass F: Field extends CommRing {
+    /// The multiplicative inverse function.
     inverse: F -> F
 
-    // Just always define the field inverse so that the inverse of zero is zero.
+    /// We define the field inverse so that the inverse of zero is zero.
+    /// It would be nice to instead express that an inverse is "not valid" or yields "no value"
+    /// but it is not convenient to do so in the current type system.
     field_inverse_zero {
         F.0.inverse = F.0
     }
 
+    /// The definition of "multiplicative inverse" in a field.
     field_inverse(f: F) {
         f != F.0 implies f * f.inverse = F.1
     }

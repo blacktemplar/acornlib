@@ -2,10 +2,10 @@ from monoid import Monoid, pow
 
 /// A group is a monoid that also has inverses.
 typeclass G: Group extends Monoid {
-    // The inverse operation
+    /// The inverse operation
     inverse: G -> G
 
-    // We only need right-inverse, we can prove left-inverse from it.
+    /// We only need right-inverse; we can prove left-inverse from it.
     inverse_right(a: G) {
         a * a.inverse = G.1
     }
@@ -79,6 +79,7 @@ theorem trivial_hom_is_hom<G: Group, H: Group>(a: G, b: G) {
 
 /// A group homomorphism that preserves the group structure.
 structure GroupHom<G: Group, H: Group> {
+    /// The mapping for the homomorphism.
     hom: G -> H
 } constraint {
     is_hom(hom)

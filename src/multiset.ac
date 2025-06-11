@@ -4,6 +4,7 @@ numerals Nat
 /// A multiset (bag) that can contain multiple copies of the same element.
 /// Each element has a multiplicity indicating how many times it appears.
 structure Multiset<T> {
+    /// A function taking each element to a count of how many times it appears in the multiset.
     multiplicity: T -> Nat
 }
 
