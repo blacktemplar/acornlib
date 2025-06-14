@@ -801,7 +801,6 @@ theorem has_prime_divisor(n: Nat) {
     has_prime_divisor(n)
 }
 
-
 theorem factorial_zero {
     0.factorial = 1
 }
@@ -1093,46 +1092,50 @@ let mod(a: Nat, m: Nat) -> r: Nat satisfy {
     }
 }
 
+attributes Nat {
+    let mod = mod
+}
+
 theorem add_mod(a: Nat, m: Nat) {
-    exists(q: Nat) { q * m + mod(a, m) = a }
+    exists(q: Nat) { q * m + a.mod(m) = a }
 } by {
     if m = 0 {
-        mod(a, 0) = a
+        a.mod(0) = a
         0 * 0 = 0
-        0 * 0 + mod(a, 0) = a
-        let (q: Nat) satisfy { q * m + mod(a, m) = a }
+        0 * 0 + a.mod(0) = a
+        let (q: Nat) satisfy { q * m + a.mod(m) = a }
     } else {
-        let (q: Nat) satisfy { q * m + mod(a, m) = a }
+        let (q: Nat) satisfy { q * m + a.mod(m) = a }
     }
 }
 
-theorem mod_by_zero(a: Nat) { mod(a, 0) = a }
+theorem mod_by_zero(a: Nat) { a.mod(0) = a }
 
 theorem mod_of_zero(m: Nat) {
-    mod(0, m) = 0
+    0.mod(m) = 0
 } by {
     if m = 0 {
-        mod(0, m) = 0
+        0.mod(m) = 0
     } else {
-        mod(0, m) = 0
+        0.mod(m) = 0
     }
 }
 
 theorem mod_lte(a: Nat, m: Nat) {
-    mod(a, m) <= a
+    a.mod(m) <= a
 } by {
     if m = 0 {
-        mod(a, m) <= a
+        a.mod(m) <= a
     } else {
-        let q: Nat satisfy { q * m + mod(a, m) = a }
-        mod(a, m) + q * m = a
-        mod(a, m) <= a
+        let q: Nat satisfy { q * m + a.mod(m) = a }
+        a.mod(m) + q * m = a
+        a.mod(m) <= a
     }
 }
 
-theorem div_sub_mod(a: Nat, m: Nat) { m.divides(a - mod(a, m)) } by {
-    let (q: Nat) satisfy { q * m + mod(a, m) = a }
-    a - mod(a, m) = q * m
+theorem div_sub_mod(a: Nat, m: Nat) { m.divides(a - a.mod(m)) } by {
+    let (q: Nat) satisfy { q * m + a.mod(m) = a }
+    a - a.mod(m) = q * m
     m.divides(q * m)
 }
 
@@ -1180,35 +1183,35 @@ theorem divides_sub(a: Nat, b: Nat, d: Nat) {
 }
 
 theorem divides_mod(a: Nat, m: Nat, d: Nat) {
-    d.divides(a) and d.divides(m) implies d.divides(mod(a, m))
+    d.divides(a) and d.divides(m) implies d.divides(a.mod(m))
 } by {
-    let (q: Nat) satisfy { q * m + mod(a, m) = a }
-    mod(a, m) + q * m = a
-    mod(a, m) = a - q * m
+    let (q: Nat) satisfy { q * m + a.mod(m) = a }
+    a.mod(m) + q * m = a
+    a.mod(m) = a - q * m
     d.divides(q * m)
     d.divides(a - q * m)
-    d.divides(mod(a, m))
+    d.divides(a.mod(m))
 }
 
-theorem div_imp_mod(a: Nat, m: Nat) { m.divides(a) implies mod(a, m) = 0 } by {
+theorem div_imp_mod(a: Nat, m: Nat) { m.divides(a) implies a.mod(m) = 0 } by {
     if m != 0 {
         m.divides(m)
-        m.divides(mod(a, m))
-        mod(a, m) < m
-        not (m <= mod(a, m))
-        mod(a, m) = 0
+        m.divides(a.mod(m))
+        a.mod(m) < m
+        not (m <= a.mod(m))
+        a.mod(m) = 0
     } else {
         a = 0
-        mod(a, m) = 0
+        a.mod(m) = 0
     }
-    mod(a, m) = 0
+    a.mod(m) = 0
 }
 
-theorem small_mod(a: Nat, m: Nat) { a < m implies mod(a, m) = a } by {
-    let (q: Nat) satisfy { q * m + mod(a, m) = a }
+theorem small_mod(a: Nat, m: Nat) { a < m implies a.mod(m) = a } by {
+    let (q: Nat) satisfy { q * m + a.mod(m) = a }
     if q = 0 {
-        0 + mod(a, m) = a
-        mod(a, m) = a
+        0 + a.mod(m) = a
+        a.mod(m) = a
     } else {
         m != 0
         q * m != 0
@@ -1217,21 +1220,21 @@ theorem small_mod(a: Nat, m: Nat) { a < m implies mod(a, m) = a } by {
         m <= a
         false
     }
-    mod(a, m) = a
+    a.mod(m) = a
 }
 
-theorem mod_mod(a: Nat, m: Nat) { mod(mod(a, m), m) = mod(a, m) } by {
+theorem mod_mod(a: Nat, m: Nat) { a.mod(m).mod(m) = a.mod(m) } by {
     if m != 0 {
-        mod(a, m) < m
-        mod(mod(a, m), m) = mod(a, m)
+        a.mod(m) < m
+        a.mod(m).mod(m) = a.mod(m)
         mod_mod(a, m)
     } else {
-        mod(mod(a, m), m) = mod(a, m)
+        a.mod(m).mod(m) = a.mod(m)
         mod_mod(a, m)
     }
 }
 
-theorem mod_mul(m: Nat, q: Nat) { mod(q * m, m) = 0 } by {
+theorem mod_mul(m: Nat, q: Nat) { (q * m).mod(m) = 0 } by {
     m.divides(q * m)
 }
 
@@ -1240,16 +1243,16 @@ theorem divides_add_copy(a: Nat, b: Nat, d: Nat) {
 }
 
 theorem divides_unmod(d: Nat, a: Nat, m: Nat) {
-    d.divides(m) and d.divides(mod(a, m)) implies d.divides(a)
+    d.divides(m) and d.divides(a.mod(m)) implies d.divides(a)
 } by {
-    let (q: Nat) satisfy { q * m + mod(a, m) = a }
+    let (q: Nat) satisfy { q * m + a.mod(m) = a }
     m.divides(q * m)
     d.divides(q * m)
-    d.divides(q * m + mod(a, m))
+    d.divides(q * m + a.mod(m))
     d.divides(a)
     if not divides_unmod(d, a, m) {
         d.divides(m)
-        d.divides(mod(a, m))
+        d.divides(a.mod(m))
         false
     }
 }

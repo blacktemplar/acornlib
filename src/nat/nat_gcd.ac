@@ -9,7 +9,7 @@ define gcd_step(p: Pair<Nat, Nat>) -> Pair<Nat, Nat> {
     if p.second = 0 {
         p
     } else {
-        Pair.new(p.second, mod(p.first, p.second))
+        Pair.new(p.second, p.first.mod(p.second))
     }
 }
 
@@ -126,11 +126,11 @@ theorem gcd_terminates(p: Pair<Nat, Nat>) {
             f(x.suc) = gcd_step_n(p, x.suc).second
             f(x.suc) = gcd_step(q).second
             q.second != 0
-            gcd_step(q) = Pair.new(q.second, mod(q.first, q.second))
-            mod(q.first, q.second) = gcd_step(q).second
-            f(x.suc) = mod(q.first, q.second)
-            f(x.suc) = mod(q.first, f(x))
-            mod(q.first, f(x)) < f(x)
+            gcd_step(q) = Pair.new(q.second, q.first.mod(q.second))
+            q.first.mod(q.second) = gcd_step(q).second
+            f(x.suc) = q.first.mod(q.second)
+            f(x.suc) = q.first.mod(f(x))
+            q.first.mod(f(x)) < f(x)
             f(x.suc) < f(x)
         }
     }
@@ -171,13 +171,13 @@ theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
 } by {
     a.divides(p.first)
     a.divides(p.second)
-    a.divides(mod(p.first, p.second))
+    a.divides(p.first.mod(p.second))
     if p.second = 0 {
         gcd_step(p) = p
         divides_both(a, gcd_step(p))
     } else {
-        gcd_step(p) = Pair<Nat, Nat>.new(p.second, mod(p.first, p.second))
-        gcd_step(p).second = mod(p.first, p.second)
+        gcd_step(p) = Pair<Nat, Nat>.new(p.second, p.first.mod(p.second))
+        gcd_step(p).second = p.first.mod(p.second)
         a.divides(gcd_step(p).second)
         gcd_step(p).first = p.second
         a.divides(gcd_step(p).first)
@@ -228,13 +228,13 @@ theorem divides_both_unstep(a: Nat, p: Pair<Nat, Nat>) {
         p = gcd_step(p)
         divides_both(a, p)
     } else {
-        gcd_step(p) = Pair<Nat, Nat>.new(p.second, mod(p.first, p.second))
+        gcd_step(p) = Pair<Nat, Nat>.new(p.second, p.first.mod(p.second))
         a.divides(gcd_step(p).first)
         exists(k0: Nat) { a.divides(Pair<Nat, Nat>.new(p.second, k0).first) }
         a.divides(p.second)
         a.divides(gcd_step(p).second)
-        exists(k0: Nat) { a.divides(Pair<Nat, Nat>.new(k0, mod(p.first, p.second)).second) }
-        a.divides(mod(p.first, p.second))
+        exists(k0: Nat) { a.divides(Pair<Nat, Nat>.new(k0, p.first.mod(p.second)).second) }
+        a.divides(p.first.mod(p.second))
         a.divides(p.first)
         divides_both(a, p)
     }
@@ -343,7 +343,7 @@ theorem gcd_comm(a: Nat, b: Nat) { gcd(a, b) = gcd(b, a) } by {
 theorem gcd_nonzero_right(a: Nat, b: Nat) { b != 0 implies gcd(a, b) != 0 }
 
 define mod_maintains(f: Nat -> Bool) -> Bool {
-    forall(a: Nat, b: Nat) { f(a) and f(b) implies f(mod(a, b)) }
+    forall(a: Nat, b: Nat) { f(a) and f(b) implies f(a.mod(b)) }
 }
 
 theorem mod_maintains_imp_gcd(f: Nat -> Bool, a: Nat, b: Nat) {
@@ -371,12 +371,12 @@ theorem mod_maintains_imp_gcd(f: Nat -> Bool, a: Nat, b: Nat) {
                 g(x.suc)
             } else {
                 Pair.new(gcd_step_n(p, x).second,
-                         mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)) = gcd_step(gcd_step_n(p, x))
+                         gcd_step_n(p, x).first.mod(gcd_step_n(p, x).second)) = gcd_step(gcd_step_n(p, x))
                 gcd_step_n(p, x.suc).first = gcd_step_n(p, x).second
-                mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second) = gcd_step(gcd_step_n(p, x)).second
-                gcd_step_n(p, x.suc).second = mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)
+                gcd_step_n(p, x).first.mod(gcd_step_n(p, x).second) = gcd_step(gcd_step_n(p, x)).second
+                gcd_step_n(p, x.suc).second = gcd_step_n(p, x).first.mod(gcd_step_n(p, x).second)
                 f(gcd_step_n(p, x.suc).first)
-                f(mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second))
+                f(gcd_step_n(p, x).first.mod(gcd_step_n(p, x).second))
                 f(gcd_step_n(p, x.suc).second)
                 g(x.suc)
             }
