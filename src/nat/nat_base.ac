@@ -679,6 +679,17 @@ attributes Nat {
     define divides(self, b: Nat) -> Bool {
         exists(c: Nat) { self * c = b }
     }
+
+    define factorial(self) -> Nat {
+        match self {
+            Nat.0 {
+                1
+            }
+            Nat.suc(pred) {
+                self * pred.factorial
+            }
+        }
+    }
 }
 
 
@@ -703,8 +714,6 @@ theorem divisor_lt(a: Nat, b: Nat, c: Nat) {
     a != c
     a <= c
 }
-
-
 
 theorem divides_self(a: Nat) { a.divides(a) }
 
@@ -792,31 +801,21 @@ theorem has_prime_divisor(n: Nat) {
     has_prime_divisor(n)
 }
 
-define factorial(n: Nat) -> Nat {
-    match n {
-        Nat.0 {
-            1
-        }
-        Nat.suc(pred) {
-            n * factorial(pred)
-        }
-    }
-}
 
 theorem factorial_zero {
-    factorial(0) = 1
+    0.factorial = 1
 }
 
 theorem factorial_one {
-    factorial(1) = 1
+    1.factorial = 1
 }
 
 theorem factorial_step(n: Nat) {
-    factorial(n.suc) = n.suc * factorial(n)
+    n.suc.factorial = n.suc * n.factorial
 }
 
 theorem divides_factorial(k: Nat, n: Nat) {
-    k != 0 and k <= n implies k.divides(factorial(n))
+    k != 0 and k <= n implies k.divides(n.factorial)
 } by {
     define f(x: Nat) -> Bool {
         divides_factorial(k, x)
@@ -827,18 +826,18 @@ theorem divides_factorial(k: Nat, n: Nat) {
     forall(x: Nat) {
         if f(x) {
             divides_factorial(k, x)
-            k <= x implies k.divides(factorial(x))
+            k <= x implies k.divides(x.factorial)
             if k <= x.suc {
                 if k = x.suc {
-                    x.suc.divides(factorial(x.suc))
-                    k.divides(factorial(x.suc))
+                    x.suc.divides(x.suc.factorial)
+                    k.divides(x.suc.factorial)
                 } else {
                     k.suc <= x.suc
                     k <= x
-                    k.divides(factorial(x))
-                    factorial(x).divides(x.suc * factorial(x))
-                    factorial(x).divides(factorial(x.suc))
-                    k.divides(factorial(x.suc))
+                    k.divides(x.factorial)
+                    x.factorial.divides(x.suc * x.factorial)
+                    x.factorial.divides(x.suc.factorial)
+                    k.divides(x.suc.factorial)
                 }
                 divides_factorial(k, x.suc)
             }
@@ -849,18 +848,18 @@ theorem divides_factorial(k: Nat, n: Nat) {
     divides_factorial(k, n)
 }
 
-theorem factorial_nondecreasing(n: Nat) { factorial(n) <= factorial(n.suc) } by {
-    factorial(n) <= n.suc * factorial(n)
+theorem factorial_nondecreasing(n: Nat) { n.factorial <= n.suc.factorial } by {
+    n.factorial <= n.suc * n.factorial
 }
 
-theorem lte_one_factorial(a: Nat) { 1 <= factorial(a) } by {
-    1 <= factorial(0)
+theorem lte_one_factorial(a: Nat) { 1 <= a.factorial } by {
+    1 <= 0.factorial
     lte_one_factorial(0)
     forall(x: Nat) {
         if lte_one_factorial(x) {
-            1 <= factorial(x)
-            factorial(x) <= factorial(x.suc)
-            1 <= factorial(x.suc)
+            1 <= x.factorial
+            x.factorial <= x.suc.factorial
+            1 <= x.suc.factorial
             lte_one_factorial(x.suc)
         }
     }
@@ -941,10 +940,10 @@ theorem exists_infinite_primes(n: Nat) {
         n < p and p.is_prime
     }
 } by {
-    let m: Nat = factorial(n).suc
-    if not (1 < factorial(n).suc) {
-        not (1 < factorial(n))
-        factorial(n) = 1
+    let m: Nat = n.factorial.suc
+    if not (1 < n.factorial.suc) {
+        not (1 < n.factorial)
+        n.factorial = 1
         false
     }
     1 < m
@@ -954,8 +953,8 @@ theorem exists_infinite_primes(n: Nat) {
     p != 1
     if p <= n {
         divides_factorial(p, n)
-        p.divides(factorial(n))
-        p.divides(factorial(n).suc)
+        p.divides(n.factorial)
+        p.divides(n.factorial.suc)
         false
     }
     not (p <= n)

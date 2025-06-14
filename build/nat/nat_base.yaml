@@ -1,5 +1,5 @@
 dependencies: 10913166933577003343
-content: 5457772963840350184
+content: 6904060835791984429
 blocks:
   Nat.LinearOrder:
     nat.nat_base:
@@ -340,17 +340,17 @@ blocks:
     - mul_suc_left
   factorial_one:
     nat.nat_base:
+    - Nat.factorial
     - add_one_right
     - add_zero_left
-    - factorial
     - factorial_zero
     - mul_one_left
   factorial_step:
     nat.nat_base:
-    - factorial
+    - Nat.factorial
   factorial_zero:
     nat.nat_base:
-    - factorial
+    - Nat.factorial
   gt_each_of_three_regular:
     nat.nat_base:
     - Nat.gt
