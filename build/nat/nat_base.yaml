@@ -1,5 +1,5 @@
 dependencies: 10913166933577003343
-content: 3793100451347048323
+content: 18095869350292094895
 blocks:
   Nat.LinearOrder:
     nat.nat_base:
@@ -372,11 +372,11 @@ blocks:
     - gte_each_of_three
   has_prime_divisor:
     nat.nat_base:
+    - Nat.is_composite
     - Nat.lt
     - divides
     - divides_trans
     - divisor_lt
-    - is_composite
     - is_prime
     - mul_one_right
     - only_zero_lte_zero

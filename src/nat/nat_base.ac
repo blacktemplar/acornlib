@@ -665,11 +665,16 @@ theorem division_theorem(m: Nat, n: Nat) {
     division_theorem(m, n)
 }
 
-define is_composite(a: Nat) -> Bool {
-    exists(b: Nat, c: Nat) {
-        1 < b and 1 < c and a = b * c
+attributes Nat {
+    define is_composite(self) -> Bool {
+        exists(b: Nat, c: Nat) {
+            1 < b and 1 < c and self = b * c
+        }
     }
 }
+
+// TODO: replace this with direct calls to `Nat.is_composite`.
+let is_composite = Nat.is_composite
 
 theorem mul_to_zero(a: Nat, b: Nat) { a * b = 0 implies a = 0 or b = 0 } by {
     if a != 0 and b != 0 {

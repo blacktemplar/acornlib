@@ -1,4 +1,4 @@
-dependencies: 5555281686220401864
+dependencies: 13640647070141497751
 content: 2950053554714140231
 blocks:
   all_false_below:
@@ -145,8 +145,8 @@ blocks:
     nat.nat_base:
     - Nat.1
     - Nat.gt
+    - Nat.is_composite
     - divides
-    - is_composite
     - is_prime
     - lt_suc_right
     - mul_comm

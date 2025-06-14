@@ -1,4 +1,4 @@
-dependencies: 5480070798952112044
+dependencies: 12563336463488455076
 content: 18435657610145613371
 blocks:
   '104':
@@ -1192,12 +1192,10 @@ blocks:
     - Rat.gt
     real.real_base:
     - Real.gt
-    - Real.gte
     - Real.lte
     - gt_from_rat_imp_gt_rat
     - gt_imp_from_rat_gt
     - gt_rat_imp_gt_from_rat
-    - not_lt_imp_gte
     - not_lte_imp_gt
     - rat_between_rat_and_real
     - rat_separating

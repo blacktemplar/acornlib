@@ -1,4 +1,3 @@
-import nat.nat_base
 from nat import Nat
 numerals Nat
 
@@ -577,7 +576,6 @@ theorem drop_last_zero<T>(a: List<T>) {
     q(List.nil)
     forall(head: T, tail: List<T>) {
         if q(tail) {
-            nat_base.not_lt_zero(tail.length)
             List.cons(head, tail).drop_last(Nat.0) = List.cons(head, tail.drop_last(Nat.0))
             List.cons(head, tail.drop_last(Nat.0)) = List.cons(head, tail)
             q(List.cons(head, tail))
@@ -595,7 +593,6 @@ theorem drop_last_all<T>(l: List<T>) {
     r(List.nil)
     forall(head: T, tail: List<T>) {
         if r(tail) {
-            nat_base.lt_suc(tail.length)
             List.cons(head, tail).drop_last(List.cons(head, tail).length) = List.cons(head, tail).drop_last(tail.length.suc)
             List.cons(head, tail).drop_last(tail.length.suc) = List.nil<T>
             r(List.cons(head, tail))
@@ -615,11 +612,9 @@ theorem drop_last_cancels_add<T>(a: List<T>, b: List<T>) {
     forall(head: T, tail: List<T>) {
         if p(tail) {
             add_length(tail, b)
-            nat_base.add_comm(tail.length, b.length)
             let (c: Nat) satisfy { b.length + c = (tail + b).length }
             c = tail.length
             b.length <= (tail + b).length
-            nat_base.lte_imp_not_lt(b.length, (tail + b).length)
             (List.cons(head, tail) + b).drop_last(b.length) = List.cons(head, tail + b).drop_last(b.length)
             List.cons(head, tail + b).drop_last(b.length) = List.cons(head, (tail + b).drop_last(b.length))
             p(tail)

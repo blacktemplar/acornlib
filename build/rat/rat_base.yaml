@@ -1,4 +1,4 @@
-dependencies: 894076102299703247
+dependencies: 8544765314947997801
 content: 13982916959608645202
 blocks:
   '16':
@@ -398,7 +398,6 @@ blocks:
     - Rat.from_nat
     - Rat.gt
     - Rat.lte
-    - from_int_num
     - nat_lt_imp_rat_lt
   gt_cancel_pos_mul_left:
     rat.rat_base:
@@ -870,7 +869,6 @@ blocks:
     - neg_num
     - rat_neg_one
     - reduce_idempotent
-    - zero_denom
   mul_neg_pos:
     rat.rat_base:
     - Rat.lt
@@ -908,7 +906,6 @@ blocks:
     - from_int_num
     - mul_comm
     - reduce_idempotent
-    - zero_denom
   mul_pos_neg:
     rat.rat_base:
     - mul_comm
@@ -1152,7 +1149,6 @@ blocks:
     - from_int_num
     - neg_denom
     - neg_num
-    - reduce_idempotent
   recip_eq_one_div:
     rat.rat_base:
     - Rat.div
@@ -1277,7 +1273,6 @@ blocks:
     - reduce_zero_num
   smaller_int_reciprocal:
     int.int_base:
-    - neg_from_nat
     - non_pos_is_neg_abs
     - zero_not_pos
     rat.rat_base:

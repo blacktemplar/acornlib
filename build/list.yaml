@@ -1,5 +1,5 @@
-dependencies: 3541880951028354824
-content: 7110454332531346255
+dependencies: 2309283006707988246
+content: 9384563581174406625
 blocks:
   add_assoc:
     list:
@@ -68,10 +68,13 @@ blocks:
     - Nat.lte
     - add_cancels_right
     - add_comm
+    - lte_imp_not_lt
   drop_last_zero:
     list:
     - List.drop_last
     - List.induction
+    nat.nat_base:
+    - not_lt_zero
   drop_one:
     list:
     - List.drop
