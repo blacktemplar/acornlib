@@ -1,5 +1,5 @@
 dependencies: 10913166933577003343
-content: 4657194433111733131
+content: 12255519469689623989
 blocks:
   Nat.LinearOrder:
     nat.nat_base:
@@ -248,11 +248,12 @@ blocks:
     - mul_to_zero
   exists_infinite_primes:
     nat.nat_base:
+    - Nat.is_prime
     - Nat.lt
     - divides_suc
     - has_prime_divisor
-    - is_prime
     - lt_imp_lt_suc
+    - lt_not_symm
     - lt_or_lte
     - lt_suc
     - lte_one_factorial
@@ -373,11 +374,11 @@ blocks:
   has_prime_divisor:
     nat.nat_base:
     - Nat.is_composite
+    - Nat.is_prime
     - Nat.lt
     - divides
     - divides_trans
     - divisor_lt
-    - is_prime
     - mul_one_right
     - only_zero_lte_zero
     - strong_induction

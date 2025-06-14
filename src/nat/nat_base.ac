@@ -671,6 +671,10 @@ attributes Nat {
             1 < b and 1 < c and self = b * c
         }
     }
+
+    define is_prime(self) -> Bool {
+        1 < self and not self.is_composite
+    }
 }
 
 
@@ -696,9 +700,6 @@ theorem divisor_lt(a: Nat, b: Nat, c: Nat) {
     a <= c
 }
 
-define is_prime(a: Nat) -> Bool {
-    1 < a and not a.is_composite
-}
 
 define divides(a: Nat, b: Nat) -> Bool {
     exists(c: Nat) { a * c = b }
@@ -760,12 +761,12 @@ theorem divides_trans(a: Nat, b: Nat, c: Nat) {
 
 theorem has_prime_divisor(n: Nat) {
     1 < n implies exists(p: Nat) {
-        is_prime(p) and divides(p, n)
+        p.is_prime and divides(p, n)
     }
 } by {
     forall(k: Nat) {
         if true_below(has_prime_divisor, k) {
-            if is_prime(k) {
+            if k.is_prime {
                 divides(k, k)
                 has_prime_divisor(k)
             }
@@ -779,7 +780,7 @@ theorem has_prime_divisor(n: Nat) {
                 b < k
                 has_prime_divisor(b)
                 let (p: Nat) satisfy {
-                    is_prime(p) and divides(p, b)
+                    p.is_prime and divides(p, b)
                 }
                 divides(p, k)
                 has_prime_divisor(k)
@@ -936,7 +937,7 @@ theorem divides_suc(a: Nat, b: Nat) { divides(a, b) and divides(a, b.suc) implie
 
 theorem exists_infinite_primes(n: Nat) {
     exists(p: Nat) {
-        n < p and is_prime(p)
+        n < p and p.is_prime
     }
 } by {
     let m: Nat = factorial(n).suc
@@ -947,7 +948,7 @@ theorem exists_infinite_primes(n: Nat) {
     }
     1 < m
     let (p: Nat) satisfy {
-        is_prime(p) and divides(p, m)
+        p.is_prime and divides(p, m)
     }
     p != 1
     if p <= n {

@@ -816,7 +816,7 @@ theorem divides_mul_right(a: Int, b: Int, m: Int) {
 }
 
 define is_prime(a: Int) -> Bool {
-    nat_base.is_prime(abs(a))
+    abs(a).is_prime
 }
 
 theorem gcd_of_prime(p: Int, n: Int) {

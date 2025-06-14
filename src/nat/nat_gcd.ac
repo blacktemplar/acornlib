@@ -1,4 +1,4 @@
-from nat.nat_base import divides, mod, strong_induction, true_below, is_prime
+from nat.nat_base import divides, mod, strong_induction, true_below
 from nat import Nat
 from pair import Pair
 numerals Nat
@@ -458,7 +458,7 @@ theorem cofactor(a: Nat, b: Nat, af: Nat, bf: Nat) {
 }
 
 theorem gcd_of_prime(p: Nat, n: Nat) {
-    is_prime(p) implies gcd(p, n) = 1 or divides(p, n)
+    p.is_prime implies gcd(p, n) = 1 or divides(p, n)
 } by {
     divides(gcd(p, n), p)
     let d: Nat satisfy {

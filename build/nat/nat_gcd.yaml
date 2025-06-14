@@ -1,5 +1,5 @@
-dependencies: 7191182624910700923
-content: 4509674157027963571
+dependencies: 11586726995816799521
+content: 4316950200084515435
 blocks:
   all_false_below:
     nat.nat_base:
@@ -146,8 +146,8 @@ blocks:
     - Nat.1
     - Nat.gt
     - Nat.is_composite
+    - Nat.is_prime
     - divides
-    - is_prime
     - lt_suc_right
     - mul_comm
     - mul_one_left
