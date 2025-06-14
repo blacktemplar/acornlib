@@ -162,21 +162,24 @@ attributes List<T> {
     }
 }
 
-/// Creates a list of natural numbers from 0 to n-1.
-define range(n: Nat) -> List<Nat> {
-    match n {
-        Nat.0 {
-            List.nil<Nat>
-        }
-        Nat.suc(n) {
-            range(n).append(n)
+attributes Nat {
+    /// Creates a list of natural numbers from 0 to n-1.
+    define range(self) -> List<Nat> {
+        match self {
+            Nat.0 {
+                List.nil<Nat>
+            }
+            Nat.suc(n) {
+                n.range.append(n)
+            }
         }
     }
 }
 
 attributes List<T> {
+    /// Alternate name for `Nat.range`.
     /// Creates a list of natural numbers from 0 to n-1.
-    let range: Nat -> List<Nat> = range
+    let range: Nat -> List<Nat> = Nat.range
 
     /// Filters the list, keeping only elements that satisfy the given predicate.
     define filter(self, f: T -> Bool) -> List<T> {
@@ -196,39 +199,39 @@ attributes List<T> {
 }
 
 theorem length_range(n: Nat) {
-    List.range(n).length = n
+    n.range.length = n
 } by {
     // Induction on n
     define f(x: Nat) -> Bool {
-        List.range(x).length = x
+        x.range.length = x
     }
 
-    // Base case: List.range(0).length = 0
-    List.range(0) = List.nil<Nat>
+    // Base case: 0.range.length = 0
+    0.range = List.nil<Nat>
     List.nil<Nat>.length = Nat.0
     f(0)
 
     // Inductive step
     forall(x: Nat) {
         if f(x) {
-            // Induction hypothesis: List.range(x).length = x
-            List.range(x.suc) = range(x.suc)
-            List.range(x.suc) = range(x).append(x)
-            List.range(x.suc) = range(x) + List.singleton(x)
+            // Induction hypothesis: x.range.length = x
+            x.suc.range = x.suc.range
+            x.suc.range = x.range.append(x)
+            x.suc.range = x.range + List.singleton(x)
 
             // Use add_length theorem
-            range(x).length + List.singleton(x).length = (range(x) + List.singleton(x)).length
-            range(x).length + List.singleton(x).length = List.range(x.suc).length
+            x.range.length + List.singleton(x).length = (x.range + List.singleton(x)).length
+            x.range.length + List.singleton(x).length = x.suc.range.length
 
             // Simplify the left side
-            List.range(x).length = x
+            x.range.length = x
             List.singleton(x).length = Nat.1
             x + Nat.1 = x.suc
             x + List.singleton(x).length = x.suc
-            List.range(x).length + List.singleton(x).length = x.suc
+            x.range.length + List.singleton(x).length = x.suc
 
             // Therefore
-            List.range(x.suc).length = x.suc
+            x.suc.range.length = x.suc
             f(x.suc)
         }
     }
@@ -266,7 +269,7 @@ define sum<A: AddCommMonoid>(items: List<A>) -> A {
 /// Computes the partial sum of a series up to index n.
 /// Returns the sum of f(0) + f(1) + ... + f(n-1).
 define partial<A: AddCommMonoid>(f: Nat -> A, n: Nat) -> A {
-    sum(map(List.range(n), f))
+    sum(map(n.range, f))
 }
 
 theorem sum_add<A: AddCommMonoid>(left: List<A>, right: List<A>) {
@@ -628,7 +631,7 @@ theorem drop_last_cancels_add<T>(a: List<T>, b: List<T>) {
 attributes Nat {
     /// Creates a list of natural numbers from self to n-1 (exclusive of n).
     define until(self, n: Nat) -> List<Nat> {
-        List.range(n).drop(self)
+        n.range.drop(self)
     }
 
     /// Creates a list of natural numbers from self to n (inclusive).
@@ -638,28 +641,28 @@ attributes Nat {
 }
 
 theorem zero_until(n: Nat) {
-    Nat.0.until(n) = List.range(n)
+    Nat.0.until(n) = n.range
 } by {
-    drop_zero(List.range(n))
+    drop_zero(n.range)
 }
 
 theorem until_self(n: Nat) {
     n.until(n) = List.nil<Nat>
 } by {
-    List.range(n).length = n
-    drop_cancels_add(List.range(n), List.nil<Nat>)
+    n.range.length = n
+    drop_cancels_add(n.range, List.nil<Nat>)
 }
 
 theorem until_suc(n: Nat) {
     n.until(n.suc) = List.singleton(n)
 } by {
-    List.range(n.suc) = List.range(n) + List.singleton(n)
-    List.range(n).length = n
-    drop_cancels_add(List.range(n), List.singleton(n))
+    n.suc.range = n.range + List.singleton(n)
+    n.range.length = n
+    drop_cancels_add(n.range, List.singleton(n))
 }
 
 theorem zero_upto(n: Nat) {
-    Nat.0.upto(n) = List.range(n.suc)
+    Nat.0.upto(n) = n.suc.range
 }
 
 theorem upto_self(n: Nat) {
@@ -667,39 +670,39 @@ theorem upto_self(n: Nat) {
 }
 
 theorem range_add_until(a: Nat, b: Nat) {
-    a <= b implies List.range(a) + a.until(b) = List.range(b)
+    a <= b implies a.range + a.until(b) = b.range
 } by {
     let (k: Nat) satisfy { a + k = b }
 
     define f(x: Nat) -> Bool {
-        List.range(a) + a.until(a + x) = List.range(a + x)
+        a.range + a.until(a + x) = (a + x).range
     }
 
     // Base case: x = 0
     until_self(a)
-    add_nil(List.range(a))
+    add_nil(a.range)
     f(Nat.0)
 
     // Inductive step
     forall(x: Nat) {
         if f(x) {
             // Show a.until(a + x.suc) = a.until(a + x) + List.singleton(a + x)
-            a.until(a + x.suc) = List.range(a + x.suc).drop(a)
-            List.range(a + x.suc) = List.range(a + x) + List.singleton(a + x)
-            a.until(a + x.suc) = (List.range(a + x) + List.singleton(a + x)).drop(a)
+            a.until(a + x.suc) = (a + x.suc).range.drop(a)
+            (a + x.suc).range = (a + x).range + List.singleton(a + x)
+            a.until(a + x.suc) = ((a + x).range + List.singleton(a + x)).drop(a)
             f(x)
-            List.range(a + x) = List.range(a) + a.until(a + x)
-            a.until(a + x.suc) = (List.range(a) + a.until(a + x) + List.singleton(a + x)).drop(a)
-            List.range(a).length = a
-            drop_cancels_add(List.range(a), a.until(a + x) + List.singleton(a + x))
+            (a + x).range = a.range + a.until(a + x)
+            a.until(a + x.suc) = (a.range + a.until(a + x) + List.singleton(a + x)).drop(a)
+            a.range.length = a
+            drop_cancels_add(a.range, a.until(a + x) + List.singleton(a + x))
             a.until(a + x.suc) = a.until(a + x) + List.singleton(a + x)
 
             // Now show f(x.suc)
-            List.range(a) + a.until(a + x.suc) = List.range(a) + (a.until(a + x) + List.singleton(a + x))
-            add_assoc(List.range(a), a.until(a + x), List.singleton(a + x))
-            (List.range(a) + a.until(a + x)) + List.singleton(a + x) = List.range(a + x) + List.singleton(a + x)
+            a.range + a.until(a + x.suc) = a.range + (a.until(a + x) + List.singleton(a + x))
+            add_assoc(a.range, a.until(a + x), List.singleton(a + x))
+            (a.range + a.until(a + x)) + List.singleton(a + x) = (a + x).range + List.singleton(a + x)
             f(x)
-            List.range(a + x) + List.singleton(a + x) = List.range((a + x).suc)
+            (a + x).range + List.singleton(a + x) = (a + x).suc.range
             f(x.suc)
         }
     }

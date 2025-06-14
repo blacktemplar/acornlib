@@ -1,5 +1,5 @@
 dependencies: 129497396485098272
-content: 9384563581174406625
+content: 12650459663290080499
 blocks:
   add_assoc:
     list:
@@ -97,8 +97,8 @@ blocks:
     - List.append
     - List.length
     - List.singleton
+    - Nat.range
     - add_length
-    - range
     nat.nat_base:
     - Nat.1
     - Nat.induction
@@ -138,10 +138,10 @@ blocks:
   range_add_until:
     list:
     - List.append
+    - Nat.range
     - Nat.until
     - add_assoc
     - length_range
-    - range
     nat.nat_base:
     - Nat.add
     - Nat.induction
@@ -188,9 +188,9 @@ blocks:
   until_suc:
     list:
     - List.append
+    - Nat.range
     - Nat.until
     - length_range
-    - range
   upto_self:
     list:
     - Nat.upto

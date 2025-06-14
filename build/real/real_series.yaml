@@ -1,5 +1,5 @@
-dependencies: 12093087854183277053
-content: 4682372806501287842
+dependencies: 13393647580056987759
+content: 7000694147998159066
 blocks:
   add_seq_converges:
     real.real_seq:
@@ -279,9 +279,9 @@ blocks:
     - Semiring.distrib_left
   partial_seq_lte:
     list:
+    - Nat.range
     - map
     - partial
-    - range
     nat.nat_base:
     - Nat.induction
     real.real_base:
@@ -295,10 +295,10 @@ blocks:
   partial_suc:
     list:
     - List.append
+    - Nat.range
     - map_add
     - map_singleton
     - partial
-    - range
     - sum_add
     - sum_append
   partial_tail:
@@ -343,9 +343,9 @@ blocks:
     - partial_tail
   partial_zero:
     list:
+    - Nat.range
     - map
     - partial
-    - range
     - sum
   seq_lte_ub:
     real.real_base:

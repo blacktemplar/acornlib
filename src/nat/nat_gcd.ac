@@ -1,4 +1,4 @@
-from nat.nat_base import mod, strong_induction, true_below
+from nat.nat_base import strong_induction, true_below
 from nat import Nat
 from pair import Pair
 numerals Nat

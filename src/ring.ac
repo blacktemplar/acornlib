@@ -1,5 +1,5 @@
 from nat import Nat
-from list import List, sum, map, range
+from list import List, sum, map
 from monoid import pow
 from add_comm_group import AddCommGroup
 from semiring import Semiring
@@ -62,10 +62,10 @@ theorem mul_neg_one_right<R: Ring>(a: R) {
 }
 
 theorem geometric_sum<R: Ring>(a: R, n: Nat) {
-    (a + -R.1) * sum(map(range(n), pow(a))) = pow(a, n) + -R.1
+    (a + -R.1) * sum(map(n.range, pow(a))) = pow(a, n) + -R.1
 } by {
     define f(x: Nat) -> Bool {
-        (a + -R.1) * sum(map(range(x), pow(a))) = pow(a, x) + -R.1
+        (a + -R.1) * sum(map(x.range, pow(a))) = pow(a, x) + -R.1
     }
 
     // Base case: n = 0
@@ -73,7 +73,7 @@ theorem geometric_sum<R: Ring>(a: R, n: Nat) {
     // sum(map([], pow(a))) = 0
     // (a + -R.1) * 0 = 0
     // pow(a, 0) + -R.1 = R.1 + -R.1 = 0
-    range(Nat.0) = List.nil<Nat>
+    Nat.0.range = List.nil<Nat>
     map(List.nil<Nat>, pow(a)) = List.nil<R>
     sum(List.nil<R>) = R.0
     (a + -R.1) * R.0 = R.0
@@ -84,22 +84,22 @@ theorem geometric_sum<R: Ring>(a: R, n: Nat) {
     // Inductive step
     forall(x: Nat) {
         if f(x) {
-            // Induction hypothesis: (a + -R.1) * sum(map(range(x), pow(a))) = pow(a, x) + -R.1
+            // Induction hypothesis: (a + -R.1) * sum(map(x.range, pow(a))) = pow(a, x) + -R.1
             
             // range(x.suc) = range(x).append(x)
-            range(x.suc) = range(x).append(x)
-            map(range(x.suc), pow(a)) = map(range(x).append(x), pow(a))
-            map(range(x).append(x), pow(a)) = map(range(x), pow(a)).append(pow(a, x))
+            x.suc.range = x.range.append(x)
+            map(x.suc.range, pow(a)) = map(x.range.append(x), pow(a))
+            map(x.range.append(x), pow(a)) = map(x.range, pow(a)).append(pow(a, x))
             
             // sum of appended list
-            sum(map(range(x), pow(a)).append(pow(a, x))) = sum(map(range(x), pow(a))) + pow(a, x)
+            sum(map(x.range, pow(a)).append(pow(a, x))) = sum(map(x.range, pow(a))) + pow(a, x)
             
             // Left side: (a + -R.1) * sum(map(range(x.suc), pow(a)))
-            (a + -R.1) * sum(map(range(x.suc), pow(a))) = (a + -R.1) * (sum(map(range(x), pow(a))) + pow(a, x))
-            (a + -R.1) * (sum(map(range(x), pow(a))) + pow(a, x)) = (a + -R.1) * sum(map(range(x), pow(a))) + (a + -R.1) * pow(a, x)
+            (a + -R.1) * sum(map(x.suc.range, pow(a))) = (a + -R.1) * (sum(map(x.range, pow(a))) + pow(a, x))
+            (a + -R.1) * (sum(map(x.range, pow(a))) + pow(a, x)) = (a + -R.1) * sum(map(x.range, pow(a))) + (a + -R.1) * pow(a, x)
             
             // Use induction hypothesis
-            (a + -R.1) * sum(map(range(x), pow(a))) + (a + -R.1) * pow(a, x) = (pow(a, x) + -R.1) + (a + -R.1) * pow(a, x)
+            (a + -R.1) * sum(map(x.range, pow(a))) + (a + -R.1) * pow(a, x) = (pow(a, x) + -R.1) + (a + -R.1) * pow(a, x)
             
             // Simplify (a + -R.1) * pow(a, x)
             (a + -R.1) * pow(a, x) = a * pow(a, x) + -R.1 * pow(a, x)
@@ -114,7 +114,7 @@ theorem geometric_sum<R: Ring>(a: R, n: Nat) {
             -R.1 + pow(a, x.suc) = pow(a, x.suc) + -R.1
             
             // Therefore
-            (a + -R.1) * sum(map(range(x.suc), pow(a))) = pow(a, x.suc) + -R.1
+            (a + -R.1) * sum(map(x.suc.range, pow(a))) = pow(a, x.suc) + -R.1
             f(x.suc)
         }
     }

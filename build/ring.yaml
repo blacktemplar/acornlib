@@ -1,5 +1,5 @@
-dependencies: 16856311651995356029
-content: 13719261802689344895
+dependencies: 10380523030149768734
+content: 3860420975179899920
 blocks:
   geometric_sum:
     add_comm_semigroup:
@@ -11,9 +11,9 @@ blocks:
     add_semigroup:
     - AddSemigroup.add_associative
     list:
+    - Nat.range
     - map
     - map_append
-    - range
     - sum
     - sum_append
     monoid:
