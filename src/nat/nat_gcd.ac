@@ -1,4 +1,4 @@
-from nat.nat_base import divides, mod, strong_induction, true_below, is_prime, is_composite
+from nat.nat_base import divides, mod, strong_induction, true_below, is_prime
 from nat import Nat
 from pair import Pair
 numerals Nat
@@ -471,7 +471,7 @@ theorem gcd_of_prime(p: Nat, n: Nat) {
     } else {
         if gcd(p, n) > 1 {
             d > 1
-            is_composite(p)
+            p.is_composite
             false
         }
         gcd(p, n) != 0

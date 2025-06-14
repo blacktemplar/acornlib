@@ -673,8 +673,6 @@ attributes Nat {
     }
 }
 
-// TODO: replace this with direct calls to `Nat.is_composite`.
-let is_composite = Nat.is_composite
 
 theorem mul_to_zero(a: Nat, b: Nat) { a * b = 0 implies a = 0 or b = 0 } by {
     if a != 0 and b != 0 {
@@ -699,7 +697,7 @@ theorem divisor_lt(a: Nat, b: Nat, c: Nat) {
 }
 
 define is_prime(a: Nat) -> Bool {
-    1 < a and not is_composite(a)
+    1 < a and not a.is_composite
 }
 
 define divides(a: Nat, b: Nat) -> Bool {
@@ -771,7 +769,7 @@ theorem has_prime_divisor(n: Nat) {
                 divides(k, k)
                 has_prime_divisor(k)
             }
-            if is_composite(k) {
+            if k.is_composite {
                 let (b: Nat, c: Nat) satisfy {
                     1 < b and 1 < c and k = b * c
                 }
