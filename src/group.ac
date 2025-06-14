@@ -1,4 +1,4 @@
-from monoid import Monoid, pow
+from monoid import Monoid
 
 /// A group is a monoid that also has inverses.
 typeclass G: Group extends Monoid {
@@ -52,7 +52,7 @@ from nat import Nat
 /// True if an element has finite order (some positive power equals the identity).
 define has_finite_order<G: Group>(g: G) -> Bool {
     exists(n: Nat) {
-        n != Nat.0 and pow(g, n) = G.1
+        n != Nat.0 and g.pow(n) = G.1
     }
 }
 

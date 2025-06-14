@@ -1,5 +1,5 @@
-dependencies: 8562104799339720064
-content: 18157031365003935026
+dependencies: 3349976283888768751
+content: 11969745751463524441
 blocks:
   lt_trans:
     order:
@@ -43,7 +43,7 @@ blocks:
     - left_cancel
     monoid:
     - Monoid.mul_identity_right
-    - pow
+    - Monoid.pow
     - pow_one
     nat.nat_base:
     - Nat.induction

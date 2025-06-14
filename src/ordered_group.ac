@@ -1,6 +1,5 @@
 from nat import Nat
 from group import Group, has_finite_order, is_torsion_free
-from monoid import pow
 from order import PartialOrder, LinearOrder
 
 /// A left-ordered group is a group with a left-invariant order.
@@ -26,20 +25,20 @@ theorem lt_trans<G: LeftOrderedGroup>(a: G, b: G, c: G) {
 }
 
 theorem one_lt_pow<G: LeftOrderedGroup>(a: G, n: Nat) {
-    lt(G.1, a) and n != Nat.0 implies lt(G.1, pow(a, n))
+    lt(G.1, a) and n != Nat.0 implies lt(G.1, a.pow(n))
 } by {
     // Define a helper function for induction
     define f(x: Nat) -> Bool { 
-        lt(G.1, pow(a, x.suc))
+        lt(G.1, a.pow(x.suc))
     }
     f(Nat.0)
     forall(x: Nat) {
         if f(x) {
-            lt(G.1, pow(a, x.suc))
-            a * G.1 <= a * pow(a, x.suc)
-            lt(a * G.1, a * pow(a, x.suc))
-            lt(a, a * pow(a, x.suc))
-            lt(G.1, pow(a, x.suc.suc))
+            lt(G.1, a.pow(x.suc))
+            a * G.1 <= a * a.pow(x.suc)
+            lt(a * G.1, a * a.pow(x.suc))
+            lt(a, a * a.pow(x.suc))
+            lt(G.1, a.pow(x.suc.suc))
             f(x.suc)
         }
     }
@@ -50,21 +49,21 @@ theorem one_lt_pow<G: LeftOrderedGroup>(a: G, n: Nat) {
 }
 
 theorem pow_lt_one<G: LeftOrderedGroup>(a: G, n: Nat) {
-    lt(a, G.1) and n != Nat.0 implies lt(pow(a, n), G.1)
+    lt(a, G.1) and n != Nat.0 implies lt(a.pow(n), G.1)
 } by {
     // Define a helper function for induction
     define f(x: Nat) -> Bool { 
-        lt(pow(a, x.suc), G.1)
+        lt(a.pow(x.suc), G.1)
     }
     f(Nat.0)
     forall(x: Nat) {
         if f(x) {
-            lt(pow(a, x.suc), G.1)
-            pow(a, x.suc) != G.1
-            pow(a, x.suc) <= G.1
-            a * pow(a, x.suc) <= a * G.1
-            lt(a * pow(a, x.suc), a * G.1)
-            lt(a * pow(a, x.suc), a)
+            lt(a.pow(x.suc), G.1)
+            a.pow(x.suc) != G.1
+            a.pow(x.suc) <= G.1
+            a * a.pow(x.suc) <= a * G.1
+            lt(a * a.pow(x.suc), a * G.1)
+            lt(a * a.pow(x.suc), a)
             f(x.suc)
         }
     }
@@ -89,11 +88,11 @@ theorem ordered_imp_torsion_free<G: OrderedGroup>(g: G) {
     forall(g: G) {
         if has_finite_order(g) {
             let n: Nat satisfy {
-                pow(g, n) = G.1
+                g.pow(n) = G.1
             }
             if g != G.1 {
                 if lt(G.1, g) {
-                    lt(G.1, pow(g, n))
+                    lt(G.1, g.pow(n))
                     false
                 } else {
                     lt(g, G.1)

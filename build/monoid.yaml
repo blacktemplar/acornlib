@@ -1,10 +1,10 @@
 dependencies: 276408211754071901
-content: 1193344366686841786
+content: 14764154820982426996
 blocks:
   pow_add:
     monoid:
     - Monoid.mul_identity_left
-    - pow
+    - Monoid.pow
     nat.nat_base:
     - Nat.add
     - Nat.induction
@@ -15,6 +15,6 @@ blocks:
   pow_one:
     monoid:
     - Monoid.mul_identity_right
-    - pow
+    - Monoid.pow
     nat.nat_base:
     - Nat.1

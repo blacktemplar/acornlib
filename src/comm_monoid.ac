@@ -1,5 +1,5 @@
 from comm_semigroup import CommSemigroup
-from monoid import Monoid, pow
+from monoid import Monoid
 from nat.nat_base import Nat // For Nat.0, Nat.suc, and general Nat usage
 
 /// CommMonoid represents a commutative, multiplicative monoid.
@@ -8,17 +8,17 @@ typeclass M: CommMonoid extends CommSemigroup, Monoid {
 }
 
 theorem pow_distrib_mul<M: CommMonoid>(a: M, b: M, c: Nat) {
-    pow(a * b, c) = pow(a, c) * pow(b, c)
+    (a * b).pow(c) = a.pow(c) * b.pow(c)
 } by {
     // Inductive proof on c
     define f(x: Nat) -> Bool {
-        pow(a * b, x) = pow(a, x) * pow(b, x)
+        (a * b).pow(x) = a.pow(x) * b.pow(x)
     }
 
     // Base case: c = Nat.0
-    // pow(a * b, Nat.0) is M.1 by definition of pow.
-    // pow(a, Nat.0) is M.1 by definition of pow.
-    // pow(b, Nat.0) is M.1 by definition of pow.
+    // (a * b).pow(Nat.0) is M.1 by definition of pow.
+    // a.pow(Nat.0) is M.1 by definition of pow.
+    // b.pow(Nat.0) is M.1 by definition of pow.
     // So, f(Nat.0) becomes M.1 = M.1 * M.1.
     // This is true by mul_identity_right(M.1) or mul_identity_left(M.1) from Monoid.
     Monoid.mul_identity_right(M.1) // States M.1 * M.1 = M.1
@@ -28,22 +28,22 @@ theorem pow_distrib_mul<M: CommMonoid>(a: M, b: M, c: Nat) {
     forall(k: Nat) {
         if f(k) {
             // Inductive Hypothesis (IH):
-            // pow(a * b, k) = pow(a, k) * pow(b, k)
+            // (a * b).pow(k) = a.pow(k) * b.pow(k)
 
-            // Goal: pow(a * b, k.suc) = pow(a, k.suc) * pow(b, k.suc)
+            // Goal: (a * b).pow(k.suc) = a.pow(k.suc) * b.pow(k.suc)
 
-            // LHS expansion: pow(a * b, k.suc) = (a * b) * pow(a * b, k)
-            // By IH: pow(a * b, k.suc) = (a * b) * (pow(a, k) * pow(b, k))
+            // LHS expansion: (a * b).pow(k.suc) = (a * b) * (a * b).pow(k)
+            // By IH: (a * b).pow(k.suc) = (a * b) * (a.pow(k) * b.pow(k))
 
-            // RHS expansion: pow(a, k.suc) * pow(b, k.suc) = (a * pow(a, k)) * (b * pow(b, k))
+            // RHS expansion: a.pow(k.suc) * b.pow(k.suc) = (a * a.pow(k)) * (b * b.pow(k))
             
             // Proof: Show expanded LHS equals expanded RHS using Commutativity and Associativity.
-            // (a * b) * (pow(a, k) * pow(b, k)) = (a * pow(a, k)) * (b * pow(b, k))
+            // (a * b) * (a.pow(k) * b.pow(k)) = (a * a.pow(k)) * (b * b.pow(k))
             // This relies on the Acorn prover's ability to apply these properties for CommMonoid.
-            (a * b) * (pow(a, k) * pow(b, k)) = (a * pow(a, k)) * (b * pow(b, k))
+            (a * b) * (a.pow(k) * b.pow(k)) = (a * a.pow(k)) * (b * b.pow(k))
             
             // Therefore, using definitions of pow and the equality above:
-            pow(a * b, k.suc) = pow(a, k.suc) * pow(b, k.suc)
+            (a * b).pow(k.suc) = a.pow(k.suc) * b.pow(k.suc)
             f(k.suc)
         }
     }

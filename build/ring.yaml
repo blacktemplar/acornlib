@@ -1,5 +1,5 @@
-dependencies: 10380523030149768734
-content: 3860420975179899920
+dependencies: 4457017118890552187
+content: 14242165711116698965
 blocks:
   geometric_sum:
     add_comm_semigroup:
@@ -17,7 +17,7 @@ blocks:
     - sum
     - sum_append
     monoid:
-    - pow
+    - Monoid.pow
     nat.nat_base:
     - Nat.induction
     ring:
