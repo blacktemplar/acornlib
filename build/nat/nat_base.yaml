@@ -1,5 +1,5 @@
 dependencies: 10913166933577003343
-content: 12255519469689623989
+content: 5457772963840350184
 blocks:
   Nat.LinearOrder:
     nat.nat_base:
@@ -110,7 +110,7 @@ blocks:
     - mul_comm
   div_imp_mod:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - divides_lte
     - divides_mod
     - lte_imp_not_lt
@@ -119,14 +119,14 @@ blocks:
     - zero_divides
   div_sub_mod:
     nat.nat_base:
+    - Nat.divides
     - add_imp_sub
     - add_mod
-    - divides
     - mul_comm
   divides_add:
     nat.nat_base:
+    - Nat.divides
     - distrib_right
-    - divides
     - divides_mul
     - divides_self
     - mul_comm
@@ -135,7 +135,7 @@ blocks:
     - divides_add
   divides_cancel_left:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_assoc
     - mul_cancel_left
   divides_cancel_right:
@@ -144,11 +144,11 @@ blocks:
     - mul_comm
   divides_factorial:
     nat.nat_base:
+    - Nat.divides
     - Nat.induction
     - Nat.lt
     - Nat.lte
     - add_to_zero
-    - divides
     - divides_trans
     - factorial_step
     - lt_imp_lte_suc
@@ -156,8 +156,8 @@ blocks:
     - mul_comm
   divides_lte:
     nat.nat_base:
+    - Nat.divides
     - Nat.mul
-    - divides
     - lte_mul
     - mul_comm
   divides_mod:
@@ -170,12 +170,12 @@ blocks:
     - mul_comm
   divides_mul:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_assoc
     - mul_comm
   divides_mul_left:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_assoc
   divides_mul_right:
     nat.nat_base:
@@ -183,24 +183,24 @@ blocks:
     - mul_comm
   divides_self:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_one_right
   divides_sub:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - divides_mul
     - divides_self
     - mul_comm
     - sub_right_distrib
   divides_suc:
     nat.nat_base:
+    - Nat.divides
     - Nat.lte
     - Nat.suc
     - add_cancels_left
     - add_comm
     - add_one_left
     - distrib_left
-    - divides
     - lt_cancel_mul
     - lt_diff
     - lt_suc
@@ -214,19 +214,19 @@ blocks:
     - zero_divides
   divides_trans:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_assoc
   divides_unmod:
     nat.nat_base:
+    - Nat.divides
     - add_mod
-    - divides
     - divides_add_copy
     - divides_mul
     - mul_comm
   divides_zero:
     nat.nat_base:
+    - Nat.divides
     - Nat.mul
-    - divides
   division_theorem:
     nat.nat_base:
     - Nat.add
@@ -253,7 +253,6 @@ blocks:
     - divides_suc
     - has_prime_divisor
     - lt_imp_lt_suc
-    - lt_not_symm
     - lt_or_lte
     - lt_suc
     - lte_one_factorial
@@ -373,10 +372,10 @@ blocks:
     - gte_each_of_three
   has_prime_divisor:
     nat.nat_base:
+    - Nat.divides
     - Nat.is_composite
     - Nat.is_prime
     - Nat.lt
-    - divides
     - divides_trans
     - divisor_lt
     - mul_one_right
@@ -524,8 +523,8 @@ blocks:
     - not_lt_zero
   lte_imp_exp_lte:
     nat.nat_base:
+    - Nat.divides
     - Nat.lte
-    - divides
     - divides_lte
     - exp_add
     - exp_ne_zero
@@ -590,8 +589,8 @@ blocks:
     - small_mod
   mod_mul:
     nat.nat_base:
+    - Nat.divides
     - div_imp_mod
-    - divides
     - mul_comm
   mod_of_zero:
     nat.nat_base:
@@ -736,12 +735,12 @@ blocks:
     - add_to_zero
   small_mod:
     nat.nat_base:
+    - Nat.divides
     - Nat.lt
     - Nat.lte
     - add_comm
     - add_imp_sub
     - add_mod
-    - divides
     - divides_lte
     - lte_imp_not_lt
     - lte_trans
@@ -829,7 +828,7 @@ blocks:
     - suc_ne
   zero_divides:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_zero_left
   zero_exp:
     nat.nat_base:

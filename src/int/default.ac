@@ -176,6 +176,10 @@ attributes Int {
     define gte(self, b: Int) -> Bool {
         b <= self
     }
+
+    define divides(self, b: Int) -> Bool {
+        exists(d: Int) { d * self = b }
+    }
 }
 
 theorem lt_not_ref(a: Int) { not (a < a) } by {
@@ -450,47 +454,44 @@ theorem abs_alt_decomp(a: Int) { unit_sign(a) * a = Int.from_nat(abs(a)) } by {
     unit_sign(a) * a = 1 * Int.from_nat(abs(a))
 }
 
-define divides(a: Int, b: Int) -> Bool {
-    exists(d: Int) { d * a = b }
-}
 
 theorem div_trans(a: Int, b: Int, c: Int) {
-    divides(a, b) and divides(b, c) implies divides(a, c)
+    a.divides(b) and b.divides(c) implies a.divides(c)
 } by {
     let (d: Int) satisfy { d * a = b }
     let (e: Int) satisfy { e * b = c }
     e * (d * a) = c
     e * d * a = c
-    divides(a, c)
+    a.divides(c)
 }
 
 theorem div_imp_div_abs(a: Int, b: Int) {
-    divides(a, b) implies nat_base.divides(abs(a), abs(b))
+    a.divides(b) implies abs(a).divides(abs(b))
 } by {
     let (d: Int) satisfy { d * a = b }
     abs(d) * abs(a) = abs(b)
-    nat_base.divides(abs(a), abs(b))
+    abs(a).divides(abs(b))
 }
 
 theorem div_from_nat(j: Nat, k: Nat) {
-    nat_base.divides(j, k) implies divides(Int.from_nat(j), Int.from_nat(k))
+    j.divides(k) implies Int.from_nat(j).divides(Int.from_nat(k))
 } by {
     let (n: Nat) satisfy { n * j = k }
     Int.from_nat(n) * Int.from_nat(j) = Int.from_nat(k)
-    divides(Int.from_nat(j), Int.from_nat(k))
+    Int.from_nat(j).divides(Int.from_nat(k))
 }
 
 theorem div_abs(a: Int) {
-    divides(a, Int.from_nat(abs(a)))
+    a.divides(Int.from_nat(abs(a)))
 } by {
     Int.from_nat(abs(a)) = a * unit_sign(a)
 }
 
-theorem div_abs_imp_div(a: Int, b: Int) { nat_base.divides(abs(a), abs(b)) implies divides(a, b) } by {
-    divides(Int.from_nat(abs(a)), Int.from_nat(abs(b)))
-    divides(a, Int.from_nat(abs(a)))
-    divides(a, Int.from_nat(abs(b)))
-    divides(Int.from_nat(abs(b)), b)
+theorem div_abs_imp_div(a: Int, b: Int) { abs(a).divides(abs(b)) implies a.divides(b) } by {
+    Int.from_nat(abs(a)).divides(Int.from_nat(abs(b)))
+    a.divides(Int.from_nat(abs(a)))
+    a.divides(Int.from_nat(abs(b)))
+    Int.from_nat(abs(b)).divides(b)
 }
 
 theorem abs_eq_imp_unit(a: Int, b: Int) {
@@ -507,12 +508,12 @@ theorem abs_eq_imp_unit(a: Int, b: Int) {
     is_unit(unit_sign(b) * unit_sign(a))
 }
 
-theorem abs_eq_imp_div(a: Int, b: Int) { abs(a) = abs(b) implies divides(a, b) } by {
+theorem abs_eq_imp_div(a: Int, b: Int) { abs(a) = abs(b) implies a.divides(b) } by {
     exists(u: Int) { is_unit(u) and u * a = b }
 }
 
-theorem div_pos_imp_lte(a: Int, b: Int) { divides(a, b) and b.is_positive implies a <= b } by {
-    nat_base.divides(abs(a), abs(b))
+theorem div_pos_imp_lte(a: Int, b: Int) { a.divides(b) and b.is_positive implies a <= b } by {
+    abs(a).divides(abs(b))
     Int.from_nat(abs(a)) <= Int.from_nat(abs(b))
     Int.from_nat(abs(a)) <= b
     a <= Int.from_nat(abs(a))
@@ -533,18 +534,18 @@ theorem gcd_comm(a: Int, b: Int) { gcd(a, b) = gcd(b, a) } by {
     Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = Int.from_nat(nat_gcd.gcd(abs(b), abs(a)))
 }
 
-theorem gcd_div_left(a: Int, b: Int) { divides(gcd(a, b), a) } by {
-    divides(Int.from_nat(nat_gcd.gcd(abs(a), abs(b))), a)
+theorem gcd_div_left(a: Int, b: Int) { gcd(a, b).divides(a) } by {
+    Int.from_nat(nat_gcd.gcd(abs(a), abs(b))).divides(a)
 }
 
-theorem gcd_div_right(a: Int, b: Int) { divides(gcd(a, b), b) }
+theorem gcd_div_right(a: Int, b: Int) { gcd(a, b).divides(b) }
 
-theorem divides_gcd(a: Int, b: Int, d: Int) { divides(d, a) and divides(d, b) implies divides(d, gcd(a, b)) } by {
-    nat_base.divides(abs(d), abs(a))
-    nat_base.divides(abs(d), abs(b))
-    nat_base.divides(abs(d), nat_gcd.gcd(abs(a), abs(b)))
-    divides(d, Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))
-    divides(d, gcd(a, b))
+theorem divides_gcd(a: Int, b: Int, d: Int) { d.divides(a) and d.divides(b) implies d.divides(gcd(a, b)) } by {
+    abs(d).divides(abs(a))
+    abs(d).divides(abs(b))
+    abs(d).divides(nat_gcd.gcd(abs(a), abs(b)))
+    d.divides(Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))
+    d.divides(gcd(a, b))
 }
 
 theorem gcd_pos(a: Int, b: Int) {
@@ -557,10 +558,10 @@ theorem gcd_pos(a: Int, b: Int) {
 }
 
 theorem gcd_is_gcd(a: Int, b: Int, d: Int) {
-    a != 0 and b != 0 and divides(d, a) and divides(d, b) implies d <= gcd(a, b)
+    a != 0 and b != 0 and d.divides(a) and d.divides(b) implies d <= gcd(a, b)
 } by {
     gcd(a, b).is_positive
-    divides(d, gcd(a, b))
+    d.divides(gcd(a, b))
 }
 
 // Theorems about the span of a linear combination
@@ -592,11 +593,11 @@ theorem spans_mul_left(a: Int, b: Int, c: Int) { spans(a, b, c * a) } by {
     c * a + 0 * b = c * a
 }
 
-theorem spans_div_left(a: Int, b: Int, c: Int) { divides(a, c) implies spans(a, b, c) }
+theorem spans_div_left(a: Int, b: Int, c: Int) { a.divides(c) implies spans(a, b, c) }
 
 theorem spans_mul_right(a: Int, b: Int, c: Int) { spans(a, b, c * b) }
 
-theorem spans_div_right(a: Int, b: Int, c: Int) { divides(b, c) implies spans(a, b, c) } by {
+theorem spans_div_right(a: Int, b: Int, c: Int) { b.divides(c) implies spans(a, b, c) } by {
     spans(b, a, c)
 }
 
@@ -789,7 +790,7 @@ theorem mul_cancel_right(a: Int, b: Int, c: Int) {
 }
 
 theorem divides_cancel_left(a: Int, b: Int, c: Int) {
-    a != 0 and divides(a * b, a * c) implies divides(b, c)
+    a != 0 and (a * b).divides(a * c) implies b.divides(c)
 } by {
     let d: Int satisfy {
         a * b * d = a * c
@@ -799,11 +800,11 @@ theorem divides_cancel_left(a: Int, b: Int, c: Int) {
 }
 
 theorem divides_cancel_right(a: Int, b: Int, c: Int) {
-    a != 0 and divides(b * a, c * a) implies divides(b, c)
+    a != 0 and (b * a).divides(c * a) implies b.divides(c)
 }
 
 theorem divides_mul_left(a: Int, b: Int, m: Int) {
-    divides(a, b) implies divides(m * a, m * b)
+    a.divides(b) implies (m * a).divides(m * b)
 } by {
     let d: Int satisfy {
         d * a = b
@@ -812,7 +813,7 @@ theorem divides_mul_left(a: Int, b: Int, m: Int) {
 }
 
 theorem divides_mul_right(a: Int, b: Int, m: Int) {
-    divides(a, b) implies divides(a * m, b * m)
+    a.divides(b) implies (a * m).divides(b * m)
 }
 
 define is_prime(a: Int) -> Bool {
@@ -820,20 +821,20 @@ define is_prime(a: Int) -> Bool {
 }
 
 theorem gcd_of_prime(p: Int, n: Int) {
-    is_prime(p) implies gcd(p, n) = 1 or divides(p, n)
+    is_prime(p) implies gcd(p, n) = 1 or p.divides(n)
 } by {
-    nat_gcd.gcd(abs(p), abs(n)) = Nat.1 or nat_base.divides(abs(p), abs(n))
+    nat_gcd.gcd(abs(p), abs(n)) = Nat.1 or abs(p).divides(abs(n))
     if nat_gcd.gcd(abs(p), abs(n)) = Nat.1 {
         gcd(p, n) = 1
     } else {
-        nat_base.divides(abs(p), abs(n))
-        divides(p, n)
+        abs(p).divides(abs(n))
+        p.divides(n)
     }
 }
 
 // Generalized version
 theorem euclids_lemma(a: Int, b: Int, c: Int) {
-    gcd(a, b) = 1 and divides(a, b * c) implies divides(a, c)
+    gcd(a, b) = 1 and a.divides(b * c) implies a.divides(c)
 } by {
     spans(a, b, 1)
     let (x: Int, y: Int) satisfy {
@@ -846,17 +847,17 @@ theorem euclids_lemma(a: Int, b: Int, c: Int) {
     x * a * c + y * d * a = c
     a * x * c + a * y * d = c
     a * (x * c + y * d) = c
-    divides(a, c)
+    a.divides(c)
 }
 
 theorem euclids_lemma_prime(a: Int, b: Int, c: Int) {
-    is_prime(a) and divides(a, b * c) implies divides(a, b) or divides(a, c)
+    is_prime(a) and a.divides(b * c) implies a.divides(b) or a.divides(c)
 } by {
-    if divides(a, b) {
-        divides(a, b)
+    if a.divides(b) {
+        a.divides(b)
     } else {
         gcd(a, b) = 1
-        divides(a, c)
+        a.divides(c)
     }
 }
 

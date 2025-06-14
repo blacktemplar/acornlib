@@ -1,5 +1,5 @@
-dependencies: 16063444040239613479
-content: 13982916959608645202
+dependencies: 6744925487076047429
+content: 5880295560111100006
 blocks:
   '16':
     rat.rat_base:
@@ -249,8 +249,8 @@ blocks:
   cross_eq_imp_eq:
     int:
     - Int.abs
+    - Int.divides
     - div_imp_div_abs
-    - divides
     - euclids_lemma
     - gcd_comm
     - member_abs_pos
@@ -1164,12 +1164,12 @@ blocks:
     - mul_zero_right
   reduce:
     int:
+    - Int.divides
     - Int.gt
     - Int.lte
     - abs_alt_decomp
     - abs_zero_imp_zero
     - cofactor
-    - divides
     - gcd_comm
     - gcd_div_right
     - gcd_mult_right
@@ -1412,7 +1412,7 @@ blocks:
     - unreduce_right
   unreduce_right:
     int:
-    - divides
+    - Int.divides
     - euclids_lemma
     - gcd_comm
     - mul_assoc

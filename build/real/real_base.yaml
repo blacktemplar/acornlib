@@ -1,4 +1,4 @@
-dependencies: 1760074901627328089
+dependencies: 11953748884083520530
 content: 18435657610145613371
 blocks:
   '104':
@@ -686,8 +686,8 @@ blocks:
     - rat_between_reals
   lt_add_pos_int:
     int:
+    - Int.divides
     - div_pos_imp_lte
-    - divides
     int.int_base:
     - mul_one_right
     rat.rat_base:

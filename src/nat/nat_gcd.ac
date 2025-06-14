@@ -1,4 +1,4 @@
-from nat.nat_base import divides, mod, strong_induction, true_below
+from nat.nat_base import mod, strong_induction, true_below
 from nat import Nat
 from pair import Pair
 numerals Nat
@@ -163,24 +163,24 @@ define gcd_pair(p: Pair<Nat, Nat>) -> Nat { gcd_step_n(p, num_gcd_steps(p)).firs
 define gcd(a: Nat, b: Nat) -> Nat { gcd_pair(Pair.new(a, b)) }
 
 define divides_both(a: Nat, p: Pair<Nat, Nat>) -> Bool {
-    divides(a, p.first) and divides(a, p.second)
+    a.divides(p.first) and a.divides(p.second)
 }
 
 theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
     divides_both(a, p) implies divides_both(a, gcd_step(p))
 } by {
-    divides(a, p.first)
-    divides(a, p.second)
-    divides(a, mod(p.first, p.second))
+    a.divides(p.first)
+    a.divides(p.second)
+    a.divides(mod(p.first, p.second))
     if p.second = 0 {
         gcd_step(p) = p
         divides_both(a, gcd_step(p))
     } else {
         gcd_step(p) = Pair<Nat, Nat>.new(p.second, mod(p.first, p.second))
         gcd_step(p).second = mod(p.first, p.second)
-        divides(a, gcd_step(p).second)
+        a.divides(gcd_step(p).second)
         gcd_step(p).first = p.second
-        divides(a, gcd_step(p).first)
+        a.divides(gcd_step(p).first)
         divides_both(a, gcd_step(p))
     }
 }
@@ -203,22 +203,22 @@ theorem divides_gcd_step_n(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
 }
 
 theorem divides_gcd_pair(d: Nat, p: Pair<Nat, Nat>) {
-    divides_both(d, p) implies divides(d, gcd_pair(p))
+    divides_both(d, p) implies d.divides(gcd_pair(p))
 } by {
     divides_both(d, gcd_step_n(p, num_gcd_steps(p)))
-    divides(d, gcd_step_n(p, num_gcd_steps(p)).first)
+    d.divides(gcd_step_n(p, num_gcd_steps(p)).first)
 }
 
 theorem divides_gcd(d: Nat, a: Nat, b: Nat) {
-    divides(d, a) and divides(d, b) implies divides(d, gcd(a, b))
+    d.divides(a) and d.divides(b) implies d.divides(gcd(a, b))
 } by {
-    divides(d, Pair<Nat, Nat>.new(a, b).first)
-    divides(d, Pair<Nat, Nat>.new(a, b).second)
+    d.divides(Pair<Nat, Nat>.new(a, b).first)
+    d.divides(Pair<Nat, Nat>.new(a, b).second)
     divides_both(d, Pair<Nat, Nat>.new(a, b))
     divides_gcd_pair(d, Pair<Nat, Nat>.new(a, b))
 
-    divides(d, gcd_pair(Pair<Nat, Nat>.new(a, b)))
-    divides(d, gcd(a, b))
+    d.divides(gcd_pair(Pair<Nat, Nat>.new(a, b)))
+    d.divides(gcd(a, b))
 }
 
 theorem divides_both_unstep(a: Nat, p: Pair<Nat, Nat>) {
@@ -229,13 +229,13 @@ theorem divides_both_unstep(a: Nat, p: Pair<Nat, Nat>) {
         divides_both(a, p)
     } else {
         gcd_step(p) = Pair<Nat, Nat>.new(p.second, mod(p.first, p.second))
-        divides(a, gcd_step(p).first)
-        exists(k0: Nat) { divides(a, Pair<Nat, Nat>.new(p.second, k0).first) }
-        divides(a, p.second)
-        divides(a, gcd_step(p).second)
-        exists(k0: Nat) { divides(a, Pair<Nat, Nat>.new(k0, mod(p.first, p.second)).second) }
-        divides(a, mod(p.first, p.second))
-        divides(a, p.first)
+        a.divides(gcd_step(p).first)
+        exists(k0: Nat) { a.divides(Pair<Nat, Nat>.new(p.second, k0).first) }
+        a.divides(p.second)
+        a.divides(gcd_step(p).second)
+        exists(k0: Nat) { a.divides(Pair<Nat, Nat>.new(k0, mod(p.first, p.second)).second) }
+        a.divides(mod(p.first, p.second))
+        a.divides(p.first)
         divides_both(a, p)
     }
 }
@@ -266,49 +266,49 @@ theorem divides_gcd_step_n_converse(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
 }
 
 theorem divides_gcd_pair_converse(d: Nat, p: Pair<Nat, Nat>) {
-    divides(d, gcd_pair(p)) implies divides_both(d, p)
+    d.divides(gcd_pair(p)) implies divides_both(d, p)
 } by {
     gcd_pair(p) = gcd_step_n(p, num_gcd_steps(p)).first
     0 = gcd_step_n(p, num_gcd_steps(p)).second
-    divides(d, gcd_step_n(p, num_gcd_steps(p)).first)
-    divides(d, gcd_step_n(p, num_gcd_steps(p)).second)
+    d.divides(gcd_step_n(p, num_gcd_steps(p)).first)
+    d.divides(gcd_step_n(p, num_gcd_steps(p)).second)
     divides_both(d, gcd_step_n(p, num_gcd_steps(p)))
     divides_both(d, p)
 }
 
 theorem gcd_divides(d: Nat, a: Nat, b: Nat) {
-    divides(d, gcd(a, b)) implies divides(d, a) and divides(d, b)
+    d.divides(gcd(a, b)) implies d.divides(a) and d.divides(b)
 } by {
     let p = Pair<Nat, Nat>.new(a, b)
     p.first = a
     p.second = b
-    divides(d, gcd_pair(p))
+    d.divides(gcd_pair(p))
     divides_both(d, p)
-    divides(d, p.first)
-    divides(d, a)
-    divides(d, p.second)
-    divides(d, b)
-    divides(d, a) and divides(d, b)
+    d.divides(p.first)
+    d.divides(a)
+    d.divides(p.second)
+    d.divides(b)
+    d.divides(a) and d.divides(b)
 }
 
 theorem gcd_divides_left(a: Nat, b: Nat) {
-    divides(gcd(a, b), a)
+    gcd(a, b).divides(a)
 } by {
-    divides(gcd(a, b), gcd(a, b))
+    gcd(a, b).divides(gcd(a, b))
 }
 
 theorem gcd_divides_right(a: Nat, b: Nat) {
-    divides(gcd(a, b), b)
+    gcd(a, b).divides(b)
 } by {
-    divides(gcd(a, b), gcd(a, b))
+    gcd(a, b).divides(gcd(a, b))
 }
 
 theorem gcd_is_gcd(a: Nat, b: Nat, d: Nat) {
-    a != 0 and b != 0 and divides(d, a) and divides(d, b) implies d <= gcd(a, b)
+    a != 0 and b != 0 and d.divides(a) and d.divides(b) implies d <= gcd(a, b)
 } by {
-    not divides(0, a)
+    not 0.divides(a)
     gcd(a, b) != 0
-    divides(d, gcd(a, b))
+    d.divides(gcd(a, b))
     d <= gcd(a, b)
 }
 
@@ -316,28 +316,28 @@ theorem gcd_nonzero_left(a: Nat, b: Nat) {
     a != 0 implies gcd(a, b) != 0
 } by {
     if gcd(a, b) = 0 {
-        divides(0, a)
+        0.divides(a)
         a = 0
         false
     }
 }
 
 theorem gcd_zero_right(a: Nat) { gcd(a, 0) = a } by {
-    divides(a, a)
-    divides(a, 0)
-    divides(a, gcd(a, 0))
-    divides(gcd(a, 0), a)
+    a.divides(a)
+    a.divides(0)
+    a.divides(gcd(a, 0))
+    gcd(a, 0).divides(a)
 }
 
 theorem gcd_zero_left(a: Nat) { gcd(0, a) = a } by {
-    divides(gcd(a, 0), gcd(0, a))
-    divides(a, gcd(0, a))
-    divides(gcd(0, a), a)
+    gcd(a, 0).divides(gcd(0, a))
+    a.divides(gcd(0, a))
+    gcd(0, a).divides(a)
 }
 
 theorem gcd_comm(a: Nat, b: Nat) { gcd(a, b) = gcd(b, a) } by {
-    divides(gcd(b, a), gcd(a, b))
-    divides(gcd(a, b), gcd(b, a))
+    gcd(b, a).divides(gcd(a, b))
+    gcd(a, b).divides(gcd(b, a))
 }
 
 theorem gcd_nonzero_right(a: Nat, b: Nat) { b != 0 implies gcd(a, b) != 0 }
@@ -398,27 +398,27 @@ theorem gcd_one_left(a: Nat) {
 theorem gcd_mult_left_nonzero(a: Nat, b: Nat, m: Nat) {
     m != 0 implies m * gcd(a, b) = gcd(m * a, m * b)
 } by {
-    divides(m, m * a)
-    divides(m, m * b)
-    divides(m, gcd(m * a, m * b))
+    m.divides(m * a)
+    m.divides(m * b)
+    m.divides(gcd(m * a, m * b))
     let d: Nat satisfy {
         m * d = gcd(m * a, m * b)
     }
 
     // Overall we will prove equality by proving both sides divide the other.
     // First we prove that d equals gcd(a, b), to prove that right divides left.
-    divides(m * d, m * a)
-    divides(d, a)
-    divides(m * d, m * b)
-    divides(d, b)
-    divides(d, gcd(a, b))
-    divides(m * d, m * gcd(a, b))
-    divides(gcd(m * a, m * b), m * gcd(a, b))
+    (m * d).divides(m * a)
+    d.divides(a)
+    (m * d).divides(m * b)
+    d.divides(b)
+    d.divides(gcd(a, b))
+    (m * d).divides(m * gcd(a, b))
+    gcd(m * a, m * b).divides(m * gcd(a, b))
 
     // Now we prove left divides right.
-    divides(m * gcd(a, b), m * a)
-    divides(m * gcd(a, b), m * b)
-    divides(m * gcd(a, b), gcd(m * a, m * b))
+    (m * gcd(a, b)).divides(m * a)
+    (m * gcd(a, b)).divides(m * b)
+    (m * gcd(a, b)).divides(gcd(m * a, m * b))
 }
 
 theorem gcd_mult_left(a: Nat, b: Nat, m: Nat) {
@@ -447,27 +447,27 @@ theorem cofactor(a: Nat, b: Nat, af: Nat, bf: Nat) {
         bf * gcd(a, b) = b
     ) implies gcd(af, bf) = 1
 } by {
-    divides(gcd(af, bf), af)
-    divides(gcd(a, b) * gcd(af, bf), a)
-    divides(gcd(af, bf), bf)
-    divides(gcd(a, b) * gcd(af, bf), b)
-    divides(gcd(a, b) * gcd(af, bf), gcd(a, b))
-    divides(gcd(a, b) * gcd(af, bf), gcd(a, b) * 1)
-    divides(gcd(af, bf), 1)
+    gcd(af, bf).divides(af)
+    (gcd(a, b) * gcd(af, bf)).divides(a)
+    gcd(af, bf).divides(bf)
+    (gcd(a, b) * gcd(af, bf)).divides(b)
+    (gcd(a, b) * gcd(af, bf)).divides(gcd(a, b))
+    (gcd(a, b) * gcd(af, bf)).divides(gcd(a, b) * 1)
+    gcd(af, bf).divides(1)
     gcd(af, bf) = 1
 }
 
 theorem gcd_of_prime(p: Nat, n: Nat) {
-    p.is_prime implies gcd(p, n) = 1 or divides(p, n)
+    p.is_prime implies gcd(p, n) = 1 or p.divides(n)
 } by {
-    divides(gcd(p, n), p)
+    gcd(p, n).divides(p)
     let d: Nat satisfy {
         d * gcd(p, n) = p
     }
     d != 0
     if d = 1 {
         gcd(p, n) = p
-        divides(p, n)
+        p.divides(n)
     } else {
         if gcd(p, n) > 1 {
             d > 1

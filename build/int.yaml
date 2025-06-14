@@ -1,5 +1,5 @@
-dependencies: 5635638175398934759
-content: 877225046826269385
+dependencies: 10791951811181238208
+content: 5867491927386859051
 blocks:
   Int.LinearOrder:
     int:
@@ -52,8 +52,8 @@ blocks:
     - neg_or_pos
   abs_eq_imp_div:
     int:
+    - Int.divides
     - abs_eq_imp_unit
-    - divides
   abs_eq_imp_unit:
     int:
     - abs_alt_decomp
@@ -97,32 +97,31 @@ blocks:
     - cofactor
   div_abs:
     int:
+    - Int.divides
     - abs_alt_decomp
-    - divides
     int.int_base:
     - mul_comm
   div_abs_imp_div:
     int:
-    - abs_alt_decomp
+    - Int.divides
     - abs_decomp
     - div_abs
     - div_from_nat
     - div_trans
-    - divides
   div_from_nat:
     int:
-    - divides
+    - Int.divides
     - mul_from_nat
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_comm
   div_imp_div_abs:
     int:
-    - divides
+    - Int.divides
     int.int_base:
     - abs_mul
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_comm
   div_pos_imp_lte:
     int:
@@ -151,11 +150,11 @@ blocks:
     - divides_lte
   div_trans:
     int:
-    - divides
+    - Int.divides
     - mul_assoc
   divides_cancel_left:
     int:
-    - divides
+    - Int.divides
     - mul_assoc
     - mul_cancel_left
     int.int_base:
@@ -176,7 +175,7 @@ blocks:
     - divides_gcd
   divides_mul_left:
     int:
-    - divides
+    - Int.divides
     - mul_assoc
     int.int_base:
     - mul_comm
@@ -194,7 +193,7 @@ blocks:
     - zero_not_pos
   euclids_lemma:
     int:
-    - divides
+    - Int.divides
     - mul_assoc
     - spans
     - spans_gcd
@@ -810,7 +809,7 @@ blocks:
     - add_comm
   spans_div_left:
     int:
-    - divides
+    - Int.divides
     - spans_mul_left
   spans_div_right:
     int:

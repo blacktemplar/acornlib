@@ -1,4 +1,4 @@
-dependencies: 15490005794753767784
+dependencies: 1149835840712705382
 content: 16542072055790406224
 blocks:
   Rat.Field:
@@ -384,8 +384,8 @@ blocks:
     - zero_lte_abs
   pos_lte_num:
     int:
+    - Int.divides
     - div_pos_imp_lte
-    - divides
     - mul_pos_pos
     int.int_base:
     - mul_comm

@@ -1,5 +1,5 @@
-dependencies: 11586726995816799521
-content: 4316950200084515435
+dependencies: 17999416785046266138
+content: 273398390746107651
 blocks:
   all_false_below:
     nat.nat_base:
@@ -8,7 +8,7 @@ blocks:
     - false_below
   cofactor:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - divides_cancel_left
     - divides_mul
     - divides_mul_left
@@ -50,8 +50,8 @@ blocks:
     - gcd_pair
   divides_gcd_pair_converse:
     nat.nat_base:
+    - Nat.divides
     - Nat.mul
-    - divides
     nat.nat_gcd:
     - divides_both
     - divides_gcd_step_n_converse
@@ -118,7 +118,7 @@ blocks:
     - gcd_zero_right
   gcd_mult_left_nonzero:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - divides_cancel_left
     - divides_mul_left
     - divides_symm
@@ -144,10 +144,10 @@ blocks:
   gcd_of_prime:
     nat.nat_base:
     - Nat.1
+    - Nat.divides
     - Nat.gt
     - Nat.is_composite
     - Nat.is_prime
-    - divides
     - lt_suc_right
     - mul_comm
     - mul_one_left
@@ -161,13 +161,13 @@ blocks:
     - gcd_nonzero_left
   gcd_one_left:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_to_one
     nat.nat_gcd:
     - gcd_divides_left
   gcd_one_right:
     nat.nat_base:
-    - divides
+    - Nat.divides
     - mul_to_one
     nat.nat_gcd:
     - gcd_divides_right
@@ -191,8 +191,8 @@ blocks:
     - gcd_zero_right
   gcd_zero_right:
     nat.nat_base:
+    - Nat.divides
     - Nat.mul
-    - divides
     - divides_symm
     - mul_one_right
     nat.nat_gcd:
