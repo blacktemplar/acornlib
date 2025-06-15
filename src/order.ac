@@ -66,3 +66,14 @@ attributes L: LinearOrder {
         }
     }
 }
+
+theorem lt_imp_min<L: LinearOrder>(a: L, b: L) {
+    a < b implies a.min(b) = a
+}
+
+theorem not_lt_imp_min<L: LinearOrder>(a: L, b: L) {
+    not a < b implies a.min(b) = b
+}
+
+// TODO: add gt_imp_min, not_gt_imp_min, gte_imp_min, not_gte_imp_min.
+// TODO: add the equivalent for max.
