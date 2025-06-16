@@ -1,5 +1,5 @@
 dependencies: 17440272678173954359
-content: 16799865915265373820
+content: 1564981311639321928
 blocks:
   gt_imp_max:
     order:
@@ -36,6 +36,28 @@ blocks:
     order:
     - LinearOrder.min
     - PartialOrder.lt
+  max_is_one:
+    order:
+    - LinearOrder.max
+  max_symm:
+    order:
+    - LinearOrder.max
+    - LinearOrder.totality
+    - PartialOrder.gte
+    - PartialOrder.lt
+    - lt_imp_max
+    - max_is_one
+  min_is_one:
+    order:
+    - LinearOrder.min
+  min_symm:
+    order:
+    - LinearOrder.min
+    - LinearOrder.totality
+    - PartialOrder.gte
+    - PartialOrder.lt
+    - gte_imp_min
+    - lt_imp_min
   not_gt_imp_max:
     order:
     - LinearOrder.max

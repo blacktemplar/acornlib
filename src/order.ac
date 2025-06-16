@@ -114,3 +114,33 @@ theorem gte_imp_max<L: LinearOrder>(a: L, b: L) {
 theorem not_gte_imp_max<L: LinearOrder>(a: L, b: L) {
     not a >= b implies a.max(b) = b
 }
+
+theorem min_is_one<L: LinearOrder>(a: L, b: L) {
+    a.min(b) = a or a.min(b) = b
+}
+
+theorem max_is_one<L: LinearOrder>(a: L, b: L) {
+    a.max(b) = a or a.max(b) = b
+}
+
+theorem min_symm<L: LinearOrder>(a: L, b: L) {
+    a.min(b) = b.min(a)
+} by {
+    if a <= b {
+        a.min(b) = b.min(a)
+    } else {
+        b < a
+        b.min(a) = a.min(b)
+    }
+}
+
+theorem max_symm<L: LinearOrder>(a: L, b: L) {
+    a.max(b) = b.max(a)
+} by {
+    if a <= b {
+        a.max(b) = b.max(a)
+    } else {
+        b < a
+        b.max(a) = a.max(b)
+    }
+}
