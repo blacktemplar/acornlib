@@ -795,9 +795,10 @@ theorem sum_abs_le_abs_sum(items: List<Real>) {
     }
 }
 
-// Use the LinearOrder typeclass everywhere first.
+// Maybe also prove the abs version.
 // theorem diff_partial(a: Nat -> Real, m: Nat, n: Nat) {
-//     (partial(a, m) - partial(a, n)).abs = sum(m.min(n).until(m.max(n)).map(a))
+//     m <= n implies
+//     (partial(a, n) - partial(a, m)).abs = sum(map(m.until(n), a))
 // }
 
 // Prove diff_partial first so that we can simplify partial closeness.
