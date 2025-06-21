@@ -1,5 +1,5 @@
-dependencies: 15826742657478540709
-content: 7000694147998159066
+dependencies: 7562824239082112696
+content: 14069474044361041568
 blocks:
   add_seq_converges:
     real.real_seq:
@@ -362,6 +362,9 @@ blocks:
     - Real.abs
     - Real.is_negative
     - Real.lte
+    - lte_add_left
+    real.real_series:
+    - triangle_ineq
   tail_converges_to:
     nat.nat_base:
     - Nat.lte
@@ -421,7 +424,11 @@ blocks:
   triangle_ineq:
     real.real_base:
     - Real.abs
+    - abs_neg
     - lte_abs
+    - lte_add_left
+    - lte_add_right
+    - lte_trans
     - neg_distrib
   ub_imp_image_ub:
     real.real_series:
