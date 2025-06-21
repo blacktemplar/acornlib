@@ -1,5 +1,5 @@
-dependencies: 7562824239082112696
-content: 4265633321171221526
+dependencies: 18372089003734304171
+content: 15446473156306269290
 blocks:
   add_seq_converges:
     real.real_seq:
@@ -66,6 +66,16 @@ blocks:
     - converges_to_imp_converges
     real.real_series:
     - mul_seq_converges_to
+  diff_partial:
+    add_comm_semigroup:
+    - AddCommSemigroup.commutative
+    list:
+    - map_add
+    - partial
+    - range_add_until
+    - sum_add
+    real.real_base:
+    - sub_moves_sides
   distant_increasing:
     nat.nat_base:
     - Nat.induction

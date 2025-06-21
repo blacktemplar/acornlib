@@ -1,4 +1,4 @@
-dependencies: 4373362450011500311
+dependencies: 4593391184044857931
 content: 16542072055790406224
 blocks:
   Rat.Field:
@@ -558,7 +558,7 @@ blocks:
   three_is_positive:
     int.int_base:
     - Int.3
-    - pos_part
+    - Int.pos_part
     - pos_part_from
     nat.nat_base:
     - one_plus_three

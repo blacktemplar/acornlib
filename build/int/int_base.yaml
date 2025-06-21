@@ -1,5 +1,5 @@
 dependencies: 15024649154120855182
-content: 7675025461220160959
+content: 11033939680986181751
 blocks:
   Int.AddCommSemigroup:
     int.int_base:
@@ -20,6 +20,8 @@ blocks:
     - abs
   abs_mul:
     int.int_base:
+    - Int.neg_part
+    - Int.pos_part
     - abs
     - abs_from_nat
     - abs_neg
@@ -30,10 +32,8 @@ blocks:
     - mul_nonneg_nonneg
     - mul_nonpos_nonpos
     - neg_neg
-    - neg_part
     - non_pos_is_neg_abs
     - pos_is_not_neg
-    - pos_part
     - sub_nat_parts
     - sub_nat_zero_right
     nat.nat_base:
@@ -116,11 +116,6 @@ blocks:
     - add_zero_right
     - neg_distrib
     - neg_neg
-    - neg_part
-    - neg_part_neg
-    - pos_part
-    - pos_part_neg
-    - sub_nat_parts
   add_nonneg_nonneg:
     int.int_base:
     - add_comm
@@ -142,6 +137,7 @@ blocks:
   add_pos_nonneg:
     int.int_base:
     - Int.is_negative
+    - Int.pos_part
     - add_from_nat
     - add_zero_right
     - neg_from_nat
@@ -150,7 +146,6 @@ blocks:
     - neg_zero
     - nonzero_pos_or_neg
     - pos_is_not_neg
-    - pos_part
     - pos_part_from
     - sub_nat_add_left
     nat.nat_base:
@@ -184,13 +179,13 @@ blocks:
   add_sub_nat_left:
     int.int_base:
     - Int.is_negative
+    - Int.neg_part
+    - Int.pos_part
     - add_sub_nat_left_neg
     - add_sub_nat_left_pos
-    - neg_part
     - neg_sub_nat
     - non_pos_is_neg_abs
     - pos_is_not_neg
-    - pos_part
     nat.nat_base:
     - add_comm
     - add_zero_left
@@ -221,8 +216,8 @@ blocks:
     int.int_base:
     - Int.add
     - Int.is_negative
+    - Int.pos_part
     - neg_part_from
-    - pos_part
     - sub_nat_negate_imp_add
     - sub_nat_parts
     - sub_nat_zero_left
@@ -232,8 +227,8 @@ blocks:
     int.int_base:
     - Int.add
     - Int.is_negative
+    - Int.pos_part
     - neg_part_from
-    - pos_part
     - sub_nat_negate_imp_add
     - sub_nat_parts
     - sub_nat_zero_left
@@ -288,12 +283,7 @@ blocks:
     - mul_neg_right
     - neg_distrib
     - neg_neg
-    - neg_part
-    - neg_part_neg
     - pos_is_not_neg
-    - pos_part
-    - pos_part_neg
-    - sub_nat_parts
   mul_nat_distrib_right:
     int.int_base:
     - add_comm_4
@@ -305,17 +295,17 @@ blocks:
     int.int_base:
     - Int.0
     - Int.is_negative
+    - Int.mul_nat
+    - Int.pos_part
     - abs
     - abs_neg
     - abs_neg_nat
-    - mul_nat
     - mul_nat_zero_left
     - neg_from_nat
     - neg_nat
     - neg_nat_zero
     - neg_neg
     - neg_zero
-    - pos_part
     - pos_part_from
     - sub_nat_zero_right
     nat.nat_base:
@@ -334,8 +324,8 @@ blocks:
   mul_nat_negate_left:
     int.int_base:
     - Int.is_positive
+    - Int.mul_nat
     - abs_neg
-    - mul_nat
     - mul_nat_nonpos_left
     - neg_neg
     - non_pos_is_neg_abs
@@ -345,9 +335,9 @@ blocks:
   mul_nat_nonneg_suc:
     int.int_base:
     - Int.is_negative
+    - Int.mul_nat
     - add_comm
     - add_from_nat
-    - mul_nat
     - sub_nat_add_left
     nat.nat_base:
     - add_comm
@@ -355,8 +345,8 @@ blocks:
   mul_nat_nonpos_left:
     int.int_base:
     - Int.0
+    - Int.mul_nat
     - abs_zero
-    - mul_nat
     - mul_nat_zero_left
     - neg_zero
     - non_pos_is_neg_abs
@@ -374,16 +364,11 @@ blocks:
     - mul_nat_nonneg_suc
     - neg_distrib
     - neg_neg
-    - neg_part
-    - neg_part_neg
     - pos_is_not_neg
-    - pos_part
-    - pos_part_neg
-    - sub_nat_parts
   mul_nat_zero_left:
     int.int_base:
+    - Int.mul_nat
     - abs_from_nat
-    - mul_nat
     - sub_nat_self
     - sub_nat_zero_right
     - zero_not_neg
@@ -394,7 +379,7 @@ blocks:
   mul_nat_zero_right:
     int.int_base:
     - Int.0
-    - mul_nat
+    - Int.mul_nat
     - sub_nat_self
     - sub_nat_zero_left
     nat.nat_base:
@@ -408,11 +393,7 @@ blocks:
     - mul_nat_from_nat_right
     - mul_nat_negate_left
     - neg_neg
-    - neg_part
     - non_pos_is_neg_abs
-    - pos_part
-    - sub_nat_parts
-    - sub_nat_zero_right
   mul_neg_right:
     int.int_base:
     - mul_comm
@@ -436,9 +417,9 @@ blocks:
   mul_nonneg_nonpos_nonpos:
     int.int_base:
     - Int.is_positive
+    - Int.neg_part
     - mul_nonneg_nonpos
     - neg_neg
-    - neg_part
     - pos_is_not_neg
     - pos_part_from
     - pos_part_neg
@@ -460,9 +441,9 @@ blocks:
   mul_nonpos_nonneg_nonpos:
     int.int_base:
     - Int.is_positive
+    - Int.neg_part
     - mul_nonpos_nonneg
     - neg_neg
-    - neg_part
     - pos_is_not_neg
     - pos_part_from
     - pos_part_neg
@@ -491,8 +472,8 @@ blocks:
     int.int_base:
     - Int.1
     - Int.is_negative
+    - Int.mul_nat
     - add_zero_left
-    - mul_nat
     - mul_nat_from_nat_right
     - mul_nat_nonpos_left
     - mul_nat_zero_right
@@ -583,9 +564,9 @@ blocks:
     - neg_nat_suc
   neg_part_from:
     int.int_base:
+    - Int.neg_part
+    - Int.pos_part
     - abs
-    - neg_part
-    - pos_part
     - pos_part_from
   neg_part_neg:
     int.int_base:
@@ -667,23 +648,23 @@ blocks:
     - sub_nat_zero_right
   pos_part_from:
     int.int_base:
+    - Int.pos_part
     - abs
     - abs_from_nat
     - from_eq_neg_from
     - non_pos_is_neg_abs
-    - pos_part
   pos_part_neg:
     int.int_base:
     - Int.is_positive
+    - Int.neg_part
+    - Int.pos_part
     - abs
     - abs_neg
     - abs_zero
     - neg_neg
-    - neg_part
     - neg_zero
     - nonzero_pos_or_neg
     - pos_is_not_neg
-    - pos_part
     - sub_nat_parts
     - sub_nat_zero_right
   sub_add_cancel_left:
@@ -871,11 +852,11 @@ blocks:
   sub_nat_parts:
     int.int_base:
     - Int.is_negative
-    - neg_part
+    - Int.neg_part
+    - Int.pos_part
     - neg_sub_nat
     - non_pos_is_neg_abs
     - pos_is_not_neg
-    - pos_part
     - sub_nat_zero_left
     - sub_nat_zero_right
   sub_nat_self:
