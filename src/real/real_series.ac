@@ -808,23 +808,51 @@ theorem diff_partial(a: Nat -> Real, m: Nat, n: Nat) {
 }
 
 // Prove diff_partial first so that we can simplify partial closeness.
-// theorem abs_conv_imp_conv(a: Nat -> Real) {
-//     converges(partial(compose(Real.abs, a)))
-//     implies
-//     converges(partial(a))
-// } by {
-//     let q = partial(compose(Real.abs, a))
-//     forall(eps: Real) {
-//         if eps.is_positive {
-//             let n: Nat satisfy {
-//                 cauchy_bound(q, n, eps)
-//             }
-//             forall(i: Nat, j: Nat) {
-//                 if n <= i and n <= j {
-//                     q(i).is_close(q(j), eps)
-//                 }
-//             }
-//             cauchy_bound(partial(a), n, eps)
-//         }
-//     }
-// }
+theorem abs_conv_imp_conv(a: Nat -> Real) {
+    converges(partial(compose(Real.abs, a)))
+    implies
+    converges(partial(a))
+} by {
+    let p = partial(a)
+    let q = partial(compose(Real.abs, a))
+    forall(eps: Real) {
+        if eps.is_positive {
+            let n: Nat satisfy {
+                cauchy_bound(q, n, eps)
+            }
+            forall(i: Nat, j: Nat) {
+                if n <= i and n <= j {
+                    q(i).is_close(q(j), eps)
+                    (q(i) - q(j)).abs < eps
+                    if i <= j {
+                        partial(compose(Real.abs, a), j) - partial(compose(Real.abs, a), i) = sum(map(i.until(j), compose(Real.abs, a)))
+                        q(j) - q(i) = sum(map(i.until(j), compose(Real.abs, a)))
+                        q(j) - q(i) = sum(map(map(i.until(j), a), Real.abs))
+                        sum(map(i.until(j), a)).abs <= q(j) - q(i)
+                        partial(a, j) - partial(a, i) = sum(map(i.until(j), a))
+                        p(j) - p(i) = sum(map(i.until(j), a))
+                        (p(j) - p(i)).abs <= q(j) - q(i)
+                        q(j).is_close(q(i), eps)
+                        (p(j) - p(i)).abs <= (q(j) - q(i)).abs
+                        (p(j) - p(i)).abs < eps
+                        p(i).is_close(p(j), eps)
+                    } else {
+                        j <= i
+                        partial(compose(Real.abs, a), i) - partial(compose(Real.abs, a), j) = sum(map(j.until(i), compose(Real.abs, a)))
+                        q(i) - q(j) = sum(map(j.until(i), compose(Real.abs, a)))
+                        q(i) - q(j) = sum(map(map(j.until(i), a), Real.abs))
+                        sum(map(j.until(i), a)).abs <= q(i) - q(j)
+                        partial(a, i) - partial(a, j) = sum(map(j.until(i), a))
+                        p(i) - p(j) = sum(map(j.until(i), a))
+                        (p(i) - p(j)).abs <= q(i) - q(j)
+                        q(i).is_close(q(j), eps)
+                        (p(i) - p(j)).abs <= (q(i) - q(j)).abs
+                        (p(i) - p(j)).abs < eps
+                        p(i).is_close(p(j), eps)
+                    }
+                }
+            }
+            cauchy_bound(partial(a), n, eps)
+        }
+    }
+}

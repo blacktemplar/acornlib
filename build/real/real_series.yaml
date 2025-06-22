@@ -1,6 +1,25 @@
 dependencies: 18372089003734304171
-content: 15446473156306269290
+content: 6580512667188928984
 blocks:
+  abs_conv_imp_conv:
+    list:
+    - map_map
+    nat.nat_base:
+    - Nat.lte
+    - lt_diff
+    - lt_or_lte
+    real.real_base:
+    - Real.is_close
+    - close_comm
+    - lte_abs
+    - lte_lt_trans
+    - lte_trans
+    real.real_seq:
+    - cauchy_bound
+    - converges
+    real.real_series:
+    - diff_partial
+    - sum_abs_le_abs_sum
   add_seq_converges:
     real.real_seq:
     - converges_to_imp_converges
