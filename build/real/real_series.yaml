@@ -1,5 +1,5 @@
 dependencies: 18372089003734304171
-content: 6580512667188928984
+content: 10125986447028785417
 blocks:
   abs_conv_imp_conv:
     list:
@@ -114,6 +114,32 @@ blocks:
     - lte_trans
     real.real_series:
     - is_increasing
+  geom_bounded:
+    add_group:
+    - AddGroup.sub
+    - inverse_add
+    - inverse_inverse
+    list:
+    - partial
+    real.real_base:
+    - Real.gt
+    - Real.neg
+    - add_zero_right
+    - gt_imp_not_lte
+    - lt_neg_swap_neg
+    - lte_add_left
+    - neg_neg
+    - neg_zero
+    - not_lte_imp_gt
+    real.real_ring:
+    - mul_neg_right
+    - real_mul_comm
+    real.real_series:
+    - pow_nonneg
+    ring:
+    - geometric_sum
+    - mul_neg_left
+    - mul_neg_neg
   increasing_convergent_bounded_by_limit:
     nat.nat_base:
     - Nat.lt
@@ -376,6 +402,20 @@ blocks:
     - map
     - partial
     - sum
+  pow_nonneg:
+    monoid:
+    - Monoid.mul_identity_right
+    - Monoid.pow
+    nat.nat_base:
+    - Nat.induction
+    real.real_base:
+    - Real.gte
+    - Real.new
+    real.real_ring:
+    - mul_nonneg_nonneg
+    - non_neg_imp_zero_lte
+    - square_nonneg
+    - zero_lte_imp_non_neg
   seq_lte_ub:
     real.real_base:
     - lte_trans

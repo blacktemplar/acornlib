@@ -6,6 +6,8 @@ import real.real_set
 from real.real_seq import cauchy_bound, tail_bound, add_seq, neg_rat_seq
 from real.real_ring import Real, converges, converges_to, limit, lift_seq
 
+numerals Real
+
 // This file defines infinite series and proves theorems about them.
 
 attributes Real {
@@ -855,4 +857,39 @@ theorem abs_conv_imp_conv(a: Nat -> Real) {
             cauchy_bound(partial(a), n, eps)
         }
     }
+}
+
+theorem pow_nonneg(r: Real, n: Nat) {
+    0 <= r implies 0 <= r.pow(n)
+} by {
+    // Proof by induction
+    define p(k: Nat) -> Bool {
+        0 <= r.pow(k)
+    }
+    1 >= 0
+    0 <= r.pow(Nat.0)
+    p(Nat.0)
+    forall(k: Nat) {
+        if p(k) {
+            0 <= r.pow(k)
+            not r.pow(k).is_negative
+            not r.is_negative
+            not r.pow(k.suc).is_negative
+            0 <= r.pow(k.suc)
+            p(k.suc)
+        }
+    }
+    p(n)
+}
+
+theorem geom_bounded(r: Real, n: Nat) {
+    0 <= r and r < 1 implies
+    sum(map(n.range, r.pow)) * (1 - r) <= 1
+} by {
+    (r + -1) * sum(map(n.range, r.pow)) = r.pow(n) + -1
+    (1 - r) * sum(map(n.range, r.pow)) = 1 - r.pow(n)
+    sum(map(n.range, r.pow)) * (1 - r) = 1 - r.pow(n)
+    0 <= r.pow(n)
+    -r.pow(n) <= 0
+    1 - r.pow(n) <= 1
 }
