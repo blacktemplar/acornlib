@@ -76,6 +76,20 @@ theorem add_contains_right<T>(left: List<T>, right: List<T>, item: T) {
     }
 }
 
+theorem not_contains_add<T>(left: List<T>, right: List<T>, item: T) {
+    not left.contains(item) and not right.contains(item) implies not (left + right).contains(item)
+} by {
+    define f(x: List<T>) -> Bool {
+        not x.contains(item) implies not (x + right).contains(item)
+    }
+    f(List.nil)
+    forall(head: T, tail: List<T>) {
+        if f(tail) {
+            f(List.cons(head, tail))
+        }
+    }
+}
+
 attributes List<T> {
     /// True if this list contains every element of type T.
     define contains_every(self) -> Bool {
@@ -133,6 +147,14 @@ attributes List<T> {
             }
         }
     }
+
+    define is_unique(self) -> Bool {
+        self.unique = self
+    }
+}
+
+theorem singleton_unique<T>(item: T) {
+    List.singleton(item).is_unique
 }
 
 theorem unique_length<T>(list: List<T>) {
@@ -151,6 +173,342 @@ theorem unique_length<T>(list: List<T>) {
                 List.cons(head, tail).unique.length <= List.cons(head, tail).length
             }
             f(List.cons(head, tail))
+        }
+    }
+}
+
+theorem unique_preserves_contains<T>(list: List<T>, item: T) {
+    list.unique.contains(item) = list.contains(item)
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        l.unique.contains(x) = l.contains(x)
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            if tail.contains(head) {
+                // If the tail contains the head, then the unique list is just the tail's unique list.
+                tail.unique.contains(item) = tail.contains(item)
+                List.cons(head, tail).unique = tail.unique
+
+                // Obviously if the tail contains the item, so does the cons list.
+                List.cons(head, tail).contains(item) implies tail.contains(item)
+                tail.contains(item) implies List.cons(head, tail).contains(item)
+                List.cons(head, tail).contains(item) = tail.contains(item)
+
+                // Proves proposition
+                p(List.cons(head, tail), item)
+            } else {
+                // If the tail doesn't contain the item, then have to append head
+                List.cons(head, tail).unique = List.cons(head, tail.unique)
+
+                // Trick to help prover here (tail.unique.contains = tail.contains, rest is defns)
+                List.cons(head, tail.unique).contains(item) implies List.cons(head, tail).contains(item)
+                List.cons(head, tail).contains(item) implies List.cons(head, tail.unique).contains(item)
+                List.cons(head, tail).contains(item) = List.cons(head, tail.unique).contains(item)
+
+                p(List.cons(head, tail), item)
+            }
+            p(List.cons(head, tail), item)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+
+    // Prover help
+    list.unique.contains(item) implies list.contains(item)
+    list.contains(item) implies list.unique.contains(item)
+}
+
+theorem unique_indemp<T>(list: List<T>) {
+    list.unique.unique = list.unique
+} by {
+    let list_unique = list.unique
+
+    define f(x: List<T>) -> Bool {
+        x.unique.unique = x.unique
+    }
+
+    // Base case
+    f(List.nil)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if f(tail) {
+            tail.unique.unique = tail.unique
+
+            if tail.contains(head) {
+                tail.unique.contains(head)
+                // Definition of unique and induction assumption
+                List.cons(head, tail).unique.unique = List.cons(head, tail).unique
+            } else {
+                not tail.unique.contains(head)
+                // Head is not in tail, so added to end (definition)
+                List.cons(head, tail).unique.unique = List.cons(head, tail).unique
+            }
+
+            List.cons(head, tail).unique = List.cons(head, tail).unique.unique
+            f(List.cons(head, tail))
+        }
+    }
+}
+
+theorem unique_list_is_unique<T>(list: List<T>) {
+    list.unique.is_unique
+}
+
+theorem unique_implies_tail_unique<T>(head: T, tail: List<T>) {
+    List.cons(head, tail).is_unique implies tail.is_unique
+} by {
+    if tail.contains(head) {
+        List.cons(head, tail).unique = tail.unique
+        tail.length < List.cons(head, tail).length
+
+        not List.cons(head, tail).is_unique
+    } else {
+        List.cons(head, tail).unique = List.cons(head, tail.unique)
+    }
+}
+
+attributes List<T> {
+    define count(self, item: T) -> Nat {
+        match self {
+            List.nil<T> {
+                Nat.0
+            }
+            List.cons(head, tail) {
+                if head = item {
+                    1 + tail.count(item)
+                } else {
+                    tail.count(item)
+                }
+            }
+        }
+    }
+}
+
+theorem list_contains_implies_count_geq_one<T>(list: List<T>, item: T) {
+    list.contains(item) implies list.count(item) >= Nat.1
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        l.contains(x) implies l.count(x) >= Nat.1
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            if List.cons(head, tail).contains(item) {
+                if head = item {
+                    List.cons(head, tail).count(item) = 1 + tail.count(item)
+                    List.cons(head, tail).count(item) >= Nat.1
+                } else {
+                    tail.count(item) >= Nat.1
+                    List.cons(head, tail).count(item) = tail.count(item)
+                    List.cons(head, tail).count(item) >= Nat.1
+                }
+                p(List.cons(head, tail), item)
+            }
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+}
+
+theorem list_not_contains_impl_count_zero<T>(list: List<T>, item: T) {
+    not list.contains(item) implies list.count(item) = Nat.0
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        not l.contains(x) implies l.count(x) = Nat.0
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            if not List.cons(head, tail).contains(item) {
+                List.cons(head, tail).count(item) = tail.count(item)
+                tail.count(item) = Nat.0
+                p(List.cons(head, tail), item)
+            }
+
+            p(List.cons(head, tail), item)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+
+    p(list, item)
+}
+
+theorem unique_implies_no_duplicate<T>(list: List<T>, item: T) {
+    list.is_unique implies list.count(item) <= Nat.1
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        l.is_unique implies l.count(x) <= Nat.1
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            if List.cons(head, tail).is_unique {
+                List.cons(head, tail).unique = List.cons(head, tail)
+                if tail.contains(head) {
+                    List.cons(head, tail).length = tail.unique.length
+                    false
+                } 
+                not tail.contains(head)
+                if head = item {
+                    List.cons(head, tail).count(item) = 1 + tail.count(item)
+                    tail.count(item) = 0
+                    List.cons(head, tail).count(item) <= 1
+                } else {
+                    List.cons(head, tail).count(item) = tail.count(item)
+                    List.cons(head, tail).count(item) <= 1
+                }
+                List.cons(head, tail).count(item) <= 1
+                p(List.cons(head, tail), item)
+            }
+            p(List.cons(head, tail), item)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+}
+
+theorem unique_len_smaller_implies_duplicate<T>(list: List<T>) {
+    list.unique.length < list.length implies exists(x: T) {
+        list.count(x) > 1
+    }
+} by {
+    define p(l: List<T>) -> Bool {
+        l.unique.length < l.length implies exists(x: T) {
+            l.count(x) > 1
+        }
+    }
+
+    // Base case: empty list
+    p(List.nil<T>)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if List.cons(head, tail).unique.length < List.cons(head, tail).length {
+                if tail.unique.length < tail.length {
+                    // x is in tail, use hypothesis
+                    let x: T satisfy {
+                        tail.count(x) > 1
+                    }
+
+                    if head = x {
+                        List.cons(head, tail).count(x) = 1 + tail.count(x)
+                        List.cons(head, tail).count(x) >= tail.count(x)
+                    } else {
+                        List.cons(head, tail).count(x) = tail.count(x)
+                    }
+                    List.cons(head, tail).count(x) >= tail.count(x)
+
+                    p(List.cons(head, tail))
+                } else {
+                    // x is not in tail so head must be the duplicate
+                    tail.contains(head)
+                    tail.count(head) >= 1
+                    List.cons(head, tail).count(head) = 1 + tail.count(head)
+                    List.cons(head, tail).count(head) > 1
+
+                    p(List.cons(head, tail))
+                }
+
+                p(List.cons(head, tail))
+            }
+
+            p(List.cons(head, tail))
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l)
+    })
+}
+
+theorem cons_duplicate_inequality<T>(tail: List<T>, head: T, x: T, n: Nat) {
+    tail.count(x) >= n implies List.cons(head, tail).count(x) >= n
+} by {
+    if tail.count(x) >= n {
+        if head = x {
+            List.cons(head, tail).count(x) = 1 + tail.count(x)
+            List.cons(head, tail).count(x) >= tail.count(x)
+        } else {
+            List.cons(head, tail).count(x) = tail.count(x)
+        }
+        List.cons(head, tail).count(x) >= n
+    }
+}
+
+theorem not_unique_implies_duplicate<T>(list: List<T>) {
+    not list.is_unique implies exists(x: T) {
+        list.count(x) > 1
+    }
+} by {
+    define p(l: List<T>) -> Bool {
+        not l.is_unique implies exists(x: T) {
+            l.count(x) > 1
+        }
+    }
+
+    // Base case: empty list
+    p(List.nil<T>)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if not List.cons(head, tail).is_unique {
+                if not tail.is_unique {
+                    let x: T satisfy {
+                        tail.count(x) > 1
+                    }
+                    if x = head {
+                        List.cons(head, tail).count(x) = 1 + tail.count(x)
+                    } else {
+                        List.cons(head, tail).count(x) = tail.count(x)
+                    }
+                    List.cons(head, tail).count(x) >= tail.count(x)
+                    List.cons(head, tail).count(x) > 1
+
+                    p(List.cons(head, tail))
+                } else {
+                    // If tail is unique, then head must be the duplicate
+                    tail.is_unique
+
+                    tail.contains(head)
+                    tail.count(head) = 1
+                    List.cons(head, tail).count(head) > 1
+
+                    p(List.cons(head, tail))
+                }
+                p(List.cons(head, tail))
+            }
+
+            p(List.cons(head, tail))
         }
     }
 }
@@ -196,8 +554,130 @@ attributes List<T> {
             }
         }
     }
+
+    /// Remove all instances of an element from the list.
+    // XXX: Todo, prove that this matches filter in the expected case
+    define remove_elem(self, elem: T) -> List<T> {
+        match self {
+            List.nil {
+                List.nil<T>
+            }
+            List.cons(head, tail) {
+                if head != elem {
+                    List.cons(head, tail.remove_elem(elem))
+                } else {
+                    tail.remove_elem(elem)
+                }
+            }
+        }
+    }
 }
 
+// Filter theorems (kinda ugly, but alas)
+theorem filter_only_removes_elems<T>(list: List<T>, f: T -> Bool) {
+    list.filter(f).length <= list.length
+} by {
+    define p(l: List<T>) -> Bool {
+        l.filter(f).length <= l.length
+    }
+
+    // Base case: empty list
+    p(List.nil<T>)
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            // Induction hypothesis: tail.filter(f).length <= tail.length
+            if f(head) {
+                List.cons(head, tail).filter(f).length <= List.cons(head, tail).length
+            } else {
+                List.cons(head, tail).filter(f).length <= List.cons(head, tail).length
+            }
+            p(List.cons(head, tail))
+        }
+    }
+}
+
+theorem filter_contains_and<T>(list: List<T>, f: T -> Bool, item: T) {
+    (list.contains(item) and f(item)) implies list.filter(f).contains(item)
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        l.contains(x) and f(x) implies l.filter(f).contains(x)
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            if tail.contains(item) {
+                tail.filter(f).contains(item)
+                if f(head) {
+                    List.cons(head, tail).filter(f) = List.cons(head, tail.filter(f))
+                    List.cons(head, tail).filter(f).contains(item)
+                } else {
+                    List.cons(head, tail).filter(f) = tail.filter(f)
+                    List.cons(head, tail).filter(f).contains(item)
+                }
+            } else {
+                not tail.contains(item)
+                if head = item {
+                    List.cons(head, tail).filter(f) = List.cons(head, tail.filter(f))
+                    List.cons(head, tail).filter(f).contains(item)
+                }
+            }
+            p(List.cons(head, tail), item)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+}
+
+theorem filter_contained_by_and<T>(list: List<T>, f: T -> Bool, item: T) {
+    list.filter(f).contains(item) implies (list.contains(item) and f(item))
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        l.filter(f).contains(x) implies (l.contains(x) and f(x))
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            if List.cons(head, tail).filter(f).contains(item) {
+                // If the filter contains the item then item must either
+                // be in tail or head
+                if tail.filter(f).contains(item) {
+                    // `and` phrase here is needed to help prover
+                    f(item) and List.cons(head, tail).contains(item)
+                } else {
+                    f(head)
+                    head = item
+                    f(item) and List.cons(head, tail).contains(item)
+                }
+                f(item) and List.cons(head, tail).contains(item)
+            }
+            List.cons(head, tail).filter(f).contains(item) implies (List.cons(head, tail).contains(item) and f(item))
+            p(List.cons(head, tail), item)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+}
+
+theorem filter_equivalent_to_and<T>(list: List<T>, f: T -> Bool, item: T) {
+    (list.contains(item) and f(item)) = list.filter(f).contains(item)
+} by {
+    list.filter(f).contains(item) implies (list.contains(item) and f(item))
+    (list.contains(item) and f(item)) implies list.filter(f).contains(item)
+}
+
+// Length theorems
 theorem length_range(n: Nat) {
     n.range.length = n
 } by {
@@ -240,6 +720,409 @@ theorem length_range(n: Nat) {
     f(n)
 }
 
+theorem suc_range_contains(n: Nat) {
+    n.suc.range.contains(n)
+} by {
+    List.singleton(n).contains(n)
+    n.suc.range = n.range.append(n)
+    n.suc.range.contains(n)
+}
+
+theorem range_contains_all_leq(n: Nat) {
+    forall(x: Nat) {
+        x < n implies n.range.contains(x)
+    }
+} by {
+    define p(m: Nat) -> Bool {
+        forall(x: Nat) {
+            x < m implies m.range.contains(x)
+        }
+    }
+
+    // Base case: 0
+    p(0)
+
+    // Induction
+    forall(m: Nat) {
+        if p(m) {
+            // Induction hypothesis: forall(x: Nat) { x < m implies m.range.contains(x) }
+            forall(x: Nat) {
+                if x < m.suc {
+                    if x < m {
+                        m.range.contains(x)
+                        m.suc.range.contains(x)
+                    } else {
+                        x = m
+                        m.suc.range.contains(m)
+                        m.suc.range.contains(x)
+                    }
+                    m.suc.range.contains(x)
+                }
+            }
+            p(m.suc)
+        }
+    }
+
+    // Conclusion
+    p(n)
+}
+
+theorem range_does_not_contain_geq(m: Nat, n: Nat) {
+    n >= m implies not m.range.contains(n)
+} by {
+    define p(x: Nat) -> Bool {
+        forall(y: Nat) {
+            y >= x implies not x.range.contains(y)
+        }
+    }
+
+    // Base case: 0
+    p(0)
+
+    // Induction
+    forall(x: Nat) {
+        if p(x) {
+            x.suc.range.contains(x)
+            not x.range.contains(x.suc)
+            forall(y: Nat) {
+                if y >= x.suc {
+                    not x.range.contains(y)
+                    not List.singleton(x).contains(y)
+
+                    x.suc.range = x.range + List.singleton(x)
+
+                    not x.suc.range.contains(y)
+                }
+            }
+            p(x.suc)
+        }
+    }
+}
+
+
+// If a list does not contain an element, removing it does not change the list.
+theorem remove_element_not_in_list<T>(list: List<T>, item: T) {
+    not list.contains(item) implies list.remove_elem(item) = list
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        not l.contains(x) implies l.remove_elem(x) = l
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            if not List.cons(head, tail).contains(item) {
+                head != item
+                not tail.contains(item)
+                List.cons(head, tail).remove_elem(item) = List.cons(head, tail)
+            }
+            p(List.cons(head, tail), item)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+}
+
+// Calling `remove_element(item)` on a list containing `item` actually does
+// remove all instances of the element.
+theorem remove_element_removes_element<T>(list: List<T>, item: T) {
+    list.contains(item) implies not list.remove_elem(item).contains(item)
+} by {
+    define p(l: List<T>, x: T) -> Bool {
+        l.contains(x) implies not l.remove_elem(x).contains(x)
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, item)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail, item) {
+            let cons_list = List.cons(head, tail)
+            if cons_list.contains(item) {
+                // If the cons list contains the item, then it must be in either head or tail
+                if head = item {
+                    cons_list.remove_elem(item) = tail.remove_elem(item)
+                    not cons_list.remove_elem(item).contains(item)
+                } else {
+                    cons_list.remove_elem(item) = List.cons(head, tail.remove_elem(item))
+                    not tail.remove_elem(item).contains(item)
+                    not cons_list.remove_elem(item).contains(item)
+                }
+                not cons_list.remove_elem(item).contains(item)
+
+            } 
+            p(List.cons(head, tail), item)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, item)
+    })
+}
+
+// Removing an element from a list does not affect the presence of other elements.
+theorem remove_element_removes_no_other_elements<T>(list: List<T>, removed_item: T, elem: T) {
+    removed_item != elem implies list.remove_elem(removed_item).contains(elem) = list.contains(elem)
+} by {
+    define p(l: List<T>, r: T, e: T) -> Bool {
+        r != e implies l.remove_elem(r).contains(e) = l.contains(e)
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, removed_item, elem)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        let cons_list = List.cons(head, tail)
+        if p(tail, removed_item, elem) {
+            // Hypothesis
+            if removed_item != elem {
+                // If we don't remove anything, then trivial
+                if not cons_list.contains(removed_item) {
+                    p(cons_list, removed_item, elem)
+                }
+
+                // If the removed item is contained, it is either in head or tail
+                // If head, then cons_list.remove_elem(removed_item) = tail.remove_elem(removed_item)
+                if head = removed_item {
+                    cons_list.remove_elem(removed_item) = tail.remove_elem(removed_item)
+                    tail.remove_elem(removed_item).contains(elem) = tail.contains(elem)
+                    cons_list.contains(elem) = tail.contains(elem)
+                    cons_list.remove_elem(removed_item).contains(elem) = cons_list.contains(elem)
+
+                    p(cons_list, removed_item, elem)
+                } else {
+                    // If the removed item is in tail then induction takes care of the rest
+                    cons_list.remove_elem(removed_item).contains(elem) = (head = elem) or tail.remove_elem(removed_item).contains(elem)
+
+                    if head = elem {
+                        cons_list.remove_elem(removed_item).contains(elem)
+                        cons_list.contains(elem)
+
+                        p(cons_list, removed_item, elem)
+                    } else {
+                        tail.remove_elem(removed_item).contains(elem) = tail.contains(elem)
+                        cons_list.contains(elem) = tail.contains(elem)
+                        cons_list.remove_elem(removed_item).contains(elem) = tail.remove_elem(removed_item).contains(elem)
+
+                        p(cons_list, removed_item, elem)
+                    }
+
+                    cons_list.remove_elem(removed_item).contains(elem) = cons_list.contains(elem)
+                    p(cons_list, removed_item, elem)
+                }
+            }
+            p(cons_list, removed_item, elem)
+            p(List.cons(head, tail), removed_item, elem)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, removed_item, elem)
+    })
+
+    p(list, removed_item, elem)
+
+}
+
+// Removing an element contained in a list results in a `.unique` list with one fewer element.
+// Statement is list.unique.remove_elem(item).length + Nat.1 = list.unique.length rather than
+// list.unique.remove_elem(item).length = list.unique.length - Nat.1 because cancellation laws
+// don't work if list.unique.length = Nat.0.
+theorem remove_element_in_unique_equals_length_minus_one<T>(list: List<T>, item: T) {
+    list.contains(item) implies list.unique.remove_elem(item).length + Nat.1 = list.unique.length
+} by {
+    define p(l: List<T>) -> Bool {
+        l.contains(item) implies l.unique.remove_elem(item).length + Nat.1 = l.unique.length
+    }
+
+    // Base case: empty list, does not contain any item
+    p(List.nil<T>)
+
+    // Induction
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if List.cons(head, tail).contains(item) {
+                // Either head is a duplicate or not
+                if tail.contains(head) {
+                    // If it's a duplicate, we can safely ignore it and the induction hypothesis
+                    // carries us through
+                    List.cons(head, tail).unique = tail.unique
+
+                    List.cons(head, tail).unique.remove_elem(item).length + Nat.1 = List.cons(head, tail).unique.length
+                } else {
+                    // If it is not a duplicate, then either the item is head or in tail.unique
+                    List.cons(head, tail).unique = List.cons(head, tail.unique)
+                    if head = item {
+                        // If the item is in head, it's not in tail.unique, and it will be one removed
+                        not tail.contains(item)
+
+                        // Prover help: item is head, remove
+                        List.cons(head, tail).unique.remove_elem(item) = tail.unique
+
+                        List.cons(head, tail).unique.remove_elem(item).length + Nat.1 = List.cons(head, tail).unique.length
+                    } else {
+                        // If it's in tail then we're done by induction hypothesis
+                        tail.contains(item)
+
+                        // Prover help: item is in tail
+                        List.cons(head, tail).unique.remove_elem(item) = List.cons(head, tail.unique.remove_elem(item))
+
+                        List.cons(head, tail).unique.remove_elem(item).length + Nat.1 = List.cons(head, tail).unique.length
+                    }
+                }
+            }
+            p(List.cons(head, tail))
+        }
+    }
+}
+
+theorem unique_comm_remove_elem<T>(list: List<T>, elem: T) {
+    list.remove_elem(elem).unique = list.unique.remove_elem(elem)
+} by {
+    define p(l: List<T>, e: T) -> Bool {
+        l.remove_elem(e).unique = l.unique.remove_elem(e)
+    }
+
+    // Base case: empty list
+    p(List.nil<T>, elem)
+
+    forall(head: T, tail: List<T>) {
+        if p(tail, elem) {
+            if head = elem {
+                // If elem is head, easy
+                List.cons(head, tail).unique.remove_elem(elem) = tail.unique.remove_elem(elem)
+                List.cons(head, tail).remove_elem(elem) = tail.remove_elem(elem)
+
+                p(List.cons(head, tail), elem)
+            } else {
+                // If not, then either elem is in tail or not
+                List.cons(head, tail).remove_elem(elem).unique = List.cons(head, tail.remove_elem(elem)).unique
+                // Now, either head is in tail or not
+                if tail.contains(head) {
+                    // If head is in tail, then tail.unique carries us through
+                    p(List.cons(head, tail), elem)
+                } else {
+                    // Otherwise, head is not in tail and elem is not head so unique and remove contains head
+                    p(List.cons(head, tail), elem)
+                }
+
+                p(List.cons(head, tail), elem)
+            }
+
+            p(List.cons(head, tail), elem)
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l, elem)
+    })
+
+    p(list, elem)
+}
+
+// And the big one: the smallest (by `.length`) list containing all elements of
+// a list is its `.unique`. This now enables us to talk about "cardinality" of a
+// set as being unique via `.filter(set.contains).unique` or, by the previous
+// theorem, via `.unique.filter(set.contains)`.
+theorem unique_is_smallest_containing_list<T>(list: List<T>, container: List<T>) {
+    forall(x: T) {
+        list.contains(x) implies container.contains(x)
+    } implies list.unique.length <= container.length
+} by {
+    // Simple helper functions here
+    define is_contained(a: T -> Bool, b: T -> Bool) -> Bool {
+        forall(x: T) {
+            a(x) implies b(x)
+        }
+    }
+
+    define pc(x: List<T>, c: List<T>) -> Bool {
+        is_contained(x.contains, c.contains) implies x.unique.length <= c.unique.length
+    }
+
+    define p(x: List<T>) -> Bool {
+        forall(c: List<T>) {
+            pc(x, c)
+        }
+    }
+
+    p(List.nil<T>)
+
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            forall(c: List<T>) {
+                if is_contained(List.cons(head, tail).contains, c.contains) {
+                    // Either head is in tail or not
+                    if tail.contains(head) {
+                        c.contains(head)
+                        List.cons(head, tail).unique = tail.unique
+                        List.cons(head, tail).unique.length = tail.unique.length
+
+                        // Hypothesis
+                        is_contained(tail.contains, c.contains)
+                        tail.unique.length <= c.unique.length
+                        
+                        pc(List.cons(head, tail), c)
+                    } else {
+                        // Head is not in the tail, so gets added
+                        c.contains(head)
+                        List.cons(head, tail).unique = List.cons(head, tail.unique)
+                        List.cons(head, tail).unique.length = tail.unique.length + Nat.1
+
+                        // Remove one from the container
+                        c.unique.remove_elem(head).length + Nat.1 = c.unique.length
+                        tail.remove_elem(head) = tail
+                        
+                        // Prove that tail.contains(x) implies c.remove_elem(head).contains(x)
+                        forall(x: T) {
+                            if x != head {
+                                tail.contains(x) implies c.remove_elem(head).contains(x)
+                            } else {
+                                not tail.contains(x)
+                                not c.remove_elem(head).contains(x)
+                            }
+                            
+                            tail.contains(x) implies c.remove_elem(head).contains(x)
+                        }
+                        is_contained(tail.contains, c.remove_elem(head).contains)
+
+                        // Given this, we know know that adding head to both should give result
+                        pc(tail, c.remove_elem(head))
+                        tail.unique.length <= c.remove_elem(head).unique.length
+                        List.cons(head, tail).unique.length = tail.unique.length + Nat.1
+                        c.remove_elem(head).unique.length + Nat.1 = c.unique.length
+                        
+                        tail.unique.length + Nat.1 <= c.remove_elem(head).unique.length + Nat.1
+                        List.cons(head, tail).unique.length <= c.unique.length
+                    }
+
+                    pc(List.cons(head, tail), c)
+                }
+
+                // Prover help
+                forall(c: List<T>) {
+                    pc(List.cons(head, tail), c)
+                }
+                p(List.cons(head, tail))
+            }
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l)
+    })
+
+    pc(list, container)
+}
+
+
 /// Applies a function to each element of a list, creating a new list of results.
 define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
     match items {
@@ -251,6 +1134,7 @@ define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
         }
     }
 }
+
 
 from add_comm_monoid import AddCommMonoid
 
@@ -325,6 +1209,7 @@ theorem map_add<T, U>(left: List<T>, right: List<T>, f: T -> U) {
     p(List.nil)
 
     // Inductive step
+
     forall(head: T, tail: List<T>) {
         if p(tail) {
             // Induction hypothesis: map(tail + right, f) = map(tail, f) + map(right, f)
@@ -440,6 +1325,155 @@ theorem map_map<T, U, V>(items: List<T>, f: T -> U, g: U -> V) {
             p(List.cons(head, tail))
         }
     }
+}
+
+theorem map_length<T, U>(list: List<T>, f: T -> U) {
+    map(list, f).length = list.length
+} by {
+    define p(x: List<T>) -> Bool {
+        map(x, f).length = x.length
+    }
+
+    // Base case
+    p(List.nil<T>)
+
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            map(List.cons(head, tail), f).length = List.cons(head, tail).length
+        }
+    }
+
+    p(list)
+}
+
+theorem map_contains<T, U>(list: List<T>, f: T -> U, item: U) {
+    map(list, f).contains(item) implies exists(x: T) {
+        list.contains(x) and f(x) = item
+    }
+} by {
+    define p(x: List<T>) -> Bool {
+        map(x, f).contains(item) implies exists(y: T) {
+            x.contains(y) and f(y) = item
+        }
+    }
+
+    // Base case
+    p(List.nil<T>)
+
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if map(List.cons(head, tail), f).contains(item) {
+                // If the map contains the item, it must be from either head or tail
+                if map(tail, f).contains(item) {
+                    // If tail contains the item, then we can use the induction hypothesis
+                    p(List.cons(head, tail))
+                } else {
+                    // If head is the source of the item
+                    f(head) = item
+                    exists(y: T) {
+                        y = head and List.cons(head, tail).contains(y)
+                    }
+                    p(List.cons(head, tail))
+                }
+                p(List.cons(head, tail))
+            }
+            p(List.cons(head, tail))
+        }
+    }
+
+    List.induction(function (l: List<T>) {
+        p(l)
+    })
+}
+
+theorem pigeonhole_unique_map<T, U>(items: List<T>, f: T -> U) {
+    items.is_unique and not map(items, f).is_unique implies
+    exists(x: T, y: T) {
+        x != y and f(x) = f(y)
+    }
+} by {
+    define p(l: List<T>) -> Bool {
+        l.is_unique and not map(l, f).is_unique implies
+        exists(a: T, b: T) {
+            a != b and f(a) = f(b)
+        }
+    }
+
+    define has_duplicate(list: List<U>) -> Bool {
+        exists(y: U) {
+            list.count(y) > 1
+        }
+    }
+
+    // Base case: empty list
+    p(List.nil<T>)
+
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if List.cons(head, tail).is_unique and not map(List.cons(head, tail), f).is_unique {
+                let tail_map = map(tail, f)
+                // Either tail already has duplicate or not
+                if has_duplicate(tail_map) {
+                    not tail_map.is_unique
+                    not map(tail, f).is_unique
+
+                    if not tail.is_unique {
+                        let x: T satisfy {
+                            tail.count(x) > 1
+                        }
+                        List.cons(head, tail).count(x) >= tail.count(x)
+                        not List.cons(head, tail).is_unique
+                        false
+                    }
+                    
+                    tail.is_unique
+
+                    let (a: T, b: T) satisfy {
+                        a != b and f(a) = f(b)
+                    }
+
+                    p(List.cons(head, tail))
+                } else {
+                    // If tail_map does not have a duplicate, f(head) is the
+                    // duplicate
+                    let dup = f(head)
+
+                    tail_map.is_unique
+                    tail_map.contains(dup)
+                    tail_map.count(dup) = 1
+                    not tail.contains(head)
+                    let x: T satisfy {
+                        tail.contains(x) and f(x) = dup
+                    }
+
+                    map(List.cons(head, tail), f).count(dup) = 1 + tail_map.count(dup)
+                    map(List.cons(head, tail), f).count(dup) > 1
+
+                    f(head) = f(x)
+                    head != x
+
+                    p(List.cons(head, tail))
+                }
+
+                p(List.cons(head, tail))
+            }
+            p(List.cons(head, tail))
+        }
+    }
+}
+
+theorem pigeonhole_map<U, T>(items: List<T>, f: T -> U) {
+    items.is_unique and items.length > map(items, f).unique.length implies
+    exists(x: T, y: T) {
+        x != y and f(x) = f(y)
+    }
+} by {
+    items.length = map(items, f).length
+    map(items, f).unique.length < map(items, f).length
+    not map(items, f).is_unique
 }
 
 attributes List<T> {
@@ -567,8 +1601,6 @@ attributes List<T> {
         }
     }
 }
-
-
 
 theorem drop_last_zero<T>(a: List<T>) {
     a.drop_last(Nat.0) = a
@@ -709,4 +1741,522 @@ theorem range_add_until(a: Nat, b: Nat) {
 
     f(k)
     a + k = b
+}
+
+// Could be generalized to arbitrary functions over a set with 0, not
+// necessarily associative as in `add`. `LinearOrder` with smallest element 0
+// would similarly work (or with `option`). Technically `Nat`s w/ `max` defines a
+// `Monoid`, which would also work w/ definition of `add` above.
+define max_list(list: List<Nat>) -> Nat {
+    match list {
+        List<Nat>.nil {
+            0
+        }
+        List.cons(head, tail) {
+            head.max(max_list(tail))
+        }
+    }
+}
+
+theorem list_has_max(list: List<Nat>, n: Nat) {
+    max_list(list) <= n implies
+    forall(m: Nat) {
+        list.contains(m) implies m <= n
+    }
+} by {
+    define f(l: List<Nat>) -> Bool {
+        forall(k: Nat) {
+            l.contains(k) implies k <= max_list(l)
+        }
+    }
+
+    forall(head: Nat, tail: List<Nat>) {
+        if f(tail) {
+            let k = max_list(tail)
+            let m: Nat = head.max(k)
+            m >= max_list(List.cons(head, tail))
+            m >= max_list(tail)
+            forall(x: Nat) {
+                head = x implies x <= m
+                tail.contains(x) implies x <= m
+
+                List.cons(head, tail).contains(x) implies x <= m
+            }
+
+            f(List.cons(head, tail))
+        }
+    }
+
+    f(list)
+}
+
+theorem no_list_contains_nat(list: List<Nat>) {
+    exists(n: Nat) {
+        not list.contains(n)
+    }
+}
+
+from option import Option
+
+attributes List<T> {
+    define find_first_idx(self, item: T) -> Nat {
+        match self {
+            List.nil{
+                Nat.0
+            }
+            List.cons(head, tail) {
+                if head = item {
+                    Nat.0
+                } else {
+                    1 + tail.find_first_idx(item)
+                }
+            }
+        }
+    }
+
+    define get_idx(self, i: Nat) -> Option<T> {
+        match self {
+            List.nil {
+                Option.none
+            }
+            List.cons(head, tail) {
+                if i > 0 {
+                    tail.get_idx(i - 1)
+                } else {
+                    Option.some(head)
+                }
+            }
+        }
+    }
+}
+
+theorem find_first_idx_contains<T>(list: List<T>, item: T) {
+    list.contains(item) implies list.find_first_idx(item) < list.length
+} by {
+    define p(l: List<T>) -> Bool {
+        l.contains(item) implies l.find_first_idx(item) < l.length
+    }
+
+    // Base case: empty list does not contain any item
+    p(List.nil<T>)
+
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if List.cons(head, tail).contains(item) {
+                if head = item {
+                    p(List.cons(head, tail))
+                } else {
+                    tail.find_first_idx(item) < tail.length
+                    p(List.cons(head, tail))
+                }
+            }
+        }
+    }
+
+    p(list)
+}
+
+theorem find_first_idx_get_idx<T>(list: List<T>, item: T) {
+    list.contains(item) implies
+    list.get_idx(list.find_first_idx(item)) = Option.some(item)
+} by {
+    define p(l: List<T>) -> Bool {
+        l.contains(item) implies
+        l.get_idx(l.find_first_idx(item)) = Option.some(item)
+    }
+
+    // Base case: empty list does not contain any item
+    p(List.nil<T>)
+
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if List.cons(head, tail).contains(item) {
+                if head = item {
+                    // If head is the item, then find_first_idx returns 0 and get_idx(0) returns head
+                    List.cons(head, tail).get_idx(Nat.0) = Option.some(head)
+
+                    p(List.cons(head, tail))
+                } else {
+                    // If not, then find_first_idx returns the index in tail and get_idx returns the item
+                    let idx = tail.find_first_idx(item)
+                    List.cons(head, tail).find_first_idx(item) = 1 + idx
+                    idx.suc > 0
+                    idx.suc - 1 = idx
+                    List.cons(head, tail).get_idx(1 + idx) = tail.get_idx(idx)
+
+                    p(List.cons(head, tail))
+                }
+            }
+        }
+    }
+
+    p(list)
+}
+
+theorem get_idx_succ_implies_tail<T>(list: List<T>, i: Nat) {
+    i + 1 < list.length implies list.get_idx(i + 1) = list.tail.get_idx(i)
+} by {
+    define p(l: List<T>) -> Bool {
+        i + 1 < l.length implies l.get_idx(i + 1) = l.tail.get_idx(i)
+    }
+
+    // Base case: empty list does not have any valid index
+    p(List.nil<T>)
+
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if i + 1 < List.cons(head, tail).length {
+                i + 1 > 0
+                List.cons(head, tail).get_idx(i + 1) = tail.get_idx(i)
+                
+                p(List.cons(head, tail))
+            }
+        }
+    }
+
+    p(list)
+}
+
+theorem duplicate_implies_duplicate_idx<T>(list: List<T>, item: T) {
+    list.count(item) > 1 implies
+    exists(i: Nat, j: Nat) {
+        i < j and j < list.length and
+        list.get_idx(i) = Option.some(item) and
+        list.get_idx(j) = Option.some(item)
+    }
+} by {
+    define p(l: List<T>) -> Bool {
+        l.count(item) > 1 implies
+        exists(i: Nat, j: Nat) {
+            i < j and j < l.length and
+            l.get_idx(i) = Option.some(item) and
+            l.get_idx(j) = Option.some(item)
+        }
+    }
+
+    // Base case: empty list does not contain any item
+    p(List.nil<T>)
+
+    // Inductive step
+    forall(head: T, tail: List<T>) {
+        if p(tail) {
+            if List.cons(head, tail).count(item) > 1 {
+                if head = item {
+                    // If head is the item, then we need one more in the tail
+                    tail.contains(item)
+                    let idx = tail.find_first_idx(item)
+                    idx < tail.length
+                    idx + 1 < tail.length + 1
+                    List.cons(head, tail).get_idx(idx + 1) = tail.get_idx(idx)
+                    List.cons(head, tail).get_idx(Nat.0) = Option.some(head)
+
+                    idx + 1 > 0
+                    // Indices
+                    let i = 0
+                    let j = idx + 1
+                    i < j
+                    j < List.cons(head, tail).length
+                    List.cons(head, tail).get_idx(i) = Option.some(head)
+                    List.cons(head, tail).get_idx(j) = tail.get_idx(idx)
+
+                    p(List.cons(head, tail))
+                } else {
+                    // If head is not the item, then we need two in the tail
+                    List.cons(head, tail).count(item) > 1
+                    tail.count(item) > 1
+
+                    let (i: Nat, j: Nat) satisfy {
+                        i < j and j < tail.length and
+                        tail.get_idx(i) = Option.some(item) and
+                        tail.get_idx(j) = Option.some(item)
+                    }
+
+                    i + 1 > 0
+                    List.cons(head, tail).get_idx(i + 1) = tail.get_idx(i)
+                    j + 1 > 0
+                    List.cons(head, tail).get_idx(j + 1) = tail.get_idx(j)
+
+                    j + 1 < List.cons(head, tail).length
+                    i + 1 < j + 1
+                    p(List.cons(head, tail))
+                }
+            }
+        }
+    }
+
+    p(list)
+}
+
+theorem index_pigeonhole<T>(list: List<T>) {
+    list.unique.length < list.length implies
+    exists(i: Nat, j: Nat) {
+        i < j and j < list.length and
+        list.get_idx(i) = list.get_idx(j)
+    }
+}
+
+theorem get_idx_always_some<T>(list: List<T>, idx: Nat) {
+    idx < list.length implies exists(x: T) {
+        list.get_idx(idx) = Option.some(x)
+    }
+} by {
+    define pl(i: Nat, l: List<T>) -> Bool {
+        i < l.length implies exists(x: T) {
+            l.get_idx(i) = Option.some(x)
+        }
+    }
+
+    define p(i: Nat) -> Bool {
+        forall(l: List<T>) {
+            pl(i, l)
+        }
+    }
+
+    forall(l: List<T>) {
+        match l {
+            List.nil {
+                List.nil<T>.length = 0
+                not 0 > 0
+                pl(0, l)
+            }
+            List.cons(head, tail) {
+                l.get_idx(0) = Option.some(head)
+                pl(0, l)
+            }
+        }
+    }
+    p(0)
+
+    forall(i: Nat) {
+        if p(i) {
+            forall(l: List<T>) {
+                if i + 1 >= l.length {
+                    // Trivial
+                    pl(i+1, l)
+                } else {
+                    i + 1 < l.length
+                    match l {
+                        List.nil {
+                            not 0 > i+1
+                            false
+                        }
+                        List.cons(head, tail) {
+                            0 < i + 1
+                            List.cons(head, tail).get_idx(i + 1) = tail.get_idx(i)
+                            pl(i, tail)
+                            let x: T satisfy {
+                                tail.get_idx(i) = Option.some(x)
+                            }
+                            pl(i+1, l)
+                        }
+                    }
+                }
+            }
+            p(i+1)
+        }
+    }
+
+    p(idx)
+}
+
+// This is pretty clunky unfortunately
+// Might indicate that Option.some isn't great (maybe we return
+// a silly object if not) or declare some monoid "lift" for
+// option
+/// Theorem: map(a, f).get_idx(idx) = f(a.get_idx(idx)) if idx < a.length
+theorem map_under_idx<T, U>(a: List<T>, f: T -> U, idx: Nat) {
+    idx < a.length implies exists(x: T) {
+        Option.some(x) = a.get_idx(idx) and
+        map(a, f).get_idx(idx) = Option.some(f(x))
+    }
+} by {
+    define pf(i: Nat, l: List<T>) -> Bool {
+        i < l.length implies exists(x: T) {
+            Option.some(x) = l.get_idx(i) and
+            map(l, f).get_idx(i) = Option.some(f(x))
+        }
+    }
+
+    define p(i: Nat) -> Bool {
+        forall(l: List<T>) {
+            pf(i, l)
+        }
+    }
+
+    forall(l: List<T>) {
+        match l {
+            List.nil {
+                pf(0, l)
+            }
+            List.cons(head, tail) {
+                l.get_idx(0) = Option.some(head)
+                map(l, f).get_idx(0) = Option.some(f(head))
+                pf(0, l)
+            }
+        }
+    }
+    p(0)
+
+    forall(i: Nat) {
+        if p(i) {
+            forall(l: List<T>) {
+                if i + 1 >= l.length {
+                    // Trivial
+                    pf(i+1, l)
+                } else {
+                    i + 1 > 0
+                    match l {
+                        List.nil {
+                            false
+                        }
+                        List.cons(head, tail) {
+                            l.get_idx(i + 1) = tail.get_idx(i)
+                            i < tail.length
+                            pf(i, tail)
+                            let x: T satisfy {
+                                tail.get_idx(i) = Option.some(x) and
+                                map(tail, f).get_idx(i) = Option.some(f(x))
+                            }
+                            map(tail, f).get_idx(i) = Option.some(f(x))
+                            map(List.cons(head, tail), f) = List.cons(f(head), map(tail, f))
+                            map(List.cons(head, tail), f).get_idx(i + 1) = map(tail, f).get_idx(i + 1 - 1)
+                            i = i + 1 - 1
+                            map(l, f).get_idx(i + 1) = Option.some(f(x))
+
+                            pf(i+1, l)
+                        }
+                    }
+                    pf(i+1, l)
+                }
+            }
+            p(i+1)
+        }
+    }
+
+    pf(idx, a)
+}
+
+theorem append_add_idx_left<T>(a: List<T>, b: List<T>, n: Nat) {
+    n < a.length implies (a + b).get_idx(n) = a.get_idx(n)
+} by {
+    define fp(i: Nat, l: List<T>) -> Bool {
+        i < l.length implies (l + b).get_idx(i) = l.get_idx(i)
+    }
+
+    define f(i: Nat) -> Bool {
+        forall(l: List<T>) {
+            fp(i, l)
+        }
+    }
+
+    forall(l: List<T>) {
+        match l {
+            List.nil {
+                fp(0, l)
+            }
+            List.cons(head, tail) {
+                l.get_idx(0) = Option.some(head)
+                (l + b).get_idx(0) = Option.some(head)
+                fp(0, l)
+            }
+        }
+    }
+    f(0)
+
+    forall(i: Nat) {
+        if f(i) {
+            forall(l: List<T>) {
+                if i+1 < l.length {
+                    match l {
+                        List.nil {
+                            false
+                        }
+                        List.cons(head, tail) {
+                            i + 1 < tail.length + 1
+                            List.cons(head, tail).get_idx(i + 1) = (tail + b).get_idx(i)
+                            List.cons(head, tail).get_idx(i + 1) = tail.get_idx(i)
+                            List.cons(head, tail) + b = List.cons(head, tail + b)
+                            (List.cons(head, tail) + b).get_idx(i + 1) = List.cons(head, tail + b).get_idx(i + 1)
+                            i + 1 > 0
+                            List.cons(head, tail + b).get_idx(i + 1) = (tail + b).get_idx(i)
+                            (l + b).get_idx(i + 1) = l.get_idx(i + 1)
+                            fp(i+1, l)
+                        }
+                    }
+                    fp(i+1, l)
+                }
+            }
+            f(i+1)
+        }
+    }
+}
+
+theorem append_add_singleton_right<T>(list: List<T>, a: T) {
+    (list + List.singleton(a)).get_idx(list.length) = Option.some(a)
+} by {
+    define f(l: List<T>) -> Bool {
+        (l + List.singleton(a)).get_idx(l.length) = Option.some(a)
+    }
+
+    f(List.nil<T>)
+
+    forall(head: T, tail: List<T>) {
+        if f(tail) {
+            let l = List.cons(head, tail)
+            let sa = List.singleton(a)
+
+            l.length > 0
+            
+            (l + sa).get_idx(l.length) = (tail + sa).get_idx(l.length - 1)
+
+            tail.length = l.length - 1
+            (tail + sa).get_idx(l.length - 1) = Option.some(a)
+
+            f(List.cons(head, tail))
+        }
+    }
+}
+
+theorem range_idx_eq_idx(n: Nat, idx: Nat) {
+    idx < n implies n.range.get_idx(idx) = Option.some(idx)
+} by {
+    define f(m: Nat) -> Bool {
+        idx < m implies m.range.get_idx(idx) = Option.some(idx)
+    }
+
+    f(0)
+
+    forall(m: Nat) {
+        if f(m) {
+            if idx < m + 1 {
+                if idx < m {
+                    (m + 1).range = m.range + List.singleton(m) 
+                    (m.range + List.singleton(m)).get_idx(idx) = m.range.get_idx(idx)
+                    f(m + 1)
+                } else {
+                    idx = m
+                    (m.range + List.singleton(m)).get_idx(m) = Option.some(m)
+                    f(m + 1)
+                }
+            }
+        }
+    }
+}
+
+theorem map_range<T>(n: Nat, f: Nat -> T, idx: Nat) {
+    idx < n implies map(n.range, f).get_idx(idx) = Option.some(f(idx))
+} by {
+    n.range.get_idx(idx) = Option.some(idx)
+
+    // Prover help
+    map_under_idx(n.range, f, idx)
+    exists(i_idx: Nat) {
+        Option.some(i_idx) = n.range.get_idx(idx) and
+        map(n.range, f).get_idx(idx) = Option.some(f(i_idx))
+    }
+
+    map(n.range, f).get_idx(idx) = Option.some(f(idx))
 }
