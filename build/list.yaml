@@ -1,5 +1,5 @@
 dependencies: 14722444015462057507
-content: 1980588016565436659
+content: 15978745786974911918
 blocks:
   add_assoc:
     list:
@@ -321,6 +321,12 @@ blocks:
     - map
     util:
     - compose
+  map_range:
+    list:
+    - length_range
+    - range_idx_eq_idx
+    option:
+    - Option.some
   map_singleton:
     list:
     - List.singleton
@@ -449,8 +455,6 @@ blocks:
     - lte_imp_not_lt
     - suc_ne
   range_idx_eq_idx:
-    add_comm_semigroup:
-    - AddCommSemigroup.commutative
     list:
     - List.append
     - Nat.range
@@ -459,7 +463,6 @@ blocks:
     - length_range
     nat.nat_base:
     - Nat.induction
-    - add_one_left
     - add_one_right
     - lt_suc_right
     - not_lt_zero
