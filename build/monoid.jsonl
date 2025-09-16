@@ -1,0 +1,22 @@
+{"goal":"a.pow(Nat.0) * a.pow(m) = M.1 * a.pow(m)","proof":["a.pow(Nat.0) != M.1","Nat.0 != Nat.0 or a.pow(Nat.0) = M.1"]}
+{"goal":"a.pow(Nat.0) * a.pow(m) = a.pow(m)","proof":["M.1 * a.pow(m) != a.pow(m)","M.1 * a.pow(m) = a.pow(m)"]}
+{"goal":"a.pow(Nat.0 + m) = a.pow(m)","proof":["Nat.0 + m != m","m + Nat.0 = Nat.0 + m","m + Nat.0 != m","Nat.0 != Nat.0 or m + Nat.0 = m"]}
+{"goal":"pow_add(a, Nat.0, m)","proof":["a.pow(Nat.0) * a.pow(m) != a.pow(Nat.0 + m) or pow_add(a, Nat.0, m)","a.pow(Nat.0) * a.pow(m) = a.pow(Nat.0 + m)","a.pow(Nat.0) * a.pow(m) != a.pow(Nat.0 + m)"]}
+{"goal":"f(Nat.0)","proof":["pow_add(a, Nat.0, m) = f(Nat.0)"]}
+{"goal":"pow_add(a, x, m)","proof":["pow_add(a, x, m) = f(x)"]}
+{"goal":"a.pow(x) * a.pow(m) = a.pow(x + m)","proof":["not pow_add(a, x, m) or a.pow(x) * a.pow(m) = a.pow(x + m)"]}
+{"goal":"a.pow(x.suc) * a.pow(m) = a * a.pow(x) * a.pow(m)","proof":["a * a.pow(x) != a.pow(x.suc)","x.suc != x.suc or a * a.pow(x) = a.pow(x.suc)"]}
+{"goal":"a.pow(x.suc) * a.pow(m) = a * (a.pow(x) * a.pow(m))","proof":["a * a.pow(x) * a.pow(m) = a * (a.pow(x) * a.pow(m))"]}
+{"goal":"a.pow(x.suc) * a.pow(m) = a * a.pow(x + m)","proof":["a * (a.pow(x) * a.pow(m)) != a.pow(x.suc) * a.pow(m)"]}
+{"goal":"a.pow(x.suc) * a.pow(m) = a.pow((x + m).suc)","proof":["a * a.pow(x + m) != a.pow((x + m).suc)","(x + m).suc != (x + m).suc or a * a.pow(x + m) = a.pow((x + m).suc)"]}
+{"goal":"a.pow(x.suc) * a.pow(m) = a.pow(x.suc + m)","proof":["a.pow(x.suc + m) != a.pow((x + m).suc)","x.suc + m != (x + m).suc","x.suc + m = (x + m).suc"]}
+{"goal":"pow_add(a, x.suc, m)","proof":["a.pow(x.suc) * a.pow(m) != a.pow(x.suc + m) or pow_add(a, x.suc, m)"]}
+{"goal":"f(x.suc)","proof":["pow_add(a, x.suc, m) = f(x.suc)"]}
+{"goal":"pow_add(a, n, m)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(Nat.0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(Nat.0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","pow_add(a, n, m) = f(n)","not f(n)","not f(s0(f).suc) or not f(Nat.0) or f(n)","not f(s0(f).suc)","not f(Nat.0) or f(s0(f)) or f(n)","not f(s0(f))","f(s0(f))"]}
+{"goal":"pow_add","proof":["not pow_add(a, n, m) or a.pow(n) * a.pow(m) = a.pow(n + m)"]}
+{"goal":"a.pow(Nat.1) = a.pow(Nat.0.suc)","proof":["Nat.0.suc != Nat.1"]}
+{"goal":"a.pow(Nat.0.suc) = a * a.pow(Nat.0)","proof":["Nat.0.suc != Nat.0.suc or a * a.pow(Nat.0) = a.pow(Nat.0.suc)"]}
+{"goal":"a * a.pow(Nat.0) = a * M.1","proof":["a.pow(Nat.0) != M.1","Nat.0 != Nat.0 or a.pow(Nat.0) = M.1"]}
+{"goal":"a * M.1 = a","proof":["a * M.1 = a"]}
+{"goal":"a.pow(Nat.1) = a","proof":[]}
+{"goal":"pow_one","proof":[]}
