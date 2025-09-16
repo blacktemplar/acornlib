@@ -215,13 +215,6 @@ instance Real: PartialOrder {
 
 instance Real: LinearOrder
 
-attributes Real {
-    /// True if this real number is strictly less than the other.
-    define lt(self, other: Real) -> Bool {
-        self != other and self.lte(other)
-    }
-}
-
 theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
     r1 > r2 implies Real.from_rat(r1).gt_rat(r2)
 }
@@ -1411,6 +1404,9 @@ theorem add_neg_gte_zero(a: Real) {
 
 theorem add_neg_eq_zero(a: Real) {
     a + -a = Real.0
+} by {
+    a + -a >= Real.0
+    a + -a <= Real.0
 }
 
 theorem neg_distrib(a: Real, b: Real) {

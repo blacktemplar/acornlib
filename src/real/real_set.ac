@@ -217,6 +217,17 @@ theorem lb_imp_flip_ub(f: Real -> Bool, x: Real) {
     }
 }
 
+theorem neg_lte(a: Real, b: Real) {
+    -a <= b implies -b <= a
+} by {
+    a + -a <= a + b
+    Real.0 <= a + b
+    Real.0 + -b <= a + b + -b
+    -b <= a + (b + -b)
+    -b <= a + Real.0
+    -b <= a
+}
+
 theorem ub_imp_flip_lb(f: Real -> Bool, x: Real) {
     is_upper_bound(f, x) implies is_lower_bound(flip(f), -x)
 } by {

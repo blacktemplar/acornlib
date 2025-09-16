@@ -504,7 +504,7 @@
 {"goal":"neg_neg","proof":["not --a <= a or --a < a or --a = a","not --a <= a","--a > a or --a <= a"]}
 {"goal":"neg_zero","proof":["-Real.from_rat(Rat.0) = Real.from_rat(-Rat.0)","Rat.0 - Rat.0 = -Rat.0","Rat.new(Int.0, Int.1) - Rat.0 = Rat.new(Int.0, Int.1)"]}
 {"goal":"neg_pos_is_neg","proof":["not -Real.0 < a or -a < Real.0","not a.is_positive or Real.0 < Real.0 + a","not -a < Real.0 or (-a).is_negative","not -a < Real.0","Real.0 + a = a","Real.0 < Real.0 + a","not -Real.0 < a","not Real.0 < a"]}
-{"goal":"neg_neg_is_pos","proof":["not -a < Real.0 or -Real.0 < a","not a <= Real.0 or not Real.0 <= a or Real.0 = a","a <= Real.0 or a > Real.0","not Real.0 < a or Real.0 <= a","not (-a).is_negative or -a < Real.0","not a > Real.0 or a.is_positive","not a > Real.0","not (-a).is_negative or -a != Real.0","-a != Real.0","-a < Real.0","a <= Real.0","-Real.0 < a","-Real.0 != -a","Real.0 != a","Real.0 < a","not Real.0 <= a","Real.0 <= a"]}
+{"goal":"neg_neg_is_pos","proof":["not -a < Real.from_rat(Rat.0) or a > Real.from_rat(-Rat.0)","-Real.from_rat(Rat.0) = Real.from_rat(-Rat.0)","not (-a).is_negative or -a < Real.0","not a > Real.0 or a.is_positive","not a > Real.0","-a < Real.0","not a > -Real.0","-a < Real.from_rat(Rat.0)","not a > -Real.from_rat(Rat.0)","a > Real.from_rat(-Rat.0)","not a > Real.from_rat(-Rat.0)"]}
 {"goal":"gt_add_neg","proof":["not b < Real.0 or b + a < Real.0 + a","not a + b < a or not a <= a + b or a + b < a + b","a <= a + b or a > a + b","a <= a + b","a + b = b + a","not b.is_negative or b < Real.0","not a + b < a + b or a + b != a + b","Real.0 + a = a","b < Real.0","not a + b < a + b","not a + b < a or a + b < a + b","not a + b < a","not b + a < a","b + a < Real.0 + a"]}
 {"goal":"a < a + Real.from_rat(eps)","proof":["not eps.is_positive or a < a + Real.from_rat(eps)"]}
 {"goal":"exists(k0: Rat) { a < Real.from_rat(k0) and Real.from_rat(k0) < a + Real.from_rat(eps) }","proof":["let s0: (Real, Real) -> Rat satisfy { forall(x0: Real, x1: Real) { not x0 < x1 or x0 < Real.from_rat(s0(x0, x1)) } and forall(x2: Real, x3: Real) { not x2 < x3 or Real.from_rat(s0(x2, x3)) < x3 } }","not Real.from_rat(s0(a, a + Real.from_rat(eps))) < a + Real.from_rat(eps) or not a < Real.from_rat(s0(a, a + Real.from_rat(eps)))","not a < a + Real.from_rat(eps) or Real.from_rat(s0(a, a + Real.from_rat(eps))) < a + Real.from_rat(eps)","not a < a + Real.from_rat(eps) or a < Real.from_rat(s0(a, a + Real.from_rat(eps)))","a < Real.from_rat(s0(a, a + Real.from_rat(eps)))","Real.from_rat(s0(a, a + Real.from_rat(eps))) < a + Real.from_rat(eps)","not Real.from_rat(s0(a, a + Real.from_rat(eps))) < a + Real.from_rat(eps)"]}
@@ -545,6 +545,8 @@
 {"goal":"a + -a > Real.from_rat(r)","proof":["Real.new((b + -b + r).gt) = Real.from_rat(b + -b + r)","Real.new(r.gt) = Real.from_rat(r)","b + -b = Rat.0","Rat.0 + r = r"]}
 {"goal":"false","proof":["not a + -a > Real.from_rat(r) or not a + -a <= Real.from_rat(r)","not a + -a < Real.from_rat(r) or a + -a <= Real.from_rat(r)","not a + -a <= Real.from_rat(r)","a + -a <= Real.from_rat(r)"]}
 {"goal":"add_neg_gte_zero","proof":["a + -a >= Real.0 or a + -a < Real.0"]}
+{"goal":"a + -a >= Real.0","proof":["a + -a >= Real.0"]}
+{"goal":"a + -a <= Real.0","proof":["a + -a <= Real.0"]}
 {"goal":"add_neg_eq_zero","proof":["not a + -a <= Real.0 or a + -a < Real.0 or a + -a = Real.0","a + -a >= Real.0","a + -a <= Real.0","not a + -a >= Real.0 or not a + -a < Real.0","a + -a < Real.0"]}
 {"goal":"a + b + -(a + b) = Real.0","proof":["a + b + -(a + b) = Real.0"]}
 {"goal":"-(a + b) + b + a = Real.0","proof":["a + (b + -(a + b)) = a + b + -(a + b)","a + (-(a + b) + b) = -(a + b) + b + a","b + -(a + b) = -(a + b) + b"]}
@@ -556,14 +558,14 @@
 {"goal":"forall(x0: Real, x1: Real, x2: Real) { x0 + (x1 + x2) = x0 + x1 + x2 }","proof":["let (s0: Real, s1: Real, s2: Real) satisfy { s0 + (s1 + s2) != s0 + s1 + s2 }","s0 + (s1 + s2) = s0 + s1 + s2"]}
 {"goal":"forall(x0: Real, x1: Real) { AddSemigroup.add<Real>(x0, x1) = AddSemigroup.add<Real>(x1, x0) }","proof":["let (s0: Real, s1: Real) satisfy { s1 + s0 != s0 + s1 }","s1 + s0 = s0 + s1"]}
 {"goal":"forall(x0: Real) { AddSemigroup.add<Real>(Real.0, x0) = x0 } and forall(x1: Real) { AddSemigroup.add<Real>(x1, Real.0) = x1 }","proof":["let (s0: Real, s1: Real) satisfy { s1 + Real.0 != s1 or Real.0 + s0 != s0 }","s1 + Real.0 = Real.0 + s1","Real.0 + s0 = s0","Real.0 + s1 = s1","s1 + Real.0 != s1"]}
-{"goal":"forall(x0: Real) { AddSemigroup.add<Real>(x0, -x0) = add_monoid.AddMonoid.0<Real> }","proof":["let s0: Real satisfy { s0 + -s0 != Real.0 }","not s0 + -s0 <= Real.0 or s0 + -s0 < Real.0 or s0 + -s0 = Real.0","s0 + -s0 >= Real.0","s0 + -s0 <= Real.0","not s0 + -s0 >= Real.0 or not s0 + -s0 < Real.0","s0 + -s0 < Real.0"]}
+{"goal":"forall(x0: Real) { AddSemigroup.add<Real>(x0, -x0) = add_monoid.AddMonoid.0<Real> }","proof":["let s0: Real satisfy { s0 + -s0 != Real.0 }","s0 + -s0 = Real.0"]}
 {"goal":"pos_imp_eq_abs","proof":["a.abs = a or a.is_negative","a.is_negative","not a.is_positive or not a.is_negative"]}
 {"goal":"a + (b + -b) = a","proof":["a + Real.0 = Real.0 + a","b + -b = Real.0","a + Real.0 != a","Real.0 + a != a","Real.0 + a = a"]}
 {"goal":"a + b + -b = a","proof":["a + (b + -b) = a + b + -b"]}
 {"goal":"sub_cancels","proof":["a + b + -b = a + b - b"]}
 {"goal":"sub_moves_sides","proof":["a + b - b = a"]}
-{"goal":"a <= Real.0","proof":["not a < Real.0 or a <= Real.0","not a < Real.0","not a.is_negative or a < Real.0"]}
-{"goal":"Real.0 <= a.abs","proof":["not a < Real.0 or -Real.0 < -a","not a.is_negative or a.abs = -a","not Real.0 < a.abs or Real.0 <= a.abs","not Real.0 < a.abs","not a.is_negative or a < Real.0","a < Real.0","a.abs = -a","not Real.0 < -a","-Real.0 < -a","not -Real.0 < -a"]}
+{"goal":"a <= Real.0","proof":["a <= Real.0 or a > Real.0","a > Real.0","not a > Real.0 or a.is_positive","not a.is_negative or not a.is_positive","a.is_positive","not a.is_positive"]}
+{"goal":"Real.0 <= a.abs","proof":["not a.is_negative or a.abs = -a","not a.abs <= Real.0 or not a.abs > Real.0","a.abs <= Real.0 or Real.0 <= a.abs","a.abs <= Real.0","not (--a).is_negative or (-a).is_positive","not (-a).is_positive or -a > Real.0","--a = a","(--a).is_negative","a.abs = -a","not a.abs > Real.0","not -a > Real.0","(-a).is_positive","not (-a).is_positive"]}
 {"goal":"a <= a.abs","proof":["not a <= Real.0 or not Real.0 <= a.abs or a <= a.abs","not Real.0 <= a.abs or not a <= Real.0"]}
 {"goal":"a = a.abs","proof":["a.abs = a or a.is_negative"]}
 {"goal":"a <= a.abs","proof":["not a <= a","let s0: (Real, Real) -> Rat satisfy { forall(x0: Real, x1: Rat, x2: Real) { not x0.gt_rat(x1) or not x0 <= x2 or x2.gt_rat(x1) } and forall(x3: Real, x4: Real) { x3.gt_rat(s0(x3, x4)) or x3 <= x4 } and forall(x5: Real, x6: Real) { not x5.gt_rat(s0(x6, x5)) or x6 <= x5 } }","not a.gt_rat(s0(a, a)) or a <= a","a.gt_rat(s0(a, a)) or a <= a","not a.gt_rat(s0(a, a))","a.gt_rat(s0(a, a))"]}
