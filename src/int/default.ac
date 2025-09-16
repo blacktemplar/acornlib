@@ -154,12 +154,6 @@ theorem mul_assoc(a: Int, b: Int, c: Int) { a * b * c = a * (b * c) } by {
 // Comparison operators
 
 attributes Int {
-    /// TODO: currently this is defined independently, but we should be able to just
-    /// inherit this operator from `PartialOrder`.
-    define lt(self, b: Int) -> Bool {
-        (b - self).is_positive
-    }
-
     /// `a <= b` when `(a - b)` is positive or zero.
     define lte(self, b: Int) -> Bool {
         (b - self).is_positive or self = b
@@ -221,9 +215,18 @@ theorem lte_ref(a: Int) { a <= a }
 
 theorem zero_lt_pos(a: Int) { a.is_positive implies 0 < a }
 
-theorem neg_lt_zero(a: Int) { a.is_negative implies a < 0 }
+theorem neg_lt_zero(a: Int) {
+    a.is_negative implies a < 0
+} by {
+    a != 0
+    a <= 0
+}
 
-theorem nonpos_lt_pos(a: Int, b: Int) { not a.is_positive and b.is_positive implies a < b }
+theorem nonpos_lt_pos(a: Int, b: Int) {
+    not a.is_positive and b.is_positive implies a < b
+} by {
+    (b - a).is_positive
+}
 
 theorem neg_lt_nonneg(a: Int, b: Int) { a.is_negative and not b.is_negative implies a < b }
 
@@ -383,6 +386,8 @@ theorem lt_from_nat(j: Nat, k: Nat) {
     Int.from_nat(d) + Int.from_nat(j) = Int.from_nat(k)
     Int.from_nat(k) - Int.from_nat(j) = Int.from_nat(d)
     Int.from_nat(d).is_positive
+    Int.from_nat(j) != Int.from_nat(k)
+    Int.from_nat(j) <= Int.from_nat(k)
 }
 
 theorem lte_from_nat(j: Nat, k: Nat) { j <= k implies Int.from_nat(j) <= Int.from_nat(k) } by {
@@ -730,6 +735,9 @@ theorem lte_mul_both_neg(a: Int, b: Int, c: Int) {
 
 theorem lt_cancel_mul(a: Int, b: Int, c: Int) {
     a.is_positive and a * b < a * c implies b < c
+} by {
+    b != c
+    b <= c
 }
 
 theorem lte_cancel_mul(a: Int, b: Int, c: Int) {

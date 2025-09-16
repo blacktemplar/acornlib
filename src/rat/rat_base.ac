@@ -1134,6 +1134,7 @@ theorem lte_from_int_mul_denom(a: Rat, n: Int) {
     if a.num = n * a.denom {
         a = Rat.from_int(n)
     } else {
+        a.num < n * a.denom
         a < Rat.from_int(n)
     }
 }
