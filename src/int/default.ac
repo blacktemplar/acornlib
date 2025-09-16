@@ -188,11 +188,13 @@ theorem int_is_reflexive {
     is_reflexive(Int.lte)
 }
 
-theorem lte_trans(a: Int, b: Int, c: Int) { a <= b and b <= c implies a <= c } by {
+theorem lte_trans(a: Int, b: Int, c: Int) {
+    a <= b and b <= c implies a <= c
+} by {
     if a = b {
         a <= c
     } else {
-        a < b
+        (b - a).is_positive
         if b = c {
             a <= c
         } else {

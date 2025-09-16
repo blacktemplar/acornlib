@@ -87,7 +87,7 @@
 {"goal":"mul_assoc","proof":[]}
 {"goal":"int_is_reflexive","proof":["let s0: (Int, Int) -> Bool -> Int satisfy { forall(x0: (Int, Int) -> Bool, x1: Int) { not is_reflexive<Int>(x0) or x0(x1, x1) } and forall(x2: (Int, Int) -> Bool) { not x2(s0(x2), s0(x2)) or is_reflexive<Int>(x2) } }","not s0(Int.lte) <= s0(Int.lte) or is_reflexive<Int>(Int.lte)","not s0(Int.lte) <= s0(Int.lte)","s0(Int.lte) != s0(Int.lte) or s0(Int.lte) <= s0(Int.lte)"]}
 {"goal":"a <= c","proof":[]}
-{"goal":"a < b","proof":["not a <= b or (b - a).is_positive or b = a","(b - a).is_positive = a < b","(b - a).is_positive","not (b - a).is_positive"]}
+{"goal":"(b - a).is_positive","proof":["not a <= b or (b - a).is_positive or b = a"]}
 {"goal":"a <= c","proof":[]}
 {"goal":"(c - b).is_positive","proof":["not b <= c or (c - b).is_positive or c = b"]}
 {"goal":"(b - a).is_positive","proof":["(b - a).is_positive = a < b"]}
@@ -511,7 +511,7 @@
 {"goal":"a - b < 0","proof":[]}
 {"goal":"0 - (a - b) = -(a - b)","proof":["0 - (a - b) = -(a - b)"]}
 {"goal":"(b - a).is_positive","proof":["(0 - (a - b)).is_positive = a - b < 0"]}
-{"goal":"a < b","proof":["(b - a).is_positive = a < b"]}
+{"goal":"a < b","proof":["not a <= b or (b - a).is_positive or b = a","(b - a).is_positive = a < b","(b - a).is_positive","not (b - a).is_positive"]}
 {"goal":"a <= b","proof":["not (b - a).is_positive or a <= b"]}
 {"goal":"int_total","proof":["not (a - b).is_positive or b <= a","not (a - b).is_positive","a - b = 0","a - b != 0 or b = a"]}
 {"goal":"forall(x0: Int, x1: Int) { PartialOrder.lte<Int>(x0, x1) or PartialOrder.lte<Int>(x1, x0) }","proof":["let (s0: Int, s1: Int) satisfy { not s0 <= s1 and not s1 <= s0 }","s0 <= s1 or s1 <= s0"]}
