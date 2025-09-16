@@ -207,10 +207,26 @@ theorem flip_flip(f: Real -> Bool) {
 
 theorem lb_imp_flip_ub(f: Real -> Bool, x: Real) {
     is_lower_bound(f, x) implies is_upper_bound(flip(f), -x)
+} by {
+    forall(y: Real) {
+        if flip(f, y) {
+            f(-y)
+            x <= -y
+            -x >= y
+        }
+    }
 }
 
 theorem ub_imp_flip_lb(f: Real -> Bool, x: Real) {
     is_upper_bound(f, x) implies is_lower_bound(flip(f), -x)
+} by {
+    forall(y: Real) {
+        if flip(f, y) {
+            f(-y)
+            -y <= x
+            -x <= y
+        }
+    }
 }
 
 theorem glb_imp_flip_lub(f: Real -> Bool, x: Real) {

@@ -104,6 +104,7 @@ theorem cauchy_gt_not_everything(q: Nat -> Real) {
             q(n) != lb
             q(n) > lb
             q(n) > Real.from_rat(r)
+            Real.from_rat(r) < q(n)
             false
         }
     }
@@ -139,8 +140,10 @@ theorem cauchy_gt_has_no_greatest(q: Nat -> Real) {
             Real.from_rat(r) < lb and eventual_lb(q, lb)
         }
         let b: Rat satisfy {
-            lb > Real.from_rat(b) and b > r
+            r < b and Real.from_rat(b) < lb
         }
+        lb > Real.from_rat(b)
+        b > r
         cauchy_gt_rat(q, b)
         false
     }
@@ -234,6 +237,7 @@ theorem eventual_eq_imp_ub(q: Nat -> Real, a: Real) {
     forall(i: Nat) {
         if n <= i {
             q(i) = a
+            a <= q(i)
         }
     }
 }
@@ -249,6 +253,7 @@ theorem eventual_eq_imp_lb(q: Nat -> Real, a: Real) {
     forall(i: Nat) {
         if n <= i {
             q(i) = a
+            a <= q(i)
         }
     }
 }
@@ -523,6 +528,8 @@ theorem add_gt_imp_gt_sub(a: Real, b: Real, c: Real) {
     a + b > c implies a > c - b
 } by {
     a + b > c
+    c < a + b
+    c + -b < a + b + -b
     a + b + -b > c + -b
     a > c - b
 }
@@ -781,6 +788,8 @@ theorem add_close(a1: Real, b1: Real, a2: Real, b2: Real, a_eps: Real, b_eps: Re
     // The greater-than direction
     a1 > a2 - a_eps
     b2 > b2 - b_eps
+    b2 - b_eps < b2
+    (a2 - a_eps) + (b2 - b_eps) < a1 + b1
     a1 + b1 > (a2 - a_eps) + (b2 - b_eps)
     a2 - a_eps + (b2 - b_eps) != a1 + b1
     (a1 + b1).max(a2 - a_eps + (b2 - b_eps)) = a1 + b1

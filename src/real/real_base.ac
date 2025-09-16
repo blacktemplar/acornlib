@@ -225,11 +225,6 @@ attributes Real {
     define gte(self, other: Real) -> Bool {
         other.lte(self)
     }
-
-    /// True if this real number is strictly greater than the other.
-    define gt(self, other: Real) -> Bool {
-        other.lt(self)
-    }
 }
 
 theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
@@ -1360,6 +1355,8 @@ theorem add_neg_lte_zero(a: Real) {
     a + -a <= Real.0
 } by {
     if a + -a > Real.0 {
+        Real.0 < a + -a
+        (a + -a).is_positive
         let r: Rat satisfy {
             Real.0 < Real.from_rat(r) and Real.from_rat(r) < a + -a
         }
@@ -1760,6 +1757,8 @@ theorem close_imp_bounds(a: Real, b: Real, eps: Real) {
     b < eps + a
     eps + a > b
     a + eps > b
+    b < a + eps
+    b + -eps < a + eps + -eps
     a + eps + -eps > b + -eps
     a > b + -eps
 }

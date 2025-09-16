@@ -149,10 +149,12 @@ theorem increasing_convergent_bounded_by_limit(a: Nat -> Real) {
     forall(n: Nat) {
         // Suppose for contradiction that a(n) > limit(a)
         if a(n) > limit(a) {
+            limit(a) < a(n)
+
             // Find a value that's between limit(a) and a(n)
             let ub: Real satisfy {
                 limit(a) < ub and ub < a(n)
-            } 
+            }
 
             // Since the sequence converges to limit(a), there must be a point
             // after which all sequence values are < ub

@@ -119,7 +119,7 @@
 {"goal":"Real.0 <= a.re * a.re","proof":["a.re * a.re >= Real.0 = Real.0 <= a.re * a.re","a.re * a.re >= Real.0"]}
 {"goal":"Real.0 <= a.im * a.im","proof":["a.im * a.im >= Real.0 = Real.0 <= a.im * a.im","a.im * a.im >= Real.0"]}
 {"goal":"a.re * a.re <= Real.0","proof":["not Real.0 <= a.im * a.im or a.re * a.re + Real.0 <= a.re * a.re + a.im * a.im","a.re * a.re + Real.0 = a.re * a.re","not a.re * a.re <= a.re * a.re + a.im * a.im","a.re * a.re + Real.0 <= a.re * a.re + a.im * a.im"]}
-{"goal":"a.im * a.im <= Real.0","proof":["not Real.0 <= a.re * a.re or not a.re * a.re <= Real.0 or a.re * a.re = Real.0","a.im * a.im > Real.0 or a.im * a.im <= Real.0","a.im * a.im + a.re * a.re = a.re * a.re + a.im * a.im","a.im * a.im > Real.0 = Real.0 < a.im * a.im","not a.abs_squared < Real.0 or a.abs_squared != Real.0","a.im * a.im + Real.0 = a.im * a.im","a.im * a.im > Real.0","not a.abs_squared < Real.0","a.re * a.re = Real.0"]}
+{"goal":"a.im * a.im <= Real.0","proof":["not Real.0 <= a.re * a.re or not a.re * a.re <= Real.0 or a.re * a.re = Real.0","a.im * a.im + a.re * a.re = a.re * a.re + a.im * a.im","Real.0 >= a.im * a.im = a.im * a.im <= Real.0","a.re * a.re >= Real.0 = Real.0 <= a.re * a.re","a.im * a.im + Real.0 = a.im * a.im","a.re * a.re = Real.0"]}
 {"goal":"a.re * a.re = Real.0","proof":["not Real.0 <= a.re * a.re or not a.re * a.re <= Real.0 or a.re * a.re = Real.0"]}
 {"goal":"a.im * a.im = Real.0","proof":["not Real.0 <= a.im * a.im or not a.im * a.im <= Real.0 or a.im * a.im = Real.0"]}
 {"goal":"a.re = Real.0","proof":["a.re * a.re != Real.0 or a.re = Real.0"]}
