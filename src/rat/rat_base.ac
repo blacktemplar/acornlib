@@ -10,6 +10,9 @@ define is_reduced(a: Int, b: Int) -> Bool {
 
 theorem denom_one_is_reduced(a: Int) {
     is_reduced(a, Int.1)
+} by {
+    Int.1 > Int.0
+    gcd(a, Int.1) = Int.1
 }
 
 /// Rational numbers represented as fractions in reduced form.

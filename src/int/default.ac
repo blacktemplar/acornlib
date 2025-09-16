@@ -165,12 +165,6 @@ attributes Int {
         (b - self).is_positive or self = b
     }
 
-    /// TODO: currently this is defined independently, but we should be able to just
-    /// inherit this operator from `PartialOrder`.
-    define gt(self, b: Int) -> Bool {
-        b < self
-    }
-
     define divides(self, b: Int) -> Bool {
         exists(d: Int) { d * self = b }
     }
@@ -755,6 +749,8 @@ theorem lte_cancel_mul(a: Int, b: Int, c: Int) {
 
 theorem lt_cancel_mul_neg(a: Int, b: Int, c: Int) {
     a.is_negative and a * b < a * c implies b > c
+} by {
+    c < b
 }
 
 theorem lte_cancel_mul_neg(a: Int, b: Int, c: Int) {
