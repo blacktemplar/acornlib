@@ -682,28 +682,6 @@ from add_comm_group import AddCommGroup
 
 instance Rat: AddCommGroup
 
-attributes Rat {
-    /// True if this rational is less than the other.
-    define lt(self, other: Rat) -> Bool {
-        (other - self).is_positive
-    }
-
-    /// True if this rational is less than or equal to the other.
-    define lte(self, other: Rat) -> Bool {
-        self < other or self = other
-    }
-
-    /// True if this rational is greater than the other.
-    define gt(self, other: Rat) -> Bool {
-        other < self
-    }
-
-    /// True if this rational is greater than or equal to the other.
-    define gte(self, other: Rat) -> Bool {
-        other <= self
-    }
-}
-
 theorem sub_self(a: Rat) {
     a - a = Rat.0
 }
@@ -736,6 +714,28 @@ theorem mul_inv_cancels_left(a: Rat) {
 
 theorem sub_zero(a: Rat) {
     a - Rat.0 = a
+}
+
+attributes Rat {
+    /// True if this rational is less than or equal to the other.
+    define lte(self, other: Rat) -> Bool {
+        (other - self).is_positive or self = other
+    }
+
+    /// True if this rational is less than the other.
+    define lt(self, other: Rat) -> Bool {
+        (other - self).is_positive
+    }
+
+    /// True if this rational is greater than the other.
+    define gt(self, other: Rat) -> Bool {
+        other < self
+    }
+
+    /// True if this rational is greater than or equal to the other.
+    define gte(self, other: Rat) -> Bool {
+        other <= self
+    }
 }
 
 theorem pos_imp_zero_lt(a: Rat) {

@@ -410,7 +410,7 @@
 {"goal":"sub_from_int","proof":[]}
 {"goal":"Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)","proof":["Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)"]}
 {"goal":"lt_from_int","proof":["Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)","not a <= b or (b - a).is_positive or b = a","(Rat.from_int(b) - Rat.from_int(a)).is_positive = Rat.from_int(a) < Rat.from_int(b)","not a < b or a <= b","not (Rat.from_int(b) - Rat.from_int(a)).is_positive","not a < b or b != a","b != a","(Rat.from_int(b) - Rat.from_int(a)).num.is_positive = (Rat.from_int(b) - Rat.from_int(a)).is_positive","Rat.from_int(b - a).num = b - a","a <= b","not (Rat.from_int(b) - Rat.from_int(a)).num.is_positive","not Rat.from_int(b - a).num.is_positive","(b - a).is_positive","not (b - a).is_positive"]}
-{"goal":"lte_from_int","proof":["Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)","not a <= b or (b - a).is_positive or b = a","(Rat.from_int(b) - Rat.from_int(a)).is_positive = Rat.from_int(a) < Rat.from_int(b)","not Rat.from_int(a) < Rat.from_int(b) or Rat.from_int(a) <= Rat.from_int(b)","not Rat.from_int(a) < Rat.from_int(b)","Rat.from_int(b) != Rat.from_int(a) or Rat.from_int(a) <= Rat.from_int(b)","Rat.from_int(b) != Rat.from_int(a)","b != a","(Rat.from_int(b) - Rat.from_int(a)).num.is_positive = (Rat.from_int(b) - Rat.from_int(a)).is_positive","Rat.from_int(b - a).num = b - a","(b - a).is_positive"]}
+{"goal":"lte_from_int","proof":["Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)","not a <= b or (b - a).is_positive or b = a","not (Rat.from_int(b) - Rat.from_int(a)).is_positive or Rat.from_int(a) <= Rat.from_int(b)","not (Rat.from_int(b) - Rat.from_int(a)).is_positive","Rat.from_int(b) != Rat.from_int(a) or Rat.from_int(a) <= Rat.from_int(b)","Rat.from_int(b) != Rat.from_int(a)","b != a","(Rat.from_int(b) - Rat.from_int(a)).num.is_positive = (Rat.from_int(b) - Rat.from_int(a)).is_positive","Rat.from_int(b - a).num = b - a","(b - a).is_positive"]}
 {"goal":"gt_from_int","proof":["not b < a or Rat.from_int(b) < Rat.from_int(a)","a > b = b < a","b < a","Rat.from_int(a) > Rat.from_int(b) = Rat.from_int(b) < Rat.from_int(a)","Rat.from_int(b) < Rat.from_int(a)","not Rat.from_int(b) < Rat.from_int(a)"]}
 {"goal":"gte_from_int","proof":["not b <= a or Rat.from_int(b) <= Rat.from_int(a)","Rat.from_int(b) <= Rat.from_int(a) = Rat.from_int(a) >= Rat.from_int(b)","not Rat.from_int(b) <= Rat.from_int(a)","b <= a = a >= b","not b <= a","b <= a"]}
 {"goal":"b - a > Rat.0","proof":["(b - a).is_positive = a < b","b - a > Rat.0 = Rat.0 < b - a","not Rat.0 < b - a","not (b - a).is_positive or Rat.0 < b - a","(b - a).is_positive","not (b - a).is_positive"]}
@@ -419,9 +419,9 @@
 {"goal":"b * c - a * c > Rat.0","proof":["b * c + -a * c = (b + -a) * c","-(a * c) = -a * c","b * c + -(a * c) = b * c - a * c","b + -a = b - a","((b - a) * c - Rat.0).is_positive = Rat.0 < (b - a) * c","(b * c - a * c - Rat.0).is_positive = Rat.0 < b * c - a * c","(b - a) * c > Rat.0 = Rat.0 < (b - a) * c","b * c - a * c > Rat.0 = Rat.0 < b * c - a * c","(b - a) * c - Rat.0 = (b - a) * c","b * c - a * c - Rat.0 = b * c - a * c"]}
 {"goal":"a * c < b * c","proof":["(b * c - a * c - Rat.0).is_positive = Rat.0 < b * c - a * c","(b * c - a * c).is_positive = a * c < b * c","b * c - a * c > Rat.0 = Rat.0 < b * c - a * c","b * c - a * c - Rat.0 = b * c - a * c"]}
 {"goal":"lt_mul_pos","proof":[]}
-{"goal":"a < b or a = b","proof":["not a <= b or a < b or b = a"]}
+{"goal":"a < b or a = b","proof":["not a <= b or (b - a).is_positive or b = a","(b - a).is_positive","(b - a).is_positive = a < b"]}
 {"goal":"a * c < b * c or a * c = b * c","proof":["b != a","not c.is_positive or not a < b or a * c < b * c"]}
-{"goal":"lte_mul_pos","proof":["not a * c < b * c or a * c <= b * c","b * c != a * c or a * c <= b * c","b * c != a * c","not a * c < b * c","a * c < b * c"]}
+{"goal":"lte_mul_pos","proof":["(b * c - a * c).is_positive = a * c < b * c","not (b * c - a * c).is_positive or a * c <= b * c","b * c != a * c or a * c <= b * c","b * c != a * c","not (b * c - a * c).is_positive","a * c < b * c","not a * c < b * c"]}
 {"goal":"c.reciprocal.is_positive","proof":["not c.is_positive or c.reciprocal.is_positive"]}
 {"goal":"a * c.reciprocal < b * c.reciprocal","proof":["not c.reciprocal.is_positive or not a < b or a * c.reciprocal < b * c.reciprocal"]}
 {"goal":"lt_div_pos","proof":["(b * c.reciprocal - a * c.reciprocal).is_positive = a * c.reciprocal < b * c.reciprocal","(b / c - a / c).is_positive = a / c < b / c","a * c.reciprocal = a / c","b * c.reciprocal = b / c"]}
@@ -443,7 +443,7 @@
 {"goal":"a = Rat.from_int(n)","proof":["a.num * Int.1 != n * a.denom or cross_equals(n, Int.1, a.num, a.denom) or a.denom = Int.0 or Int.0 = Int.1","a.num * Int.1 != n * a.denom or cross_equals(n, Int.1, a.num, a.denom) or Int.0 = Int.1 or a.denom = Int.0","not cross_equals(Rat.from_int(n).num, Rat.from_int(n).denom, a.num, a.denom) or Rat.from_int(n) = a","Rat.from_int(n).denom = Int.1","Rat.from_int(n).num = n","a.num * Int.1 = a.num","a.denom != Int.0","not cross_equals(Rat.from_int(n).num, Rat.from_int(n).denom, a.num, a.denom)","not cross_equals(Rat.from_int(n).num, Int.1, a.num, a.denom)","not cross_equals(n, Int.1, a.num, a.denom)","a.num * Int.1 = n * a.denom","a.num * Int.1 != n * a.denom"]}
 {"goal":"a.num < n * a.denom","proof":["not a.num <= n * a.denom or a.num < n * a.denom or n * a.denom = a.num"]}
 {"goal":"a < Rat.from_int(n)","proof":["not a.num < n * a.denom or a < Rat.from_int(n)","not a.num <= n * a.denom or (n * a.denom - a.num).is_positive or n * a.denom = a.num","(n * a.denom - a.num).is_positive = a.num < n * a.denom","not a.num < n * a.denom","(n * a.denom - a.num).is_positive","not (n * a.denom - a.num).is_positive"]}
-{"goal":"lte_from_int_mul_denom","proof":["not a < Rat.from_int(n) or a <= Rat.from_int(n)","not a < Rat.from_int(n)","Rat.from_int(n) != a or a <= Rat.from_int(n)","Rat.from_int(n) != a","n * a.denom = a.num","n * a.denom != a.num"]}
+{"goal":"lte_from_int_mul_denom","proof":["(Rat.from_int(n) - a).is_positive = a < Rat.from_int(n)","not (Rat.from_int(n) - a).is_positive or a <= Rat.from_int(n)","not (Rat.from_int(n) - a).is_positive","not a < Rat.from_int(n)","Rat.from_int(n) != a or a <= Rat.from_int(n)","Rat.from_int(n) != a","n * a.denom = a.num","n * a.denom != a.num"]}
 {"goal":"a.denom.is_positive","proof":["(-a).denom = a.denom","not (-a).denom.is_positive","(-a).denom.is_positive"]}
 {"goal":"exists(k0: Int, k1: Int) { Int.0 <= k1 and k1 < a.denom and a.num = k0 * a.denom + k1 }","proof":["let (s0: (Int, Int) -> Int, s1: (Int, Int) -> Int) satisfy { forall(x0: Int, x1: Int) { not x0.is_positive or Int.0 <= s1(x1, x0) } and forall(x2: Int, x3: Int) { not x2.is_positive or s1(x3, x2) < x2 } and forall(x4: Int, x5: Int) { not x4.is_positive or s0(x5, x4) * x4 + s1(x5, x4) = x5 } }","s0(a.num, a.denom) * a.denom + s1(a.num, a.denom) != a.num or not s1(a.num, a.denom) < a.denom or not Int.0 <= s1(a.num, a.denom)","not a.denom.is_positive or s0(a.num, a.denom) * a.denom + s1(a.num, a.denom) = a.num","not a.denom.is_positive or s1(a.num, a.denom) < a.denom","not a.denom.is_positive or Int.0 <= s1(a.num, a.denom)","Int.0 <= s1(a.num, a.denom)","s1(a.num, a.denom) < a.denom","s0(a.num, a.denom) * a.denom + s1(a.num, a.denom) = a.num"]}
 {"goal":"Rat.from_int(a.num) = Rat.from_int(q * a.denom + r)","proof":["q * a.denom + r != a.num"]}
@@ -471,21 +471,21 @@
 {"goal":"a * c < b * c","proof":["not c.is_positive or not a < b or a * c < b * c"]}
 {"goal":"b.is_positive","proof":["not (b - a).is_positive or not a.is_positive or (b - a + a).is_positive","(b - a).is_positive = a < b","b - a + a = b","not (b - a + a).is_positive","(b - a).is_positive","not (b - a).is_positive or (b - a + a).is_positive"]}
 {"goal":"b * c <= b * d","proof":["not c <= d or not b.is_positive or c * b <= d * b","b * c = c * b","d * b = b * d","not b * c <= d * b","not c * b <= d * b"]}
-{"goal":"mul_lt_lte","proof":["not a.is_positive or not c.is_positive or not a < b or not c < d or a * c < b * d","not c < d","not c <= d or c < d or d = c","d = c"]}
+{"goal":"mul_lt_lte","proof":["not a < b or not c < d or not a.is_positive or not c.is_positive or a * c < b * d","not c < d","not c <= d or (d - c).is_positive or d = c","(d - c).is_positive = c < d","(d - c).is_positive or d = c","not (d - c).is_positive","d = c"]}
 {"goal":"b.is_positive","proof":["not a.is_positive"]}
-{"goal":"a < b","proof":["not a <= b or a < b or b = a"]}
+{"goal":"a < b","proof":["not a <= b or (b - a).is_positive or b = a","(b - a).is_positive = a < b","(b - a).is_positive","not (b - a).is_positive"]}
 {"goal":"b.is_positive","proof":["not (b - a).is_positive or not a.is_positive or (b - a + a).is_positive","(b - a).is_positive = a < b","b - a + a = b","not (b - a + a).is_positive","(b - a).is_positive","not (b - a).is_positive or (b - a + a).is_positive"]}
 {"goal":"pos_lte","proof":[]}
 {"goal":"a * c <= b * c","proof":["not c.is_positive or not a <= b or a * c <= b * c"]}
 {"goal":"b.is_positive","proof":["not a.is_positive or not a <= b or b.is_positive"]}
 {"goal":"b * c < b * d","proof":["not c.is_positive or not b.is_positive or not c < d or not b <= b or c * b < d * b","b * c = c * b","d * b = b * d","b != b or b <= b","not b * c < d * b","b <= b","not c * b < d * b"]}
-{"goal":"mul_lte_lt","proof":["not a.is_positive or not c.is_positive or not a < b or not c < d or a * c < b * d","not a < b","not a <= b or a < b or b = a","b = a"]}
+{"goal":"mul_lte_lt","proof":["not c < d or not c.is_positive or not a.is_positive or not a <= b or c * a < d * b","c * a = a * c","d * b = b * d","not a * c < d * b","not c < d or not c.is_positive or c * a < d * b","not c * a < d * b","c * a < d * b"]}
 {"goal":"a.reciprocal * a < b.reciprocal * b","proof":["not a < b or not a.reciprocal <= b.reciprocal or not a.is_positive or not a.reciprocal.is_positive or a.reciprocal * a < b.reciprocal * b","not a < b or not a.reciprocal <= b.reciprocal or not a.reciprocal.is_positive or not a.is_positive or a.reciprocal * a < b.reciprocal * b","not a.reciprocal.is_positive","not a.is_positive or a.reciprocal.is_positive"]}
 {"goal":"a.reciprocal * a = Rat.1","proof":["a.reciprocal * a = Rat.1 or Rat.0 = a","Rat.0 = a","a.num.is_positive = a.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
 {"goal":"b.reciprocal * b = Rat.1","proof":["b.reciprocal * b = Rat.1 or Rat.0 = b","Rat.0 = b","not a < Rat.0 or a.is_negative","not a.is_negative or not a.is_positive","not a.is_negative","a < Rat.0","not a < Rat.0"]}
 {"goal":"Rat.1 < Rat.1","proof":[]}
 {"goal":"false","proof":["not Rat.1 < Rat.1 or not Rat.1 < Rat.1"]}
-{"goal":"lt_pos_reciprocal","proof":["a.reciprocal > b.reciprocal or a.reciprocal < b.reciprocal or b.reciprocal = a.reciprocal","a.reciprocal > b.reciprocal = b.reciprocal < a.reciprocal","not a.reciprocal > b.reciprocal","not a.reciprocal < b.reciprocal or a.reciprocal <= b.reciprocal","b.reciprocal != a.reciprocal or a.reciprocal <= b.reciprocal","b.reciprocal != a.reciprocal","not a.reciprocal < b.reciprocal","a.reciprocal < b.reciprocal"]}
+{"goal":"lt_pos_reciprocal","proof":["b.reciprocal > a.reciprocal or b.reciprocal < a.reciprocal or b.reciprocal = a.reciprocal","(b.reciprocal - a.reciprocal).is_positive = a.reciprocal < b.reciprocal","not (b.reciprocal - a.reciprocal).is_positive or a.reciprocal <= b.reciprocal","b.reciprocal > a.reciprocal = a.reciprocal < b.reciprocal","b.reciprocal != a.reciprocal or a.reciprocal <= b.reciprocal","b.reciprocal != a.reciprocal","b.reciprocal > a.reciprocal","a.reciprocal < b.reciprocal","not (b.reciprocal - a.reciprocal).is_positive","(b.reciprocal - a.reciprocal).is_positive"]}
 {"goal":"a * a.reciprocal = Rat.1","proof":["a * a.reciprocal = Rat.1 or Rat.0 = a"]}
 {"goal":"Rat.new(a.reciprocal.num, a.reciprocal.denom) / a * a = Rat.new(a.reciprocal.num, a.reciprocal.denom)","proof":["Rat.new(a.reciprocal.num, a.reciprocal.denom) / a * a = Rat.new(a.reciprocal.num, a.reciprocal.denom) or Rat.0 = a"]}
 {"goal":"a.reciprocal != Rat.0","proof":["a * a.reciprocal = a.reciprocal * a","a * Rat.0 = Rat.0","Rat.1 * a = a"]}
@@ -496,7 +496,7 @@
 {"goal":"exists(k0: Int) { a.reciprocal < Rat.from_int(k0) }","proof":["not a.reciprocal < Rat.from_int(floor(a.reciprocal) + Int.1)","a.reciprocal < Rat.from_int(floor(a.reciprocal) + Int.1)"]}
 {"goal":"Rat.from_int(n).reciprocal < a.reciprocal.reciprocal","proof":["not a.reciprocal < Rat.from_int(n) or not a.reciprocal.is_positive or Rat.from_int(n).reciprocal < a.reciprocal.reciprocal"]}
 {"goal":"a.reciprocal.reciprocal = a","proof":["a.reciprocal.reciprocal = a or Rat.0 = a","Rat.0 = a","a.num.is_positive = a.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
-{"goal":"Rat.from_int(n).is_positive","proof":["not a.reciprocal <= Rat.from_int(n) or not a.reciprocal.is_positive or Rat.from_int(n).is_positive","not a.reciprocal < Rat.from_int(n) or a.reciprocal <= Rat.from_int(n)","not a.reciprocal <= Rat.from_int(n) or not a.reciprocal.is_positive","a.reciprocal <= Rat.from_int(n)","not a.reciprocal <= Rat.from_int(n)"]}
+{"goal":"Rat.from_int(n).is_positive","proof":["not a.reciprocal <= Rat.from_int(n) or not a.reciprocal.is_positive or Rat.from_int(n).is_positive","(Rat.from_int(n) - a.reciprocal).is_positive = a.reciprocal < Rat.from_int(n)","not (Rat.from_int(n) - a.reciprocal).is_positive or a.reciprocal <= Rat.from_int(n)","not a.reciprocal <= Rat.from_int(n) or not a.reciprocal.is_positive","not a.reciprocal <= Rat.from_int(n)","(Rat.from_int(n) - a.reciprocal).is_positive","not (Rat.from_int(n) - a.reciprocal).is_positive"]}
 {"goal":"n.is_positive","proof":["-Int.from_nat(lib(int.int_base).abs(n)) = n or n.is_positive","-Int.from_nat(lib(int.int_base).abs(n)) = n","Rat.from_int(n).num.is_positive = Rat.from_int(n).is_positive","Rat.from_int(-Int.from_nat(lib(int.int_base).abs(n))).num = -Int.from_nat(lib(int.int_base).abs(n))"]}
 {"goal":"smaller_int_reciprocal","proof":["not Rat.from_int(n).reciprocal < a or not n.is_positive","not Rat.from_int(n).reciprocal < a","Rat.from_int(n).reciprocal < a"]}
 {"goal":"a >= Rat.from_int(floor(a))","proof":["Rat.from_int(floor(a)) <= a = a >= Rat.from_int(floor(a))","not Rat.from_int(floor(a)) <= a","Rat.from_int(floor(a)) <= a"]}
@@ -515,11 +515,11 @@
 {"goal":"(-p - -q).is_positive","proof":["-p + --q = -p - -q","q + -p = q - p","-p + --q = --q + -p","(-p - -q).num.is_positive = (-p - -q).is_positive","(q - p).num.is_positive = (q - p).is_positive","--q = q"]}
 {"goal":"lt_neg","proof":["(-p - -q).is_positive = -q < -p"]}
 {"goal":"a < c","proof":[]}
-{"goal":"b < c","proof":["not b <= c or b < c or c = b"]}
+{"goal":"b < c","proof":["not b <= c or (c - b).is_positive or c = b","(c - b).is_positive = b < c","(c - b).is_positive","not (c - b).is_positive"]}
 {"goal":"a < c","proof":["not a < b or not b < c or a < c","not b < c or not a < b"]}
 {"goal":"lt_lte_trans","proof":[]}
 {"goal":"a < c","proof":[]}
-{"goal":"a < b","proof":["not a <= b or a < b or b = a"]}
+{"goal":"a < b","proof":["not a <= b or (b - a).is_positive or b = a","(b - a).is_positive = a < b","(b - a).is_positive","not (b - a).is_positive"]}
 {"goal":"a < c","proof":["not a < b or not b < c or a < c","not b < c or not a < b"]}
 {"goal":"lte_lt_trans","proof":[]}
 {"goal":"a / Rat.2 < b / Rat.2","proof":["not Rat.2.is_positive or not a < b or a / Rat.2 < b / Rat.2","not Rat.2.is_positive"]}
@@ -553,10 +553,10 @@
 {"goal":"cancel_positivity_left","proof":["b.is_negative or b.is_positive or Rat.0 = b","Rat.0 = b","b - Rat.0 = b","not (b - Rat.0).is_positive","b - b = Rat.0","a * Rat.0 = Rat.0","not (b - b).is_positive","not Rat.0.is_positive","(a * (b - Rat.0)).is_positive","(a * (b - b)).is_positive","(a * Rat.0).is_positive"]}
 {"goal":"cancel_positivity_right","proof":["not (b * a).is_positive or not b.is_positive or a.is_positive","a * b = b * a","(b * a).is_positive"]}
 {"goal":"mul_cancels_div_left","proof":["a / b * b = a or Rat.0 = b","b * (a / b) = a / b * b","a / b * b != a"]}
-{"goal":"not c < b","proof":["not b <= c or b < c or c = b","not b < c or not c < b","not b < c","c = b"]}
-{"goal":"not a < c","proof":["not a < c or a <= c"]}
+{"goal":"not c < b","proof":["not c < b or not b <= c or c < c","not c < c or not c < c","not b <= c or c < c","c < c"]}
+{"goal":"not a < c","proof":["(c - a).is_positive = a < c","(c - a).is_positive","not (c - a).is_positive or a <= c"]}
 {"goal":"not c > a","proof":["c > a = a < c"]}
-{"goal":"c != a","proof":["c <= b","not c <= b or c < b or c = b","c = b"]}
+{"goal":"c != a","proof":["c != a or a <= c"]}
 {"goal":"false","proof":["not c < a or not a <= b or c < b","c > a or c < a or c = a","c < a","not c < a or not a <= b"]}
 {"goal":"lte_trans","proof":[]}
 {"goal":"a.abs = -a","proof":["not a.is_negative or a.abs = -a"]}
@@ -602,7 +602,7 @@
 {"goal":"Rat.0 <= a.abs","proof":["a.abs != Rat.0 or Rat.0 <= a.abs"]}
 {"goal":"a.abs != Rat.0","proof":["a.abs != Rat.0 or Rat.0 = a"]}
 {"goal":"a.abs.is_positive","proof":["(Rat.1 * a.abs).abs = (Rat.1 * a).abs","Rat.0 > a.abs or Rat.0 < a.abs or a.abs = Rat.0","(Rat.0 - a.abs).is_positive = a.abs < Rat.0","(a.abs - Rat.0).is_positive = Rat.0 < a.abs","a.abs.abs = -a.abs or a.abs.is_positive","Rat.0 > a.abs = a.abs < Rat.0","a.abs.abs = -a.abs","(-a).abs = a.abs","Rat.0 - a.abs = -a.abs","not Rat.0 < a.abs or a.abs.is_positive","not Rat.0 < a.abs","Rat.0 > a.abs","(-a).abs - Rat.0 = (-a).abs","Rat.1 * (-a).abs = (-a).abs","Rat.1 * a = a"]}
-{"goal":"Rat.0 <= a.abs","proof":["not Rat.0 < a.abs or Rat.0 <= a.abs","not Rat.0 < a.abs","not a.abs.is_positive or Rat.0 < a.abs"]}
+{"goal":"Rat.0 <= a.abs","proof":["(a.abs - Rat.0).is_positive = Rat.0 < a.abs","not (a.abs - Rat.0).is_positive or Rat.0 <= a.abs","not (a.abs - Rat.0).is_positive","not Rat.0 < a.abs","not a.abs.is_positive or Rat.0 < a.abs"]}
 {"goal":"zero_lte_abs","proof":[]}
 {"goal":"r / p * p < r / q * p","proof":["not r / p < r / q or not p.is_positive or r / p * p < r / q * p"]}
 {"goal":"r / p * p = r","proof":["r / p * p = r or Rat.0 = p","Rat.0 = p","p.num.is_positive = p.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
@@ -623,8 +623,8 @@
 {"goal":"q != Rat.0","proof":["Rat.0.is_positive","not Rat.0.is_positive or Rat.0 < Rat.0","not Rat.0 < Rat.0"]}
 {"goal":"q = p","proof":["r / q != r / p or Rat.0 = r or Rat.0 = q or Rat.0 = p or q = p","r / q != r / p or Rat.0 = q or Rat.0 = p or Rat.0 = r or q = p","Rat.0 = r","r.num.is_positive = r.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
 {"goal":"q <= p","proof":["not q <= q","not p <= q","q != p or p <= q"]}
-{"goal":"q < p","proof":["not r / p < r / q or not r.is_positive or not p.is_positive or not q.is_positive or q < p","not r / p < r / q or not p.is_positive or not q.is_positive or not r.is_positive or q < p","not r / p <= r / q or r / p < r / q or r / q = r / p","not r / p < r / q or not r.is_positive","r / p < r / q","not r / p < r / q"]}
-{"goal":"q <= p","proof":["not q < p or q <= p"]}
+{"goal":"q < p","proof":["not r / p < r / q or not r.is_positive or not p.is_positive or not q.is_positive or q < p","not r / p < r / q or not p.is_positive or not q.is_positive or not r.is_positive or q < p","not r / p <= r / q or (r / q - r / p).is_positive or r / q = r / p","(r / q - r / p).is_positive = r / p < r / q","not r / p < r / q or not r.is_positive","not r / p < r / q","(r / q - r / p).is_positive","not (r / q - r / p).is_positive"]}
+{"goal":"q <= p","proof":["(p - q).is_positive = q < p","not (p - q).is_positive or q <= p","(p - q).is_positive","not (p - q).is_positive"]}
 {"goal":"pos_inverses_lte","proof":[]}
 {"goal":"pos_inverses_gt","proof":["not r / q < r / p or not r.is_positive or not q.is_positive or not p.is_positive or p < q","not r / q < r / p or not q.is_positive or not p.is_positive or not r.is_positive or p < q","p < q = q > p","r / q < r / p = r / p > r / q","not p < q","r / q < r / p"]}
 {"goal":"pos_inverses_gte","proof":["not r / q <= r / p or not r.is_positive or not q.is_positive or not p.is_positive or p <= q","not r / q <= r / p or not q.is_positive or not p.is_positive or not r.is_positive or p <= q","p <= q = q >= p","r / q <= r / p = r / p >= r / q","not p <= q","r / q <= r / p"]}
@@ -643,13 +643,13 @@
 {"goal":"eps.is_positive","proof":["not Rat.2.reciprocal.is_positive"]}
 {"goal":"eps < Rat.1","proof":["not Rat.2.reciprocal < Rat.1"]}
 {"goal":"eps * eps < Rat.1","proof":["not eps.is_positive or not eps.is_positive or not eps < Rat.1 or not eps < Rat.1 or eps * eps < Rat.1 * Rat.1","Rat.1 * Rat.1 = Rat.1","not eps * eps < Rat.1 * Rat.1"]}
-{"goal":"eps.is_positive and eps * eps < a","proof":["not eps * eps < a","not eps * eps < Rat.1 or not Rat.1 < a or eps * eps < a","not Rat.1 <= a or Rat.1 < a or Rat.1 = a","Rat.1 < a or Rat.1 = a","not eps * eps < Rat.1 or not Rat.1 < a","not Rat.1 < a","Rat.1 = a"]}
-{"goal":"a < Rat.1","proof":["Rat.1 > a or Rat.1 < a or Rat.1 = a","Rat.1 > a = a < Rat.1","not Rat.1 > a","not Rat.1 < a or Rat.1 <= a","Rat.1 != a or Rat.1 <= a","Rat.1 != a","not Rat.1 < a","Rat.1 < a"]}
+{"goal":"eps.is_positive and eps * eps < a","proof":["not eps * eps < a","not eps * eps < Rat.1 or not Rat.1 <= a or eps * eps < a","not eps * eps < Rat.1 or not Rat.1 <= a"]}
+{"goal":"a < Rat.1","proof":["a > Rat.1 or a < Rat.1 or Rat.1 = a","a > Rat.1 or Rat.1 = a","(a - Rat.1).is_positive = Rat.1 < a","not (a - Rat.1).is_positive or Rat.1 <= a","a > Rat.1 = Rat.1 < a","Rat.1 != a or Rat.1 <= a","Rat.1 != a","a > Rat.1","Rat.1 < a","not (a - Rat.1).is_positive","(a - Rat.1).is_positive"]}
 {"goal":"eps.is_positive","proof":["not (a * a).is_positive","not a.is_positive or not a.is_positive or (a * a).is_positive"]}
 {"goal":"eps.is_positive and eps * eps < a","proof":["not eps * eps < a","not eps.is_positive or not eps.is_positive or not eps < a or not eps < Rat.1 or eps * eps < a * Rat.1","not a.is_positive or not a < Rat.1 or a * a < Rat.1 * a","not eps < a or not a < Rat.1 or eps < Rat.1","Rat.1 * a = a","a * Rat.1 = a","not eps * eps < a * Rat.1","not eps < a or eps < Rat.1","not a.is_positive or a * a < Rat.1 * a","a * a < Rat.1 * a","a * a < a","eps < a","not eps < Rat.1","eps < Rat.1"]}
 {"goal":"lower_squared","proof":["let s0: Rat satisfy { s0.is_positive and s0 * s0 < a }","not s0 * s0 < a or not s0.is_positive","not s0 * s0 < a"]}
 {"goal":"false","proof":["not b * a < b * b or not b.is_positive or a < b","not a.is_positive or not b <= a or b * a <= a * a","not a * a < b * b or not b * a <= a * a or b * a < b * b","not a < b or not b <= a or a < a","a >= b = b <= a","b <= a","not a < a","not a < b or a < a","not a < b","not b * a <= a * a or b * a < b * b","not b <= a or b * a <= a * a","not b * a < b * b or a < b","b * a <= a * a","not b * a < b * b","b * a < b * b"]}
-{"goal":"square_lt_imp_lt","proof":["b > a or b < a or b = a","a >= b = b <= a","not b <= a","b > a = a < b","not b > a","not b < a or b <= a","b != a or b <= a","b != a","not b < a","b < a"]}
+{"goal":"square_lt_imp_lt","proof":["a > b or a < b or b = a","a > b or b = a","(a - b).is_positive = b < a","not (a - b).is_positive or b <= a","a >= b = b <= a","not b <= a","a > b = b < a","b != a or b <= a","b != a","a > b","b < a","not (a - b).is_positive","(a - b).is_positive"]}
 {"goal":"smaller_positive","proof":["not Rat.2.reciprocal * a < a or not (Rat.2.reciprocal * a).is_positive","not Rat.2.reciprocal < Rat.1 or not a.is_positive or Rat.2.reciprocal * a < Rat.1 * a","not Rat.2.reciprocal.is_positive or not a.is_positive or (Rat.2.reciprocal * a).is_positive","Rat.1 * a = a","not Rat.2.reciprocal.is_positive or (Rat.2.reciprocal * a).is_positive","(Rat.2.reciprocal * a).is_positive","not Rat.2.reciprocal < Rat.1 or Rat.2.reciprocal * a < Rat.1 * a","Rat.2.reciprocal * a < Rat.1 * a","not Rat.2.reciprocal * a < a","Rat.2.reciprocal * a < a"]}
 {"goal":"exists(k0: Rat) { k0.is_positive and k0 < a }","proof":["let s0: Rat -> Rat satisfy { forall(x0: Rat) { not x0.is_positive or s0(x0).is_positive } and forall(x1: Rat) { not x1.is_positive or s0(x1) < x1 } }","not s0(a) < a or not s0(a).is_positive","not a.is_positive or s0(a) < a","not a.is_positive or s0(a).is_positive","s0(a).is_positive","s0(a) < a","not s0(a) < a"]}
 {"goal":"r.is_positive and r < a and r < b","proof":["not r < b","not r < a or not a < b or r < b","not r < a or not a < b"]}
@@ -659,7 +659,7 @@
 {"goal":"a * c < b / c * c","proof":["not a < b / c or not c.is_positive or a * c < b / c * c"]}
 {"goal":"b / c * c = b","proof":["b / c * c = b or Rat.0 = c","Rat.0 = c","c.num.is_positive = c.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
 {"goal":"lt_rhs_div_pos","proof":["not a * c < b / c * c"]}
-{"goal":"lte_abs","proof":["not q <= Rat.0 or not Rat.0 <= q.abs or q <= q.abs","not q < Rat.0 or q <= Rat.0","q.abs = q or q.is_negative","not q.is_negative or q < Rat.0","q.abs != q or q <= q.abs","q.abs != q","Rat.0 <= q.abs","not Rat.0 <= q.abs or not q <= Rat.0","not q <= Rat.0","q.is_negative","not q < Rat.0","q < Rat.0"]}
+{"goal":"lte_abs","proof":["not q <= Rat.0 or not Rat.0 <= q.abs or q <= q.abs","(Rat.0 - q).is_positive = q < Rat.0","not (Rat.0 - q).is_positive or q <= Rat.0","q.abs = q or q.is_negative","not q.is_negative or q < Rat.0","q.abs != q or q <= q.abs","q.abs != q","Rat.0 <= q.abs","not Rat.0 <= q.abs or not q <= Rat.0","not q <= Rat.0","q.is_negative","not (Rat.0 - q).is_positive","q < Rat.0","not q < Rat.0"]}
 {"goal":"a - b = -(b - a)","proof":["-(b - a) = a - b"]}
 {"goal":"(a - b).abs = (b - a).abs","proof":["-(a - b) = b - a","(-(a - b)).abs = (a - b).abs"]}
 {"goal":"(a - b).abs < eps","proof":["(a - b).abs < eps = a.is_close(b, eps)"]}
@@ -708,6 +708,6 @@
 {"goal":"Nat.0 < n","proof":["nat_base.bounded_sub(Nat.0, n) + n = Nat.0 or Nat.0 < n","nat_base.bounded_sub(Nat.0, n) + n != Nat.0 or n = Nat.0","nat_base.bounded_sub(Nat.0, n) + n = Nat.0"]}
 {"goal":"Rat.from_nat(Nat.0) < Rat.from_nat(n)","proof":["not Nat.0 < n or Rat.from_nat(Nat.0) < Rat.from_nat(n)"]}
 {"goal":"Rat.0 < Rat.from_nat(n)","proof":["Rat.from_nat(n) > Rat.0 = Rat.0 < Rat.from_nat(n)","Rat.from_nat(n) > Rat.from_nat(Nat.0) = Rat.from_nat(Nat.0) < Rat.from_nat(n)","Rat.from_int(Int.from_nat(Nat.0)) = Rat.from_nat(Nat.0)","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)"]}
-{"goal":"Rat.0 <= Rat.from_nat(n)","proof":["not Rat.0 < Rat.from_nat(n) or Rat.0 <= Rat.from_nat(n)"]}
+{"goal":"Rat.0 <= Rat.from_nat(n)","proof":["(Rat.from_nat(n) - Rat.0).is_positive = Rat.0 < Rat.from_nat(n)","not (Rat.from_nat(n) - Rat.0).is_positive or Rat.0 <= Rat.from_nat(n)","(Rat.from_nat(n) - Rat.0).is_positive","not (Rat.from_nat(n) - Rat.0).is_positive"]}
 {"goal":"from_nat_nonneg","proof":[]}
 {"goal":"recip_eq_one_div","proof":["Rat.1 * a.reciprocal = Rat.1 / a","Rat.1 * a.reciprocal != a.reciprocal","Rat.1 * a.reciprocal = a.reciprocal"]}
