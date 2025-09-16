@@ -271,11 +271,6 @@
 {"goal":"mul_inv_cancels_right","proof":[]}
 {"goal":"mul_inv_cancels_left","proof":["a * a.reciprocal = Rat.1 or Rat.0 = a","a * a.reciprocal = a.reciprocal * a","a * a.reciprocal = Rat.1","a * a.reciprocal != Rat.1"]}
 {"goal":"sub_zero","proof":["Rat.new(-Rat.0.num, Rat.0.denom) = -Rat.0","a + -Rat.0 = a - Rat.0","a + -Rat.0 = -Rat.0 + a","a + Rat.0 = Rat.0 + a","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","a + Rat.0 = a","Rat.from_int(Int.0).num = Int.0"]}
-{"goal":"(a - Rat.0).is_positive","proof":["a - Rat.0 = a"]}
-{"goal":"pos_imp_zero_lt","proof":["not Rat.0 <= a or Rat.0 < a or Rat.0 = a","not Rat.0 <= a or Rat.0 = a","not (a - Rat.0).is_positive or Rat.0 <= a","a.num.is_positive = a.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","(-Int.0).is_negative = Int.0.is_positive","(-a.num).is_negative = a.num.is_positive","Rat.from_int(Int.0).num = Int.0","Rat.0 <= a","Rat.0 = a"]}
-{"goal":"a - Rat.0 = a","proof":["a - Rat.0 = a"]}
-{"goal":"a.is_positive","proof":["not (a - Rat.0).is_positive","not Rat.0 <= a or (a - Rat.0).is_positive or Rat.0 = a","not Rat.0 < a or Rat.0 <= a","not Rat.0 < a or Rat.0 != a","Rat.0 != a","Rat.0 <= a","not Rat.0 <= a"]}
-{"goal":"zero_lt_imp_pos","proof":[]}
 {"goal":"not_pos_and_neg","proof":["a.num.is_negative = a.is_negative","a.num.is_negative","a.num.is_positive = a.is_positive","not a.num.is_negative or not a.num.is_positive","a.num.is_positive","not a.num.is_positive"]}
 {"goal":"b != Int.0","proof":["Int.0.is_positive"]}
 {"goal":"exists(k0: Int) { reduce(a, b).num * k0 = a and reduce(a, b).denom * k0 = b }","proof":["let s0: (Int, Int) -> Int satisfy { forall(x0: Int, x1: Int) { reduce(x0, x1).num * s0(x0, x1) = x0 or Int.0 = x1 } and forall(x2: Int, x3: Int) { reduce(x2, x3).denom * s0(x2, x3) = x3 or Int.0 = x3 } }","reduce(a, b).num * s0(a, b) != a or reduce(a, b).denom * s0(a, b) != b","reduce(a, b).denom * s0(a, b) = b or Int.0 = b","reduce(a, b).num * s0(a, b) = a or Int.0 = b","reduce(a, b).num * s0(a, b) = a","reduce(a, b).denom * s0(a, b) = b"]}
@@ -299,26 +294,50 @@
 {"goal":"a + (-b + b) = a","proof":["-b + b = Rat.0","a + Rat.0 != a","a + Rat.0 = a"]}
 {"goal":"a + -b + b = a","proof":["a + (-b + b) = a + -b + b"]}
 {"goal":"add_cancels_sub","proof":["a + -b = a - b"]}
+{"goal":"neg_neg_is_pos","proof":["(-a).num = -a.num","a.num.is_negative = a.is_negative","(-a).num.is_positive = (-a).is_positive","(--a.num).is_negative = (-a.num).is_positive","--a.num = a.num"]}
+{"goal":"neg_pos_is_neg","proof":["(-a).num = -a.num","(-a).num.is_negative = (-a).is_negative","a.num.is_positive = a.is_positive","(-a.num).is_negative = a.num.is_positive"]}
+{"goal":"zero_minus","proof":["Rat.0 + -a = Rat.0 - a","-a + Rat.0 = Rat.0 + -a","Rat.0 + -a != -a","-a + Rat.0 = -a"]}
+{"goal":"a / b * b = a * b.reciprocal * b","proof":["a * b.reciprocal != a / b","a * b.reciprocal = a / b"]}
+{"goal":"a / b * b = a * (b.reciprocal * b)","proof":["a * (b.reciprocal * b) = a * b.reciprocal * b"]}
+{"goal":"a / b * b = a * Rat.1","proof":["b.reciprocal * b = Rat.1 or Rat.0 = b","a * (b.reciprocal * b) != a * Rat.1","b.reciprocal * b = Rat.1","b.reciprocal * b != Rat.1"]}
+{"goal":"a / b * b = a","proof":["a * Rat.1 != a","a * Rat.1 = Rat.1 * a","Rat.1 * a != a","Rat.1 * a = a"]}
+{"goal":"mul_cancels_div","proof":[]}
+{"goal":"rat_is_reflexive","proof":["let s0: (Rat, Rat) -> Bool -> Rat satisfy { forall(x0: (Rat, Rat) -> Bool, x1: Rat) { not is_reflexive<Rat>(x0) or x0(x1, x1) } and forall(x2: (Rat, Rat) -> Bool) { not x2(s0(x2), s0(x2)) or is_reflexive<Rat>(x2) } }","not s0(Rat.lte) <= s0(Rat.lte) or is_reflexive<Rat>(Rat.lte)","not s0(Rat.lte) <= s0(Rat.lte)","s0(Rat.lte) != s0(Rat.lte) or s0(Rat.lte) <= s0(Rat.lte)"]}
+{"goal":"a <= c","proof":[]}
+{"goal":"(b - a).is_positive","proof":["not a <= b or (b - a).is_positive or b = a","not a < b or a <= b","not a < b or b != a","b != a","a <= b","not a <= b"]}
+{"goal":"a <= c","proof":[]}
+{"goal":"(c - b).is_positive","proof":["not b <= c or (c - b).is_positive or c = b","not b < c or b <= c","not b < c or c != b","c != b","b <= c","not b <= c"]}
+{"goal":"(c - b + (b - a)).is_positive","proof":["not (c - b).is_positive or not (b - a).is_positive or (c - b + (b - a)).is_positive"]}
+{"goal":"(c - a).is_positive","proof":["c - b + (b + -a) = c - b + b + -a","b + -a = b - a","c + -a = c - a","not (c + -a).is_positive","c - b + b = c","(c - b + (b + -a)).is_positive","(c - b + b + -a).is_positive"]}
+{"goal":"a <= c","proof":["not (c - a).is_positive or a <= c"]}
+{"goal":"lte_trans","proof":[]}
+{"goal":"rat_is_transitive","proof":["let (s0: (Rat, Rat) -> Bool -> Rat, s1: (Rat, Rat) -> Bool -> Rat, s2: (Rat, Rat) -> Bool -> Rat) satisfy { forall(x0: (Rat, Rat) -> Bool, x1: Rat, x2: Rat, x3: Rat) { not is_transitive<Rat>(x0) or not x0(x1, x2) or not x0(x2, x3) or x0(x1, x3) } and forall(x4: (Rat, Rat) -> Bool) { x4(s0(x4), s1(x4)) or is_transitive<Rat>(x4) } and forall(x5: (Rat, Rat) -> Bool) { x5(s1(x5), s2(x5)) or is_transitive<Rat>(x5) } and forall(x6: (Rat, Rat) -> Bool) { not x6(s0(x6), s2(x6)) or is_transitive<Rat>(x6) } }","not s0(Rat.lte) <= s1(Rat.lte) or not s1(Rat.lte) <= Rat.0 + s2(Rat.lte) or s0(Rat.lte) <= Rat.0 + s2(Rat.lte)","not s0(Rat.lte) <= s2(Rat.lte) or is_transitive<Rat>(Rat.lte)","not s0(Rat.lte) <= s2(Rat.lte)","s1(Rat.lte) <= s2(Rat.lte) or is_transitive<Rat>(Rat.lte)","s1(Rat.lte) <= s2(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte) or is_transitive<Rat>(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte)","Rat.0 + s2(Rat.lte) = s2(Rat.lte)","s1(Rat.lte) <= Rat.0 + s2(Rat.lte)","not s0(Rat.lte) <= Rat.0 + s2(Rat.lte)","not s1(Rat.lte) <= Rat.0 + s2(Rat.lte) or s0(Rat.lte) <= Rat.0 + s2(Rat.lte)"]}
+{"goal":"a = b","proof":["a * Rat.1 = Rat.1 * a","b * Rat.1 = Rat.1 * b","Rat.1 * a = a","Rat.1 * b = b"]}
+{"goal":"(b - a).is_positive","proof":["not a <= b or (b - a).is_positive or b = a","not a < b or a <= b","not a < b or b != a","b != a","a <= b","not a <= b"]}
+{"goal":"(a - b).is_positive","proof":["not b <= a or (a - b).is_positive or b = a"]}
+{"goal":"(b - a + (a - b)).is_positive","proof":["not (b - a).is_positive or not (a - b).is_positive or (b - a + (a - b)).is_positive"]}
+{"goal":"Rat.0.is_positive","proof":["b - a + (a + -b) = b - a + a + -b","a + -b = a - b","b - a + a = b","b + -b = Rat.0","not (b + -b).is_positive","(b - a + (a + -b)).is_positive","(b - a + a + -b).is_positive"]}
+{"goal":"false","proof":["Rat.0.num.is_positive = Rat.0.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
+{"goal":"lte_antisymm","proof":[]}
+{"goal":"rat_is_antisymmetric","proof":["let (s0: (Rat, Rat) -> Bool -> Rat, s1: (Rat, Rat) -> Bool -> Rat) satisfy { forall(x0: (Rat, Rat) -> Bool, x1: Rat, x2: Rat) { not is_antisymmetric<Rat>(x0) or not x0(x1, x2) or not x0(x2, x1) or x1 = x2 } and forall(x3: (Rat, Rat) -> Bool) { x3(s0(x3), s1(x3)) or is_antisymmetric<Rat>(x3) } and forall(x4: (Rat, Rat) -> Bool) { x4(s1(x4), s0(x4)) or is_antisymmetric<Rat>(x4) } and forall(x5: (Rat, Rat) -> Bool) { s1(x5) != s0(x5) or is_antisymmetric<Rat>(x5) } }","not s1(Rat.lte) <= s0(Rat.lte) or not s0(Rat.lte) <= s1(Rat.lte) or s1(Rat.lte) = s0(Rat.lte)","s1(Rat.lte) <= s0(Rat.lte) or is_antisymmetric<Rat>(Rat.lte)","s1(Rat.lte) <= s0(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte) or is_antisymmetric<Rat>(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte)","s1(Rat.lte) != s0(Rat.lte) or is_antisymmetric<Rat>(Rat.lte)","s1(Rat.lte) = s0(Rat.lte)","s1(Rat.lte) != s0(Rat.lte)"]}
+{"goal":"is_antisymmetric<Rat>(Rat.lte) and is_reflexive<Rat>(Rat.lte) and is_transitive<Rat>(Rat.lte)","proof":["not is_transitive<Rat>(Rat.lte) or not is_reflexive<Rat>(Rat.lte)","not is_reflexive<Rat>(Rat.lte)"]}
+{"goal":"(a - Rat.0).is_positive","proof":["a - Rat.0 = a"]}
+{"goal":"pos_imp_zero_lt","proof":["not Rat.0 <= a or Rat.0 < a or Rat.0 = a","not Rat.0 <= a or Rat.0 = a","not (a - Rat.0).is_positive or Rat.0 <= a","a.num.is_positive = a.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","(-Int.0).is_negative = Int.0.is_positive","(-a.num).is_negative = a.num.is_positive","Rat.from_int(Int.0).num = Int.0","Rat.0 <= a","Rat.0 = a"]}
+{"goal":"a - Rat.0 = a","proof":["a - Rat.0 = a"]}
+{"goal":"a.is_positive","proof":["not (a - Rat.0).is_positive","not Rat.0 <= a or (a - Rat.0).is_positive or Rat.0 = a","not Rat.0 < a or Rat.0 <= a","not Rat.0 < a or Rat.0 != a","Rat.0 != a","Rat.0 <= a","not Rat.0 <= a"]}
+{"goal":"zero_lt_imp_pos","proof":[]}
 {"goal":"(b - a).is_positive","proof":["not a <= b or (b - a).is_positive or b = a","not a < b or a <= b","not a < b or b != a","b != a","a <= b","not a <= b"]}
 {"goal":"(c - b).is_positive","proof":["not b <= c or (c - b).is_positive or c = b","not b < c or b <= c","not b < c or c != b","c != b","b <= c","not b <= c"]}
 {"goal":"c - b + (b - a) = c - b + b - a","proof":["c - b + (b + -a) = c - b + b + -a","b + -a = b - a","c - b + b + -a = c - b + b - a","c - b + (b + -a) != c - b + b - a"]}
 {"goal":"c - b + (b - a) = c - a","proof":["c - b + b = c"]}
 {"goal":"(c - a).is_positive","proof":["not (c - b).is_positive or not (b - a).is_positive or (c - b + (b - a)).is_positive","not (c - b + (b - a)).is_positive"]}
 {"goal":"lt_trans","proof":["not a <= c or a < c or c = a","not a <= c or c = a","not (c - a).is_positive or a <= c","(c - a).num.is_positive = (c - a).is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","a - a = Rat.0","Rat.from_int(Int.0).num = Int.0","a <= c","c = a"]}
-{"goal":"neg_neg_is_pos","proof":["(-a).num = -a.num","a.num.is_negative = a.is_negative","(-a).num.is_positive = (-a).is_positive","(--a.num).is_negative = (-a.num).is_positive","--a.num = a.num"]}
-{"goal":"neg_pos_is_neg","proof":["(-a).num = -a.num","(-a).num.is_negative = (-a).is_negative","a.num.is_positive = a.is_positive","(-a.num).is_negative = a.num.is_positive"]}
-{"goal":"zero_minus","proof":["Rat.0 + -a = Rat.0 - a","-a + Rat.0 = Rat.0 + -a","Rat.0 + -a != -a","-a + Rat.0 = -a"]}
 {"goal":"(-a).is_positive","proof":["not a.is_negative or (-a).is_positive"]}
 {"goal":"(Rat.0 - a).is_positive","proof":["Rat.0 - a = -a"]}
 {"goal":"neg_imp_lt_zero","proof":["not a <= Rat.0 or a < Rat.0 or Rat.0 = a","not a <= Rat.0 or Rat.0 = a","not (Rat.0 - a).is_positive or a <= Rat.0","Rat.0 * -Rat.1 = -Rat.0","a * -Rat.1 = -a","Rat.0 - Rat.0 = -Rat.0","not (-a).is_negative or not (-a).is_positive","Rat.0 - Rat.0 = Rat.0","not (-a).is_negative","a <= Rat.0","Rat.0 = a"]}
 {"goal":"(Rat.0 - a).is_positive","proof":["not a <= Rat.0 or (Rat.0 - a).is_positive or Rat.0 = a","not a < Rat.0 or a <= Rat.0","not a < Rat.0 or Rat.0 != a","Rat.0 != a","a <= Rat.0","not a <= Rat.0"]}
 {"goal":"(-a).is_positive","proof":["Rat.0 - a = -a"]}
 {"goal":"lt_zero_imp_neg","proof":["not (-a).is_positive or (--a).is_negative","--a = a","(--a).is_negative","not (--a).is_negative"]}
-{"goal":"a / b * b = a * b.reciprocal * b","proof":["a * b.reciprocal != a / b","a * b.reciprocal = a / b"]}
-{"goal":"a / b * b = a * (b.reciprocal * b)","proof":["a * (b.reciprocal * b) = a * b.reciprocal * b"]}
-{"goal":"a / b * b = a * Rat.1","proof":["b.reciprocal * b = Rat.1 or Rat.0 = b","a * (b.reciprocal * b) != a * Rat.1","b.reciprocal * b = Rat.1","b.reciprocal * b != Rat.1"]}
-{"goal":"a / b * b = a","proof":["a * Rat.1 != a","a * Rat.1 = Rat.1 * a","Rat.1 * a != a","Rat.1 * a = a"]}
-{"goal":"mul_cancels_div","proof":[]}
 {"goal":"two_neq_zero","proof":["Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0","Rat.from_int(Int.1 + Int.1).num = Int.1 + Int.1","lib(int.int_base).abs(Int.from_nat(Nat.2)) = Nat.2"]}
 {"goal":"Rat.2 * r = reduce(Int.2 * r.num, Int.1 * r.denom)","proof":["reduce(Int.2 * r.num, r.denom) = Rat.from_int(Int.2) * r","Int.1 * r.denom = r.denom","reduce(Int.2 * r.num, r.denom) != Rat.2 * r","Rat.from_int(Int.2) * r != Rat.2 * r","Rat.from_int(Int.2) != Rat.2"]}
 {"goal":"Rat.2 * r = reduce(r.num + r.num, r.denom)","proof":["reduce(Int.2 * r.num, r.denom) = Rat.from_int(Int.2) * r","r.num + r.num = Int.2 * r.num","reduce(Int.2 * r.num, r.denom) != Rat.2 * r","Rat.from_int(Int.2) * r != Rat.2 * r","Rat.from_int(Int.2) != Rat.2"]}
@@ -559,12 +578,6 @@
 {"goal":"cancel_positivity_left","proof":["b.is_negative or b.is_positive or Rat.0 = b","Rat.0 = b","b - Rat.0 = b","not (b - Rat.0).is_positive","b - b = Rat.0","a * Rat.0 = Rat.0","not (b - b).is_positive","not Rat.0.is_positive","(a * (b - Rat.0)).is_positive","(a * (b - b)).is_positive","(a * Rat.0).is_positive"]}
 {"goal":"cancel_positivity_right","proof":["not (b * a).is_positive or not b.is_positive or a.is_positive","a * b = b * a","(b * a).is_positive"]}
 {"goal":"mul_cancels_div_left","proof":["a / b * b = a or Rat.0 = b","b * (a / b) = a / b * b","a / b * b != a"]}
-{"goal":"not c < b","proof":["not c < b or not b <= c or c < c","not c < c or not c < c","not b <= c or c < c","c < c"]}
-{"goal":"not a < c","proof":["not a < c or a <= c"]}
-{"goal":"not c > a","proof":["c > a = a < c"]}
-{"goal":"c != a","proof":["c != a or a <= c"]}
-{"goal":"false","proof":["not c < a or not a <= b or c < b","c > a or c < a or c = a","c < a","not c < a or not a <= b"]}
-{"goal":"lte_trans","proof":[]}
 {"goal":"a.abs = -a","proof":["not a.is_negative or a.abs = -a"]}
 {"goal":"(-a).abs = -a","proof":["(-a).abs = -a or (-a).is_negative","(-a).is_negative","not a.is_negative or (-a).is_positive","not (-a).is_negative or not (-a).is_positive","(-a).is_positive","not (-a).is_positive"]}
 {"goal":"(-a).abs = a.abs","proof":["(-a).abs != -a"]}
@@ -717,7 +730,3 @@
 {"goal":"Rat.0 <= Rat.from_nat(n)","proof":["not Rat.0 < Rat.from_nat(n) or Rat.0 <= Rat.from_nat(n)"]}
 {"goal":"from_nat_nonneg","proof":[]}
 {"goal":"recip_eq_one_div","proof":["Rat.1 * a.reciprocal = Rat.1 / a","Rat.1 * a.reciprocal != a.reciprocal","Rat.1 * a.reciprocal = a.reciprocal"]}
-{"goal":"rat_is_reflexive","proof":["let s0: (Rat, Rat) -> Bool -> Rat satisfy { forall(x0: (Rat, Rat) -> Bool, x1: Rat) { not is_reflexive<Rat>(x0) or x0(x1, x1) } and forall(x2: (Rat, Rat) -> Bool) { not x2(s0(x2), s0(x2)) or is_reflexive<Rat>(x2) } }","not s0(Rat.lte) <= s0(Rat.lte) or is_reflexive<Rat>(Rat.lte)","not s0(Rat.lte) <= s0(Rat.lte)","s0(Rat.lte) != s0(Rat.lte) or s0(Rat.lte) <= s0(Rat.lte)"]}
-{"goal":"rat_is_transitive","proof":["let (s0: (Rat, Rat) -> Bool -> Rat, s1: (Rat, Rat) -> Bool -> Rat, s2: (Rat, Rat) -> Bool -> Rat) satisfy { forall(x0: (Rat, Rat) -> Bool, x1: Rat, x2: Rat, x3: Rat) { not is_transitive<Rat>(x0) or not x0(x1, x2) or not x0(x2, x3) or x0(x1, x3) } and forall(x4: (Rat, Rat) -> Bool) { x4(s0(x4), s1(x4)) or is_transitive<Rat>(x4) } and forall(x5: (Rat, Rat) -> Bool) { x5(s1(x5), s2(x5)) or is_transitive<Rat>(x5) } and forall(x6: (Rat, Rat) -> Bool) { not x6(s0(x6), s2(x6)) or is_transitive<Rat>(x6) } }","not s0(Rat.lte) <= s1(Rat.lte) or not s1(Rat.lte) <= Rat.0 + s2(Rat.lte) or s0(Rat.lte) <= Rat.0 + s2(Rat.lte)","not s0(Rat.lte) <= s2(Rat.lte) or is_transitive<Rat>(Rat.lte)","not s0(Rat.lte) <= s2(Rat.lte)","s1(Rat.lte) <= s2(Rat.lte) or is_transitive<Rat>(Rat.lte)","s1(Rat.lte) <= s2(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte) or is_transitive<Rat>(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte)","Rat.0 + s2(Rat.lte) = s2(Rat.lte)","s1(Rat.lte) <= Rat.0 + s2(Rat.lte)","not s0(Rat.lte) <= Rat.0 + s2(Rat.lte)","not s1(Rat.lte) <= Rat.0 + s2(Rat.lte) or s0(Rat.lte) <= Rat.0 + s2(Rat.lte)"]}
-{"goal":"rat_is_antisymmetric","proof":["let (s0: (Rat, Rat) -> Bool -> Rat, s1: (Rat, Rat) -> Bool -> Rat) satisfy { forall(x0: (Rat, Rat) -> Bool, x1: Rat, x2: Rat) { not is_antisymmetric<Rat>(x0) or not x0(x1, x2) or not x0(x2, x1) or x1 = x2 } and forall(x3: (Rat, Rat) -> Bool) { x3(s0(x3), s1(x3)) or is_antisymmetric<Rat>(x3) } and forall(x4: (Rat, Rat) -> Bool) { x4(s1(x4), s0(x4)) or is_antisymmetric<Rat>(x4) } and forall(x5: (Rat, Rat) -> Bool) { s1(x5) != s0(x5) or is_antisymmetric<Rat>(x5) } }","not s0(Rat.lte) <= s1(Rat.lte) or s0(Rat.lte) < s1(Rat.lte) or s1(Rat.lte) = s0(Rat.lte)","not s1(Rat.lte) <= s0(Rat.lte) or s1(Rat.lte) < s0(Rat.lte) or s1(Rat.lte) = s0(Rat.lte)","s1(Rat.lte) <= s0(Rat.lte) or is_antisymmetric<Rat>(Rat.lte)","s1(Rat.lte) <= s0(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte) or is_antisymmetric<Rat>(Rat.lte)","s0(Rat.lte) <= s1(Rat.lte)","s1(Rat.lte) != s0(Rat.lte) or is_antisymmetric<Rat>(Rat.lte)","s1(Rat.lte) != s0(Rat.lte)","not s1(Rat.lte) < s0(Rat.lte) or not s0(Rat.lte) < s1(Rat.lte)","s0(Rat.lte) < s1(Rat.lte)","s1(Rat.lte) < s0(Rat.lte)","not s1(Rat.lte) < s0(Rat.lte)"]}
-{"goal":"is_antisymmetric<Rat>(Rat.lte) and is_reflexive<Rat>(Rat.lte) and is_transitive<Rat>(Rat.lte)","proof":["not is_transitive<Rat>(Rat.lte) or not is_reflexive<Rat>(Rat.lte)","not is_reflexive<Rat>(Rat.lte)"]}

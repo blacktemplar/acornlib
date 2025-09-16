@@ -716,41 +716,6 @@ theorem sub_zero(a: Rat) {
     a - Rat.0 = a
 }
 
-attributes Rat {
-    /// True if this rational is less than or equal to the other.
-    define lte(self, other: Rat) -> Bool {
-        (other - self).is_positive or self = other
-    }
-
-    /// True if this rational is less than the other.
-    define lt(self, other: Rat) -> Bool {
-        self <= other and self != other
-    }
-
-    /// True if this rational is greater than the other.
-    define gt(self, other: Rat) -> Bool {
-        other < self
-    }
-
-    /// True if this rational is greater than or equal to the other.
-    define gte(self, other: Rat) -> Bool {
-        other <= self
-    }
-}
-
-theorem pos_imp_zero_lt(a: Rat) {
-    a.is_positive implies Rat.0 < a
-} by {
-    (a - Rat.0).is_positive
-}
-
-theorem zero_lt_imp_pos(a: Rat) {
-    Rat.0 < a implies a.is_positive
-} by {
-    a - Rat.0 = a
-    a.is_positive
-}
-
 theorem not_pos_and_neg(a: Rat) {
     a.is_positive implies not a.is_negative
 }
@@ -799,16 +764,6 @@ theorem add_cancels_sub(a: Rat, b: Rat) {
     a + -b + b = a
 }
 
-theorem lt_trans(a: Rat, b: Rat, c: Rat) {
-    a < b and b < c implies a < c
-} by {
-    (b - a).is_positive
-    (c - b).is_positive
-    (c - b) + (b - a) = (c - b) + b - a
-    (c - b) + (b - a) = c - a
-    (c - a).is_positive
-}
-
 theorem neg_neg_is_pos(a: Rat) {
     a.is_negative implies (-a).is_positive
 }
@@ -819,6 +774,112 @@ theorem neg_pos_is_neg(a: Rat) {
 
 theorem zero_minus(a: Rat) {
     Rat.0 - a = -a
+}
+
+theorem mul_cancels_div(a: Rat, b: Rat) {
+    b != Rat.0 implies (a / b) * b = a
+} by {
+    (a / b) * b = a * b.reciprocal * b
+    (a / b) * b = a * (b.reciprocal * b)
+    (a / b) * b = a * Rat.1
+    (a / b) * b = a
+}
+
+attributes Rat {
+    /// True if this rational is less than or equal to the other.
+    define lte(self, other: Rat) -> Bool {
+        (other - self).is_positive or self = other
+    }
+
+    /// True if this rational is less than the other.
+    define lt(self, other: Rat) -> Bool {
+        self <= other and self != other
+    }
+
+    /// True if this rational is greater than the other.
+    define gt(self, other: Rat) -> Bool {
+        other < self
+    }
+
+    /// True if this rational is greater than or equal to the other.
+    define gte(self, other: Rat) -> Bool {
+        other <= self
+    }
+}
+
+from util import is_reflexive, is_transitive, is_antisymmetric
+
+theorem rat_is_reflexive {
+    is_reflexive(Rat.lte)
+}
+
+theorem lte_trans(a: Rat, b: Rat, c: Rat) {
+    a <= b and b <= c implies a <= c
+} by {
+    if a = b {
+        a <= c
+    } else {
+        (b - a).is_positive
+        if b = c {
+            a <= c
+        } else {
+            (c - b).is_positive
+            ((c - b) + (b - a)).is_positive
+            (c - a).is_positive
+            a <= c
+        }
+    }
+}
+
+theorem rat_is_transitive {
+    is_transitive(Rat.lte)
+}
+
+theorem lte_antisymm(a: Rat, b: Rat) {
+    a <= b and b <= a implies a = b
+} by {
+    if a = b {
+        a = b
+    } else {
+        (b - a).is_positive
+        (a - b).is_positive
+        ((b - a) + (a - b)).is_positive
+        Rat.0.is_positive
+        false
+    }
+}
+
+theorem rat_is_antisymmetric {
+    is_antisymmetric(Rat.lte)
+}
+
+from order import PartialOrder
+
+instance Rat: PartialOrder {
+    let lte = Rat.lte
+}
+
+theorem pos_imp_zero_lt(a: Rat) {
+    a.is_positive implies Rat.0 < a
+} by {
+    (a - Rat.0).is_positive
+}
+
+theorem zero_lt_imp_pos(a: Rat) {
+    Rat.0 < a implies a.is_positive
+} by {
+    a - Rat.0 = a
+    a.is_positive
+}
+
+theorem lt_trans(a: Rat, b: Rat, c: Rat) {
+    a < b and b < c implies a < c
+} by {
+    (b - a).is_positive
+    (c - b).is_positive
+    (c - b) + (b - a) = (c - b) + b - a
+    (c - b) + (b - a) = c - a
+    (c - a).is_positive
 }
 
 theorem neg_imp_lt_zero(a: Rat) {
@@ -833,15 +894,6 @@ theorem lt_zero_imp_neg(a: Rat) {
 } by {
     (Rat.0 - a).is_positive
     (-a).is_positive
-}
-
-theorem mul_cancels_div(a: Rat, b: Rat) {
-    b != Rat.0 implies (a / b) * b = a
-} by {
-    (a / b) * b = a * b.reciprocal * b
-    (a / b) * b = a * (b.reciprocal * b)
-    (a / b) * b = a * Rat.1
-    (a / b) * b = a
 }
 
 theorem two_neq_zero {
@@ -1383,18 +1435,6 @@ theorem mul_cancels_div_left(a: Rat, b: Rat) {
     b != Rat.0 implies b * (a / b) = a
 }
 
-theorem lte_trans(a: Rat, b: Rat, c: Rat) {
-    a <= b and b <= c implies a <= c
-} by {
-    if not a <= c {
-        not c < b
-        not a < c
-        not c > a
-        c != a
-        false
-    }
-}
-
 theorem neg_abs(a: Rat) {
     (-a).abs = a.abs
 } by {
@@ -1737,24 +1777,4 @@ theorem from_nat_nonneg(n: Nat) {
 
 theorem recip_eq_one_div(a: Rat) {
     a != Rat.0 implies a.reciprocal = Rat.1 / a
-}
-
-from util import is_reflexive, is_transitive, is_antisymmetric
-
-theorem rat_is_reflexive {
-    is_reflexive(Rat.lte)
-}
-
-theorem rat_is_transitive {
-    is_transitive(Rat.lte)
-}
-
-theorem rat_is_antisymmetric {
-    is_antisymmetric(Rat.lte)
-}
-
-from order import PartialOrder
-
-instance Rat: PartialOrder {
-    let lte = Rat.lte
 }
