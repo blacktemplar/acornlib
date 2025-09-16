@@ -171,12 +171,6 @@ attributes Int {
         b < self
     }
 
-    /// TODO: currently this is defined independently, but we should be able to just
-    /// inherit this operator from `PartialOrder`.
-    define gte(self, b: Int) -> Bool {
-        b <= self
-    }
-
     define divides(self, b: Int) -> Bool {
         exists(d: Int) { d * self = b }
     }

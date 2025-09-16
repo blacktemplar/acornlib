@@ -925,6 +925,7 @@ theorem floor_exists(a: Real) {
         m + Int.from_nat(int.abs(m) + int.abs(big)) < big
         m + Int.from_nat(int.abs(m)) + Int.from_nat(int.abs(big)) < big
         big <= Int.from_nat(int.abs(big))
+        -m <= Int.from_nat(int.abs(m))
         Int.0 <= m + Int.from_nat(int.abs(m))
         Int.0 + big <= m + Int.from_nat(int.abs(m)) + Int.from_nat(int.abs(big))
         false
