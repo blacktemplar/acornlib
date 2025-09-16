@@ -1,6 +1,7 @@
 from nat import Nat
 from int import Int
 from rat.rat_base import Rat, reduce
+from order import LinearOrder
 
 // It will be convenient to have a particular function that
 // approaches zero.
@@ -613,20 +614,6 @@ instance Rat: Field {
     let inverse = Rat.reciprocal
 }
 
-from util import is_reflexive, is_transitive, is_antisymmetric
-
-theorem rat_is_reflexive {
-    is_reflexive(Rat.lte)
-}
-
-theorem rat_is_transitive {
-    is_transitive(Rat.lte)
-}
-
-theorem rat_is_antisymmetric {
-    is_antisymmetric(Rat.lte)
-}
-
 theorem rat_total(a: Rat, b: Rat) { a <= b or b <= a } by {
     if a < b {
         a <= b
@@ -638,12 +625,6 @@ theorem rat_total(a: Rat, b: Rat) { a <= b or b <= a } by {
             b <= a
         }
     }
-}
-
-from order import PartialOrder, LinearOrder
-
-instance Rat: PartialOrder {
-    let lte = Rat.lte
 }
 
 instance Rat: LinearOrder

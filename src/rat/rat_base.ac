@@ -1738,3 +1738,23 @@ theorem from_nat_nonneg(n: Nat) {
 theorem recip_eq_one_div(a: Rat) {
     a != Rat.0 implies a.reciprocal = Rat.1 / a
 }
+
+from util import is_reflexive, is_transitive, is_antisymmetric
+
+theorem rat_is_reflexive {
+    is_reflexive(Rat.lte)
+}
+
+theorem rat_is_transitive {
+    is_transitive(Rat.lte)
+}
+
+theorem rat_is_antisymmetric {
+    is_antisymmetric(Rat.lte)
+}
+
+from order import PartialOrder
+
+instance Rat: PartialOrder {
+    let lte = Rat.lte
+}
