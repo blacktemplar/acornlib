@@ -120,6 +120,7 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         Int.from_nat(int.abs(int.unit_sign(b1))) = Int.1
         gcd(a2, b2) = Int.1
         b2 != Int.0
+        b2 > Int.0
         is_reduced(a2, b2)
 
         let r = Rat.new(a2, b2)

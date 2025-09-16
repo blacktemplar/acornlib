@@ -162,7 +162,7 @@ attributes Int {
 
     /// `a <= b` when `(a - b)` is positive or zero.
     define lte(self, b: Int) -> Bool {
-        (self < b) or self = b
+        (b - self).is_positive or self = b
     }
 
     /// TODO: currently this is defined independently, but we should be able to just
@@ -180,6 +180,43 @@ attributes Int {
     define divides(self, b: Int) -> Bool {
         exists(d: Int) { d * self = b }
     }
+}
+
+from util import is_reflexive, is_transitive, is_antisymmetric
+
+theorem int_is_reflexive {
+    is_reflexive(Int.lte)
+}
+
+theorem lte_trans(a: Int, b: Int, c: Int) { a <= b and b <= c implies a <= c } by {
+    if a = b {
+        a <= c
+    } else {
+        a < b
+        if b = c {
+            a <= c
+        } else {
+            (c - b).is_positive
+            (b - a).is_positive
+            ((c - b) + (b - a)).is_positive
+            (c - a).is_positive
+            a <= c
+        }
+    }
+}
+
+theorem int_is_transitive {
+    is_transitive(Int.lte)
+}
+
+theorem int_is_antisymmetric {
+    is_antisymmetric(Int.lte)
+}
+
+from order import PartialOrder, LinearOrder
+
+instance Int: PartialOrder {
+    let lte = Int.lte
 }
 
 theorem lt_not_ref(a: Int) { not (a < a) } by {
@@ -331,21 +368,6 @@ theorem lt_trans(a: Int, b: Int, c: Int) { a < b and b < c implies a < c } by {
     not (a + -b).is_positive
     exists(k0: Int) { a + k0 < c + k0 }
     (c - a).is_positive
-}
-
-theorem lte_trans(a: Int, b: Int, c: Int) { a <= b and b <= c implies a <= c } by {
-    if a = b {
-        a <= c
-    } else {
-        a < b
-        if b = c {
-            a <= c
-        } else {
-            b < c
-            a < c
-            a <= c
-        }
-    }
 }
 
 theorem lt_and_lte(a: Int, b: Int, c: Int) { a < b and b <= c implies a < c } by {
@@ -910,6 +932,8 @@ theorem negative_division_theorem(m: Int, n: Int) {
         (-qn) * n = (-qn + -1) * n + n
         m = (-qn) * n + -rn
         m = (-qn + -1) * n + (n + -rn)
+        rn < n
+        0 < n + -rn
         0 <= n + -rn
         -rn < 0
         n + -rn < n
@@ -1119,20 +1143,6 @@ from comm_ring import CommRing
 
 instance Int: CommRing
 
-from util import is_reflexive, is_transitive, is_antisymmetric
-
-theorem int_is_reflexive {
-    is_reflexive(Int.lte)
-}
-
-theorem int_is_transitive {
-    is_transitive(Int.lte)
-}
-
-theorem int_is_antisymmetric {
-    is_antisymmetric(Int.lte)
-}
-
 theorem int_total(a: Int, b: Int) { a <= b or b <= a } by {
     if a = b {
         a <= b
@@ -1157,12 +1167,6 @@ theorem int_total(a: Int, b: Int) { a <= b or b <= a } by {
             }
         }
     }
-}
-
-from order import PartialOrder, LinearOrder
-
-instance Int: PartialOrder {
-    let lte = Int.lte
 }
 
 instance Int: LinearOrder
