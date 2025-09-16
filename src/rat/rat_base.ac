@@ -724,7 +724,7 @@ attributes Rat {
 
     /// True if this rational is less than the other.
     define lt(self, other: Rat) -> Bool {
-        (other - self).is_positive
+        self <= other and self != other
     }
 
     /// True if this rational is greater than the other.
@@ -940,6 +940,8 @@ theorem lt_add_pos(a: Rat, b: Rat) {
     (a + b) - a = (-a + a) + b
     (a + b) - a = Rat.0 + b
     (a + b) - a = b
+    a <= a + b
+    a != a + b
 }
 
 attributes Rat {
@@ -1059,6 +1061,8 @@ theorem lt_from_int(a: Int, b: Int) {
     a < b implies Rat.from_int(a) < Rat.from_int(b)
 } by {
     Rat.from_int(b) - Rat.from_int(a) = Rat.from_int(b - a)
+    Rat.from_int(a) <= Rat.from_int(b)
+    Rat.from_int(a) != Rat.from_int(b)
 }
 
 theorem lte_from_int(a: Int, b: Int) {
@@ -1080,6 +1084,8 @@ theorem lt_mul_pos(a: Rat, b: Rat, c: Rat) {
     c > Rat.0
     (b - a) * c > Rat.0
     b * c - a * c > Rat.0
+    a * c != b * c
+    a * c <= b * c
     a * c < b * c
 }
 
