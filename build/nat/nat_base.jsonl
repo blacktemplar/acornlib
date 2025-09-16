@@ -139,8 +139,37 @@
 {"goal":"a + a * 0 = a","proof":["0 != 0 or a * 0 = 0","a * 0 != 0 or a + a * 0 = a","a * 0 != 0"]}
 {"goal":"mul_one_right","proof":["a + a * 0 = a * 0.suc","a * 0.suc = 0.suc * a","a * 1 = 1 * a","0 + 1 = 0.suc","0 + 1 = 1"]}
 {"goal":"mul_one_left","proof":["a * 1 = 1 * a","a * 1 != a","a * 1 = a"]}
-{"goal":"lt_not_ref","proof":["not a < a or a != a"]}
+{"goal":"0 + c = 0 + b","proof":["0 + c = 0 + b or add_cancels_left(0, b, c)"]}
+{"goal":"not add_cancels_left(0, b, 0 + c)","proof":["0 + c = c"]}
+{"goal":"false","proof":["b != b or add_cancels_left(0, b, b)","add_cancels_left(0, b, b)","not add_cancels_left(0, b, 0 + b)","0 + b = b"]}
+{"goal":"f(0)","proof":["add_cancels_left(0, b, c) = f(0)"]}
+{"goal":"(x + c).suc = x.suc + b","proof":["x.suc + c = (x + c).suc"]}
+{"goal":"(x + b).suc = (x + c).suc","proof":["x.suc + b != (x + b).suc","x.suc + b = (x + b).suc"]}
+{"goal":"x + b = x + c","proof":["(x + c).suc != (x + b).suc or x + c = x + b"]}
+{"goal":"add_cancels_left(x, b, c)","proof":["add_cancels_left(x, b, c) = f(x)"]}
+{"goal":"b = c","proof":["x + c != x + b or not add_cancels_left(x, b, c) or c = b"]}
+{"goal":"x.suc + b = x.suc + c implies b = c","proof":[]}
+{"goal":"x.suc + c = x.suc + b","proof":["x.suc + c = x.suc + b or add_cancels_left(x.suc, b, c)"]}
+{"goal":"c != b","proof":["c != b or add_cancels_left(x.suc, b, c)"]}
+{"goal":"false","proof":["0 + b = b"]}
+{"goal":"f(x.suc)","proof":["add_cancels_left(x.suc, b, c) = f(x.suc)"]}
+{"goal":"f(a)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(a)","not f(s0(f).suc)","not f(0) or f(s0(f)) or f(a)","not f(s0(f))","f(s0(f))"]}
+{"goal":"add_cancels_left","proof":["add_cancels_left(a, b, c) = f(a)","a + c != a + b or not add_cancels_left(a, b, c) or c = b","add_cancels_left(a, b, c)","not add_cancels_left(a, b, c)"]}
 {"goal":"lte_ref","proof":["a + 0 != a or a <= a","a + 0 != a","0 != 0 or a + 0 = a","0 != 0"]}
+{"goal":"nat_is_reflexive","proof":["let s0: (Nat, Nat) -> Bool -> Nat satisfy { forall(x0: (Nat, Nat) -> Bool, x1: Nat) { not is_reflexive<Nat>(x0) or x0(x1, x1) } and forall(x2: (Nat, Nat) -> Bool) { not x2(s0(x2), s0(x2)) or is_reflexive<Nat>(x2) } }","not s0(Nat.lte) <= s0(Nat.lte) or is_reflexive<Nat>(Nat.lte)","not s0(Nat.lte) <= s0(Nat.lte)","s0(Nat.lte) <= s0(Nat.lte)"]}
+{"goal":"y = 0","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","not y <= 0 or y + s0(y, 0) = 0","let s1: Nat -> Nat satisfy { forall(x5: Nat) { s1(x5).suc = x5 or 0 = x5 } }","s1(y).suc + s0(y, 0) = (s1(y) + s0(y, 0)).suc","s1(y).suc = y or y = 0","s1(y).suc = y","(s1(y) + s0(y, 0)).suc != 0","y + s0(y, 0) = 0","s1(y).suc + s0(y, 0) = 0"]}
+{"goal":"x <= 0","proof":[]}
+{"goal":"lte_trans(x, y, 0)","proof":["not x <= 0 or lte_trans(x, y, 0)","y <= 0 or lte_trans(x, y, 0)","x <= y or lte_trans(x, y, 0)","x <= y","y <= 0","not x <= 0","x <= 0"]}
+{"goal":"f(0)","proof":["let (s0: Nat -> Nat, s1: Nat -> Nat) satisfy { forall(x0: Nat, x1: Nat, x2: Nat) { not f(x0) or lte_trans(x1, x2, x0) } and forall(x3: Nat) { not lte_trans(s0(x3), s1(x3), x3) or f(x3) } }","lte_trans(s0(0), s1(0), 0)","not lte_trans(s0(0), s1(0), 0) or f(0)"]}
+{"goal":"exists(k0: Nat) { x + k0 = y }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","x + s0(x, y) != y","not x <= y or x + s0(x, y) = y"]}
+{"goal":"exists(k0: Nat) { y + k0 = z.suc }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","y + s0(y, z.suc) != z.suc","not y <= z.suc or y + s0(y, z.suc) = z.suc"]}
+{"goal":"x + (d + e) = z.suc","proof":["x + (d + e) = x + d + e"]}
+{"goal":"x <= z.suc","proof":["x + (d + e) != z.suc or x <= z.suc"]}
+{"goal":"lte_trans(x, y, z.suc)","proof":["not x <= z.suc or lte_trans(x, y, z.suc)","y <= z.suc or lte_trans(x, y, z.suc)","x <= y or lte_trans(x, y, z.suc)","x <= y","y <= z.suc","not x <= z.suc","x <= z.suc"]}
+{"goal":"f(z.suc)","proof":["let (s0: Nat -> Nat, s1: Nat -> Nat) satisfy { forall(x0: Nat, x1: Nat, x2: Nat) { not f(x0) or lte_trans(x1, x2, x0) } and forall(x3: Nat) { not lte_trans(s0(x3), s1(x3), x3) or f(x3) } }","lte_trans(s0(z.suc), s1(z.suc), z.suc)","not lte_trans(s0(z.suc), s1(z.suc), z.suc) or f(z.suc)"]}
+{"goal":"f(c)","proof":["let s0: Nat satisfy { forall(x0: Nat) { not f(0) or f(s0) or f(x0) } and forall(x1: Nat) { not f(s0.suc) or not f(0) or f(x1) } }","not f(0) or f(s0) or f(c)","f(s0) or f(c)","f(s0)","not f(s0.suc) or not f(0) or f(c)","not f(s0.suc) or f(c)","not f(s0.suc)","not f(s0) or f(s0.suc)"]}
+{"goal":"lte_trans","proof":["not f(c) or lte_trans(a, b, c)","not a <= b or not b <= c or not lte_trans(a, b, c) or a <= c","lte_trans(a, b, c)","not b <= c or not a <= b"]}
+{"goal":"nat_is_transitive","proof":["let (s0: (Nat, Nat) -> Bool -> Nat, s1: (Nat, Nat) -> Bool -> Nat, s2: (Nat, Nat) -> Bool -> Nat) satisfy { forall(x0: (Nat, Nat) -> Bool, x1: Nat, x2: Nat, x3: Nat) { not is_transitive<Nat>(x0) or not x0(x1, x2) or not x0(x2, x3) or x0(x1, x3) } and forall(x4: (Nat, Nat) -> Bool) { x4(s0(x4), s1(x4)) or is_transitive<Nat>(x4) } and forall(x5: (Nat, Nat) -> Bool) { x5(s1(x5), s2(x5)) or is_transitive<Nat>(x5) } and forall(x6: (Nat, Nat) -> Bool) { not x6(s0(x6), s2(x6)) or is_transitive<Nat>(x6) } }","not s0(Nat.lte) <= s1(Nat.lte) or not s1(Nat.lte) <= 0 + s2(Nat.lte) or s0(Nat.lte) <= 0 + s2(Nat.lte)","not s0(Nat.lte) <= s2(Nat.lte) or is_transitive<Nat>(Nat.lte)","not s0(Nat.lte) <= s2(Nat.lte)","s1(Nat.lte) <= s2(Nat.lte) or is_transitive<Nat>(Nat.lte)","s1(Nat.lte) <= s2(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte) or is_transitive<Nat>(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte)","0 + s2(Nat.lte) = s2(Nat.lte)","s1(Nat.lte) <= 0 + s2(Nat.lte)","not s0(Nat.lte) <= 0 + s2(Nat.lte)","not s1(Nat.lte) <= 0 + s2(Nat.lte) or s0(Nat.lte) <= 0 + s2(Nat.lte)"]}
 {"goal":"0 + b = 0","proof":["0 + b = 0 or add_to_zero(0, b)"]}
 {"goal":"b != 0","proof":["not add_to_zero(0, 0)","0 != 0 or 0 != 0 or add_to_zero(0, 0)"]}
 {"goal":"false","proof":["0 + b = b"]}
@@ -151,6 +180,18 @@
 {"goal":"f(a)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(a)"]}
 {"goal":"add_to_zero(a, b)","proof":["add_to_zero(a, b) = f(a)"]}
 {"goal":"add_to_zero","proof":["a + b != 0 or not add_to_zero(a, b) or b = 0","a + b != 0 or not add_to_zero(a, b) or a = 0","a = 0","b = 0","b != 0"]}
+{"goal":"exists(k0: Nat) { a + k0 = b }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","a + s0(a, b) != b","not a <= b or a + s0(a, b) = b"]}
+{"goal":"exists(k0: Nat) { b + k0 = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","b + s0(b, a) != a","not b <= a or b + s0(b, a) = a"]}
+{"goal":"a + c + d = a","proof":[]}
+{"goal":"a + (c + d) = a","proof":["a + (c + d) = a + c + d"]}
+{"goal":"c + d = 0","proof":["a + (c + d) != a + 0 or c + d = 0","a + 0 = a","a + (c + d) != a + 0"]}
+{"goal":"c = 0","proof":["c + d != 0 or c = 0"]}
+{"goal":"d = 0","proof":["0 + d = 0","0 + d != 0 or d = 0"]}
+{"goal":"a = b","proof":["0 != a"]}
+{"goal":"lte_antisymm","proof":[]}
+{"goal":"nat_is_antisymmetric","proof":["let (s0: (Nat, Nat) -> Bool -> Nat, s1: (Nat, Nat) -> Bool -> Nat) satisfy { forall(x0: (Nat, Nat) -> Bool, x1: Nat, x2: Nat) { not is_antisymmetric<Nat>(x0) or not x0(x1, x2) or not x0(x2, x1) or x1 = x2 } and forall(x3: (Nat, Nat) -> Bool) { x3(s0(x3), s1(x3)) or is_antisymmetric<Nat>(x3) } and forall(x4: (Nat, Nat) -> Bool) { x4(s1(x4), s0(x4)) or is_antisymmetric<Nat>(x4) } and forall(x5: (Nat, Nat) -> Bool) { s1(x5) != s0(x5) or is_antisymmetric<Nat>(x5) } }","not s1(Nat.lte) <= s0(Nat.lte) or not s0(Nat.lte) <= s1(Nat.lte) or s1(Nat.lte) = s0(Nat.lte)","s1(Nat.lte) <= s0(Nat.lte) or is_antisymmetric<Nat>(Nat.lte)","s1(Nat.lte) <= s0(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte) or is_antisymmetric<Nat>(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte)","s1(Nat.lte) != s0(Nat.lte) or is_antisymmetric<Nat>(Nat.lte)","s1(Nat.lte) = s0(Nat.lte)","s1(Nat.lte) != s0(Nat.lte)"]}
+{"goal":"is_antisymmetric<Nat>(Nat.lte) and is_reflexive<Nat>(Nat.lte) and is_transitive<Nat>(Nat.lte)","proof":["not is_transitive<Nat>(Nat.lte) or not is_reflexive<Nat>(Nat.lte)","not is_reflexive<Nat>(Nat.lte)"]}
+{"goal":"lt_not_ref","proof":["not a < a or a != a"]}
 {"goal":"exists(k0: Nat) { a + k0 = 0 }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","a + s0(a, 0) != 0","not a <= 0 or a + s0(a, 0) = 0"]}
 {"goal":"only_zero_lte_zero","proof":["let s0: Nat satisfy { a + s0 = 0 }","a + s0 != 0 or 0 = a"]}
 {"goal":"a != 0","proof":["0 < 0","not 0 < 0 or 0 != 0"]}
@@ -189,18 +230,6 @@
 {"goal":"b != a","proof":["a < a","not a < a or not a < a"]}
 {"goal":"c != 0","proof":["c != 0 or a + c = a","a + c = a"]}
 {"goal":"lt_diff","proof":["a + c != b or c = 0","a + c != b"]}
-{"goal":"y = 0","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","not y <= 0 or y + s0(y, 0) = 0","y + s0(y, 0) != 0 or y = 0","y + s0(y, 0) != 0"]}
-{"goal":"x <= 0","proof":[]}
-{"goal":"lte_trans(x, y, 0)","proof":["not x <= 0 or lte_trans(x, y, 0)","y <= 0 or lte_trans(x, y, 0)","x <= y or lte_trans(x, y, 0)","x <= y","y <= 0","not x <= 0","x <= 0"]}
-{"goal":"f(0)","proof":["let (s0: Nat -> Nat, s1: Nat -> Nat) satisfy { forall(x0: Nat, x1: Nat, x2: Nat) { not f(x0) or lte_trans(x1, x2, x0) } and forall(x3: Nat) { not lte_trans(s0(x3), s1(x3), x3) or f(x3) } }","lte_trans(s0(0), s1(0), 0)","not lte_trans(s0(0), s1(0), 0) or f(0)"]}
-{"goal":"exists(k0: Nat) { x + k0 = y }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","x + s0(x, y) != y","not x <= y or x + s0(x, y) = y"]}
-{"goal":"exists(k0: Nat) { y + k0 = z.suc }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","y + s0(y, z.suc) != z.suc","not y <= z.suc or y + s0(y, z.suc) = z.suc"]}
-{"goal":"x + (d + e) = z.suc","proof":["x + (d + e) = x + d + e"]}
-{"goal":"x <= z.suc","proof":["x + (d + e) != z.suc or x <= z.suc"]}
-{"goal":"lte_trans(x, y, z.suc)","proof":["not x <= z.suc or lte_trans(x, y, z.suc)","y <= z.suc or lte_trans(x, y, z.suc)","x <= y or lte_trans(x, y, z.suc)","x <= y","y <= z.suc","not x <= z.suc","x <= z.suc"]}
-{"goal":"f(z.suc)","proof":["let (s0: Nat -> Nat, s1: Nat -> Nat) satisfy { forall(x0: Nat, x1: Nat, x2: Nat) { not f(x0) or lte_trans(x1, x2, x0) } and forall(x3: Nat) { not lte_trans(s0(x3), s1(x3), x3) or f(x3) } }","lte_trans(s0(z.suc), s1(z.suc), z.suc)","not lte_trans(s0(z.suc), s1(z.suc), z.suc) or f(z.suc)"]}
-{"goal":"f(c)","proof":["let s0: Nat satisfy { forall(x0: Nat) { not f(0) or f(s0) or f(x0) } and forall(x1: Nat) { not f(s0.suc) or not f(0) or f(x1) } }","not f(0) or f(s0) or f(c)","f(s0) or f(c)","f(s0)","not f(s0.suc) or not f(0) or f(c)","not f(s0.suc) or f(c)","not f(s0.suc)","not f(s0) or f(s0.suc)"]}
-{"goal":"lte_trans","proof":["not f(c) or lte_trans(a, b, c)","not a <= b or not b <= c or not lte_trans(a, b, c) or a <= c","lte_trans(a, b, c)","not b <= c or not a <= b"]}
 {"goal":"a <= b","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 < x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat) { 0 != s0(x2, x3) or not x2 < x3 } }","not a < b or a + s0(a, b) = b","a + s0(a, b) != b or a <= b","a + s0(a, b) != b"]}
 {"goal":"a <= c","proof":["not a <= b or not b <= c or a <= c","not b <= c or not a <= b"]}
 {"goal":"c < b","proof":[]}
@@ -217,22 +246,6 @@
 {"goal":"lte_and_lt","proof":[]}
 {"goal":"a <= b","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 < x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat) { 0 != s0(x2, x3) or not x2 < x3 } }","not a < b or a + s0(a, b) = b","a + s0(a, b) != b or a <= b","a + s0(a, b) != b"]}
 {"goal":"lt_trans","proof":["not a < b or not b <= c or a < c","not b < c or b <= c","not a < b or not b <= c","b <= c","not b <= c"]}
-{"goal":"0 + c = 0 + b","proof":["0 + c = 0 + b or add_cancels_left(0, b, c)"]}
-{"goal":"not add_cancels_left(0, b, 0 + c)","proof":["0 + c = c"]}
-{"goal":"false","proof":["b != b or add_cancels_left(0, b, b)","add_cancels_left(0, b, b)","not add_cancels_left(0, b, 0 + b)","0 + b = b"]}
-{"goal":"f(0)","proof":["add_cancels_left(0, b, c) = f(0)"]}
-{"goal":"(x + c).suc = x.suc + b","proof":["x.suc + c = (x + c).suc"]}
-{"goal":"(x + b).suc = (x + c).suc","proof":["x.suc + b != (x + b).suc","x.suc + b = (x + b).suc"]}
-{"goal":"x + b = x + c","proof":["(x + c).suc != (x + b).suc or x + c = x + b"]}
-{"goal":"add_cancels_left(x, b, c)","proof":["add_cancels_left(x, b, c) = f(x)"]}
-{"goal":"b = c","proof":["x + c != x + b or not add_cancels_left(x, b, c) or c = b"]}
-{"goal":"x.suc + b = x.suc + c implies b = c","proof":[]}
-{"goal":"x.suc + c = x.suc + b","proof":["x.suc + c = x.suc + b or add_cancels_left(x.suc, b, c)"]}
-{"goal":"c != b","proof":["c != b or add_cancels_left(x.suc, b, c)"]}
-{"goal":"false","proof":[]}
-{"goal":"f(x.suc)","proof":["add_cancels_left(x.suc, b, c) = f(x.suc)"]}
-{"goal":"f(a)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(a)","not f(s0(f).suc)","not f(0) or f(s0(f)) or f(a)","not f(s0(f))","f(s0(f))"]}
-{"goal":"add_cancels_left","proof":["add_cancels_left(a, b, c) = f(a)","a + c != a + b or not add_cancels_left(a, b, c) or c = b","add_cancels_left(a, b, c)","not add_cancels_left(a, b, c)"]}
 {"goal":"a + b = a + c","proof":["a + b = b + a","c + a = a + c"]}
 {"goal":"b = c","proof":["a + c != a + b or c = b"]}
 {"goal":"add_cancels_right","proof":[]}
@@ -379,7 +392,7 @@
 {"goal":"k <= x implies k.divides(x.factorial)","proof":["not k <= x or not divides_factorial(k, x) or k.divides(x.factorial) or k = 0"]}
 {"goal":"x.suc.divides(x.suc.factorial)","proof":["x.suc * x.factorial = x.suc.factorial","x.suc * x.factorial != x.suc.factorial or x.suc.divides(x.suc.factorial)","x.suc * x.factorial != x.suc.factorial"]}
 {"goal":"k.divides(x.suc.factorial)","proof":["not x.suc.divides(x.suc.factorial)"]}
-{"goal":"k.suc <= x.suc","proof":["not k <= x.suc or k < x.suc or x.suc = k","not k < x.suc or k.suc <= x.suc","k < x.suc","not k < x.suc"]}
+{"goal":"k.suc <= x.suc","proof":["k < x.suc or x.suc < k or x.suc = k","not k < x.suc or k.suc <= x.suc","not k < x.suc","x.suc < k","not k <= x.suc or not x.suc < k"]}
 {"goal":"k <= x","proof":["not k.suc <= x.suc or k <= x"]}
 {"goal":"k.divides(x.factorial)","proof":[]}
 {"goal":"x.factorial.divides(x.suc * x.factorial)","proof":["x.factorial * x.suc != x.factorial * x.suc or x.factorial.divides(x.factorial * x.suc)","x.factorial * x.suc = x.suc * x.factorial","not x.factorial.divides(x.factorial * x.suc)","x.factorial.divides(x.factorial * x.suc)"]}
@@ -392,7 +405,7 @@
 {"goal":"divides_factorial","proof":["not k <= n or not divides_factorial(k, n) or k.divides(n.factorial) or k = 0"]}
 {"goal":"n.factorial <= n.suc * n.factorial","proof":["n.factorial + n * n.factorial = n.suc * n.factorial","n.factorial + n * n.factorial != n.factorial + n * n.factorial or n.factorial <= n.factorial + n * n.factorial","n.factorial <= n.factorial + n * n.factorial"]}
 {"goal":"factorial_nondecreasing","proof":["n.suc * n.factorial = n.suc.factorial"]}
-{"goal":"1 <= 0.factorial","proof":["1 <= 0.factorial or 0.factorial < 1","0.factorial < 1","not 0.factorial < 1 or 0.factorial != 1","0.factorial != 1"]}
+{"goal":"1 <= 0.factorial","proof":["1 <= 1 or 1 < 1","not 1 < 1 or not 1 < 1","not 1 <= 1","1 < 1"]}
 {"goal":"lte_one_factorial(0)","proof":["1 <= 0.factorial = lte_one_factorial(0)"]}
 {"goal":"1 <= x.factorial","proof":["1 <= x.factorial = lte_one_factorial(x)"]}
 {"goal":"x.factorial <= x.suc.factorial","proof":["x.factorial <= x.suc.factorial"]}
@@ -424,7 +437,7 @@
 {"goal":"false","proof":["not a * b < a * c or not a * c <= a * b"]}
 {"goal":"c != b","proof":["not b <= b","let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 < x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat) { 0 != s0(x2, x3) or not x2 < x3 } }","not b < b or b + s0(b, b) = b","b + s0(b, b) != b or b <= b","b + s0(b, b) != b","b < b or b <= b","not b < b","b < b"]}
 {"goal":"lt_cancel_mul","proof":["b < c or c <= b"]}
-{"goal":"1 != 0","proof":["not 0 < 0.suc or 0.suc != 0","0 + 1 = 0.suc","0 < 0.suc","0 + 1 = 1","0 + 1 = 0","0.suc = 0"]}
+{"goal":"1 != 0","proof":["1 + 0 = 0.suc","1 + 0 = 1","1 + 0 = 0","0.suc = 0","0.suc != 0"]}
 {"goal":"a != 0","proof":["0 * b = 1","0 * b = 0"]}
 {"goal":"not a < 0.suc","proof":["not a.suc <= 0.suc or a <= 0","not a < 0.suc or a.suc <= 0.suc","a.suc <= 0.suc","not a <= 0 or a = 0","a <= 0","not a <= 0"]}
 {"goal":"not a < 1","proof":["0.suc > a = a < 0.suc","1 > a = a < 1","0 + 1 = 0.suc","0 + 1 = 1"]}
@@ -489,7 +502,7 @@
 {"goal":"divides_add","proof":[]}
 {"goal":"0.divides(b)","proof":[]}
 {"goal":"b = 0","proof":["not 0.divides(b) or 0 = b"]}
-{"goal":"a = b","proof":["0 != a"]}
+{"goal":"a = b","proof":[]}
 {"goal":"b != 0","proof":["b != a","0.divides(a)","not 0.divides(a) or 0 = a"]}
 {"goal":"a <= b","proof":["not a.divides(b) or 0 = b or a <= b"]}
 {"goal":"b <= a","proof":["not b.divides(a) or 0 = a or b <= a"]}
@@ -531,7 +544,7 @@
 {"goal":"mod(0)(m) = 0","proof":["mod(0, 0) != 0","0 != 0 or mod(0, 0) = 0"]}
 {"goal":"mod(0)(m) = 0","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or mod(x5, x4) = x5 } }","s0(0, m) * m + mod(0, m) = 0 or m = 0","s0(0, m) * m + mod(0, m) != 0 or mod(0, m) = 0","s0(0, m) * m + mod(0, m) != 0"]}
 {"goal":"mod_of_zero","proof":[]}
-{"goal":"mod(a)(m) <= a","proof":["a < mod(a, m) or mod(a, m) <= a","a < mod(a, m)","a > mod(a, m) = mod(a, m) < a","mod(a, m) > a = a < mod(a, m)","not mod(a, m) < a or mod(a, m) <= a","not mod(a, m) < a","mod(a, 0) = a"]}
+{"goal":"mod(a)(m) <= a","proof":["not mod(a, 0) <= a","a <= a or a < a","not a < a or not a < a","mod(a, 0) = a","not a <= a","a < a"]}
 {"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or mod(x5, x4) = x5 } }","s0(a, m) * m + mod(a, m) != a","s0(a, m) * m + mod(a, m) = a or 0 = m"]}
 {"goal":"mod(a)(m) + q * m = a","proof":["q * m + mod(a, m) = mod(a, m) + q * m"]}
 {"goal":"mod(a)(m) <= a","proof":["mod(a, m) + q * m != a or mod(a, m) <= a"]}
@@ -646,7 +659,7 @@
 {"goal":"one_exp(0)","proof":["1.exp(0) != 1 or one_exp(0)","1.exp(0) != 1","0 != 0 or 1.exp(0) = 1"]}
 {"goal":"one_exp(n)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","1.exp(s0(one_exp).suc) != 1 or one_exp(s0(one_exp).suc)","not one_exp(s0(one_exp)) or 1.exp(s0(one_exp)) = 1","s0(one_exp).suc != s0(one_exp).suc or 1 * 1.exp(s0(one_exp)) = 1.exp(s0(one_exp).suc)","not one_exp(s0(one_exp).suc) or not one_exp(0) or one_exp(n)","not one_exp(s0(one_exp).suc)","not one_exp(0) or one_exp(s0(one_exp)) or one_exp(n)","one_exp(s0(one_exp))","1 * 1 = 1","1 * 1.exp(s0(one_exp)) = 1.exp(s0(one_exp).suc)","1.exp(s0(one_exp)) = 1","1.exp(s0(one_exp).suc) != 1"]}
 {"goal":"one_exp","proof":["not one_exp(n) or 1.exp(n) = 1"]}
-{"goal":"f(0)","proof":["1 <= a.exp(0) = f(0)","not 1 <= a.exp(0)","1 <= 1 or 1 < 1","not 1 < 1 or 1 <= 1","a.exp(0) = 1","not 1 <= 1","1 < 1","not 1 < 1"]}
+{"goal":"f(0)","proof":["1 <= a.exp(0) = f(0)","not 1 <= a.exp(0)","mod(1, 0) <= 1","a.exp(0) = 1","not 1 <= 1","mod(1, 0) = 1"]}
 {"goal":"1 <= a.exp(x)","proof":["1 <= a.exp(x) = f(x)"]}
 {"goal":"a.exp(x) <= a.exp(x.suc)","proof":["x.suc != x.suc or a * a.exp(x) = a.exp(x.suc)","a.exp(x) <= a.exp(x) * a or a = 0","a * a.exp(x) = a.exp(x) * a","a.exp(x) <= a.exp(x) * a","a * a.exp(x) = a.exp(x.suc)","not a.exp(x) <= a * a.exp(x)"]}
 {"goal":"1 <= a.exp(x.suc)","proof":["not 1 <= a.exp(x) or not a.exp(x) <= a.exp(x.suc) or 1 <= a.exp(x.suc)","not a.exp(x) <= a.exp(x.suc) or not 1 <= a.exp(x)"]}
@@ -678,8 +691,8 @@
 {"goal":"false","proof":["a * a.exp(b_pred) = 1","a * a.exp(b_pred) != 1 or 1 = a"]}
 {"goal":"exp_eq_one_imp","proof":[]}
 {"goal":"sq_eq_mul","proof":["a.exp(1) * a.exp(1) = a.exp(1 + 1)","a.exp(1) = a"]}
-{"goal":"exists(k0: Nat) { a <= k0 and b <= k0 }","proof":["not b <= a or not a <= a","not b <= b or not a <= b","a <= b or b < a","not b < a or b <= a","a <= a","b <= b","not a <= b","not b <= a","b < a","not b < a"]}
-{"goal":"exists(k0: Nat) { n1 <= k0 and c <= k0 }","proof":["not c <= c or not n1 <= c","not c <= n1 or not n1 <= n1","n1 <= c or c < n1","not c < n1 or c <= n1","c <= c","n1 <= n1","not n1 <= c","not c <= n1","c < n1","not c < n1"]}
+{"goal":"exists(k0: Nat) { a <= k0 and b <= k0 }","proof":["not b <= a or not a <= a","not b <= b or not a <= b","a <= b or b < a","b <= a or a < b","not b < a or not a < b","a <= a","b <= b","not a <= b","not b <= a","a < b","b < a","not b < a"]}
+{"goal":"exists(k0: Nat) { n1 <= k0 and c <= k0 }","proof":["not c <= c or not n1 <= c","not c <= n1 or not n1 <= n1","c <= n1 or n1 < c","n1 <= c or c < n1","not c < n1 or not n1 < c","c <= c","n1 <= n1","not n1 <= c","not c <= n1","n1 < c","c < n1","not c < n1"]}
 {"goal":"a <= n2 and b <= n2 and c <= n2","proof":["not b <= n2 or not a <= n2","not a <= n1 or not n1 <= n2 or a <= n2","not b <= n1 or not n1 <= n2 or b <= n2","not a <= n1 or a <= n2","not b <= n1 or b <= n2","b <= n2","a <= n2","not a <= n2"]}
 {"goal":"gte_each_of_three","proof":["not c <= n2 or not b <= n2 or not a <= n2","not a <= n2"]}
 {"goal":"exists(k0: Nat) { a <= k0 and b <= k0 and c <= k0 }","proof":["let s0: (Nat, Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat, x2: Nat) { x0 <= s0(x0, x1, x2) } and forall(x3: Nat, x4: Nat, x5: Nat) { x3 <= s0(x4, x3, x5) } and forall(x6: Nat, x7: Nat, x8: Nat) { x6 <= s0(x7, x8, x6) } }","not c <= s0(c, a, b) or not b <= s0(c, a, b) or not a <= s0(c, a, b)","b <= s0(c, a, b)","a <= s0(c, a, b)","c <= s0(c, a, b)","not b <= s0(c, a, b) or not a <= s0(c, a, b)","not b <= s0(c, a, b)"]}
@@ -696,8 +709,4 @@
 {"goal":"one_plus_three","proof":["1 + 3 = 3.suc","3.suc != 4"]}
 {"goal":"one_plus_four","proof":["1 + 4 = 4.suc","4.suc != 5"]}
 {"goal":"one_plus_five","proof":["1 + 5 = 5.suc","5.suc != 6"]}
-{"goal":"nat_is_reflexive","proof":["let s0: (Nat, Nat) -> Bool -> Nat satisfy { forall(x0: (Nat, Nat) -> Bool, x1: Nat) { not is_reflexive<Nat>(x0) or x0(x1, x1) } and forall(x2: (Nat, Nat) -> Bool) { not x2(s0(x2), s0(x2)) or is_reflexive<Nat>(x2) } }","not s0(Nat.lte) <= s0(Nat.lte) or is_reflexive<Nat>(Nat.lte)","not s0(Nat.lte) <= s0(Nat.lte)","s0(Nat.lte) <= s0(Nat.lte) or s0(Nat.lte) < s0(Nat.lte)","not s0(Nat.lte) < s0(Nat.lte) or s0(Nat.lte) <= s0(Nat.lte)","s0(Nat.lte) < s0(Nat.lte)","not s0(Nat.lte) < s0(Nat.lte)"]}
-{"goal":"nat_is_transitive","proof":["let (s0: (Nat, Nat) -> Bool -> Nat, s1: (Nat, Nat) -> Bool -> Nat, s2: (Nat, Nat) -> Bool -> Nat) satisfy { forall(x0: (Nat, Nat) -> Bool, x1: Nat, x2: Nat, x3: Nat) { not is_transitive<Nat>(x0) or not x0(x1, x2) or not x0(x2, x3) or x0(x1, x3) } and forall(x4: (Nat, Nat) -> Bool) { x4(s0(x4), s1(x4)) or is_transitive<Nat>(x4) } and forall(x5: (Nat, Nat) -> Bool) { x5(s1(x5), s2(x5)) or is_transitive<Nat>(x5) } and forall(x6: (Nat, Nat) -> Bool) { not x6(s0(x6), s2(x6)) or is_transitive<Nat>(x6) } }","not s0(Nat.lte) <= s1(Nat.lte) or not s1(Nat.lte) <= 0 + s2(Nat.lte) or s0(Nat.lte) <= 0 + s2(Nat.lte)","not s0(Nat.lte) <= s2(Nat.lte) or is_transitive<Nat>(Nat.lte)","not s0(Nat.lte) <= s2(Nat.lte)","s1(Nat.lte) <= s2(Nat.lte) or is_transitive<Nat>(Nat.lte)","s1(Nat.lte) <= s2(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte) or is_transitive<Nat>(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte)","0 + s2(Nat.lte) = s2(Nat.lte)","s1(Nat.lte) <= 0 + s2(Nat.lte)","not s0(Nat.lte) <= 0 + s2(Nat.lte)","not s1(Nat.lte) <= 0 + s2(Nat.lte) or s0(Nat.lte) <= 0 + s2(Nat.lte)"]}
-{"goal":"nat_is_antisymmetric","proof":["let (s0: (Nat, Nat) -> Bool -> Nat, s1: (Nat, Nat) -> Bool -> Nat) satisfy { forall(x0: (Nat, Nat) -> Bool, x1: Nat, x2: Nat) { not is_antisymmetric<Nat>(x0) or not x0(x1, x2) or not x0(x2, x1) or x1 = x2 } and forall(x3: (Nat, Nat) -> Bool) { x3(s0(x3), s1(x3)) or is_antisymmetric<Nat>(x3) } and forall(x4: (Nat, Nat) -> Bool) { x4(s1(x4), s0(x4)) or is_antisymmetric<Nat>(x4) } and forall(x5: (Nat, Nat) -> Bool) { s1(x5) != s0(x5) or is_antisymmetric<Nat>(x5) } }","not s0(Nat.lte) <= s1(Nat.lte) or s0(Nat.lte) < s1(Nat.lte) or s1(Nat.lte) = s0(Nat.lte)","s1(Nat.lte) <= s0(Nat.lte) or is_antisymmetric<Nat>(Nat.lte)","s1(Nat.lte) <= s0(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte) or is_antisymmetric<Nat>(Nat.lte)","s0(Nat.lte) <= s1(Nat.lte)","s1(Nat.lte) != s0(Nat.lte) or is_antisymmetric<Nat>(Nat.lte)","s1(Nat.lte) != s0(Nat.lte)","not s1(Nat.lte) <= s0(Nat.lte) or not s0(Nat.lte) < s1(Nat.lte)","s0(Nat.lte) < s1(Nat.lte)","not s0(Nat.lte) < s1(Nat.lte)"]}
-{"goal":"is_antisymmetric<Nat>(Nat.lte) and is_reflexive<Nat>(Nat.lte) and is_transitive<Nat>(Nat.lte)","proof":["not is_transitive<Nat>(Nat.lte) or not is_reflexive<Nat>(Nat.lte)","not is_reflexive<Nat>(Nat.lte)"]}
 {"goal":"forall(x0: Nat, x1: Nat) { PartialOrder.lte<Nat>(x0, x1) or PartialOrder.lte<Nat>(x1, x0) }","proof":["let (s0: Nat, s1: Nat) satisfy { not s0 <= s1 and not s1 <= s0 }","let s2: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 < x1 or x0 + s2(x0, x1) = x1 } and forall(x2: Nat, x3: Nat) { 0 != s2(x2, x3) or not x2 < x3 } }","not s0 < s1 or s0 + s2(s0, s1) = s1","s0 + s2(s0, s1) != s1 or s0 <= s1","s0 + s2(s0, s1) != s1","s0 < s1 or s1 <= s0","not s0 < s1","s0 < s1"]}

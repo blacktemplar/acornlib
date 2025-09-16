@@ -134,24 +134,24 @@
 {"goal":"triangle_nonpos_lte_nonneg","proof":["not n <= abs(a) + abs(b)"]}
 {"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["not abs(b) <= abs(a) or abs(a + b) <= abs(a) + abs(b) or a.is_negative or b.is_positive"]}
 {"goal":"abs(a) <= abs(b)","proof":["abs(a) < abs(b) or abs(b) <= abs(a)","abs(b) < abs(a) or abs(a) <= abs(b)","abs(b) < abs(a)","not abs(a) < abs(b) or not abs(b) < abs(a)","abs(a) < abs(b)","not abs(a) < abs(b)"]}
-{"goal":"abs(-a) <= abs(-b)","proof":["abs(-a) <= abs(-b) = abs(-b) >= abs(-a)","abs(a) <= abs(b) = abs(b) >= abs(a)","abs(-a) = abs(a)","abs(-b) = abs(b)"]}
+{"goal":"abs(-a) <= abs(-b)","proof":["abs(-a) = abs(a)","abs(-b) = abs(b)"]}
 {"goal":"not (-b).is_negative","proof":["(-b).is_negative = b.is_positive"]}
 {"goal":"not (-a).is_positive","proof":["sub_nat((--a).pos_part, (--a).neg_part) = --a","sub_nat(a.pos_part, a.neg_part) = a","(--a).neg_part = (-a).pos_part","(-a).neg_part = a.pos_part","(--a).pos_part = (-a).neg_part","(-a).pos_part = a.neg_part","(--a).is_negative = (-a).is_positive"]}
 {"goal":"abs(-b + -a) <= abs(-b) + abs(-a)","proof":["not abs(-a) <= abs(-b) or abs(-b + -a) <= abs(-b) + abs(-a) or (-b).is_negative or (-a).is_positive"]}
 {"goal":"abs(-(b + a)) <= abs(-b) + abs(-a)","proof":["-b + -a = -(b + a)"]}
 {"goal":"abs(b + a) <= abs(-b) + abs(-a)","proof":["abs(-(b + a)) = abs(b + a)"]}
-{"goal":"abs(b + a) <= abs(b) + abs(a)","proof":["abs(b + a) <= abs(-b) + abs(-a) = abs(-b) + abs(-a) >= abs(b + a)","abs(b + a) <= abs(b) + abs(a) = abs(b) + abs(a) >= abs(b + a)","abs(-b) + abs(-a) = abs(-a) + abs(-b)","abs(b) + abs(a) = abs(a) + abs(b)","abs(-a) = abs(a)","abs(-b) = abs(b)"]}
+{"goal":"abs(b + a) <= abs(b) + abs(a)","proof":["abs(-b) + abs(-a) = abs(-a) + abs(-b)","abs(b) + abs(a) = abs(a) + abs(b)","abs(-a) = abs(a)","abs(-b) = abs(b)"]}
 {"goal":"abs(a + b) <= abs(b) + abs(a)","proof":["b + a = a + b"]}
 {"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["abs(b) + abs(a) = abs(a) + abs(b)"]}
 {"goal":"triangle_nonneg_nonpos","proof":[]}
 {"goal":"abs(a + b) = abs(a) + abs(b)","proof":["abs(a) + abs(b) = abs(a + b) or a.is_positive or b.is_positive","b.is_positive or a.is_positive","not a.is_negative or not a.is_positive","not b.is_negative or not b.is_positive","not b.is_positive","not a.is_positive","a.is_positive"]}
-{"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["not abs(a + b) <= abs(a + b)","abs(a + b) <= abs(a + b) or abs(a + b) < abs(a + b)","not abs(a + b) < abs(a + b) or abs(a + b) <= abs(a + b)","abs(a + b) < abs(a + b)","not abs(a + b) < abs(a + b)"]}
+{"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["not abs(a + b) <= abs(a + b)","nat_base.mod(abs(a + b), Nat.0) <= abs(a + b)","nat_base.mod(abs(a + b), Nat.0) = abs(a + b)"]}
 {"goal":"abs(b + a) <= abs(b) + abs(a)","proof":["abs(b + a) <= abs(b) + abs(a) or b.is_negative or a.is_positive","a.is_positive","not a.is_negative or not a.is_positive"]}
 {"goal":"abs(b + a) <= abs(a) + abs(b)","proof":["abs(b) + abs(a) = abs(a) + abs(b)"]}
 {"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["b + a = a + b"]}
 {"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["abs(a + b) <= abs(a) + abs(b) or a.is_negative or b.is_positive","b.is_positive","not b.is_negative or not b.is_positive"]}
 {"goal":"abs(a + b) = abs(a) + abs(b)","proof":["abs(a) + abs(b) = abs(a + b) or a.is_negative or b.is_negative"]}
-{"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["not abs(a + b) <= abs(a + b)","abs(a + b) <= abs(a + b) or abs(a + b) < abs(a + b)","not abs(a + b) < abs(a + b) or abs(a + b) <= abs(a + b)","abs(a + b) < abs(a + b)","not abs(a + b) < abs(a + b)"]}
+{"goal":"abs(a + b) <= abs(a) + abs(b)","proof":["not abs(a + b) <= abs(a + b)","nat_base.mod(abs(a + b), Nat.0) <= abs(a + b)","nat_base.mod(abs(a + b), Nat.0) = abs(a + b)"]}
 {"goal":"triangle_ineq","proof":[]}
 {"goal":"b * c - a * c = (b - a) * c","proof":["b * c - a * c = (b - a) * c"]}
 {"goal":"b * c - a * c = c * (b - a)","proof":["(b - a) * c != c * (b - a)","(b - a) * c = c * (b - a)"]}

@@ -1,6 +1,6 @@
 {"goal":"abs_from_nat","proof":["Int.from_nat(n) != Int.from_nat(n) or abs(Int.from_nat(n)) = n"]}
 {"goal":"neg_nat_zero","proof":["Nat.0 != Nat.0 or neg_nat(Nat.0) = 0"]}
-{"goal":"n.suc != Nat.0","proof":["let s0: Nat satisfy { true }","s0 < s0 + n.suc","n.suc != Nat.0 or s0 + n.suc = s0","s0 + n.suc = s0","not s0 < s0 + n.suc or s0 + n.suc != s0"]}
+{"goal":"n.suc != Nat.0","proof":["n.suc != Nat.0 or Nat.0 * n.factorial = Nat.0.factorial","Nat.0 * n.factorial = Nat.0.factorial","Nat.0 * n.factorial = Nat.0","Nat.0.factorial = Nat.0","Nat.1 = Nat.0","Nat.0.suc != Nat.0"]}
 {"goal":"neg_nat(n.suc) = Int.neg_suc(n.suc - Nat.1)","proof":["Int.neg_suc(n.suc - Nat.1) = neg_nat(n.suc) or n.suc = Nat.0"]}
 {"goal":"n.suc - Nat.1 = n","proof":["n + Nat.1 != n.suc or n.suc - Nat.1 = n","n + Nat.1 != n.suc","n + Nat.1 = Nat.1 + n","Nat.1 + n = n.suc"]}
 {"goal":"neg_nat_suc","proof":["Int.neg_suc(n.suc - Nat.1) != neg_nat(n.suc)"]}
@@ -50,7 +50,7 @@
 {"goal":"Int.from_nat(p) = 0","proof":["-Int.from_nat(p) != Int.from_nat(p) or Int.from_nat(p) = 0"]}
 {"goal":"from_eq_neg_from","proof":["abs(Int.from_nat(q)) = abs(0)","Int.from_nat(Nat.0) != Int.from_nat(p) or Nat.0 = p","abs(Int.from_nat(Nat.0)) = Nat.0","abs(Int.from_nat(q)) = q","Int.from_nat(Nat.0) = Int.from_nat(p)","abs(Int.from_nat(q)) = abs(Int.from_nat(Nat.0))","abs(Int.from_nat(q)) = Nat.0","q = Nat.0","Nat.0 = p","Nat.0 != p"]}
 {"goal":"abs_zero","proof":["Int.from_nat(Nat.0) != 0 or abs(0) = Nat.0","Int.from_nat(Nat.0) != 0"]}
-{"goal":"abs(Int.from_nat(Nat.1)) != Nat.0","proof":["not Nat.0 < Nat.0.suc or Nat.0.suc != Nat.0","Nat.0 + Nat.1 = Nat.0.suc","abs(Int.from_nat(Nat.1)) = Nat.1","Nat.1 = Nat.0","Nat.0 < Nat.0.suc","Nat.0 + Nat.1 = Nat.1","Nat.0 + Nat.1 = Nat.0","Nat.0.suc = Nat.0"]}
+{"goal":"abs(Int.from_nat(Nat.1)) != Nat.0","proof":["Nat.0 + Nat.1 = Nat.0.suc","abs(Int.from_nat(Nat.0 + Nat.1)) = Nat.0 + Nat.1","Nat.0 + Nat.1 = Nat.1","abs(Int.from_nat(Nat.0 + Nat.1)) = Nat.0","Nat.0 + Nat.1 = Nat.0","Nat.0.suc = Nat.0","Nat.0.suc != Nat.0"]}
 {"goal":"one_neq_zero","proof":["abs(1) = Nat.0"]}
 {"goal":"Nat.0 <= n","proof":["Nat.0 + n != n or Nat.0 <= n","Nat.0 + n != n","Nat.0 + n = n"]}
 {"goal":"Int.from_nat(n - Nat.0) = sub_nat(n, Nat.0)","proof":["not Nat.0 <= n or Int.from_nat(n - Nat.0) = sub_nat(n, Nat.0)"]}
@@ -67,7 +67,7 @@
 {"goal":"sub_nat(m, n) = 0","proof":["sub_nat(m, m) != 0","sub_nat(m, m) = 0"]}
 {"goal":"sub_nat(m, n) = -0","proof":["-0 != 0"]}
 {"goal":"sub_nat(m, n) = -sub_nat(n, m)","proof":[]}
-{"goal":"not m <= n","proof":["not m <= n or m < n or n = m","m < n","not m < n or not n <= m"]}
+{"goal":"not m <= n","proof":["m < n or n < m or n = m","not m < n or not n <= m","not n < m or not m <= n","not n < m","not m < n","m < n"]}
 {"goal":"sub_nat(m, n) = -sub_nat(n, m)","proof":["-Int.from_nat(m - n) = sub_nat(n, m) or m <= n","not n <= m or Int.from_nat(m - n) = sub_nat(m, n)","--sub_nat(m, n) = sub_nat(m, n)","--sub_nat(m, n) != -sub_nat(n, m)","-sub_nat(m, n) != sub_nat(n, m)","Int.from_nat(m - n) = sub_nat(m, n)","-Int.from_nat(m - n) = sub_nat(n, m)","-Int.from_nat(m - n) != sub_nat(n, m)"]}
 {"goal":"-Int.from_nat(n - m) = sub_nat(m, n)","proof":["-Int.from_nat(n - m) = sub_nat(m, n) or n <= m"]}
 {"goal":"not n < m","proof":["not n.suc <= m.suc or n <= m","not n < m or n < m.suc","n < m.suc","not n < m.suc or n.suc <= m.suc","not n.suc <= m.suc","n.suc <= m.suc"]}
