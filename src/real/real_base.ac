@@ -237,6 +237,11 @@ theorem from_rat_gt_imp_gt(r1: Rat, r2: Rat) {
 
 theorem not_gt_rat_self(r: Rat) {
     not Real.from_rat(r).gt_rat(r)
+} by {
+    if Real.from_rat(r).gt_rat(r) {
+        r > r
+        false
+    }
 }
 
 theorem zero_not_positive {
@@ -1029,6 +1034,7 @@ theorem lt_add_pos(a: Real, b: Real) {
         Real.0 < Real.from_rat(r) and Real.from_rat(r) < b
     }
     Real.from_rat(r).is_positive
+    Rat.0 <= r
     r.is_positive
     a < a + Real.from_rat(r)
     a + Real.from_rat(r) <= a + b

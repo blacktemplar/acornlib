@@ -1,5 +1,5 @@
 {"goal":"Rat.0 <= Rat.from_nat(n)","proof":["Rat.0 <= Rat.from_nat(n)"]}
-{"goal":"Rat.1 + Rat.0 <= Rat.1 + Rat.from_nat(n)","proof":["not Rat.0 <= Rat.from_nat(n) or (Rat.from_nat(n) - Rat.0).is_positive or Rat.from_nat(n) = Rat.0","not Rat.from_nat(n).is_positive or Rat.1 < Rat.1 + Rat.from_nat(n)","not Rat.1 + Rat.0 < Rat.1 + Rat.from_nat(n) or Rat.1 + Rat.0 <= Rat.1 + Rat.from_nat(n)","Rat.1 + Rat.from_nat(n) != Rat.1 + Rat.0 or Rat.1 + Rat.0 <= Rat.1 + Rat.from_nat(n)","Rat.from_nat(n) - Rat.0 = Rat.from_nat(n)","Rat.1 + Rat.0 = Rat.1","Rat.1 + Rat.from_nat(n) != Rat.1 + Rat.0","Rat.from_nat(n) != Rat.0","(Rat.from_nat(n) - Rat.0).is_positive","Rat.from_nat(n).is_positive","not Rat.1 + Rat.0 < Rat.1 + Rat.from_nat(n)","not Rat.1 < Rat.1 + Rat.from_nat(n)"]}
+{"goal":"Rat.1 + Rat.0 <= Rat.1 + Rat.from_nat(n)","proof":["not Rat.0 <= Rat.from_nat(n) or (Rat.from_nat(n) - Rat.0).is_positive or Rat.from_nat(n) = Rat.0","not (Rat.1 + Rat.from_nat(n) - (Rat.1 + Rat.0)).is_positive or Rat.1 + Rat.0 <= Rat.1 + Rat.from_nat(n)","Rat.from_nat(n) + Rat.1 - Rat.1 = Rat.from_nat(n)","Rat.from_nat(n) + Rat.1 = Rat.1 + Rat.from_nat(n)","Rat.1 + Rat.from_nat(n) != Rat.1 + Rat.0 or Rat.1 + Rat.0 <= Rat.1 + Rat.from_nat(n)","Rat.from_nat(n) - Rat.0 = Rat.from_nat(n)","Rat.1 + Rat.0 = Rat.1","Rat.1 + Rat.from_nat(n) != Rat.1 + Rat.0","Rat.from_nat(n) != Rat.0","(Rat.from_nat(n) - Rat.0).is_positive","Rat.from_nat(n).is_positive","not (Rat.1 + Rat.from_nat(n) - (Rat.1 + Rat.0)).is_positive","not (Rat.1 + Rat.from_nat(n) - Rat.1).is_positive","not (Rat.from_nat(n) + Rat.1 - Rat.1).is_positive"]}
 {"goal":"Rat.0 < Rat.1 + Rat.from_nat(n)","proof":["not (Rat.1 + Rat.0).is_positive or not Rat.1 + Rat.0 <= Rat.1 + Rat.from_nat(n) or (Rat.1 + Rat.from_nat(n)).is_positive","not (Rat.1 + Rat.from_nat(n)).is_positive or Rat.0 < Rat.1 + Rat.from_nat(n)","not (Rat.1 + Rat.from_nat(n)).is_positive","not (Rat.1 + Rat.0).is_positive","Rat.1 + Rat.0 = Rat.1","not Rat.1.is_positive"]}
 {"goal":"(Rat.1 + Rat.from_nat(n)).is_positive","proof":["not Rat.0 < Rat.1 + Rat.from_nat(n) or (Rat.1 + Rat.from_nat(n)).is_positive"]}
 {"goal":"Rat.1.is_positive","proof":[]}
@@ -76,7 +76,7 @@
 {"goal":"a * c = Rat.0","proof":["a * Rat.0 != Rat.0","a * Rat.0 = Rat.0"]}
 {"goal":"b * c = Rat.0","proof":["b * Rat.0 != Rat.0","b * Rat.0 = Rat.0"]}
 {"goal":"a * c <= b * c","proof":[]}
-{"goal":"c.is_positive","proof":["not Rat.0 <= c or Rat.0 < c or Rat.0 = c","not Rat.0 < c or c.is_positive","Rat.0 < c","not Rat.0 < c"]}
+{"goal":"c.is_positive","proof":["not Rat.0 <= c or (c - Rat.0).is_positive or Rat.0 = c","c - Rat.0 = c","(c - Rat.0).is_positive","not (c - Rat.0).is_positive"]}
 {"goal":"a * c <= b * c","proof":["not c.is_positive or not a <= b or a * c <= b * c"]}
 {"goal":"lte_mul_nonneg","proof":[]}
 {"goal":"not b < a","proof":["let s0: Rat -> Int satisfy { forall(x0: Rat) { Rat.from_int(s0(x0)) <= x0 } and forall(x1: Rat) { x1 < Rat.from_int(s0(x1) + Int.1) } }","not b < Rat.from_int(s0(a) + Int.1) or not a < Rat.from_int(s0(a) + Int.1)","not b < a or not a < Rat.from_int(s0(a) + Int.1) or b < Rat.from_int(s0(a) + Int.1)","a < Rat.from_int(s0(a) + Int.1)","not a < Rat.from_int(s0(a) + Int.1) or b < Rat.from_int(s0(a) + Int.1)","not b < Rat.from_int(s0(a) + Int.1)","b < Rat.from_int(s0(a) + Int.1)"]}
@@ -165,7 +165,7 @@
 {"goal":"not b.is_negative","proof":["not b < a or not a <= b or b < b","not a.is_positive or not a <= b or b.is_positive","a.is_negative or a.is_positive or Rat.0 = a","not b.is_negative or b < Rat.0","b < Rat.0","not b.is_negative or not b.is_positive","not b.is_positive","not a.is_positive","Rat.0 = a","not b < b","b < a","not b < a or b < b"]}
 {"goal":"not d.is_negative","proof":["not d < c or not c <= d or d < d","not c.is_positive or not c <= d or d.is_positive","c.is_negative or c.is_positive or Rat.0 = c","not d.is_negative or d < Rat.0","d < Rat.0","not d.is_negative or not d.is_positive","not d.is_positive","not c.is_positive","Rat.0 = c","not d < d","d < c","not d < c or d < d"]}
 {"goal":"c * b <= d * b","proof":["not Rat.0 <= b or not c <= d or c * b <= d * b","not Rat.0 <= b","not b.is_positive or not c <= d or c * b <= d * b","not b.is_positive","b.is_negative or b.is_positive or Rat.0 = b","Rat.0 = b"]}
-{"goal":"a * c <= b * d","proof":["a * d >= a * c = a * c <= a * d","d * b >= c * b = c * b <= d * b","c * a = a * c","d * a = a * d"]}
+{"goal":"a * c <= b * d","proof":["c * a = a * c","d * a = a * d"]}
 {"goal":"a < b","proof":["not a <= b or a < b or b = a"]}
 {"goal":"a * c <= b * d","proof":["not a * c <= b * c","c <= c","not Rat.0 <= c or not a <= b or a * c <= b * c","not Rat.0 <= c","not c.is_positive or not a <= b or a * c <= b * c","not c.is_positive","c.is_negative or c.is_positive or Rat.0 = c","Rat.0 = c"]}
 {"goal":"c < d","proof":["not c <= d or c < d or d = c"]}

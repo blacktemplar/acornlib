@@ -790,21 +790,6 @@ attributes Rat {
     define lte(self, other: Rat) -> Bool {
         (other - self).is_positive or self = other
     }
-
-    /// True if this rational is less than the other.
-    define lt(self, other: Rat) -> Bool {
-        self <= other and self != other
-    }
-
-    /// True if this rational is greater than the other.
-    define gt(self, other: Rat) -> Bool {
-        other < self
-    }
-
-    /// True if this rational is greater than or equal to the other.
-    define gte(self, other: Rat) -> Bool {
-        other <= self
-    }
 }
 
 from util import is_reflexive, is_transitive, is_antisymmetric

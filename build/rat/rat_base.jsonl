@@ -620,8 +620,8 @@
 {"goal":"a.abs = Rat.0","proof":["a.abs != a","not a.is_negative or a.abs = -a","a.is_negative or a.abs = a","a.is_negative","Rat.0 - Rat.0 = -Rat.0","Rat.0 - Rat.0 = Rat.0","Rat.0 - Rat.0 != a.abs","-Rat.0 != a.abs","a.abs = -a","a.abs != -a"]}
 {"goal":"Rat.0 <= a.abs","proof":["a.abs != Rat.0 or Rat.0 <= a.abs"]}
 {"goal":"a.abs != Rat.0","proof":["a.abs != Rat.0 or Rat.0 = a"]}
-{"goal":"a.abs.is_positive","proof":["(Rat.1 * a.abs).abs = (Rat.1 * a).abs","not a.abs <= Rat.0 or (Rat.0 - a.abs).is_positive or a.abs = Rat.0","Rat.0 > a.abs or Rat.0 < a.abs or a.abs = Rat.0","a.abs.abs = -a.abs or a.abs.is_positive","Rat.0 > a.abs = a.abs < Rat.0","not a.abs < Rat.0 or a.abs <= Rat.0","a.abs.abs = -a.abs","Rat.0 - a.abs = -a.abs","not Rat.0 < a.abs or a.abs.is_positive","not Rat.0 < a.abs","Rat.0 > a.abs","Rat.1 * a = a","Rat.1 * a.abs = a.abs","not (Rat.1 * a).abs.is_positive","a.abs < Rat.0","not a.abs <= Rat.0 or (Rat.0 - a.abs).is_positive","not (Rat.1 * a.abs).abs.is_positive","not a.abs.abs.is_positive","a.abs <= Rat.0","not (-a.abs).is_positive","(Rat.0 - a.abs).is_positive","not (Rat.0 - a.abs).is_positive"]}
-{"goal":"Rat.0 <= a.abs","proof":["not Rat.0 < a.abs or Rat.0 <= a.abs","not Rat.0 < a.abs","not a.abs.is_positive or Rat.0 < a.abs"]}
+{"goal":"a.abs.is_positive","proof":["(Rat.1 * a.abs).abs = (Rat.1 * a).abs","a.abs.abs = -a.abs or a.abs.is_positive","a.abs.is_negative or a.abs.is_positive or a.abs = Rat.0","a.abs.is_negative","a.abs.abs = -a.abs","(-a).abs = a.abs","not a.abs.is_negative or (-a.abs).is_positive","Rat.1 * (-a).abs = (-a).abs","Rat.1 * a = a","(-a.abs).is_positive"]}
+{"goal":"Rat.0 <= a.abs","proof":["not (a.abs - Rat.0).is_positive or Rat.0 <= a.abs","not (a.abs - Rat.0).is_positive","a.abs - Rat.0 = a.abs"]}
 {"goal":"zero_lte_abs","proof":[]}
 {"goal":"r / p * p < r / q * p","proof":["not r / p < r / q or not p.is_positive or r / p * p < r / q * p"]}
 {"goal":"r / p * p = r","proof":["r / p * p = r or Rat.0 = p","Rat.0 = p","p.num.is_positive = p.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
@@ -678,7 +678,7 @@
 {"goal":"a * c < b / c * c","proof":["not a < b / c or not c.is_positive or a * c < b / c * c"]}
 {"goal":"b / c * c = b","proof":["b / c * c = b or Rat.0 = c","Rat.0 = c","c.num.is_positive = c.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
 {"goal":"lt_rhs_div_pos","proof":["not a * c < b / c * c"]}
-{"goal":"lte_abs","proof":["not q <= Rat.0 or not Rat.0 <= q.abs or q <= q.abs","not q < Rat.0 or q <= Rat.0","q.abs = q or q.is_negative","not q.is_negative or q < Rat.0","q.abs != q or q <= q.abs","q.abs != q","Rat.0 <= q.abs","not Rat.0 <= q.abs or not q <= Rat.0","not q <= Rat.0","q.is_negative","not q < Rat.0","q < Rat.0"]}
+{"goal":"lte_abs","proof":["not q <= Rat.0 or not Rat.0 <= q.abs or q <= q.abs","not (Rat.0 - q).is_positive or q <= Rat.0","q.abs = q or q.is_negative","q.abs != q or q <= q.abs","q.abs != q","Rat.0 - q = -q","not q.is_negative or (-q).is_positive","Rat.0 <= q.abs","not Rat.0 <= q.abs or not q <= Rat.0","not q <= Rat.0","q.is_negative","not (Rat.0 - q).is_positive","(-q).is_positive","not (-q).is_positive"]}
 {"goal":"a - b = -(b - a)","proof":["-(b - a) = a - b"]}
 {"goal":"(a - b).abs = (b - a).abs","proof":["-(a - b) = b - a","(-(a - b)).abs = (a - b).abs"]}
 {"goal":"(a - b).abs < eps","proof":["(a - b).abs < eps = a.is_close(b, eps)"]}
