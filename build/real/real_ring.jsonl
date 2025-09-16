@@ -143,7 +143,7 @@
 {"goal":"x * z <= y * z","proof":["not x * z < y * z or x * z <= y * z"]}
 {"goal":"lte_mul_nonneg_right","proof":[]}
 {"goal":"lte_mul_nonneg_left","proof":["not x <= y or x * z <= y * z or z.is_negative","x * z = z * x","y * z = z * y","not z * x <= y * z","x * z <= y * z or z.is_negative","not x * z <= y * z","x * z <= y * z"]}
-{"goal":"not y < x","proof":["not y >= x or not y < x","not y >= x","y >= x = x <= y","not x <= y","not x < y or x <= y"]}
+{"goal":"not y < x","proof":["not x < y or not y < x or x < x","let s0: (Real, Real) -> Rat satisfy { forall(x0: Real, x1: Real) { not x0 < x1 or x1.gt_rat(s0(x0, x1)) } and forall(x2: Real, x3: Real) { not x2.gt_rat(s0(x2, x3)) or not x2 < x3 } }","not x.gt_rat(s0(x, x)) or not x < x","not x < x or x.gt_rat(s0(x, x))","not x < y or x < x","x < x","not x.gt_rat(s0(x, x))","x.gt_rat(s0(x, x))"]}
 {"goal":"y != x","proof":["not x < x","not x < y"]}
 {"goal":"x - y != Real.0","proof":["x - y != Real.0 or y = x"]}
 {"goal":"(x - y).is_negative","proof":["not (x - y).is_positive or y < x","(x - y).is_positive or x - y = Real.0 or (x - y).is_negative","not (x - y).is_positive","(x - y).is_positive"]}
@@ -151,8 +151,8 @@
 {"goal":"lt_mul_neg_right","proof":["x * z - y * z = (x - y) * z","not (x * z - y * z).is_positive or y * z < x * z","(x * z - y * z).is_positive","not (x * z - y * z).is_positive"]}
 {"goal":"lt_mul_neg_left","proof":["not x < y or not z.is_negative or y * z < x * z","x * z = z * x","y * z = z * y","not y * z < z * x","not z.is_negative or y * z < x * z","not y * z < x * z","y * z < x * z"]}
 {"goal":"add_neg_neg","proof":["not x < Real.0 or not y < Real.0 or x + y < Real.0 + Real.0","not x + y < Real.0 or (x + y).is_negative","not x + y < Real.0","not x.is_negative or x < Real.0","not y.is_negative or y < Real.0","Real.0 + Real.0 = Real.0","y < Real.0","x < Real.0","not x + y < Real.0 + Real.0"]}
-{"goal":"zero_lte_imp_non_neg","proof":["not x >= Real.0 or not x < Real.0","x >= Real.0 = Real.0 <= x","not x.is_negative or x < Real.0","x < Real.0","x >= Real.0","not x >= Real.0"]}
-{"goal":"non_neg_imp_zero_lte","proof":["x >= Real.0 or x < Real.0","x >= Real.0 = Real.0 <= x","not x >= Real.0","not x < Real.0 or x.is_negative","x < Real.0","not x < Real.0"]}
+{"goal":"zero_lte_imp_non_neg","proof":["not x <= Real.0 or not Real.0 <= x or Real.0 = x","not x < Real.0 or x <= Real.0","not x.is_negative or x < Real.0","x < Real.0","not x.is_negative or Real.0 != x","Real.0 != x","x <= Real.0","not x <= Real.0"]}
+{"goal":"non_neg_imp_zero_lte","proof":["not x <= Real.0 or x < Real.0 or Real.0 = x","x <= Real.0 or Real.0 <= x","x <= Real.0","not x < Real.0 or x.is_negative","x <= x","not x < Real.0","Real.0 = x"]}
 {"goal":"Real.from_rat(a) * Real.from_rat(b) = limit_rat(mr)","proof":["limit_rat(mul_rat_seq(rat_seq(Real.from_rat(a)), rat_seq(Real.from_rat(b)))) = Real.from_rat(a) * Real.from_rat(b)"]}
 {"goal":"eq_seq(rat_seq(Real.from_rat(a)), const_rat_seq(a))","proof":["not converges_to(lift_seq(const_rat_seq(a)), limit_rat(rat_seq(Real.from_rat(a)))) or not converges(lift_seq(rat_seq(Real.from_rat(a)))) or eq_seq(rat_seq(Real.from_rat(a)), const_rat_seq(a))","converges_to(lift_seq(const_rat_seq(a)), Real.from_rat(a))","limit_rat(rat_seq(Real.from_rat(a))) = Real.from_rat(a)","converges(lift_seq(rat_seq(Real.from_rat(a))))","not converges_to(lift_seq(const_rat_seq(a)), limit_rat(rat_seq(Real.from_rat(a))))"]}
 {"goal":"eq_seq(rat_seq(Real.from_rat(b)), const_rat_seq(b))","proof":["not converges_to(lift_seq(const_rat_seq(b)), limit_rat(rat_seq(Real.from_rat(b)))) or not converges(lift_seq(rat_seq(Real.from_rat(b)))) or eq_seq(rat_seq(Real.from_rat(b)), const_rat_seq(b))","converges_to(lift_seq(const_rat_seq(b)), Real.from_rat(b))","limit_rat(rat_seq(Real.from_rat(b))) = Real.from_rat(b)","converges(lift_seq(rat_seq(Real.from_rat(b))))","not converges_to(lift_seq(const_rat_seq(b)), limit_rat(rat_seq(Real.from_rat(b))))"]}

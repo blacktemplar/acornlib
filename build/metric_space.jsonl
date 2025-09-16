@@ -1,9 +1,9 @@
 {"goal":"x.distance(x) <= x.distance(y) + y.distance(x)","proof":["x.distance(x) <= x.distance(y) + y.distance(x)"]}
-{"goal":"0 <= x.distance(y) + x.distance(y)","proof":["Real.new(lib(real.real_base).add_gt(x.distance(y), x.distance(y))) = x.distance(y) + x.distance(y)","Real.new(lib(real.real_base).add_gt(x.distance(y), y.distance(x))) = x.distance(y) + y.distance(x)","y.distance(x) = x.distance(y)","x.distance(y) + x.distance(y) >= 0 = 0 <= x.distance(y) + x.distance(y)","x.distance(y) + y.distance(x) >= x.distance(x) = x.distance(x) <= x.distance(y) + y.distance(x)","x.distance(x) = 0"]}
+{"goal":"0 <= x.distance(y) + x.distance(y)","proof":["Real.new(lib(real.real_base).add_gt(x.distance(y), x.distance(y))) = x.distance(y) + x.distance(y)","Real.new(lib(real.real_base).add_gt(x.distance(y), y.distance(x))) = x.distance(y) + y.distance(x)","y.distance(x) = x.distance(y)","x.distance(x) = 0"]}
 {"goal":"0 <= x.distance(y)","proof":["not x.distance(y).is_negative or not x.distance(y).is_negative or (x.distance(y) + x.distance(y)).is_negative","0 <= x.distance(y) or x.distance(y).is_negative","x.distance(y).is_negative","not 0 <= x.distance(y) + x.distance(y) or not (x.distance(y) + x.distance(y)).is_negative","not (x.distance(y) + x.distance(y)).is_negative"]}
 {"goal":"distance_non_negative","proof":["not 0 <= x.distance(y) or not x.distance(y).is_negative"]}
 {"goal":"0 <= discrete(x, y)","proof":["y != x or discrete(x, y) = 0","0 <= discrete(x, y) or discrete(x, y).is_negative","discrete(x, y).is_negative","discrete(x, y) != 0 or not discrete(x, y).is_negative","discrete(x, y) = 0","discrete(x, y) != 0"]}
-{"goal":"0 <= discrete(x, y)","proof":["discrete(x, y) = 1 or y = x","discrete(x, y) = 1","discrete(x, y) >= 0 = 0 <= discrete(x, y)","not discrete(x, y) >= 0","not 1 >= 0","1 * 1 >= 0","1 * 1 = 1"]}
+{"goal":"0 <= discrete(x, y)","proof":["discrete(x, y) = 1 or y = x","discrete(x, y) = 1","not 0 < discrete(x, y) or 0 <= discrete(x, y)","not 0 < discrete(x, y)","not 0 < 1","0 < 0 + 1","0 + 1 = 1"]}
 {"goal":"zero_lte_discrete","proof":[]}
 {"goal":"discrete_self_distance_is_zero","proof":["x != x or discrete(x, x) = 0"]}
 {"goal":"discrete_dist_zero_imp_eq","proof":["discrete(x, y) = 1 or y = x","discrete(x, y) = 1","0 < 0 + 1","not 0 < discrete(x, y) or discrete(x, y) != 0","0 + 1 = 1","not 0 < discrete(x, y)","not 0 < 1"]}

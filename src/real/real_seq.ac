@@ -120,8 +120,9 @@ theorem cauchy_gt_is_lower(q: Nat -> Real) {
     forall(x: Rat, y: Rat) {
         if cauchy_gt_rat(q, y) and x < y {
             let lb: Real satisfy {
-                Real.from_rat(y) < lb and eventual_lb(q, lb)
+                lb > Real.from_rat(y) and eventual_lb(q, lb)
             }
+            Real.from_rat(y) < lb
             Real.from_rat(x) < lb
             cauchy_gt_rat(q, x)
         }

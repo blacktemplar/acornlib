@@ -220,11 +220,6 @@ attributes Real {
     define lt(self, other: Real) -> Bool {
         self != other and self.lte(other)
     }
-
-    /// True if this real number is greater than or equal to the other.
-    define gte(self, other: Real) -> Bool {
-        other.lte(self)
-    }
 }
 
 theorem gt_imp_from_rat_gt(r1: Rat, r2: Rat) {
@@ -753,6 +748,12 @@ theorem add_zero_left(a: Real) {
 
 theorem from_rat_maintains_lt(p: Rat, q: Rat) {
     p < q implies Real.from_rat(p) < Real.from_rat(q)
+} by {
+    if not Real.from_rat(p) < Real.from_rat(q) {
+        Real.from_rat(q) <= Real.from_rat(p)
+        q <= p
+        false
+    }
 }
 
 theorem add_lt_lt(a: Real, b: Real, c: Real, d: Real) {

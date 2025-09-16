@@ -62,14 +62,14 @@
 {"goal":"x < l","proof":["not l - eps2 < l","not l.is_close(l, eps2) or l - eps2 < l","not eps2.is_positive or l.is_close(l, eps2)","l.is_close(l, eps2)"]}
 {"goal":"not is_upper_bound(a, x)","proof":["not is_least_upper_bound(a, l) or not is_upper_bound(a, x) or not x < l","not is_least_upper_bound(a, l) or not x < l"]}
 {"goal":"exists(k0: Nat) { not a(k0) <= x }","proof":["let s0: (Nat -> Real, Real) -> Nat satisfy { forall(x0: Nat -> Real, x1: Real, x2: Nat) { not is_upper_bound(x0, x1) or x0(x2) <= x1 } and forall(x3: Nat -> Real, x4: Real) { not x3(s0(x3, x4)) <= x4 or is_upper_bound(x3, x4) } }","a(s0(a, x)) <= x","not a(s0(a, x)) <= x or is_upper_bound(a, x)"]}
-{"goal":"l - eps2 < a(n)","proof":["not x < a(n)","x >= a(n) or x < a(n)","x >= a(n)","x >= a(n) = a(n) <= x"]}
+{"goal":"l - eps2 < a(n)","proof":["not x < a(n)","not x <= a(n) or x < a(n) or a(n) = x","x <= a(n) or a(n) <= x","x <= x","x <= a(n)","a(n) = x"]}
 {"goal":"n <= i","proof":[]}
 {"goal":"a(n) <= a(i)","proof":["not is_increasing(a) or not n <= i or a(n) <= a(i)"]}
 {"goal":"n <= j","proof":[]}
 {"goal":"a(n) <= a(j)","proof":["not is_increasing(a) or not n <= j or a(n) <= a(j)"]}
 {"goal":"a(i) <= l","proof":["not is_upper_bound(a, l) or a(i) <= l","not is_upper_bound(a, l)","not is_least_upper_bound(a, l) or is_upper_bound(a, l)"]}
 {"goal":"a(j) <= l","proof":["not is_upper_bound(a, l) or a(j) <= l","not is_upper_bound(a, l)","not is_least_upper_bound(a, l) or is_upper_bound(a, l)"]}
-{"goal":"l - eps2 < a(n)","proof":["not x < a(n)","a(n) > x or a(n) <= x","a(n) > x = x < a(n)","a(n) > x","not a(n) > x"]}
+{"goal":"l - eps2 < a(n)","proof":["not x < a(n)","x >= a(n) or x < a(n)","x >= a(n)","x >= a(n) = a(n) <= x"]}
 {"goal":"l - eps2 < a(i)","proof":["not x < a(i)","x < a(n)","not x < a(n) or not a(n) <= a(i) or x < a(i)","not a(n) <= a(i) or not x < a(n)"]}
 {"goal":"l - eps2 < a(j)","proof":["not x < a(j)","x < a(n)","not x < a(n) or not a(n) <= a(j) or x < a(j)","not a(n) <= a(j) or not x < a(n)"]}
 {"goal":"a(i) < l + eps2","proof":["not l.is_close(l, eps2) or l < l + eps2","not l < l + eps2 or not a(i) <= l or a(i) < l + eps2","not eps2.is_positive or l.is_close(l, eps2)","l.is_close(l, eps2)","not l < l + eps2 or not a(i) <= l","not l < l + eps2"]}
