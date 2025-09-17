@@ -988,9 +988,44 @@ theorem pos_geom_converges(r: Real) {
     is_increasing(partial(r.pow))
 }
 
-// theorem abs_pow(r: Real, n: Nat) {
-//     r.abs.pow(n) = r.pow(n).abs
-// }
+theorem abs_pow(r: Real, n: Nat) {
+    r.abs.pow(n) = r.pow(n).abs
+} by {
+    // Proof by induction on n
+    define p(k: Nat) -> Bool {
+        r.abs.pow(k) = r.pow(k).abs
+    }
+
+    // Base case: n = 0
+    r.abs.pow(Nat.0) = Real.1
+    r.pow(Nat.0) = Real.1
+    r.pow(Nat.0).abs = Real.1.abs
+    Real.1.abs = Real.1
+    r.abs.pow(Nat.0) = r.pow(Nat.0).abs
+    p(Nat.0)
+
+    // Inductive step
+    forall(k: Nat) {
+        if p(k) {
+            // Induction hypothesis: r.abs.pow(k) = r.pow(k).abs
+            r.abs.pow(k) = r.pow(k).abs
+
+            // Need to prove: r.abs.pow(k.suc) = r.pow(k.suc).abs
+            r.abs.pow(k.suc) = r.abs * r.abs.pow(k)
+            r.abs.pow(k.suc) = r.abs * r.pow(k).abs
+            r.pow(k.suc) = r * r.pow(k)
+            r.pow(k.suc).abs = (r * r.pow(k)).abs
+            (r * r.pow(k)).abs = r.abs * r.pow(k).abs
+            r.pow(k.suc).abs = r.abs * r.pow(k).abs
+            r.abs.pow(k.suc) = r.pow(k.suc).abs
+            p(k.suc)
+        }
+    }
+
+    // By induction, p holds for all k
+    p(n)
+}
+
 
 // theorem abs_geom_comm(r: Real) {
 //     compose(Real.abs, r.pow) = r.abs.pow

@@ -356,3 +356,20 @@
 {"goal":"exists(k0: Real) { is_upper_bound(partial<Real>(r.pow), k0) }","proof":["let s0: Real -> Real satisfy { forall(x0: Real) { not 0 <= x0 or not x0 < 1 or is_upper_bound(partial<Real>(x0.pow), s0(x0)) } }","not is_upper_bound(partial<Real>(r.pow), s0(r))","not 0 <= r or not r < 1 or is_upper_bound(partial<Real>(r.pow), s0(r))"]}
 {"goal":"is_increasing(partial<Real>(r.pow))","proof":["not 0 <= r or nonneg_seq(r.pow)","not nonneg_seq(r.pow) or is_increasing(partial<Real>(r.pow))","nonneg_seq(r.pow)","not nonneg_seq(r.pow)"]}
 {"goal":"pos_geom_converges","proof":["not is_upper_bound(partial<Real>(r.pow), ub) or not is_increasing(partial<Real>(r.pow)) or converges(partial<Real>(r.pow))"]}
+{"goal":"r.abs.pow(Nat.0) = 1","proof":["Nat.0 != Nat.0 or r.abs.pow(Nat.0) = 1"]}
+{"goal":"r.pow(Nat.0) = 1","proof":["Nat.0 != Nat.0 or r.pow(Nat.0) = 1"]}
+{"goal":"r.pow(Nat.0).abs = 1.abs","proof":["r.pow(Nat.0) != 1"]}
+{"goal":"1.abs = 1","proof":["not Rat.1.is_positive or Real.from_rat(Rat.1).is_positive","not 1.is_positive or 1.abs = 1","not 1.is_positive","not Real.from_rat(Rat.1).is_positive"]}
+{"goal":"r.abs.pow(Nat.0) = r.pow(Nat.0).abs","proof":[]}
+{"goal":"p(Nat.0)","proof":["r.abs.pow(Nat.0) != r.pow(Nat.0).abs or p(Nat.0)"]}
+{"goal":"r.abs.pow(k) = r.pow(k).abs","proof":["not p(k) or r.abs.pow(k) = r.pow(k).abs"]}
+{"goal":"r.abs.pow(k.suc) = r.abs * r.abs.pow(k)","proof":["k.suc != k.suc or r.abs * r.abs.pow(k) = r.abs.pow(k.suc)"]}
+{"goal":"r.abs.pow(k.suc) = r.abs * r.pow(k).abs","proof":["r.abs * r.abs.pow(k) != r.abs.pow(k.suc)"]}
+{"goal":"r.pow(k.suc) = r * r.pow(k)","proof":["k.suc != k.suc or r * r.pow(k) = r.pow(k.suc)"]}
+{"goal":"r.pow(k.suc).abs = (r * r.pow(k)).abs","proof":["r * r.pow(k) != r.pow(k.suc)"]}
+{"goal":"(r * r.pow(k)).abs = r.abs * r.pow(k).abs","proof":["r.abs * r.pow(k).abs = (r * r.pow(k)).abs"]}
+{"goal":"r.pow(k.suc).abs = r.abs * r.pow(k).abs","proof":["r.abs * r.pow(k).abs != (r * r.pow(k)).abs"]}
+{"goal":"r.abs.pow(k.suc) = r.pow(k.suc).abs","proof":["r.abs * r.pow(k).abs != r.abs.pow(k.suc)"]}
+{"goal":"p(k.suc)","proof":["r.abs.pow(k.suc) != r.pow(k.suc).abs or p(k.suc)"]}
+{"goal":"p(n)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(Nat.0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(Nat.0) or x2(x3) } }","not p(s0(p)) or p(s0(p).suc)","not p(s0(p).suc) or not p(Nat.0) or p(n)","not p(s0(p).suc)","not p(Nat.0) or p(s0(p)) or p(n)","not p(s0(p))","p(s0(p))"]}
+{"goal":"abs_pow","proof":["not p(n) or r.abs.pow(n) = r.pow(n).abs"]}
