@@ -884,9 +884,9 @@ theorem pow_nonneg(r: Real, n: Nat) {
     p(n)
 }
 
-theorem geom_bounded(r: Real, n: Nat) {
+theorem geom_indirect_upper_bound(r: Real, n: Nat) {
     0 <= r and r < 1 implies
-    sum(map(n.range, r.pow)) * (1 - r) <= 1
+    partial(r.pow, n) * (1 - r) <= 1
 } by {
     (r + -1) * sum(map(n.range, r.pow)) = r.pow(n) + -1
     (1 - r) * sum(map(n.range, r.pow)) = 1 - r.pow(n)
@@ -894,4 +894,53 @@ theorem geom_bounded(r: Real, n: Nat) {
     let x = r.pow(n)
     0 <= x
     0 + (1 - x) <= x + (1 - x)
+    sum(map(n.range, r.pow)) * (1 - r) <= 1
 }
+
+theorem pos_mul_eq_pos(a: Real, b: Real) {
+    a.is_positive and (a * b).is_positive implies b.is_positive
+}
+
+theorem exists_large_mul(a: Real, b: Real) {
+    a.is_positive and b.is_positive implies exists(c: Real) {
+        a < b * c
+    }
+} by {
+    let ra: Rat satisfy {
+        a < Real.from_rat(ra)
+    }
+    Real.from_rat(ra).is_positive
+    ra.is_positive
+    let rb: Rat satisfy {
+        rb.is_positive and Real.from_rat(rb) < b
+    }
+    let rc = ra / rb
+    rc.is_positive
+    ra = rb * rc
+    ra <= rb * rc
+    Real.from_rat(ra) <= Real.from_rat(rb) * Real.from_rat(rc)
+    a < Real.from_rat(rb) * Real.from_rat(rc)
+    Real.from_rat(rb) * Real.from_rat(rc) < b * Real.from_rat(rc)
+    a < b * Real.from_rat(rc)
+}
+
+// theorem geom_has_upper_bound(r: Real) {
+//     0 <= r and r < 1 implies
+//     exists(ub: Real) {
+//         is_upper_bound(partial(r.pow), ub)
+//     }
+// } by {
+//     (1 - r).is_positive
+//     let ub: Real satisfy {
+//         1 < ub * (1 - r)
+//     }
+//     (ub * (1 - r)).is_positive
+//     ub.is_positive
+//     forall(n: Nat) {
+//         partial(r.pow, n) * (1 - r) <= 1
+//         partial(r.pow, n) * (1 - r) * ub <= ub
+//         partial(r.pow, n) < (1 - r) * ub
+//         partial(r.pow, n) < ub
+//     }
+//     is_upper_bound(partial(r.pow), ub)
+// }
