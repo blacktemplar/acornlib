@@ -1039,3 +1039,31 @@ theorem geom_converges(r: Real) {
     partial(r.abs.pow) = partial(compose(Real.abs, r.pow))
     converges(partial(compose(Real.abs, r.pow)))
 }
+
+theorem partial_tail_decomp(a: Nat -> Real, m: Nat) {
+    converges(partial(a)) implies
+    limit(partial(a)) = partial(a, m) + limit(partial(tail(a, m)))
+} by {
+    converges_to(partial(tail(a, m)), limit(partial(a)) - partial(a, m))
+    limit(partial(tail(a, m))) = limit(partial(a)) - partial(a, m)
+}
+
+theorem pow_tail(r: Real) {
+    tail(r.pow, Nat.1) = mul_seq(r, r.pow)
+}
+
+theorem partial_one(a: Nat -> Real) {
+    partial(a, Nat.1) = a(Nat.0)
+}
+
+// theorem geom_series_no_div(r: Real) {
+//     r.abs < 1 implies
+//     1 + r * limit(partial(r.pow)) = limit(partial(r.pow))
+// } by {
+//     converges(partial(r.pow))
+//     converges(partial(tail(r.pow, Nat.1)))
+//     limit(partial(r.pow)) = partial(r.pow, Nat.1) + limit(partial(tail(r.pow, Nat.1)))
+//     partial(r.pow, Nat.1) = r.pow(Nat.0)
+//     partial(r.pow, Nat.1) = Real.1
+//     partial(tail(r.pow, Nat.1)) = partial(mul_seq(r, r.pow))
+// }
