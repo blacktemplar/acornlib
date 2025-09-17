@@ -924,23 +924,66 @@ theorem exists_large_mul(a: Real, b: Real) {
     a < b * Real.from_rat(rc)
 }
 
-// theorem geom_has_upper_bound(r: Real) {
-//     0 <= r and r < 1 implies
-//     exists(ub: Real) {
-//         is_upper_bound(partial(r.pow), ub)
-//     }
-// } by {
-//     (1 - r).is_positive
-//     let ub: Real satisfy {
-//         1 < ub * (1 - r)
-//     }
-//     (ub * (1 - r)).is_positive
-//     ub.is_positive
-//     forall(n: Nat) {
-//         partial(r.pow, n) * (1 - r) <= 1
-//         partial(r.pow, n) * (1 - r) * ub <= ub
-//         partial(r.pow, n) < (1 - r) * ub
-//         partial(r.pow, n) < ub
-//     }
-//     is_upper_bound(partial(r.pow), ub)
-// }
+define nonneg_seq(a: Nat -> Real) -> Bool {
+    forall(n: Nat) {
+        not a(n).is_negative
+    }
+}
+
+theorem nonneg_imp_partial_increasing(a: Nat -> Real) {
+    nonneg_seq(a) implies is_increasing(partial(a))
+} by {
+    forall(n: Nat) {
+        not a(n).is_negative
+        0 <= a(n)
+        partial(a, n.suc) = partial(a, n) + a(n)
+        partial(a, n) <= partial(a, n) + a(n)
+        partial(a, n) <= partial(a, n.suc)
+    }
+}
+
+theorem increasing_from_nonneg_start(a: Nat -> Real) {
+    not a(Nat.0).is_negative and is_increasing(a) implies nonneg_seq(a)
+}
+
+theorem nonneg_partial_nonneg(a: Nat -> Real) {
+    nonneg_seq(a) implies
+    nonneg_seq(partial(a))
+}
+
+theorem nonneg_pow(r: Real) {
+    0 <= r implies nonneg_seq(r.pow)
+}
+
+theorem geom_has_upper_bound(r: Real) {
+    0 <= r and r < 1 implies
+    exists(ub: Real) {
+        is_upper_bound(partial(r.pow), ub)
+    }
+} by {
+    (1 - r).is_positive
+    1.is_positive
+    let ub: Real satisfy {
+        1 < ub * (1 - r)
+    }
+    (ub * (1 - r)).is_positive
+    ub.is_positive
+    forall(n: Nat) {
+        partial(r.pow, n) * (1 - r) <= 1
+        partial(r.pow, n) * (1 - r) * ub <= ub
+        nonneg_seq(partial(r.pow))
+        0 <= partial(r.pow, n)
+        partial(r.pow, n) * 1 <= partial(r.pow, n) * ((1 - r) * ub)
+        partial(r.pow, n) <= ub
+    }
+    is_upper_bound(partial(r.pow), ub)
+}
+
+theorem geom_converges(r: Real) {
+    0 <= r and r < 1 implies converges(partial(r.pow))
+} by {
+    let ub: Real satisfy {
+        is_upper_bound(partial(r.pow), ub)
+    }
+    is_increasing(partial(r.pow))
+}
