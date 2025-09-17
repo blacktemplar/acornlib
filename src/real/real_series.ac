@@ -1026,7 +1026,16 @@ theorem abs_pow(r: Real, n: Nat) {
     p(n)
 }
 
+theorem abs_geom_comm(r: Real) {
+    compose(Real.abs, r.pow) = r.abs.pow
+}
 
-// theorem abs_geom_comm(r: Real) {
-//     compose(Real.abs, r.pow) = r.abs.pow
-// }
+theorem geom_converges(r: Real) {
+    r.abs < 1 implies converges(partial(r.pow))
+} by {
+    0 <= r.abs
+    converges(partial(r.abs.pow))
+    compose(Real.abs, r.pow) = r.abs.pow
+    partial(r.abs.pow) = partial(compose(Real.abs, r.pow))
+    converges(partial(compose(Real.abs, r.pow)))
+}
