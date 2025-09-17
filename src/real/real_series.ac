@@ -884,7 +884,7 @@ theorem pow_nonneg(r: Real, n: Nat) {
     p(n)
 }
 
-theorem geom_indirect_upper_bound(r: Real, n: Nat) {
+theorem pos_geom_indirect_upper_bound(r: Real, n: Nat) {
     0 <= r and r < 1 implies
     partial(r.pow, n) * (1 - r) <= 1
 } by {
@@ -955,7 +955,7 @@ theorem nonneg_pow(r: Real) {
     0 <= r implies nonneg_seq(r.pow)
 }
 
-theorem geom_has_upper_bound(r: Real) {
+theorem pos_geom_has_upper_bound(r: Real) {
     0 <= r and r < 1 implies
     exists(ub: Real) {
         is_upper_bound(partial(r.pow), ub)
@@ -979,7 +979,7 @@ theorem geom_has_upper_bound(r: Real) {
     is_upper_bound(partial(r.pow), ub)
 }
 
-theorem geom_converges(r: Real) {
+theorem pos_geom_converges(r: Real) {
     0 <= r and r < 1 implies converges(partial(r.pow))
 } by {
     let ub: Real satisfy {
@@ -987,3 +987,11 @@ theorem geom_converges(r: Real) {
     }
     is_increasing(partial(r.pow))
 }
+
+// theorem abs_pow(r: Real, n: Nat) {
+//     r.abs.pow(n) = r.pow(n).abs
+// }
+
+// theorem abs_geom_comm(r: Real) {
+//     compose(Real.abs, r.pow) = r.abs.pow
+// }
