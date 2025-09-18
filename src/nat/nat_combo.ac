@@ -138,3 +138,13 @@ theorem choose_zero(n: Nat) {
     n.choose(0) * n.factorial = n.factorial
     n.factorial != 0
 }
+
+theorem choose_n(n: Nat) {
+    n.choose(n) = 1
+} by {
+    not n < n
+    n.choose(n) * n.factorial * (n - n).factorial = n.factorial
+    n.choose(n) * n.factorial * 1 = n.factorial
+    n.choose(n) * n.factorial = n.factorial
+    n.factorial != 0
+}
