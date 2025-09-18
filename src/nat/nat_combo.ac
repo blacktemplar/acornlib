@@ -148,3 +148,29 @@ theorem choose_n(n: Nat) {
     n.choose(n) * n.factorial = n.factorial
     n.factorial != 0
 }
+
+theorem choose_add(a: Nat, b: Nat) {
+    (a + b).choose(a) * a.factorial * b.factorial = (a + b).factorial
+} by {
+    not (a + b) < a
+    (a + b).choose(a) * a.factorial * (a + b - a).factorial = (a + b).factorial
+    (a + b - a).factorial = b.factorial
+}
+
+theorem choose_symm_add_form(a: Nat, b: Nat) {
+    (a + b).choose(a) = (a + b).choose(b)
+} by {
+    a.factorial * b.factorial != 0
+    (a + b).choose(a) * a.factorial * b.factorial = (a + b).factorial
+    (a + b).choose(a) * (a.factorial * b.factorial) = (a + b).factorial
+    (a + b).choose(b) * b.factorial * a.factorial = (a + b).factorial
+    (a + b).choose(b) * (a.factorial * b.factorial) = (a + b).factorial
+}
+
+theorem choose_symm_sub_form(n: Nat, k: Nat) {
+    k <= n implies n.choose(k) = n.choose(n - k)
+} by {
+    let a: Nat satisfy {
+        k + a = n
+    }
+}
