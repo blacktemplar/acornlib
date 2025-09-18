@@ -1,0 +1,140 @@
+from nat.nat_gcd import Nat
+
+numerals Nat
+
+// This file contains basic combinatorics.
+
+// We want to define "n choose k", but it's a bit tricky to prove it's a natural number.
+// We're going to do induction, but it'll be simpler to separate these out into named functions.
+// We are essentially proving that n choose k is integral using the Pascal's triangle recurrence,
+// except we are expressing the steps without using rational numbers.
+
+define choose_exists(x: Nat, y: Nat) -> Bool {
+    (x.factorial * y.factorial).divides((x + y).factorial)
+}
+
+// This will be the inductive hypothesis
+define choose_hyp(n: Nat) -> Bool {
+    forall(x: Nat, y: Nat) {
+        if x + y = n {
+            choose_exists(x, y)
+        }
+    }
+}
+
+theorem choose_exists_left_zero(x: Nat) {
+    choose_exists(0, x)
+}
+
+theorem choose_exists_right_zero(x: Nat) {
+    choose_exists(x, 0)
+}
+
+theorem choose_base {
+    choose_hyp(0)
+}
+
+theorem choose_lemma(a: Nat, b: Nat) {
+    a != 0 and b != 0 and choose_hyp(a + b - 1) implies
+    (a.factorial * b.factorial).divides((a + b - 1).factorial * b)
+} by {
+    (a - 1) + 1 = a
+    (b - 1) + 1 = b
+    choose_hyp(a + (b - 1))
+
+    // a! (b - 1)! divides (a + b - 1)!
+    choose_exists(a, b - 1)
+    a + b - 1 = a + (b - 1)
+    (a.factorial * (b - 1).factorial).divides((a + b - 1).factorial)
+
+    // a! b! (b - 1)! divides (a + b - 1)! b!
+    (a.factorial * (b - 1).factorial * b.factorial).divides((a + b - 1).factorial * b.factorial)
+    (a.factorial * b.factorial * (b - 1).factorial).divides((a + b - 1).factorial * b.factorial)
+                        
+    // a! b! (b - 1)! divides (a + b - 1)! b * (b - 1)!
+    b.factorial = b * (b - 1).factorial
+    (a.factorial * b.factorial * (b - 1).factorial).divides((a + b - 1).factorial * b * (b - 1).factorial)
+
+    // a! b! divides (a + b - 1)! b
+    (a.factorial * b.factorial).divides((a + b - 1).factorial * b)
+}
+
+theorem choose_exists_is_true(z1: Nat, z2: Nat) {
+    choose_exists(z1, z2)
+} by {
+    forall(x: Nat) {
+        if choose_hyp(x) {
+            forall(a: Nat, b: Nat) {
+                if a + b = x.suc {
+                    if a = 0 {
+                        choose_exists(a, b)
+                    }
+                    if b = 0 {
+                        choose_exists(a, b)
+                    }
+                    if a != 0 and b != 0 {
+                        // Use the lemma one way
+                        (a.factorial * b.factorial).divides((a + b - 1).factorial * b)
+
+                        // Use the lemma the other way
+                        (b.factorial * a.factorial).divides((b + a - 1).factorial * a)
+                        (a.factorial * b.factorial).divides((a + b - 1).factorial * a)
+
+                        (a + b - 1).factorial * b + (a + b - 1).factorial * a = (a + b).factorial
+                        (a.factorial * b.factorial).divides((a + b).factorial)
+                        choose_exists(a, b)
+                    }
+                    choose_exists(a, b)
+                }
+            }
+            choose_hyp(x.suc)
+        }
+    }
+
+    choose_hyp(z1 + z2)
+}
+
+theorem choose_exists_sub_form(n: Nat, k: Nat) {
+    k <= n implies exists(c: Nat) {
+        c * k.factorial * (n - k).factorial = n.factorial
+    }
+} by {
+    (n - k) + k = n
+    (k.factorial * (n - k).factorial).divides(n.factorial)
+    let c: Nat satisfy {
+        (k.factorial * (n - k).factorial) * c = n.factorial
+    }
+}
+
+let choose(n: Nat, k: Nat) -> c: Nat satisfy {
+    if n < k {
+        c = 0
+    } else {
+        c * k.factorial * (n - k).factorial = n.factorial
+    }
+}
+
+attributes Nat {
+    let choose = choose
+}
+
+theorem factorial_nonzero(n: Nat) {
+    n.factorial != 0
+} by {
+    factorial_nonzero(0)
+    forall(x: Nat) {
+        if factorial_nonzero(x) {
+            factorial_nonzero(x.suc)
+        }
+    }
+}
+
+theorem choose_zero(n: Nat) {
+    n.choose(0) = 1
+} by {
+    not n < 0
+    n.choose(0) * 0.factorial * (n - 0).factorial = n.factorial
+    n.choose(0) * 1 * n.factorial = n.factorial
+    n.choose(0) * n.factorial = n.factorial
+    n.factorial != 0
+}
