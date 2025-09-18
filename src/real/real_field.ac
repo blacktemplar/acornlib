@@ -1,3 +1,4 @@
+from list import partial
 from nat import Nat
 from rat import Rat
 from real.real_seq import cauchy_bound, tail_bound, neg_rat_seq, eventual_eq
@@ -261,4 +262,19 @@ attributes Real {
     define div(self, other: Real) -> Real {
         self * other.reciprocal
     }
+}
+
+theorem mul_left_cancel(a: Real, b: Real, c: Real) {
+    a = b * c and b != Real.0 implies a / b = c
+}
+
+theorem geom_series(r: Real) {
+    r.abs < 1 implies
+    limit(partial(r.pow)) = 1 / (1 - r)
+} by {
+    1 + r * limit(partial(r.pow)) = limit(partial(r.pow))
+    1 = limit(partial(r.pow)) - r * limit(partial(r.pow))
+    1 = (1 - r) * limit(partial(r.pow))
+    (1 - r) != Real.0
+    limit(partial(r.pow)) = 1 / (1 - r)
 }
