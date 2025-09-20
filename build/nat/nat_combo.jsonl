@@ -57,3 +57,13 @@
 {"goal":"choose_symm_add_form","proof":["choose(a + b, b) * (a.factorial * b.factorial) != choose(a + b, a) * (a.factorial * b.factorial) or a.factorial * b.factorial = 0 or choose(a + b, b) = choose(a + b, a)","choose(a + b, b) * (a.factorial * b.factorial) != choose(a + b, a) * (a.factorial * b.factorial) or a.factorial * b.factorial = 0","choose(a + b, b) * (a.factorial * b.factorial) = choose(a + b, a) * (a.factorial * b.factorial)","choose(a + b, b) * (a.factorial * b.factorial) != choose(a + b, a) * (a.factorial * b.factorial)"]}
 {"goal":"exists(k0: Nat) { k + k0 = n }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","k + s0(k, n) != n","not k <= n or k + s0(k, n) = n"]}
 {"goal":"choose_symm_sub_form","proof":["choose(k + a, a) = choose(k + a, k)","a + k - k = a","a + k = k + a"]}
+{"goal":"choose(n)(1) = 0","proof":["not n < 1 or choose(n, 1) = 0"]}
+{"goal":"choose(n)(1) = n","proof":["n != 0","not n < 0.suc or n < 0 or n = 0","0 + 1 = 0.suc","0 + 1 = 1","not n < 0","not n < 0.suc"]}
+{"goal":"choose(n)(1) * 1.factorial * (n - 1).factorial = n.factorial","proof":["choose(n, 1) * 1.factorial * (n - 1).factorial = n.factorial or n < 1"]}
+{"goal":"choose(n)(1) * 1 * (n - 1).factorial = n.factorial","proof":[]}
+{"goal":"choose(n)(1) * (n - 1).factorial = n.factorial","proof":["choose(n, 1) * (1 * (n - 1).factorial) = choose(n, 1) * 1 * (n - 1).factorial","n - 1 = lib(nat.nat_base).bounded_sub(n, 1)","1 * lib(nat.nat_base).bounded_sub(n, 1).factorial = lib(nat.nat_base).bounded_sub(n, 1).factorial"]}
+{"goal":"n.factorial = n * (n - 1).factorial","proof":["lib(nat.nat_base).bounded_sub(n, 1) + 1 = n or n < 1","lib(nat.nat_base).bounded_sub(n, 1).suc != n or n * lib(nat.nat_base).bounded_sub(n, 1).factorial = n.factorial","n - 1 = lib(nat.nat_base).bounded_sub(n, 1)","n * lib(nat.nat_base).bounded_sub(n, 1).factorial != n.factorial","lib(nat.nat_base).bounded_sub(n, 1) + 1 = lib(nat.nat_base).bounded_sub(n, 1).suc","lib(nat.nat_base).bounded_sub(n, 1).suc != n","lib(nat.nat_base).bounded_sub(n, 1) + 1 = n","lib(nat.nat_base).bounded_sub(n, 1) + 1 != n"]}
+{"goal":"choose(n)(1) * (n - 1).factorial = n * (n - 1).factorial","proof":["choose(n, 1) * (n - 1).factorial != n.factorial"]}
+{"goal":"(n - 1).factorial != 0","proof":["n - 1 = lib(nat.nat_base).bounded_sub(n, 1)","lib(nat.nat_base).bounded_sub(n, 1).factorial = 0","lib(nat.nat_base).bounded_sub(n, 1).factorial != 0"]}
+{"goal":"choose(n)(1) = n","proof":["choose(n, 1) * (n - 1).factorial != n * (n - 1).factorial or (n - 1).factorial = 0 or choose(n, 1) = n"]}
+{"goal":"choose_one","proof":[]}

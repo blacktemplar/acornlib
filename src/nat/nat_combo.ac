@@ -174,3 +174,20 @@ theorem choose_symm_sub_form(n: Nat, k: Nat) {
         k + a = n
     }
 }
+
+theorem choose_one(n: Nat) {
+    n.choose(1) = n
+} by {
+    if n < 1 {
+        n.choose(1) = 0
+        n.choose(1) = n
+    } else {
+        n.choose(1) * 1.factorial * (n - 1).factorial = n.factorial
+        n.choose(1) * 1 * (n - 1).factorial = n.factorial
+        n.choose(1) * (n - 1).factorial = n.factorial
+        n.factorial = n * (n - 1).factorial
+        n.choose(1) * (n - 1).factorial = n * (n - 1).factorial
+        (n - 1).factorial != 0
+        n.choose(1) = n
+    }
+}
