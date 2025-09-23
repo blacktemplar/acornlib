@@ -49,7 +49,7 @@
 {"goal":"flip(ff, x) = ff(-x)","proof":["flip(ff, x) != ff(-x) or ff(-x)","flip(ff, x) = ff(-x)","ff(-x)","not flip(ff, x)","flip(ff, x)"]}
 {"goal":"flip(flip(f), x) = flip(f)(-x)","proof":["flip(flip(f), x) != flip(f, -x) or flip(f, -x)","flip(flip(f), x) = flip(f, -x)","flip(f, -x)","not flip(flip(f), x)"]}
 {"goal":"flip(flip(f), x) = f(x)","proof":["flip(flip(f), x) != f(x) or f(x)","flip(f, -x) = f(--x)","--x = x","flip(flip(f), x) = f(--x)","flip(flip(f), x) = f(x)","f(x)","not flip(flip(f), x)","flip(flip(f), x)"]}
-{"goal":"flip_flip","proof":["let s0: Real satisfy { not flip(flip(f), s0) or not f(s0) and (flip(flip(f), s0) or f(s0)) }","flip(flip(f), s0) = f(s0)","f(s0)","not flip(flip(f), s0)","flip(flip(f), s0)"]}
+{"goal":"flip_flip","proof":["let s0: Real satisfy { flip(flip(f), s0) != f(s0) }","flip(flip(f), s0) = f(s0)"]}
 {"goal":"f(-y)","proof":["flip(f, y) = f(-y)"]}
 {"goal":"x <= -y","proof":["not is_lower_bound(f, x) or not f(-y) or x <= -y","not is_lower_bound(f, x) or not f(-y)"]}
 {"goal":"-x >= y","proof":["not -x < y or -y < x","-x >= y or -x < y","-x < y","not -y >= x or not -y < x","-y >= x = x <= -y","-y >= x","-y < x","not -y < x"]}
@@ -84,6 +84,6 @@
 {"goal":"is_upper_bound(flip(s), -x)","proof":["not is_lower_bound(s, x) or is_upper_bound(flip(s), -x)"]}
 {"goal":"exists(k0: Real) { is_least_upper_bound(flip(s), k0) }","proof":["let s0: (Real -> Bool, Real) -> Real satisfy { forall(x0: Real -> Bool, x1: Real) { not is_upper_bound(x0, x1) or not is_nonempty(x0) or is_least_upper_bound(x0, s0(x0, x1)) } }","not is_least_upper_bound(flip(s), s0(flip(s), -x))","not is_upper_bound(flip(s), -x) or not is_nonempty(flip(s)) or is_least_upper_bound(flip(s), s0(flip(s), -x))"]}
 {"goal":"is_greatest_lower_bound(flip(flip(s)), -y)","proof":["not is_least_upper_bound(flip(s), y) or is_greatest_lower_bound(flip(flip(s)), -y)"]}
-{"goal":"flip(flip(s)) = s","proof":["let s0: Real satisfy { not flip(flip(s), s0) or not s(s0) and (flip(flip(s), s0) or s(s0)) }","flip(flip(s), s0) != s(s0) or s(s0)","flip(flip(s), s0) = s(s0)","s(s0)","not flip(flip(s), s0)","flip(flip(s), s0)"]}
+{"goal":"flip(flip(s)) = s","proof":["let s0: Real satisfy { flip(flip(s), s0) != s(s0) }","flip(flip(s), s0) = s(s0)"]}
 {"goal":"is_greatest_lower_bound(s, -y)","proof":["not is_greatest_lower_bound(flip(flip(s)), -y)"]}
 {"goal":"lb_imp_glb","proof":["not is_greatest_lower_bound(s, -y)"]}

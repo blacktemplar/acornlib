@@ -38,7 +38,7 @@
 {"goal":"not a.gt_rat(r)","proof":[]}
 {"goal":"not b.gt_rat(r)","proof":["not b <= a or not b.gt_rat(r) or a.gt_rat(r)","not b <= a or a.gt_rat(r)"]}
 {"goal":"a.gt_rat(r) = b.gt_rat(r)","proof":["a.gt_rat(r)"]}
-{"goal":"a.gt_rat = b.gt_rat","proof":["let s0: Rat satisfy { not b.gt_rat(s0) or not a.gt_rat(s0) and (b.gt_rat(s0) or a.gt_rat(s0)) }","b.gt_rat(s0) = a.gt_rat(s0)","a.gt_rat(s0)","not b.gt_rat(s0)","b.gt_rat(s0)"]}
+{"goal":"a.gt_rat = b.gt_rat","proof":["let s0: Rat satisfy { b.gt_rat(s0) != a.gt_rat(s0) }","b.gt_rat(s0) = a.gt_rat(s0)"]}
 {"goal":"a = b","proof":["Real.new(a.gt_rat) = a","Real.new(b.gt_rat) = b"]}
 {"goal":"lte_both_ways_imp_eq","proof":[]}
 {"goal":"real_is_reflexive","proof":["let s0: (Real, Real) -> Bool -> Real satisfy { forall(x0: (Real, Real) -> Bool, x1: Real) { not is_reflexive<Real>(x0) or x0(x1, x1) } and forall(x2: (Real, Real) -> Bool) { not x2(s0(x2), s0(x2)) or is_reflexive<Real>(x2) } }","let s1: (Real, Real) -> Rat satisfy { forall(x3: Real, x4: Rat, x5: Real) { not x3.gt_rat(x4) or not x3 <= x5 or x5.gt_rat(x4) } and forall(x6: Real, x7: Real) { x6.gt_rat(s1(x6, x7)) or x6 <= x7 } and forall(x8: Real, x9: Real) { not x8.gt_rat(s1(x9, x8)) or x9 <= x8 } }","not s0(Real.lte).gt_rat(s1(s0(Real.lte), s0(Real.lte))) or s0(Real.lte) <= s0(Real.lte)","s0(Real.lte).gt_rat(s1(s0(Real.lte), s0(Real.lte))) or s0(Real.lte) <= s0(Real.lte)","not s0(Real.lte) <= s0(Real.lte) or is_reflexive<Real>(Real.lte)","not s0(Real.lte) <= s0(Real.lte)","not s0(Real.lte).gt_rat(s1(s0(Real.lte), s0(Real.lte)))","s0(Real.lte).gt_rat(s1(s0(Real.lte), s0(Real.lte)))"]}
@@ -136,7 +136,7 @@
 {"goal":"not add_gt(b, a, r)","proof":["not add_gt(b, a, r) or add_gt(a, b, r)"]}
 {"goal":"add_gt(a, b, r) = add_gt(b, a, r)","proof":["add_gt(a, b, r)"]}
 {"goal":"add_gt(a, b, r) = add_gt(b, a, r)","proof":["add_gt(a, b, r)","not add_gt(b, a, r)"]}
-{"goal":"add_gt(a, b) = add_gt(b, a)","proof":["let s0: Rat satisfy { not add_gt(b, a, s0) or not add_gt(a, b, s0) and (add_gt(b, a, s0) or add_gt(a, b, s0)) }","add_gt(b, a, s0) = add_gt(a, b, s0)","add_gt(a, b, s0)","not add_gt(b, a, s0)","add_gt(b, a, s0)"]}
+{"goal":"add_gt(a, b) = add_gt(b, a)","proof":["let s0: Rat satisfy { add_gt(b, a, s0) != add_gt(a, b, s0) }","add_gt(b, a, s0) = add_gt(a, b, s0)"]}
 {"goal":"add_comm","proof":["Real.new(add_gt(a, b)) = a + b","Real.new(add_gt(b, a)) = b + a"]}
 {"goal":"add_gt(z1 + z2, z3, q)","proof":["not Real.new(add_gt(z1 + z2, z3)).gt_rat(q) or not is_dedekind_cut(add_gt(z1 + z2, z3)) or add_gt(z1 + z2, z3, q)","Real.new(add_gt(z1 + z2, z3)) = z1 + z2 + z3","is_dedekind_cut(add_gt(z1 + z2, z3))","Real.new(add_gt(z1 + z2, z3)).gt_rat(q)"]}
 {"goal":"exists(k0: Rat, k1: Rat) { (z1 + z2).gt_rat(k0) and z3.gt_rat(k1) and q = k0 + k1 }","proof":["let (s0: (Real, Real, Rat) -> Rat, s1: (Real, Real, Rat) -> Rat) satisfy { forall(x0: Real, x1: Real, x2: Rat) { not add_gt(x0, x1, x2) or x0.gt_rat(s0(x0, x1, x2)) } and forall(x3: Real, x4: Real, x5: Rat) { not add_gt(x3, x4, x5) or x4.gt_rat(s1(x3, x4, x5)) } and forall(x6: Real, x7: Real, x8: Rat) { not add_gt(x6, x7, x8) or s0(x6, x7, x8) + s1(x6, x7, x8) = x8 } and forall(x9: Real, x10: Rat, x11: Real, x12: Rat, x13: Rat) { not x9.gt_rat(x10) or not x11.gt_rat(x12) or x10 + x12 != x13 or add_gt(x9, x11, x13) } }","not (z1 + z2).gt_rat(s0(z1 + z2, z3, q)) or not z3.gt_rat(s1(z1 + z2, z3, q)) or s0(z1 + z2, z3, q) + s1(z1 + z2, z3, q) != q","not add_gt(z1 + z2, z3, q) or s0(z1 + z2, z3, q) + s1(z1 + z2, z3, q) = q","not add_gt(z1 + z2, z3, q) or z3.gt_rat(s1(z1 + z2, z3, q))","not add_gt(z1 + z2, z3, q) or (z1 + z2).gt_rat(s0(z1 + z2, z3, q))","z3.gt_rat(s1(z1 + z2, z3, q))","(z1 + z2).gt_rat(s0(z1 + z2, z3, q))","s0(z1 + z2, z3, q) + s1(z1 + z2, z3, q) = q"]}
@@ -157,7 +157,7 @@
 {"goal":"r = ra + rb + rc","proof":["ra + (rb + rc) = ra + rb + rc"]}
 {"goal":"false","proof":["not (a + b).gt_rat(ra + rb) or not c.gt_rat(rc) or (a + b + c).gt_rat(ra + rb + rc)","not a.gt_rat(ra) or not b.gt_rat(rb) or (a + b).gt_rat(ra + rb)","not (a + b).gt_rat(ra + rb) or (a + b + c).gt_rat(ra + rb + rc)","not a.gt_rat(ra) or (a + b).gt_rat(ra + rb)","(a + b).gt_rat(ra + rb)","not (a + b + c).gt_rat(ra + rb + rc)","(a + b + c).gt_rat(ra + rb + rc)"]}
 {"goal":"(a + b + c).gt_rat(r) = (a + (b + c)).gt_rat(r)","proof":["(a + b + c).gt_rat(r)"]}
-{"goal":"(a + b + c).gt_rat = (a + (b + c)).gt_rat","proof":["let s0: Rat satisfy { not (a + (b + c)).gt_rat(s0) or not (a + b + c).gt_rat(s0) and ((a + (b + c)).gt_rat(s0) or (a + b + c).gt_rat(s0)) }","(a + (b + c)).gt_rat(s0) = (a + b + c).gt_rat(s0)","(a + b + c).gt_rat(s0)","not (a + (b + c)).gt_rat(s0)","(a + (b + c)).gt_rat(s0)"]}
+{"goal":"(a + b + c).gt_rat = (a + (b + c)).gt_rat","proof":["let s0: Rat satisfy { (a + (b + c)).gt_rat(s0) != (a + b + c).gt_rat(s0) }","(a + (b + c)).gt_rat(s0) = (a + b + c).gt_rat(s0)"]}
 {"goal":"add_assoc","proof":["a + (b + c) = b + c + a","Real.new((a + b + c).gt_rat) = a + b + c","Real.new((b + c + a).gt_rat) = b + c + a"]}
 {"goal":"gt_imp_not_lte","proof":["not a > b or a.max(b) = a","not a <= b or b.max(a) = b","b.max(a) = b","PartialOrder.lt<Real>(b, a) = a > b","b.max(a) = a.max(b)","a.max(b) = b","not PartialOrder.lt<Real>(b, a.max(b)) or a.max(b) != b","PartialOrder.lt<Real>(b, a)","a.max(b) = a","not PartialOrder.lt<Real>(b, a.max(b))","PartialOrder.lt<Real>(b, a.max(b))"]}
 {"goal":"not_lte_imp_gt","proof":["a.min(b) = a or a > b","a.min(b) = a","a.min(b) <= b"]}
@@ -165,7 +165,7 @@
 {"goal":"not_lt_imp_gte","proof":["not a <= b or a < b or b = a","a >= b = b <= a","b >= a = a <= b","not b <= a","a <= b or b <= a","a <= b","b = a"]}
 {"goal":"a != b","proof":["a < a","not a < a or a != a"]}
 {"goal":"a.gt_rat != b.gt_rat","proof":["Real.new(a.gt_rat) = a","Real.new(b.gt_rat) = b"]}
-{"goal":"exists(k0: Rat) { a.gt_rat(k0) != b.gt_rat(k0) }","proof":["let s0: Rat satisfy { not b.gt_rat(s0) or not a.gt_rat(s0) and (b.gt_rat(s0) or a.gt_rat(s0)) }","b.gt_rat(s0) = a.gt_rat(s0)","a.gt_rat(s0)","b.gt_rat(s0)"]}
+{"goal":"exists(k0: Rat) { a.gt_rat(k0) != b.gt_rat(k0) }","proof":["let s0: Rat satisfy { b.gt_rat(s0) != a.gt_rat(s0) }","b.gt_rat(s0) = a.gt_rat(s0)"]}
 {"goal":"not b.gt_rat(r)","proof":[]}
 {"goal":"false","proof":["not a <= b or not a.gt_rat(r) or b.gt_rat(r)","not a < b or a <= b","a <= b","not a <= b or not a.gt_rat(r)"]}
 {"goal":"not a.gt_rat(r)","proof":[]}

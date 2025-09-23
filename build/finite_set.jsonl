@@ -28,7 +28,7 @@
 {"goal":"set.contains(item) = set.remove(other).contains(item)","proof":["set.remove(other).contains(item)"]}
 {"goal":"remove_other_contains_eq","proof":["set.contains(item)","not set.remove(other).contains(item)"]}
 {"goal":"set.remove(item).insert(item).contains != set.contains","proof":["FiniteSet.new<T>(set.contains) = set","FiniteSet.new<T>(set.remove(item).insert(item).contains) = set.remove(item).insert(item)"]}
-{"goal":"exists(k0: T) { set.remove(item).insert(item).contains(k0) != set.contains(k0) }","proof":["let s0: T satisfy { not set.remove(item).insert(item).contains(s0) or not set.contains(s0) and (set.remove(item).insert(item).contains(s0) or set.contains(s0)) }","set.remove(item).insert(item).contains(s0) = set.contains(s0)","set.contains(s0)","set.remove(item).insert(item).contains(s0)"]}
+{"goal":"exists(k0: T) { set.remove(item).insert(item).contains(k0) != set.contains(k0) }","proof":["let s0: T satisfy { set.remove(item).insert(item).contains(s0) != set.contains(s0) }","set.remove(item).insert(item).contains(s0) = set.contains(s0)"]}
 {"goal":"set.remove(item).contains(t)","proof":["not set.contains(t) or set.remove(item).contains(t) or t = item"]}
 {"goal":"false","proof":["not set.remove(item).contains(t) or set.remove(item).insert(item).contains(t) or t = item"]}
 {"goal":"false","proof":["not set.remove(item).contains(t) or set.contains(t) or t = item","not set.remove(item).insert(item).contains(t) or set.remove(item).contains(t) or t = item","set.remove(item).contains(t)"]}
@@ -37,7 +37,7 @@
 {"goal":"false","proof":[]}
 {"goal":"remove_then_insert","proof":[]}
 {"goal":"set.insert(item).remove(item).contains != set.contains","proof":["FiniteSet.new<T>(set.contains) = set","FiniteSet.new<T>(set.insert(item).remove(item).contains) = set.insert(item).remove(item)"]}
-{"goal":"exists(k0: T) { set.insert(item).remove(item).contains(k0) != set.contains(k0) }","proof":["let s0: T satisfy { not set.insert(item).remove(item).contains(s0) or not set.contains(s0) and (set.insert(item).remove(item).contains(s0) or set.contains(s0)) }","set.insert(item).remove(item).contains(s0) = set.contains(s0)","set.contains(s0)","set.insert(item).remove(item).contains(s0)"]}
+{"goal":"exists(k0: T) { set.insert(item).remove(item).contains(k0) != set.contains(k0) }","proof":["let s0: T satisfy { set.insert(item).remove(item).contains(s0) != set.contains(s0) }","set.insert(item).remove(item).contains(s0) = set.contains(s0)"]}
 {"goal":"false","proof":["not set.insert(item).contains(t) or set.insert(item).remove(item).contains(t) or t = item","not set.contains(t) or set.insert(item).contains(t)","set.insert(item).contains(t)"]}
 {"goal":"set.insert(item).contains(t)","proof":["not set.insert(item).remove(item).contains(t) or set.insert(item).contains(t) or t = item"]}
 {"goal":"false","proof":["not set.insert(item).contains(t) or set.contains(t) or t = item"]}
