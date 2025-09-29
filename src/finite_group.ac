@@ -55,7 +55,7 @@ attributes FiniteSubgroup<G: FiniteGroup> {
 attributes G: FiniteGroup {
     let identity_subgroup: FiniteSubgroup<G> = FiniteSubgroup.new(List.singleton<G>(G.1))
     
-    // XXX: Wait, how does Acorn know this is a subgroup?
+    // TODO: prove this actually is the subgroup you'd expect, not a degenerate case.
     define cyclic_subgroup(self) -> FiniteSubgroup<G> {
         FiniteSubgroup.new(map(G.order.range, self.pow).unique)
     }

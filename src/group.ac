@@ -57,14 +57,14 @@ theorem pow_inverse<G: Group>(a: G, n: Nat) {
 
     p(Nat.0)
 
-    forall(n: Nat) {
-        if p(n) {
-            a.pow(n) * a.inverse.pow(n) = G.1
-            a.pow(n.suc) = a.pow(n)*a
-            a.inverse.pow(n.suc) = a.inverse*a.inverse.pow(n)
-            a.pow(n.suc) * a.inverse.pow(n.suc) = (a.pow(n) * a) * (a.inverse * a.inverse.pow(n))
-            a.pow(n.suc) * a.inverse.pow(n.suc) = G.1
-            a.pow(n.suc).inverse = a.inverse.pow(n.suc)
+    forall(k: Nat) {
+        if p(k) {
+            a.pow(k) * a.inverse.pow(k) = G.1
+            a.pow(k.suc) = a.pow(k)*a
+            a.inverse.pow(k.suc) = a.inverse*a.inverse.pow(k)
+            a.pow(k.suc) * a.inverse.pow(k.suc) = (a.pow(k) * a) * (a.inverse * a.inverse.pow(k))
+            a.pow(k.suc) * a.inverse.pow(k.suc) = G.1
+            a.pow(k.suc).inverse = a.inverse.pow(k.suc)
         }
     }
 }

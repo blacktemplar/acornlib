@@ -785,16 +785,16 @@ theorem sum_abs_le_abs_sum(items: List<Real>) {
     p(List.nil)
 
     // Inductive step
-    forall(head: Real, tail: List<Real>) {
-        if p(tail) {
-            sum(tail).abs <= sum(map(tail, Real.abs))
-            (head + sum(tail)).abs <= head.abs + sum(tail).abs
-            head.abs + sum(tail).abs <= head.abs + sum(map(tail, Real.abs))
-            sum(List.cons(head, tail)) = head + sum(tail)
-            map(List.cons(head, tail), Real.abs) = List.cons(Real.abs(head), map(tail, Real.abs))
-            map(List.cons(head, tail), Real.abs) = List.cons(head.abs, map(tail, Real.abs))
-            sum(map(List.cons(head, tail), Real.abs)) = head.abs + sum(map(tail, Real.abs))
-            p(List.cons(head, tail))
+    forall(head: Real, rest: List<Real>) {
+        if p(rest) {
+            sum(rest).abs <= sum(map(rest, Real.abs))
+            (head + sum(rest)).abs <= head.abs + sum(rest).abs
+            head.abs + sum(rest).abs <= head.abs + sum(map(rest, Real.abs))
+            sum(List.cons(head, rest)) = head + sum(rest)
+            map(List.cons(head, rest), Real.abs) = List.cons(Real.abs(head), map(rest, Real.abs))
+            map(List.cons(head, rest), Real.abs) = List.cons(head.abs, map(rest, Real.abs))
+            sum(map(List.cons(head, rest), Real.abs)) = head.abs + sum(map(rest, Real.abs))
+            p(List.cons(head, rest))
         }
     }
 }
