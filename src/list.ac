@@ -1113,8 +1113,22 @@ theorem unique_is_smallest_containing_list<T>(list: List<T>, container: List<T>)
     pc(list, container)
 }
 
+/// Applies a function to each element of a list, creating a new list of results.
+attributes List<T> {
+    define map<U>(self, f: T -> U) -> List<U> {
+        match self {
+            List.nil {
+                List.nil<U>
+            }
+            List.cons(head, tail) {
+                List.cons(f(head), tail.map(f))
+            }
+        }
+    }
+}
 
 /// Applies a function to each element of a list, creating a new list of results.
+/// Deprecated non-attribute definition.
 define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
     match items {
         List.nil {
@@ -1126,6 +1140,25 @@ define map<T, U>(items: List<T>, f: T -> U) -> List<U> {
     }
 }
 
+// The two definitions of map are the same
+theorem map_equivalence<T, U> {
+    List.map<T, U> = map<T, U>
+} by {
+    forall(f: T -> U) {
+        // Induction on p
+        define p(ts: List<T>) -> Bool {
+            ts.map(f) = map(ts, f)
+        }
+
+        // Base case
+        p(List.nil)
+
+        forall(ts: List<T>) {
+            p(ts)
+            ts.map(f) = map(ts, f)
+        }
+    }
+}
 
 from add_comm_monoid import AddCommMonoid
 
