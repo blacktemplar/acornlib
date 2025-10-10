@@ -28,7 +28,7 @@ typeclass M: MetricSpace {
     }
 }
 
-theorem distance_non_negative<M: MetricSpace>(x: M, y: M) {
+theorem distance_non_negative[M: MetricSpace](x: M, y: M) {
     not x.distance(y).is_negative
 } by {
     x.distance(x) <= x.distance(y) + y.distance(x)
@@ -37,7 +37,7 @@ theorem distance_non_negative<M: MetricSpace>(x: M, y: M) {
 }
 
 /// The discrete metric assigns distance 0 to identical elements and distance 1 to distinct elements.
-define discrete<T>(x: T, y: T) -> Real {
+define discrete[T](x: T, y: T) -> Real {
     if x = y {
         0
     } else {
@@ -45,7 +45,7 @@ define discrete<T>(x: T, y: T) -> Real {
     }
 }
 
-theorem zero_lte_discrete<T>(x: T, y: T) {
+theorem zero_lte_discrete[T](x: T, y: T) {
     0 <= discrete(x, y)
 } by {
     if x = y {
@@ -55,15 +55,15 @@ theorem zero_lte_discrete<T>(x: T, y: T) {
     }
 }
 
-theorem discrete_self_distance_is_zero<T>(x: T) {
+theorem discrete_self_distance_is_zero[T](x: T) {
     discrete(x, x) = 0
 }
 
-theorem discrete_dist_zero_imp_eq<T>(x: T, y: T) {
+theorem discrete_dist_zero_imp_eq[T](x: T, y: T) {
     discrete(x, y) = 0 implies x = y
 }
 
-theorem discrete_symmetric<T>(x: T, y: T) {
+theorem discrete_symmetric[T](x: T, y: T) {
     discrete(x, y) = discrete(y, x)
 } by {
     if x = y {
@@ -73,7 +73,7 @@ theorem discrete_symmetric<T>(x: T, y: T) {
     }
 }
 
-theorem discrete_triangle<T>(x: T, y: T, z: T) {
+theorem discrete_triangle[T](x: T, y: T, z: T) {
     discrete(x, z) <= discrete(x, y) + discrete(y, z)
 } by {
     if x = y {

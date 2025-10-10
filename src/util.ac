@@ -1,18 +1,18 @@
 /// Utilities for functions that are generally independent of types.
 
 /// Composing two functions.
-define compose<T, U, V>(f: U -> V, g: T -> U) -> T -> V {
+define compose[T, U, V](f: U -> V, g: T -> U) -> T -> V {
     function(t: T) {
         f(g(t))
     }
 }
 
-/// constant<T, U>(u) is a T -> U function that always returns u.
-define constant<T, U>(u: U, t: T) -> U {
+/// constant[T, U](u) is a T -> U function that always returns u.
+define constant[T, U](u: U, t: T) -> U {
     u
 }
 
-define is_constant<T, U>(f: T -> U) -> Bool {
+define is_constant[T, U](f: T -> U) -> Bool {
     exists(y: U) {
         forall(x: T) {
             f(x) = y
@@ -20,13 +20,13 @@ define is_constant<T, U>(f: T -> U) -> Bool {
     }
 }
 
-theorem constant_is_constant<T, U>(u: U) {
-    is_constant(constant<T, U>(u))
+theorem constant_is_constant[T, U](u: U) {
+    is_constant(constant[T, U](u))
 }
 
-theorem is_constant_imp_eq_constant<T, U>(f: T -> U) {
+theorem is_constant_imp_eq_constant[T, U](f: T -> U) {
     is_constant(f) implies exists(u: U) {
-        constant<T, U>(u) = f
+        constant[T, U](u) = f
     }
 } by {
     let t: T satisfy {
@@ -35,34 +35,34 @@ theorem is_constant_imp_eq_constant<T, U>(f: T -> U) {
     let u = f(t)
     forall(x: T) {
         f(x) = u
-        constant<T, U>(u)(x) = f(x)
+        constant[T, U](u)(x) = f(x)
     }
 }
 
-define is_reflexive<T>(f: (T, T) -> Bool) -> Bool {
+define is_reflexive[T](f: (T, T) -> Bool) -> Bool {
     forall(t: T) {
         f(t, t)
     }
 }
 
-define is_symmetric<T>(f: (T, T) -> Bool) -> Bool {
+define is_symmetric[T](f: (T, T) -> Bool) -> Bool {
     forall(x: T, y: T) {
         f(x, y) implies f(y, x)
     }
 }
 
-define is_transitive<T>(f: (T, T) -> Bool) -> Bool {
+define is_transitive[T](f: (T, T) -> Bool) -> Bool {
     forall(x: T, y: T, z: T) {
         f(x, y) and f(y, z) implies f(x, z)
     }
 }
 
-define is_antisymmetric<T>(f: (T, T) -> Bool) -> Bool {
+define is_antisymmetric[T](f: (T, T) -> Bool) -> Bool {
     forall(x: T, y: T) {
         f(x, y) and f(y, x) implies x = y
     }
 }
 
-define is_equivalence<T>(f: (T, T) -> Bool) -> Bool {
+define is_equivalence[T](f: (T, T) -> Bool) -> Bool {
     is_reflexive(f) and is_symmetric(f) and is_transitive(f)
 }

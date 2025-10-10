@@ -3,19 +3,19 @@ numerals Nat
 
 /// A multiset (bag) that can contain multiple copies of the same element.
 /// Each element has a multiplicity indicating how many times it appears.
-structure Multiset<T> {
+structure Multiset[T] {
     /// A function taking each element to a count of how many times it appears in the multiset.
     multiplicity: T -> Nat
 }
 
-attributes Multiset<T> {
+attributes Multiset[T] {
     /// True if the multiset contains at least one copy of the given item.
     define contains(self, item: T) -> Bool {
         self.multiplicity(item) != 0
     }
 
     /// Adds one more copy of the given item to the multiset.
-    define insert(self, item: T) -> Multiset<T> {
+    define insert(self, item: T) -> Multiset[T] {
         Multiset.new(function(x: T) {
             if x = item {
                 self.multiplicity(x).suc

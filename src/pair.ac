@@ -1,19 +1,19 @@
 /// An ordered pair of two values, possibly of different types.
-structure Pair<T, U> {
+structure Pair[T, U] {
     /// The first element of the pair.
     first: T
     /// The second element of the pair.
     second: U
 }
 
-attributes Pair<T, U> {
+attributes Pair[T, U] {
     /// Swaps the first and second elements of the pair.
-    define swap(self) -> Pair<U, T> {
+    define swap(self) -> Pair[U, T] {
         Pair.new(self.second, self.first)
     }
 }
 
-theorem swap_swap<T, U>(p: Pair<T, U>) {
+theorem swap_swap[T, U](p: Pair[T, U]) {
     p.swap.swap = p
 } by {
     p.swap = Pair.new(p.second, p.first)

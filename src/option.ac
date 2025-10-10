@@ -1,6 +1,6 @@
 /// Optional values that can either contain a value of type T or be empty.
 /// Useful for representing values that may or may not exist.
-inductive Option<T> {
+inductive Option[T] {
     /// `Option.none` represents the absence of a value.
     none
 

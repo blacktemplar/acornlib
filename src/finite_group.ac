@@ -5,7 +5,7 @@ numerals Nat
 
 /// A group is finite if its elements can be placed in a (finite) list
 typeclass G: FiniteGroup extends Group {
-    elements: List<G>
+    elements: List[G]
 
     all_group_elements_in_elements(g: G) {
         G.elements.contains_every
@@ -22,46 +22,46 @@ attributes G: FiniteGroup {
 from subgroup import Subgroup, subgroup_constraint, identity_subgroup
 from finite_set import finite_constraint
 
-theorem subgroup_of_finite_group_is_finite<G: FiniteGroup>(s: Subgroup<G>) {
+theorem subgroup_of_finite_group_is_finite[G: FiniteGroup](s: Subgroup[G]) {
     finite_constraint(s.contains)
 }
 
-structure FiniteSubgroup<G: FiniteGroup> {
-    elements: List<G>
+structure FiniteSubgroup[G: FiniteGroup] {
+    elements: List[G]
 } constraint {
     elements.is_unique and subgroup_constraint(elements.contains)
 } by {
-    let s = List.singleton<G>(G.1)
+    let s = List.singleton[G](G.1)
 
     forall(x: G) {
         if s.contains(x) {
             x = G.1
-            identity_subgroup<G>.contains(x)
+            identity_subgroup[G].contains(x)
         } else {
-            not identity_subgroup<G>.contains(x)
+            not identity_subgroup[G].contains(x)
         }
-        s.contains(x) = identity_subgroup<G>.contains(x)
+        s.contains(x) = identity_subgroup[G].contains(x)
     }
-    s.contains = identity_subgroup<G>.contains
+    s.contains = identity_subgroup[G].contains
     subgroup_constraint(s.contains)
 }
 
-attributes FiniteSubgroup<G: FiniteGroup> {
+attributes FiniteSubgroup[G: FiniteGroup] {
     define order(self) -> Nat {
         self.elements.length
     }
 }
 
 attributes G: FiniteGroup {
-    let identity_subgroup: FiniteSubgroup<G> = FiniteSubgroup.new(List.singleton<G>(G.1))
+    let identity_subgroup: FiniteSubgroup[G] = FiniteSubgroup.new(List.singleton[G](G.1))
     
     // TODO: prove this actually is the subgroup you'd expect, not a degenerate case.
-    define cyclic_subgroup(self) -> FiniteSubgroup<G> {
+    define cyclic_subgroup(self) -> FiniteSubgroup[G] {
         FiniteSubgroup.new(map(G.order.range, self.pow).unique)
     }
 }
 
-theorem subgroup_has_order_at_most_G_order<G: FiniteGroup>(s: FiniteSubgroup<G>) {
+theorem subgroup_has_order_at_most_G_order<G: FiniteGroup>(s: FiniteSubgroup[G]) {
     s.order <= G.order
 } by {
     forall(x: G) {
@@ -118,6 +118,6 @@ theorem all_elements_have_order_at_most_G<G: FiniteGroup>(g: G) {
     g.pow(m) = G.1
 }
 
-theorem all_elements_have_finite_order<G: FiniteGroup>(g: G) {
+theorem all_elements_have_finite_order[G: FiniteGroup](g: G) {
     has_finite_order(g)
 }
