@@ -2,33 +2,33 @@ typeclass M: Magma {
     mul: (M, M) -> M
 } 
 
-let main<M: Magma>: Bool = forall(x: M, y: M, z: M) {
+let main[M: Magma]: Bool = forall(x: M, y: M, z: M) {
     x = (y * x) * ((x * z) * z)
 }
 
-define s<M: Magma>(z: M, x: M) -> M {
+define s[M: Magma](z: M, x: M) -> M {
     (x * z) * z
 }
 
-define f<M: Magma>(x: M, y: M) -> M {
+define f[M: Magma](x: M, y: M) -> M {
     x * s(y, x)
 }
 
 // y = z * a
 // x = s(b, a)
-theorem claim1<M: Magma>(a: M, b: M, z: M) {
-    main<M> implies (z * a) * s(b, a) = a
+theorem claim1[M: Magma](a: M, b: M, z: M) {
+    main[M] implies (z * a) * s(b, a) = a
 }
 
-theorem lemma1<M: Magma>(a: M, b: M, c: M) {
-    main<M> implies s(b, a) = a * f(b, c)
+theorem lemma1[M: Magma](a: M, b: M, c: M) {
+    main[M] implies s(b, a) = a * f(b, c)
 } by {
     let z: M = s(c, b)
     s(b, a) = a * s(z, s(b, a))
 }
 
-theorem lemma2<M: Magma>(a: M, c: M) {
-    main<M> implies exists(b: M, d: M) {
+theorem lemma2[M: Magma](a: M, c: M) {
+    main[M] implies exists(b: M, d: M) {
         f(b, c) = s(d, a)
     }
 } by {
@@ -40,8 +40,8 @@ theorem lemma2<M: Magma>(a: M, c: M) {
     f(b, c) = (a * s(c, b)) * s(c, b)
 }
 
-theorem lemma3<M: Magma>(a: M) {
-    main<M> implies exists(e: M) {
+theorem lemma3[M: Magma](a: M) {
+    main[M] implies exists(e: M) {
         s(e, a) = a
     }
 } by {
@@ -55,14 +55,14 @@ theorem lemma3<M: Magma>(a: M) {
     a * a * a = a * f(a, d)
 }
 
-theorem claim2<M: Magma>(a: M, y: M) {
-    main<M> implies a = s(a, y)
+theorem claim2[M: Magma](a: M, y: M) {
+    main[M] implies a = s(a, y)
 }
 
-theorem claim3<M: Magma>(a: M, y: M, z: M) {
-    main<M> implies (z * y) * a = y
+theorem claim3[M: Magma](a: M, y: M, z: M) {
+    main[M] implies (z * y) * a = y
 }
 
-theorem goal<M: Magma>(x: M, y: M) {
-    main<M> implies x = y
+theorem goal[M: Magma](x: M, y: M) {
+    main[M] implies x = y
 }

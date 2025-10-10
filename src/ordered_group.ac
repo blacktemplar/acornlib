@@ -12,11 +12,11 @@ typeclass G: LeftOrderedGroup extends Group, LinearOrder {
 }
 
 /// True if a is strictly less than b in the group order.
-define lt<G: LeftOrderedGroup>(a: G, b: G) -> Bool {
+define lt[G: LeftOrderedGroup](a: G, b: G) -> Bool {
     a <= b and a != b
 }
 
-theorem lt_trans<G: LeftOrderedGroup>(a: G, b: G, c: G) {
+theorem lt_trans[G: LeftOrderedGroup](a: G, b: G, c: G) {
     lt(a, b) and lt(b, c) implies lt(a, c)
 } by {
     a <= b and a != b
@@ -24,7 +24,7 @@ theorem lt_trans<G: LeftOrderedGroup>(a: G, b: G, c: G) {
     a <= c and a != c
 }
 
-theorem one_lt_pow<G: LeftOrderedGroup>(a: G, n: Nat) {
+theorem one_lt_pow[G: LeftOrderedGroup](a: G, n: Nat) {
     lt(G.1, a) and n != Nat.0 implies lt(G.1, a.pow(n))
 } by {
     // Define a helper function for induction
@@ -48,7 +48,7 @@ theorem one_lt_pow<G: LeftOrderedGroup>(a: G, n: Nat) {
     f(n_pred)
 }
 
-theorem pow_lt_one<G: LeftOrderedGroup>(a: G, n: Nat) {
+theorem pow_lt_one[G: LeftOrderedGroup](a: G, n: Nat) {
     lt(a, G.1) and n != Nat.0 implies lt(a.pow(n), G.1)
 } by {
     // Define a helper function for induction
@@ -82,8 +82,8 @@ typeclass G: OrderedGroup extends LeftOrderedGroup {
 }
 
 // Ordered groups must be torsion-free.
-theorem ordered_imp_torsion_free<G: OrderedGroup>(g: G) {
-    is_torsion_free<G>
+theorem ordered_imp_torsion_free[G: OrderedGroup](g: G) {
+    is_torsion_free[G]
 } by {
     forall(h: G) {
         if has_finite_order(h) {

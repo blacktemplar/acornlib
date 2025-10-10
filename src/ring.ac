@@ -7,21 +7,21 @@ from semiring import Semiring
 /// multiplication forms a monoid, and multiplication distributes over addition.
 typeclass Ring extends Semiring, AddCommGroup
 
-theorem mul_zero_left<R: Ring>(a: R) {
+theorem mul_zero_left[R: Ring](a: R) {
     R.0 * a = R.0
 } by {
     R.0 + R.0 = R.0
     (R.0 + R.0) * a = R.0 * a
 }
 
-theorem mul_zero_right<R: Ring>(a: R) {
+theorem mul_zero_right[R: Ring](a: R) {
     a * R.0 = R.0
 } by {
     R.0 + R.0 = R.0
     a * (R.0 + R.0) = a * R.0
 }
 
-theorem mul_neg_left<R: Ring>(a: R, b: R) {
+theorem mul_neg_left[R: Ring](a: R, b: R) {
     -a * b = -(a * b)
 } by {
     -a * b + a * b = R.0
@@ -29,7 +29,7 @@ theorem mul_neg_left<R: Ring>(a: R, b: R) {
     R.0 * b = R.0
 }
 
-theorem mul_neg_right<R: Ring>(a: R, b: R) {
+theorem mul_neg_right[R: Ring](a: R, b: R) {
     a * -b = -(a * b)
 } by {
     a * -b + a * b = R.0
@@ -37,14 +37,14 @@ theorem mul_neg_right<R: Ring>(a: R, b: R) {
     a * R.0 = R.0
 }
 
-theorem mul_neg_neg<R: Ring>(a: R, b: R) {
+theorem mul_neg_neg[R: Ring](a: R, b: R) {
     -a * -b = a * b
 } by {
     -a * -b = -(a * -b)
     -a * -b = --(a * b)
 }
 
-theorem mul_neg_one_left<R: Ring>(a: R) {
+theorem mul_neg_one_left[R: Ring](a: R) {
     -R.1 * a = -a
 } by {
     -R.1 * a + R.1 * a = R.0
@@ -52,7 +52,7 @@ theorem mul_neg_one_left<R: Ring>(a: R) {
     R.0 * a = R.0
 }
 
-theorem mul_neg_one_right<R: Ring>(a: R) {
+theorem mul_neg_one_right[R: Ring](a: R) {
     a * -R.1 = -a
 } by {
     a * -R.1 + a * R.1 = R.0
@@ -60,7 +60,7 @@ theorem mul_neg_one_right<R: Ring>(a: R) {
     a * R.0 = R.0
 }
 
-theorem geometric_sum<R: Ring>(a: R, n: Nat) {
+theorem geometric_sum[R: Ring](a: R, n: Nat) {
     (a + -R.1) * sum(map(n.range, a.pow)) = a.pow(n) + -R.1
 } by {
     define f(x: Nat) -> Bool {
@@ -72,9 +72,9 @@ theorem geometric_sum<R: Ring>(a: R, n: Nat) {
     // sum(map([], a.pow)) = 0
     // (a + -R.1) * 0 = 0
     // pow(a, 0) + -R.1 = R.1 + -R.1 = 0
-    Nat.0.range = List.nil<Nat>
-    map(List.nil<Nat>, a.pow) = List.nil<R>
-    sum(List.nil<R>) = R.0
+    Nat.0.range = List.nil[Nat]
+    map(List.nil[Nat], a.pow) = List.nil[R]
+    sum(List.nil[R]) = R.0
     (a + -R.1) * R.0 = R.0
     a.pow(Nat.0) = R.1
     R.1 + -R.1 = R.0

@@ -61,7 +61,7 @@ attributes G: FiniteGroup {
     }
 }
 
-theorem subgroup_has_order_at_most_G_order<G: FiniteGroup>(s: FiniteSubgroup[G]) {
+theorem subgroup_has_order_at_most_G_order[G: FiniteGroup](s: FiniteSubgroup[G]) {
     s.order <= G.order
 } by {
     forall(x: G) {
@@ -73,7 +73,7 @@ theorem subgroup_has_order_at_most_G_order<G: FiniteGroup>(s: FiniteSubgroup[G])
 
 from option import Option
 
-theorem all_elements_have_order_at_most_G<G: FiniteGroup>(g: G) {
+theorem all_elements_have_order_at_most_G[G: FiniteGroup](g: G) {
     exists (n: Nat) {
         n > 0 and n <= G.order and g.pow(n) = G.1
     }

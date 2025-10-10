@@ -49,7 +49,7 @@ structure Subgroup[G: Group] {
 }
 
 /// The trivial subgroup containing only the identity element.
-let identity_subgroup<G: Group>: Subgroup[G] = Subgroup.new(is_identity[G])
+let identity_subgroup[G: Group]: Subgroup[G] = Subgroup.new(is_identity[G])
 
 theorem identity_subgroup_only_has_identity[G: Group](g: G) {
     identity_subgroup[G].contains(g) implies g = G.1

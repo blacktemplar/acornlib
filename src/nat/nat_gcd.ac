@@ -5,7 +5,7 @@ numerals Nat
 
 /// Performs one step of the Euclidean algorithm for computing GCD.
 /// Takes the pair (a, b) and replaces it with (b, a mod b).
-define gcd_step(p: Pair<Nat, Nat>) -> Pair<Nat, Nat> {
+define gcd_step(p: Pair[Nat, Nat]) -> Pair[Nat, Nat] {
     if p.second = 0 {
         p
     } else {
@@ -14,7 +14,7 @@ define gcd_step(p: Pair<Nat, Nat>) -> Pair<Nat, Nat> {
 }
 
 /// Performs n steps of the Euclidean GCD algorithm.
-define gcd_step_n(p: Pair<Nat, Nat>, n: Nat) -> Pair<Nat, Nat> {
+define gcd_step_n(p: Pair[Nat, Nat], n: Nat) -> Pair[Nat, Nat] {
     match n {
         Nat.0 {
             p
@@ -114,7 +114,7 @@ theorem dtz_terminates(f: Nat -> Nat) {
     f(n) = 0
 }
 
-theorem gcd_terminates(p: Pair<Nat, Nat>) {
+theorem gcd_terminates(p: Pair[Nat, Nat]) {
     exists(n: Nat) { gcd_step_n(p, n).second = 0 }
 } by {
     let f = function(x: Nat) { gcd_step_n(p, x).second }
@@ -137,19 +137,19 @@ theorem gcd_terminates(p: Pair<Nat, Nat>) {
     decreasing_to_zero(f)
 }
 
-define gcd_termination(p: Pair<Nat, Nat>) -> (Nat -> Bool) {
+define gcd_termination(p: Pair[Nat, Nat]) -> (Nat -> Bool) {
     function(n: Nat) {
         gcd_step_n(p, n).second = 0
     }
 }
 
-let num_gcd_steps(p: Pair<Nat, Nat>) -> n: Nat satisfy {
+let num_gcd_steps(p: Pair[Nat, Nat]) -> n: Nat satisfy {
     is_min(gcd_termination(p), n)
 } by {
     exists(k: Nat) { gcd_termination(p, k) }
 }
 
-theorem num_gcd_steps_terminates(p: Pair<Nat, Nat>) {
+theorem num_gcd_steps_terminates(p: Pair[Nat, Nat]) {
     gcd_step_n(p, num_gcd_steps(p)).second = 0
 } by {
     exists(n: Nat) { is_min(gcd_termination(p), n) }
@@ -158,15 +158,15 @@ theorem num_gcd_steps_terminates(p: Pair<Nat, Nat>) {
     gcd_termination(p)(num_gcd_steps(p))
 }
 
-define gcd_pair(p: Pair<Nat, Nat>) -> Nat { gcd_step_n(p, num_gcd_steps(p)).first }
+define gcd_pair(p: Pair[Nat, Nat]) -> Nat { gcd_step_n(p, num_gcd_steps(p)).first }
 
 define gcd(a: Nat, b: Nat) -> Nat { gcd_pair(Pair.new(a, b)) }
 
-define divides_both(a: Nat, p: Pair<Nat, Nat>) -> Bool {
+define divides_both(a: Nat, p: Pair[Nat, Nat]) -> Bool {
     a.divides(p.first) and a.divides(p.second)
 }
 
-theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
+theorem divides_both_step(a: Nat, p: Pair[Nat, Nat]) {
     divides_both(a, p) implies divides_both(a, gcd_step(p))
 } by {
     a.divides(p.first)
@@ -176,7 +176,7 @@ theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
         gcd_step(p) = p
         divides_both(a, gcd_step(p))
     } else {
-        gcd_step(p) = Pair<Nat, Nat>.new(p.second, p.first.mod(p.second))
+        gcd_step(p) = Pair[Nat, Nat].new(p.second, p.first.mod(p.second))
         gcd_step(p).second = p.first.mod(p.second)
         a.divides(gcd_step(p).second)
         gcd_step(p).first = p.second
@@ -185,7 +185,7 @@ theorem divides_both_step(a: Nat, p: Pair<Nat, Nat>) {
     }
 }
 
-theorem divides_gcd_step_n(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
+theorem divides_gcd_step_n(d: Nat, p: Pair[Nat, Nat], n: Nat) {
     divides_both(d, p) implies divides_both(d, gcd_step_n(p, n))
 } by {
     let f = function(x: Nat) { divides_both(d, gcd_step_n(p, x)) }
@@ -202,7 +202,7 @@ theorem divides_gcd_step_n(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
     divides_both(d, gcd_step_n(p, n))
 }
 
-theorem divides_gcd_pair(d: Nat, p: Pair<Nat, Nat>) {
+theorem divides_gcd_pair(d: Nat, p: Pair[Nat, Nat]) {
     divides_both(d, p) implies d.divides(gcd_pair(p))
 } by {
     divides_both(d, gcd_step_n(p, num_gcd_steps(p)))
@@ -212,35 +212,35 @@ theorem divides_gcd_pair(d: Nat, p: Pair<Nat, Nat>) {
 theorem divides_gcd(d: Nat, a: Nat, b: Nat) {
     d.divides(a) and d.divides(b) implies d.divides(gcd(a, b))
 } by {
-    d.divides(Pair<Nat, Nat>.new(a, b).first)
-    d.divides(Pair<Nat, Nat>.new(a, b).second)
-    divides_both(d, Pair<Nat, Nat>.new(a, b))
-    divides_gcd_pair(d, Pair<Nat, Nat>.new(a, b))
+    d.divides(Pair[Nat, Nat].new(a, b).first)
+    d.divides(Pair[Nat, Nat].new(a, b).second)
+    divides_both(d, Pair[Nat, Nat].new(a, b))
+    divides_gcd_pair(d, Pair[Nat, Nat].new(a, b))
 
-    d.divides(gcd_pair(Pair<Nat, Nat>.new(a, b)))
+    d.divides(gcd_pair(Pair[Nat, Nat].new(a, b)))
     d.divides(gcd(a, b))
 }
 
-theorem divides_both_unstep(a: Nat, p: Pair<Nat, Nat>) {
+theorem divides_both_unstep(a: Nat, p: Pair[Nat, Nat]) {
     divides_both(a, gcd_step(p)) implies divides_both(a, p)
 } by {
     if p.second = 0 {
         p = gcd_step(p)
         divides_both(a, p)
     } else {
-        gcd_step(p) = Pair<Nat, Nat>.new(p.second, p.first.mod(p.second))
+        gcd_step(p) = Pair[Nat, Nat].new(p.second, p.first.mod(p.second))
         a.divides(gcd_step(p).first)
-        exists(k0: Nat) { a.divides(Pair<Nat, Nat>.new(p.second, k0).first) }
+        exists(k0: Nat) { a.divides(Pair[Nat, Nat].new(p.second, k0).first) }
         a.divides(p.second)
         a.divides(gcd_step(p).second)
-        exists(k0: Nat) { a.divides(Pair<Nat, Nat>.new(k0, p.first.mod(p.second)).second) }
+        exists(k0: Nat) { a.divides(Pair[Nat, Nat].new(k0, p.first.mod(p.second)).second) }
         a.divides(p.first.mod(p.second))
         a.divides(p.first)
         divides_both(a, p)
     }
 }
 
-theorem divides_gcd_step_n_converse(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
+theorem divides_gcd_step_n_converse(d: Nat, p: Pair[Nat, Nat], n: Nat) {
     divides_both(d, gcd_step_n(p, n)) implies divides_both(d, p)
 } by {
     let f = function(x: Nat) {
@@ -265,7 +265,7 @@ theorem divides_gcd_step_n_converse(d: Nat, p: Pair<Nat, Nat>, n: Nat) {
     }
 }
 
-theorem divides_gcd_pair_converse(d: Nat, p: Pair<Nat, Nat>) {
+theorem divides_gcd_pair_converse(d: Nat, p: Pair[Nat, Nat]) {
     d.divides(gcd_pair(p)) implies divides_both(d, p)
 } by {
     gcd_pair(p) = gcd_step_n(p, num_gcd_steps(p)).first
@@ -279,7 +279,7 @@ theorem divides_gcd_pair_converse(d: Nat, p: Pair<Nat, Nat>) {
 theorem gcd_divides(d: Nat, a: Nat, b: Nat) {
     d.divides(gcd(a, b)) implies d.divides(a) and d.divides(b)
 } by {
-    let p = Pair<Nat, Nat>.new(a, b)
+    let p = Pair[Nat, Nat].new(a, b)
     p.first = a
     p.second = b
     d.divides(gcd_pair(p))
@@ -349,7 +349,7 @@ define mod_maintains(f: Nat -> Bool) -> Bool {
 theorem mod_maintains_imp_gcd(f: Nat -> Bool, a: Nat, b: Nat) {
     mod_maintains(f) and f(a) and f(b) implies f(gcd(a, b))
 } by {
-    let p = Pair<Nat, Nat>.new(a, b)
+    let p = Pair[Nat, Nat].new(a, b)
     let g = function(n: Nat) {
         f(gcd_step_n(p, n).first) and f(gcd_step_n(p, n).second)
     }

@@ -606,7 +606,7 @@ theorem neg_uniform {
 
 
 /// Pointwise addition of two real-valued functions.
-define add_fns<T>(f: T -> Real, g: T -> Real, t: T) -> Real {
+define add_fns[T](f: T -> Real, g: T -> Real, t: T) -> Real {
     f(t) + g(t)
 }
 

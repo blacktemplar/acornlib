@@ -35,7 +35,7 @@ attributes M: Monoid {
 }
 
 // Proof that a^n * a^m = a^(n+m)
-theorem pow_add<M: Monoid>(a: M, n: Nat, m: Nat) {
+theorem pow_add[M: Monoid](a: M, n: Nat, m: Nat) {
     a.pow(n) * a.pow(m) = a.pow(n + m)
 } by {
     // Define a helper function for induction
@@ -69,7 +69,7 @@ theorem pow_add<M: Monoid>(a: M, n: Nat, m: Nat) {
 }
 
 // Proof that a^1 = a
-theorem pow_one<M: Monoid>(a: M) {
+theorem pow_one[M: Monoid](a: M) {
     a.pow(Nat.1) = a
 } by {
     a.pow(Nat.1) = a.pow(Nat.0.suc) // by definition of Nat.1

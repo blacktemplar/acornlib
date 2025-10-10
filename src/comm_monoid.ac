@@ -7,7 +7,7 @@ typeclass M: CommMonoid extends CommSemigroup, Monoid {
     // All the properties are provided by the base typeclasses.
 }
 
-theorem pow_distrib_mul<M: CommMonoid>(a: M, b: M, c: Nat) {
+theorem pow_distrib_mul[M: CommMonoid](a: M, b: M, c: Nat) {
     (a * b).pow(c) = a.pow(c) * b.pow(c)
 } by {
     // Inductive proof on c
