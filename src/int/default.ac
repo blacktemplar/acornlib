@@ -159,6 +159,7 @@ attributes Int {
         (b - self).is_positive or self = b
     }
 
+    /// True if this integer divides b (equivalently, there exists d such that d * this = b).
     define divides(self, b: Int) -> Bool {
         exists(d: Int) { d * self = b }
     }

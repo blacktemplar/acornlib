@@ -1,5 +1,6 @@
 /// Sets with elements of type `K` are defined as Boolean functions over `K`
 structure Set[K] {
+    /// True if the element is in the set.
     contains: K -> Bool
 }
 
@@ -30,21 +31,26 @@ theorem neg_of_neg_is_self[K](f: K -> Bool) {
 /// Set basics
 attributes Set[K] {
     let empty_set = Set[K].new(constant_false[K])
+    /// The universal set containing all elements of type K.
     let universal_set = Set[K].new(negate_fun(constant_false[K]))
+    /// Creates a set containing exactly one element.
     let singleton: K -> Set[K] = function(a: K) {
         Set[K].new(singleton_fun(a))
     }
 
+    /// True if the set has no elements.
     define is_empty(self) -> Bool {
         forall(x: K) {
             not self.contains(x)
         }
     }
 
+    /// The complement of this set.
     define c(self) -> Set[K] {
         Set[K].new(negate_fun(self.contains))
     }
 
+    /// True if the set contains exactly one element.
     define is_singleton(self) -> Bool {
         exists(a: K) {
             self = Set[K].singleton(a)
@@ -386,8 +392,11 @@ define intersection_family[K, I](f: I -> Set[K]) -> Set[K] {
 
 // Proving indexed union and intersection definitions are consistent
 // with family definitions
+/// A type with exactly two values.
 inductive TwoType {
+    /// The first value.
     first
+    /// The second value.
     second
 }
 

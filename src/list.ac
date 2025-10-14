@@ -148,6 +148,7 @@ attributes List[T] {
         }
     }
 
+    /// True if all elements in the list are distinct.
     define is_unique(self) -> Bool {
         self.unique = self
     }
@@ -277,6 +278,7 @@ theorem unique_implies_tail_unique[T](head: T, tail: List[T]) {
 }
 
 attributes List[T] {
+    /// The number of times the given item appears in the list.
     define count(self, item: T) -> Nat {
         match self {
             List.nil[T] {
@@ -535,7 +537,6 @@ attributes Nat {
 }
 
 attributes List[T] {
-    /// Alternate name for `Nat.range`.
     /// Creates a list of natural numbers from 0 to n-1.
     let range: Nat -> List[Nat] = Nat.range
 
@@ -1823,6 +1824,8 @@ theorem no_list_contains_nat(list: List[Nat]) {
 from option import Option
 
 attributes List[T] {
+    /// The index of the first occurrence of the item in the list.
+    /// Returns the list length if the item is not found.
     define find_first_idx(self, item: T) -> Nat {
         match self {
             List.nil{
@@ -1838,6 +1841,7 @@ attributes List[T] {
         }
     }
 
+    /// The element at index i, or none if the index is out of bounds.
     define get_idx(self, i: Nat) -> Option[T] {
         match self {
             List.nil {

@@ -701,20 +701,24 @@ theorem division_theorem(m: Nat, n: Nat) {
 }
 
 attributes Nat {
+    /// True if this number is composite (has nontrivial factors).
     define is_composite(self) -> Bool {
         exists(b: Nat, c: Nat) {
             1 < b and 1 < c and self = b * c
         }
     }
 
+    /// True if this number is prime (greater than 1 and not composite).
     define is_prime(self) -> Bool {
         1 < self and not self.is_composite
     }
 
+    /// True if this number divides b (equivalently, there exists c such that this * c = b).
     define divides(self, b: Nat) -> Bool {
         exists(c: Nat) { self * c = b }
     }
 
+    /// The factorial of this number (the product 1 * 2 * ... * n).
     define factorial(self) -> Nat {
         match self {
             Nat.0 {
@@ -1128,6 +1132,7 @@ let mod(a: Nat, m: Nat) -> r: Nat satisfy {
 }
 
 attributes Nat {
+    /// The remainder when dividing this number by m.
     let mod = mod
 }
 
