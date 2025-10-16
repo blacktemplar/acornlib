@@ -1,4 +1,5 @@
 from nat.nat_gcd import Nat
+from list import partial
 
 numerals Nat
 
@@ -249,3 +250,28 @@ theorem pascal(n: Nat, k: Nat) {
 
     n.suc.choose(k) = n.choose(k - 1) + n.choose(k)
 }
+
+// Helper function for the binomial theorem
+define binomial_term(a: Nat, b: Nat, n: Nat, k: Nat) -> Nat {
+    n.choose(k) * a.exp(k) * b.exp(n - k)
+}
+
+// TODO: The binomial theorem proof is incomplete. It requires several helper theorems:
+// 1. partial_add: Adding partial sums (currently commented out in list.ac)
+// 2. partial_scalar_mul: Distributing scalar multiplication through partial sums
+// 3. partial_reindex: Reindexing partial sums
+// 4. A way to apply Pascal's identity term-by-term to combine sums
+//
+// The proof structure is:
+// - Base case (n=0) is straightforward and verifies
+// - Inductive step needs to:
+//   a) Expand (a+b)^(n+1) = (a+b) * (a+b)^n
+//   b) Distribute: a*(a+b)^n + b*(a+b)^n
+//   c) Apply induction hypothesis to get two sums
+//   d) Reindex one sum to shift indices
+//   e) Combine term-by-term using Pascal's identity
+//
+// /// The binomial theorem: (a + b)^n equals the sum of binomial terms.
+// theorem binomial(a: Nat, b: Nat, n: Nat) {
+//     (a + b).exp(n) = partial(binomial_term(a, b, n), n.suc)
+// }

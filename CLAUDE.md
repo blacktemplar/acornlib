@@ -10,6 +10,8 @@ acorn
 
 to run the verifier. This should be run after every change, to make sure the proof is verifiable.
 
+Make sure to run the verifier before you tell the user you're finished. If you have made some progress but you're still working on a big proof, it's okay to comment that out so the user can check in your work.
+
 There is a todo list in TODO.md. Keep that up to date as you make changes.
 
 ## Documentation Style

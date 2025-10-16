@@ -1162,6 +1162,7 @@ theorem map_equivalence[T, U] {
 }
 
 from add_comm_monoid import AddCommMonoid
+from add_semigroup import add_fn
 
 /// Computes the sum of all elements in a list (requires elements to form an additive commutative monoid).
 define sum[A: AddCommMonoid](items: List[A]) -> A {
@@ -1180,6 +1181,31 @@ define sum[A: AddCommMonoid](items: List[A]) -> A {
 define partial[A: AddCommMonoid](f: Nat -> A, n: Nat) -> A {
     sum(map(n.range, f))
 }
+
+/// The partial sum of a single element equals that element.
+theorem partial_one[A: AddCommMonoid](f: Nat -> A) {
+    partial(f, 1) = f(0)
+} by {
+    partial(f, 1) = sum(map(1.range, f))
+    1.range = 0.range.append(0)
+    0.range = List.nil[Nat]
+    1.range = List.singleton(0)
+    map(1.range, f) = map(List.singleton(0), f)
+    map(List.singleton(0), f) = List.singleton(f(0))
+    sum(List.singleton(f(0))) = sum(List.cons(f(0), List.nil[A]))
+    sum(List.cons(f(0), List.nil[A])) = f(0) + sum(List.nil[A])
+    sum(List.nil[A]) = A.0
+    f(0) + A.0 = f(0)
+}
+
+// TODO: This theorem needs helper theorems:
+// 1. Theorem that map(list, f) + map(list, g) = map(list, add_fn(f, g)) (pointwise addition)
+// 2. Theorem that sum(list1 + list2) = sum(list1) + sum(list2) already exists (sum_add)
+//
+// /// Adding two partial sums equals the partial sum of pointwise sums.
+// theorem partial_add[A: AddCommMonoid](f: Nat -> A, g: Nat -> A, n: Nat) {
+//     partial(f, n) + partial(g, n) = partial(add_fn(f, g), n)
+// }
 
 theorem sum_add[A: AddCommMonoid](left: List[A], right: List[A]) {
     sum(left + right) = sum(left) + sum(right)

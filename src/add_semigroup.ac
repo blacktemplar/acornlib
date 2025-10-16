@@ -9,3 +9,8 @@ typeclass A: AddSemigroup {
     }
 }
 
+/// Pointwise addition of two functions.
+define add_fn[T, A: AddSemigroup](f: T -> A, g: T -> A, t: T) -> A {
+    f(t) + g(t)
+}
+

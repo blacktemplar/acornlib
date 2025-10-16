@@ -16,7 +16,15 @@ Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 
 
 ## Current Status
 - [x] Define binomial coefficients `n.choose(k)` - **DONE** (src/nat/nat_combo.ac)
-- [x] Prove Pascal's identity: `(n+1 choose k) = (n choose k-1) + (n choose k)` - **DONE** (src/nat/nat_combo.ac:196)
+- [x] Prove Pascal's identity: `(n+1 choose k) = (n choose k-1) + (n choose k)` - **DONE** (src/nat/nat_combo.ac:202)
+- [x] Define `binomial_term` helper function - **DONE** (src/nat/nat_combo.ac:255)
+- [x] Define `add_fn[T, A: AddSemigroup]` for pointwise addition - **DONE** (src/add_semigroup.ac:13)
+- [x] Prove `partial_one`: `partial(f, 1) = f(0)` - **DONE** (src/list.ac:1186)
+- [ ] **NEXT STEP**: Prove `partial_add` theorem (currently commented out in src/list.ac:1201)
+  - This requires a helper theorem: `map_add_fn` to show that `map(list, f) + map(list, g) = map(list, add_fn(f, g))`
+- [ ] Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums
+- [ ] Prove reindexing theorems for partial sums
+- [ ] Complete the binomial theorem proof (currently commented out in src/nat/nat_combo.ac:274)
 
 ## Helper Theorems Needed
 
@@ -25,20 +33,23 @@ Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 
   - Makes summation cleaner at boundaries
   - Verified automatically from definition
 
-### 2. Summation properties (src/list.ac or new file)
-Check if these already exist, otherwise prove:
-- [ ] `partial_add`: Distributivity over addition
-  - `partial(f, n) + partial(g, n) = partial(function(k) { f(k) + g(k) }, n)`
-- [ ] `partial_mul_const_left`: Factoring out constants
-  - `c * partial(f, n) = partial(function(k) { c * f(k) }, n)`
+### 2. Summation properties
+- [x] `partial_add_seq_comm`: Distributivity over addition - **EXISTS** (real_series.ac:420)
+  - `partial(add_seq(a, b)) = add_seq(partial(a), partial(b))`
+  - Where `add_seq(a, b)(n) = a(n) + b(n)` (pointwise addition)
+- [x] `partial_mul_seq_comm`: Factoring out constants - **EXISTS** (real_series.ac:460)
+  - `partial(mul_seq(c, f)) = mul_seq(c, partial(f))`
+  - Where `mul_seq(c, f)(n) = c * f(n)` (scalar multiplication)
 - [ ] `partial_sum_split` or summation reindexing
   - Useful for shifting indices when distributing `(a+b) * sum(...)`
+  - May need index shifting theorem for the inductive step
 
 ### 3. Exponentiation properties (src/nat/nat_base.ac)
-May already exist, verify:
-- [x] `exp_add`: `a^(b+c) = a^b * a^c` - **EXISTS** (nat_base.ac:1373)
-- [ ] `exp_zero_any`: `0^n = 0` for `n > 0` - may need slight variant
-- [ ] Any distributive properties needed
+- [x] `exp_zero`: `a.exp(0) = 1` - **EXISTS** (nat_base.ac:1369)
+- [x] `exp_one`: `a.exp(1) = a` - **EXISTS** (nat_base.ac:1362)
+- [x] `exp_add`: `a.exp(b + c) = a.exp(b) * a.exp(c)` - **EXISTS** (nat_base.ac:1373)
+- [x] `zero_exp`: `n != 0 implies 0.exp(n) = 0` - **EXISTS** (nat_base.ac:1448)
+- [x] `exp_mul`: `a.exp(b * c) = a.exp(b).exp(c)` - **EXISTS** (nat_base.ac:1391)
 
 ## Proof Strategy
 
