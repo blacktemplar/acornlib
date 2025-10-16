@@ -20,9 +20,9 @@ Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 
 - [x] Define `binomial_term` helper function - **DONE** (src/nat/nat_combo.ac:255)
 - [x] Define `add_fn[T, A: AddSemigroup]` for pointwise addition - **DONE** (src/add_semigroup.ac:13)
 - [x] Prove `partial_one`: `partial(f, 1) = f(0)` - **DONE** (src/list.ac:1186)
-- [ ] **NEXT STEP**: Prove `partial_add` theorem (currently commented out in src/list.ac:1201)
-  - This requires a helper theorem: `map_add_fn` to show that `map(list, f) + map(list, g) = map(list, add_fn(f, g))`
-- [ ] Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums
+- [x] Prove `map_sum_add` helper theorem - **DONE** (src/list.ac:1202)
+- [x] Prove `partial_add` theorem - **DONE** (src/list.ac:1252)
+- [ ] **NEXT STEP**: Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums
 - [ ] Prove reindexing theorems for partial sums
 - [ ] Complete the binomial theorem proof (currently commented out in src/nat/nat_combo.ac:274)
 

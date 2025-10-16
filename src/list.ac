@@ -1198,14 +1198,68 @@ theorem partial_one[A: AddCommMonoid](f: Nat -> A) {
     f(0) + A.0 = f(0)
 }
 
-// TODO: This theorem needs helper theorems:
-// 1. Theorem that map(list, f) + map(list, g) = map(list, add_fn(f, g)) (pointwise addition)
-// 2. Theorem that sum(list1 + list2) = sum(list1) + sum(list2) already exists (sum_add)
-//
-// /// Adding two partial sums equals the partial sum of pointwise sums.
-// theorem partial_add[A: AddCommMonoid](f: Nat -> A, g: Nat -> A, n: Nat) {
-//     partial(f, n) + partial(g, n) = partial(add_fn(f, g), n)
-// }
+/// Summing two mapped lists equals mapping with the pointwise sum of functions.
+theorem map_sum_add[T, A: AddCommMonoid](list: List[T], f: T -> A, g: T -> A) {
+    sum(map(list, f)) + sum(map(list, g)) = sum(map(list, add_fn(f, g)))
+} by {
+    define p(l: List[T]) -> Bool {
+        sum(map(l, f)) + sum(map(l, g)) = sum(map(l, add_fn(f, g)))
+    }
+
+    // Base case: empty list
+    sum(map(List.nil[T], f)) + sum(map(List.nil[T], g)) = A.0 + A.0
+    A.0 + A.0 = A.0
+    sum(map(List.nil[T], add_fn(f, g))) = A.0
+    p(List.nil)
+
+    // Inductive step
+    forall(head: T, tail: List[T]) {
+        if p(tail) {
+            // Induction hypothesis: sum(map(tail, f)) + sum(map(tail, g)) = sum(map(tail, add_fn(f, g)))
+
+            // LHS: sum(map(List.cons(head, tail), f)) + sum(map(List.cons(head, tail), g))
+            sum(map(List.cons(head, tail), f)) = sum(List.cons(f(head), map(tail, f)))
+            sum(List.cons(f(head), map(tail, f))) = f(head) + sum(map(tail, f))
+            sum(map(List.cons(head, tail), g)) = sum(List.cons(g(head), map(tail, g)))
+            sum(List.cons(g(head), map(tail, g))) = g(head) + sum(map(tail, g))
+
+            // RHS: sum(map(List.cons(head, tail), add_fn(f, g)))
+            map(List.cons(head, tail), add_fn(f, g)) = List.cons(add_fn(f, g)(head), map(tail, add_fn(f, g)))
+            add_fn(f, g)(head) = f(head) + g(head)
+            sum(map(List.cons(head, tail), add_fn(f, g))) = sum(List.cons(f(head) + g(head), map(tail, add_fn(f, g))))
+            sum(List.cons(f(head) + g(head), map(tail, add_fn(f, g)))) = (f(head) + g(head)) + sum(map(tail, add_fn(f, g)))
+
+            // Now we need to show:
+            // (f(head) + sum(map(tail, f))) + (g(head) + sum(map(tail, g))) = (f(head) + g(head)) + sum(map(tail, add_fn(f, g)))
+
+            // Using the induction hypothesis:
+            sum(map(tail, f)) + sum(map(tail, g)) = sum(map(tail, add_fn(f, g)))
+
+            // Using associativity and commutativity:
+            (f(head) + sum(map(tail, f))) + (g(head) + sum(map(tail, g))) = f(head) + (sum(map(tail, f)) + (g(head) + sum(map(tail, g))))
+            f(head) + (sum(map(tail, f)) + (g(head) + sum(map(tail, g)))) = f(head) + ((sum(map(tail, f)) + g(head)) + sum(map(tail, g)))
+            f(head) + ((sum(map(tail, f)) + g(head)) + sum(map(tail, g))) = f(head) + ((g(head) + sum(map(tail, f))) + sum(map(tail, g)))
+            f(head) + ((g(head) + sum(map(tail, f))) + sum(map(tail, g))) = f(head) + (g(head) + (sum(map(tail, f)) + sum(map(tail, g))))
+            f(head) + (g(head) + (sum(map(tail, f)) + sum(map(tail, g)))) = (f(head) + g(head)) + (sum(map(tail, f)) + sum(map(tail, g)))
+            (f(head) + g(head)) + (sum(map(tail, f)) + sum(map(tail, g))) = (f(head) + g(head)) + sum(map(tail, add_fn(f, g)))
+
+            p(List.cons(head, tail))
+        }
+    }
+}
+
+/// Adding two partial sums equals the partial sum of pointwise sums.
+theorem partial_add[A: AddCommMonoid](f: Nat -> A, g: Nat -> A, n: Nat) {
+    partial(f, n) + partial(g, n) = partial(add_fn(f, g), n)
+} by {
+    // Expand the definitions of partial
+    partial(f, n) = sum(map(n.range, f))
+    partial(g, n) = sum(map(n.range, g))
+    partial(add_fn(f, g), n) = sum(map(n.range, add_fn(f, g)))
+
+    // Use map_sum_add theorem
+    sum(map(n.range, f)) + sum(map(n.range, g)) = sum(map(n.range, add_fn(f, g)))
+}
 
 theorem sum_add[A: AddCommMonoid](left: List[A], right: List[A]) {
     sum(left + right) = sum(left) + sum(right)
