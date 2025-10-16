@@ -19,10 +19,18 @@ Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 
 - [x] Prove Pascal's identity: `(n+1 choose k) = (n choose k-1) + (n choose k)` - **DONE** (src/nat/nat_combo.ac:202)
 - [x] Define `binomial_term` helper function - **DONE** (src/nat/nat_combo.ac:255)
 - [x] Define `add_fn[T, A: AddSemigroup]` for pointwise addition - **DONE** (src/add_semigroup.ac:13)
+- [x] Define `mul_fn[T, S: Semigroup]` for scalar multiplication - **DONE** (src/semigroup.ac:14)
 - [x] Prove `partial_one`: `partial(f, 1) = f(0)` - **DONE** (src/list.ac:1186)
 - [x] Prove `map_sum_add` helper theorem - **DONE** (src/list.ac:1202)
 - [x] Prove `partial_add` theorem - **DONE** (src/list.ac:1252)
-- [ ] **NEXT STEP**: Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums
+- [ ] **NEXT STEP**: Add `mul_zero_left` and `mul_zero_right` axioms to Semiring typeclass
+  - These cannot be derived without additive inverses
+  - Requires updating all Semiring instances: Nat (already has theorems), Rat, Real, etc.
+  - See discussion in src/list.ac:1267-1290
+- [ ] Prove `sum_scalar_mul` theorem (requires mul_zero axioms) - **BLOCKED**
+- [ ] Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums - **BLOCKED**
+  - Requires sum_scalar_mul
+  - Also has prover limitations with map_map application
 - [ ] Prove reindexing theorems for partial sums
 - [ ] Complete the binomial theorem proof (currently commented out in src/nat/nat_combo.ac:274)
 

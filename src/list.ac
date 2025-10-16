@@ -1163,6 +1163,9 @@ theorem map_equivalence[T, U] {
 
 from add_comm_monoid import AddCommMonoid
 from add_semigroup import add_fn
+from semiring import Semiring
+from semigroup import mul_fn
+from util import compose
 
 /// Computes the sum of all elements in a list (requires elements to form an additive commutative monoid).
 define sum[A: AddCommMonoid](items: List[A]) -> A {
@@ -1259,6 +1262,53 @@ theorem partial_add[A: AddCommMonoid](f: Nat -> A, g: Nat -> A, n: Nat) {
 
     // Use map_sum_add theorem
     sum(map(n.range, f)) + sum(map(n.range, g)) = sum(map(n.range, add_fn(f, g)))
+}
+
+/// Helper function for scalar multiplication.
+define scalar_mul[S: Semiring](c: S, x: S) -> S {
+    c * x
+}
+
+/// Multiplying a constant by a sum equals the sum of the products.
+theorem sum_scalar_mul[S: Semiring](c: S, list: List[S]) {
+    c * sum(list) = sum(map(list, scalar_mul(c)))
+} by {
+    define p(xs: List[S]) -> Bool {
+        c * sum(xs) = sum(map(xs, scalar_mul(c)))
+    }
+
+    // Base case: c * sum(nil) = sum(map(nil, scalar_mul(c)))
+    sum(List.nil[S]) = S.0
+    c * S.0 = S.0
+    map(List.nil[S], scalar_mul(c)) = List.nil[S]
+    sum(List.nil[S]) = S.0
+    p(List.nil)
+
+    // Inductive step
+    forall(head: S, tail: List[S]) {
+        if p(tail) {
+            // Induction hypothesis: c * sum(tail) = sum(map(tail, scalar_mul(c)))
+
+            // Left side: c * sum(cons(head, tail))
+            sum(List.cons(head, tail)) = head + sum(tail)
+            c * sum(List.cons(head, tail)) = c * (head + sum(tail))
+            c * (head + sum(tail)) = (c * head) + (c * sum(tail))
+
+            // Apply induction hypothesis
+            c * sum(tail) = sum(map(tail, scalar_mul(c)))
+            (c * head) + (c * sum(tail)) = (c * head) + sum(map(tail, scalar_mul(c)))
+
+            // Right side: sum(map(cons(head, tail), scalar_mul(c)))
+            map(List.cons(head, tail), scalar_mul(c)) = List.cons(scalar_mul(c)(head), map(tail, scalar_mul(c)))
+            scalar_mul(c)(head) = c * head
+            map(List.cons(head, tail), scalar_mul(c)) = List.cons(c * head, map(tail, scalar_mul(c)))
+            sum(map(List.cons(head, tail), scalar_mul(c))) = sum(List.cons(c * head, map(tail, scalar_mul(c))))
+            sum(List.cons(c * head, map(tail, scalar_mul(c)))) = (c * head) + sum(map(tail, scalar_mul(c)))
+
+            c * sum(List.cons(head, tail)) = sum(map(List.cons(head, tail), scalar_mul(c)))
+            p(List.cons(head, tail))
+        }
+    }
 }
 
 theorem sum_add[A: AddCommMonoid](left: List[A], right: List[A]) {
@@ -1396,8 +1446,6 @@ theorem append_not_nil[T](a: List[T], t: T) {
     a.append(t) != List.nil[T]
 }
 
-from util import compose
-
 theorem map_map[T, U, V](items: List[T], f: T -> U, g: U -> V) {
     map(map(items, f), g) = map(items, compose(g, f))
 } by {
@@ -1430,6 +1478,36 @@ theorem map_map[T, U, V](items: List[T], f: T -> U, g: U -> V) {
             p(List.cons(head, tail))
         }
     }
+}
+
+/// Distributing scalar multiplication through a partial sum.
+theorem partial_scalar_mul[S: Semiring](c: S, f: Nat -> S, n: Nat) {
+    c * partial(f, n) = partial(mul_fn(c, f), n)
+} by {
+    // Expand the definition of partial
+    partial(f, n) = sum(map(n.range, f))
+    c * partial(f, n) = c * sum(map(n.range, f))
+
+    // Use sum_scalar_mul theorem
+    c * sum(map(n.range, f)) = sum(map(map(n.range, f), scalar_mul(c)))
+
+    // Use the map_map theorem
+    map(map(n.range, f), scalar_mul(c)) = map(n.range, compose(scalar_mul(c), f))
+
+    // Show that compose(scalar_mul(c), f) = mul_fn(c, f)
+    forall(k: Nat) {
+        compose(scalar_mul(c), f)(k) = scalar_mul(c)(f(k))
+        scalar_mul(c)(f(k)) = c * f(k)
+        mul_fn(c, f)(k) = c * f(k)
+        compose(scalar_mul(c), f)(k) = mul_fn(c, f)(k)
+    }
+
+    // The two functions are equal
+    compose(scalar_mul(c), f) = mul_fn(c, f)
+    map(n.range, compose(scalar_mul(c), f)) = map(n.range, mul_fn(c, f))
+    sum(map(map(n.range, f), scalar_mul(c))) = sum(map(n.range, mul_fn(c, f)))
+
+    partial(mul_fn(c, f), n) = sum(map(n.range, mul_fn(c, f)))
 }
 
 theorem map_length[T, U](list: List[T], f: T -> U) {

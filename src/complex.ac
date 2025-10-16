@@ -457,6 +457,34 @@ instance Complex: Monoid {
     let 1: Complex = Complex.1
 }
 
+theorem mul_zero_right(a: Complex) {
+    a * Complex.0 = Complex.0
+} by {
+    a * Complex.0 = a * Complex.new(Real.0, Real.0)
+    a * Complex.new(Real.0, Real.0) = Complex.new(
+        a.re * Real.0 - a.im * Real.0,
+        a.re * Real.0 + a.im * Real.0
+    )
+    a.re * Real.0 = Real.0
+    a.im * Real.0 = Real.0
+    a * Complex.new(Real.0, Real.0) = Complex.new(Real.0, Real.0)
+    a * Complex.0 = Complex.0
+}
+
+theorem mul_zero_left(a: Complex) {
+    Complex.0 * a = Complex.0
+} by {
+    Complex.0 * a = Complex.new(Real.0, Real.0) * a
+    Complex.new(Real.0, Real.0) * a = Complex.new(
+        Real.0 * a.re - Real.0 * a.im,
+        Real.0 * a.im + Real.0 * a.re
+    )
+    Real.0 * a.re = Real.0
+    Real.0 * a.im = Real.0
+    Complex.new(Real.0, Real.0) * a = Complex.new(Real.0, Real.0)
+    Complex.0 * a = Complex.0
+}
+
 from semiring import Semiring
 
 instance Complex: Semiring

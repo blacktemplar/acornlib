@@ -9,3 +9,8 @@ typeclass S: Semigroup {
         a * (b * c) = (a * b) * c
     }
 }
+
+/// Scalar multiplication of a function: multiplies a constant by the result of a function.
+define mul_fn[T, S: Semigroup](c: S, f: T -> S, t: T) -> S {
+    c * f(t)
+}
