@@ -10,6 +10,8 @@ acorn
 
 to run the verifier. This should be run after every change, to make sure the proof is verifiable.
 
+There is a todo list in TODO.md. Keep that up to date as you make changes.
+
 ## Documentation Style
 
 Every type, typeclass, and attribute should have a doc comment, starting with `///`.

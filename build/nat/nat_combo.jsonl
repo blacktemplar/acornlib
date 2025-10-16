@@ -67,6 +67,7 @@
 {"goal":"(n - 1).factorial != 0","proof":["n - 1 = lib(nat.nat_base).bounded_sub(n, 1)","lib(nat.nat_base).bounded_sub(n, 1).factorial = 0","lib(nat.nat_base).bounded_sub(n, 1).factorial != 0"]}
 {"goal":"choose(n)(1) = n","proof":["choose(n, 1) * (n - 1).factorial != n * (n - 1).factorial or (n - 1).factorial = 0 or choose(n, 1) = n"]}
 {"goal":"choose_one","proof":[]}
+{"goal":"choose_out_of_bounds","proof":["not n < k or choose(n, k) = 0"]}
 {"goal":"exists(k0: Nat) { k0.suc = k }","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { s0(x0).suc = x0 or 0 = x0 } }","s0(k).suc != k","not 0 < 0 or not 0 < 0","s0(k).suc = k or k = 0","k = 0","0 < 0"]}
 {"goal":"k_pred + 1 = k","proof":["k_pred + 1 = 1 + k_pred","1 + k_pred != k","1 + k_pred = k_pred.suc"]}
 {"goal":"k - 1 = k_pred","proof":["k_pred + 1 != k or k - 1 = k_pred"]}

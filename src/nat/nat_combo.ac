@@ -192,6 +192,11 @@ theorem choose_one(n: Nat) {
     }
 }
 
+/// When k > n, the binomial coefficient is zero.
+theorem choose_out_of_bounds(n: Nat, k: Nat) {
+    n < k implies n.choose(k) = 0
+}
+
 /// Pascal's identity: each entry in Pascal's triangle is the sum of the two entries above it.
 theorem pascal(n: Nat, k: Nat) {
     0 < k and k <= n implies n.suc.choose(k) = n.choose(k - 1) + n.choose(k)

@@ -21,9 +21,9 @@ Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 
 ## Helper Theorems Needed
 
 ### 1. Binomial coefficient edge cases (src/nat/nat_combo.ac)
-- [ ] `choose_out_of_bounds`: `n.choose(k) = 0` when `k > n`
+- [x] `choose_out_of_bounds`: `n.choose(k) = 0` when `k > n` - **DONE** (nat_combo.ac:196)
   - Makes summation cleaner at boundaries
-  - Follows from definition since `n < k` case returns 0
+  - Verified automatically from definition
 
 ### 2. Summation properties (src/list.ac or new file)
 Check if these already exist, otherwise prove:
