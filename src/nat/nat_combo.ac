@@ -191,3 +191,56 @@ theorem choose_one(n: Nat) {
         n.choose(1) = n
     }
 }
+
+/// Pascal's identity: each entry in Pascal's triangle is the sum of the two entries above it.
+theorem pascal(n: Nat, k: Nat) {
+    0 < k and k <= n implies n.suc.choose(k) = n.choose(k - 1) + n.choose(k)
+} by {
+    // Establish key facts about k
+    let (k_pred: Nat) satisfy { k_pred.suc = k }
+    k_pred + 1 = k
+    k - 1 = k_pred
+
+    // Establish bounds
+    k_pred < k
+    k_pred <= n
+    k_pred <= k
+    k <= n.suc
+
+    k.factorial * (n.suc - k).factorial != 0
+
+    // LHS
+    not n.suc < k
+    n.suc.choose(k) * k.factorial * (n.suc - k).factorial = n.suc.factorial
+    n.suc.choose(k) * (k.factorial * (n.suc - k).factorial) = n.suc.factorial
+
+    // First term of RHS
+    not n < k_pred
+    n.choose(k_pred) * k_pred.factorial * (n - k_pred).factorial = n.factorial
+    n - k_pred = n.suc - k
+    n.choose(k_pred) * k_pred.factorial * (n.suc - k).factorial = n.factorial
+    k.factorial = k * k_pred.factorial
+    n.choose(k_pred) * k * k_pred.factorial * (n.suc - k).factorial = k * n.factorial
+    n.choose(k_pred) * (k.factorial * (n.suc - k).factorial) = k * n.factorial
+    n.choose(k - 1) * (k.factorial * (n.suc - k).factorial) = k * n.factorial
+
+    // Second term of RHS
+    not n < k
+    n.choose(k) * k.factorial * (n - k).factorial = n.factorial
+    n.suc - k = (n - k).suc
+    (n.suc - k).factorial = (n - k).suc.factorial
+    (n.suc - k).factorial = (n - k + 1) * (n - k).factorial
+    n.choose(k) * k.factorial * (n.suc - k).factorial = n.choose(k) * k.factorial * (n - k + 1) * (n - k).factorial
+    n.choose(k) * k.factorial * (n.suc - k).factorial = (n - k + 1) * n.choose(k) * k.factorial * (n - k).factorial
+    n.choose(k) * k.factorial * (n.suc - k).factorial = (n - k + 1) * n.factorial
+    n.choose(k) * (k.factorial * (n.suc - k).factorial) = (n - k + 1) * n.factorial
+
+    // Sum
+    (n.choose(k - 1) + n.choose(k)) * (k.factorial * (n.suc - k).factorial) = k * n.factorial + (n - k + 1) * n.factorial
+    (n.choose(k - 1) + n.choose(k)) * (k.factorial * (n.suc - k).factorial) = (k + n - k + 1) * n.factorial
+    (n.choose(k - 1) + n.choose(k)) * (k.factorial * (n.suc - k).factorial) = (n + 1) * n.factorial
+    (n.choose(k - 1) + n.choose(k)) * (k.factorial * (n.suc - k).factorial) = n.suc * n.factorial
+    (n.choose(k - 1) + n.choose(k)) * (k.factorial * (n.suc - k).factorial) = n.suc.factorial
+
+    n.suc.choose(k) = n.choose(k - 1) + n.choose(k)
+}
