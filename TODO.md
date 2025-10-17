@@ -1,90 +1,40 @@
 # TODO: Binomial Theorem
 
-## Goal
-Prove the binomial theorem: `(a + b)^n = sum_{k=0}^{n} (n choose k) * a^k * b^(n-k)`
+## Current Task
+Complete the binomial theorem proof (src/nat/nat_combo.ac:261-273)
 
-In Acorn syntax (using `partial` from `list.ac`):
-```acorn
-theorem binomial(a: Nat, b: Nat, n: Nat) {
-    (a + b).exp(n) = partial(function(k: Nat) {
-        n.choose(k) * a.exp(k) * b.exp(n - k)
-    }, n.suc)
-}
-```
+**Status:**
+- Proof is commented out but structure is documented
+- Base case logic verified successfully (when uncommented)
+- All helper theorems are in place:
+  * `partial_add` - combines two partial sums (src/list.ac:1252)
+  * `partial_scalar_mul` - distributes scalar multiplication (src/list.ac:1484-1511)
+  * `partial_shift_suc` - shifts indices by 1 (src/list.ac:1513-1586)
+  * `partial_split_last` - splits off last term (src/list.ac:1588-1600)
+  * Pascal's identity (src/nat/nat_combo.ac:202-252)
 
-Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 terms.
+**What remains for inductive step:**
+After using `partial_scalar_mul`, we get two sums that need to be combined:
+1. First sum has terms `(m choose k) * a^(k+1) * b^(m-k)` for k=0..m
+2. Second sum has terms `(m choose k) * a^k * b^(m+1-k)` for k=0..m
+3. Need to reindex first sum using `partial_shift_suc` to align indices
+4. Apply Pascal's identity pointwise: `(m choose k-1) + (m choose k) = (m+1 choose k)`
+5. Handle boundary terms (k=0 and k=m+1) using `choose_zero`, `choose_n`, `choose_out_of_bounds`
 
-## Current Status
-- [x] Define binomial coefficients `n.choose(k)` - **DONE** (src/nat/nat_combo.ac)
-- [x] Prove Pascal's identity: `(n+1 choose k) = (n choose k-1) + (n choose k)` - **DONE** (src/nat/nat_combo.ac:202)
-- [x] Define `binomial_term` helper function - **DONE** (src/nat/nat_combo.ac:255)
-- [x] Define `add_fn[T, A: AddSemigroup]` for pointwise addition - **DONE** (src/add_semigroup.ac:13)
-- [x] Define `mul_fn[T, S: Semigroup]` for scalar multiplication - **DONE** (src/semigroup.ac:14)
-- [x] Prove `partial_one`: `partial(f, 1) = f(0)` - **DONE** (src/list.ac:1186)
-- [x] Prove `map_sum_add` helper theorem - **DONE** (src/list.ac:1202)
-- [x] Prove `partial_add` theorem - **DONE** (src/list.ac:1252)
-- [x] Add `mul_zero_left` and `mul_zero_right` axioms to Semiring typeclass - **DONE** (src/semiring.ac:19-26)
-- [x] Prove `sum_scalar_mul` theorem - **DONE** (src/list.ac:1273-1312)
-- [x] Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums - **DONE** (src/list.ac:1484-1511)
-- [x] Prove reindexing theorems for partial sums - **DONE**
-  - `partial_shift_suc`: shifts indices by 1 using `compose(f, Nat.suc)` (src/list.ac:1513-1586)
-  - `partial_split_last`: splits off the last term: `partial(f, n.suc) = partial(f, n) + f(n)` (src/list.ac:1588-1600)
-- [ ] **NEXT STEP**: Complete the binomial theorem proof (currently commented out in src/nat/nat_combo.ac:274)
-  - May need additional term-by-term combination theorems to apply Pascal's identity
+**Additional helper lemmas - COMPLETED:**
+1. [x] `partial_pointwise_eq` - Function extensionality for partial sums - **DONE** (src/list.ac:1602-1658)
+   - If `f(k) = g(k)` for all `k < n`, then `partial(f, n) = partial(g, n)`
+   - This lets us prove sums equal by proving their terms equal pointwise
 
-## Helper Theorems Needed
+2. [x] `partial_drop_first` - Extract the first term from a partial sum - **DONE** (src/list.ac:1660-1675)
+   - `n > 0 implies partial(f, n) = f(0) + partial(compose(f, Nat.suc), n - 1)`
+   - Rearrangement of `partial_shift_suc` that's more convenient for some proofs
 
-### 1. Binomial coefficient edge cases (src/nat/nat_combo.ac)
-- [x] `choose_out_of_bounds`: `n.choose(k) = 0` when `k > n` - **DONE** (nat_combo.ac:196)
-  - Makes summation cleaner at boundaries
-  - Verified automatically from definition
+3. [x] `partial_split_first_last` - Split into first, middle, and last terms - **DONE** (src/list.ac:1677-1721)
+   - `n >= 2 implies partial(f, n) = f(0) + partial(compose(f, Nat.suc), n - 2) + f(n - 1)`
+   - Useful for isolating boundary terms
 
-### 2. Summation properties
-- [x] `partial_add_seq_comm`: Distributivity over addition - **EXISTS** (real_series.ac:420)
-  - `partial(add_seq(a, b)) = add_seq(partial(a), partial(b))`
-  - Where `add_seq(a, b)(n) = a(n) + b(n)` (pointwise addition)
-- [x] `partial_mul_seq_comm`: Factoring out constants - **EXISTS** (real_series.ac:460)
-  - `partial(mul_seq(c, f)) = mul_seq(c, partial(f))`
-  - Where `mul_seq(c, f)(n) = c * f(n)` (scalar multiplication)
-- [ ] `partial_sum_split` or summation reindexing
-  - Useful for shifting indices when distributing `(a+b) * sum(...)`
-  - May need index shifting theorem for the inductive step
-
-### 3. Exponentiation properties (src/nat/nat_base.ac)
-- [x] `exp_zero`: `a.exp(0) = 1` - **EXISTS** (nat_base.ac:1369)
-- [x] `exp_one`: `a.exp(1) = a` - **EXISTS** (nat_base.ac:1362)
-- [x] `exp_add`: `a.exp(b + c) = a.exp(b) * a.exp(c)` - **EXISTS** (nat_base.ac:1373)
-- [x] `zero_exp`: `n != 0 implies 0.exp(n) = 0` - **EXISTS** (nat_base.ac:1448)
-- [x] `exp_mul`: `a.exp(b * c) = a.exp(b).exp(c)` - **EXISTS** (nat_base.ac:1391)
-
-## Proof Strategy
-
-### Base case (n = 0)
-```
-(a + b)^0 = 1
-= 0.choose(0) * a^0 * b^0
-= 1 * 1 * 1
-```
-
-### Inductive step (n → n+1)
-Assume: `(a+b)^n = sum_{k=0}^{n} (n choose k) * a^k * b^(n-k)`
-
-Prove: `(a+b)^(n+1) = sum_{k=0}^{n+1} ((n+1) choose k) * a^k * b^(n+1-k)`
-
-**Key steps:**
-1. `(a+b)^(n+1) = (a+b) * (a+b)^n`
-2. Distribute: `= a * (a+b)^n + b * (a+b)^n`
-3. Apply induction hypothesis to both terms
-4. `= a * sum_{k=0}^{n} ... + b * sum_{k=0}^{n} ...`
-5. Distribute constants into sums
-6. Reindex one of the sums (shift k → k-1 or k+1)
-7. Combine using Pascal's identity: `(n+1 choose k) = (n choose k-1) + (n choose k)`
-8. Handle boundary cases using `choose_out_of_bounds`
-
-## Files to Modify
-- `src/nat/nat_combo.ac` - binomial coefficient theorems and final binomial theorem
-- `src/list.ac` - summation helper theorems (if not already present)
-- `src/nat/nat_base.ac` - exponentiation helpers (if needed)
+**Next step:** Attempt the binomial proof again using these new tools.
 
 ---
 

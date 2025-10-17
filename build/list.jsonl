@@ -448,6 +448,66 @@
 {"goal":"sum[A](map[Nat, A](n.range, f)) = partial[A](f, n)","proof":["sum[A](map[Nat, A](n.range, f)) = partial[A](f, n)"]}
 {"goal":"sum[A](map[Nat, A](n.suc.range, f)) = partial[A](f, n) + f(n)","proof":[]}
 {"goal":"partial_split_last","proof":["sum[A](map[Nat, A](n.suc.range, f)) != partial[A](f, n) + f(n)"]}
+{"goal":"partial[A](f, 0) = sum[A](map[Nat, A](0.range, f))","proof":["sum[A](map[Nat, A](0.range, f)) = partial[A](f, 0)"]}
+{"goal":"0.range = List.nil[Nat]","proof":["0 != 0 or 0.range = List.nil[Nat]"]}
+{"goal":"map[Nat, A](List.nil[Nat], f) = List.nil[A]","proof":["List.nil[Nat].map(f) = map[Nat, A](List.nil[Nat], f)","List.nil[Nat].map(f) != List.nil[A]","List.nil[Nat] != List.nil[Nat] or List.nil[Nat].map(f) = List.nil[A]"]}
+{"goal":"sum[A](List.nil[A]) = A.0","proof":["List.nil[A] != List.nil[A] or sum[A](List.nil[A]) = A.0"]}
+{"goal":"partial[A](f, 0) = A.0","proof":[]}
+{"goal":"partial[A](g, 0) = sum[A](map[Nat, A](0.range, g))","proof":["sum[A](map[Nat, A](0.range, g)) = partial[A](g, 0)"]}
+{"goal":"map[Nat, A](List.nil[Nat], g) = List.nil[A]","proof":["List.nil[Nat].map(g) = map[Nat, A](List.nil[Nat], g)","List.nil[Nat].map(g) != List.nil[A]","List.nil[Nat] != List.nil[Nat] or List.nil[Nat].map(g) = List.nil[A]"]}
+{"goal":"sum[A](List.nil[A]) = A.0","proof":[]}
+{"goal":"partial[A](g, 0) = A.0","proof":[]}
+{"goal":"partial[A](f, 0) = partial[A](g, 0)","proof":["partial[A](f, 0) != A.0"]}
+{"goal":"p(0)","proof":["partial[A](g, 0) != partial[A](f, 0) or p(0)"]}
+{"goal":"k < m.suc","proof":["not k < m or k < m.suc"]}
+{"goal":"f(k) = g(k)","proof":["not k < m.suc or g(k) = f(k)"]}
+{"goal":"partial[A](f, m) = partial[A](g, m)","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { not p(x0) or s0(x0) < x0 or partial[A](g, x0) = partial[A](f, x0) } and forall(x1: Nat) { g(s0(x1)) != f(s0(x1)) or not p(x1) or partial[A](g, x1) = partial[A](f, x1) } and forall(x2: Nat, x3: Nat) { not x2 < x3 or p(x3) or g(x2) = f(x2) } and forall(x4: Nat) { partial[A](g, x4) != partial[A](f, x4) or p(x4) } }","not s0(m) < m or g(s0(m)) = f(s0(m))","not p(m) or s0(m) < m or partial[A](g, m) = partial[A](f, m)","g(s0(m)) != f(s0(m)) or not p(m) or partial[A](g, m) = partial[A](f, m)","s0(m) < m","g(s0(m)) != f(s0(m))","g(s0(m)) = f(s0(m))"]}
+{"goal":"m < m.suc","proof":["not m ∈ m.suc.range or not m >= m.suc","m.suc <= m = m >= m.suc","m.suc <= m or m < m.suc","m.suc <= m","m >= m.suc","m ∈ m.suc.range"]}
+{"goal":"f(m) = g(m)","proof":["not m < m.suc or g(m) = f(m)"]}
+{"goal":"partial[A](f, m.suc) = partial[A](f, m) + f(m)","proof":["partial[A](f, m) + f(m) = partial[A](f, m.suc)"]}
+{"goal":"partial[A](g, m.suc) = partial[A](g, m) + g(m)","proof":["partial[A](g, m) + g(m) = partial[A](g, m.suc)"]}
+{"goal":"partial[A](f, m.suc) = partial[A](g, m) + f(m)","proof":["partial[A](f, m) + f(m) != partial[A](f, m.suc)"]}
+{"goal":"partial[A](g, m) + f(m) = partial[A](g, m) + g(m)","proof":["g(m) != f(m)"]}
+{"goal":"partial[A](f, m.suc) = partial[A](g, m.suc)","proof":[]}
+{"goal":"p(m.suc)","proof":["let s0: Nat satisfy { s0 < m.suc or partial[A](g, m.suc) = partial[A](f, m.suc) and (g(s0) != f(s0) or partial[A](g, m.suc) = partial[A](f, m.suc)) }","partial[A](g, m.suc) != partial[A](f, m.suc) or p(m.suc)","not s0 < m.suc or p(m.suc) or g(s0) = f(s0)","partial[A](g, m.suc) != partial[A](f, m.suc)","s0 < m.suc","g(s0) != f(s0)","g(s0) = f(s0)"]}
+{"goal":"p(n)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not p(s0(p)) or p(s0(p).suc)","not p(s0(p).suc) or not p(0) or p(n)","not p(s0(p).suc)","not p(0) or p(s0(p)) or p(n)","not p(s0(p))","p(s0(p))"]}
+{"goal":"partial_pointwise_eq","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { not p(x0) or s0(x0) < x0 or partial[A](g, x0) = partial[A](f, x0) } and forall(x1: Nat) { g(s0(x1)) != f(s0(x1)) or not p(x1) or partial[A](g, x1) = partial[A](f, x1) } and forall(x2: Nat, x3: Nat) { not x2 < x3 or p(x3) or g(x2) = f(x2) } and forall(x4: Nat) { partial[A](g, x4) != partial[A](f, x4) or p(x4) } }","not s0(n) < n or g(s0(n)) = f(s0(n))","not p(n) or s0(n) < n or partial[A](g, n) = partial[A](f, n)","g(s0(n)) != f(s0(n)) or not p(n) or partial[A](g, n) = partial[A](f, n)","s0(n) < n","g(s0(n)) != f(s0(n))","g(s0(n)) = f(s0(n))"]}
+{"goal":"exists(k0: Nat) { k0.suc = n }","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { s0(x0).suc = x0 or 0 = x0 } }","s0(n).suc != n","n > n = n < n","not n < n or not n < n","s0(n).suc = n or 0 = n","0 = n","n > n","n < n"]}
+{"goal":"n_pred + 1 = n","proof":["n_pred + 1 = 1 + n_pred","1 + n_pred != n","1 + n_pred = n_pred.suc"]}
+{"goal":"n - 1 = n_pred","proof":["n_pred + 1 != n or n - 1 = n_pred"]}
+{"goal":"f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n_pred) = partial[A](f, n_pred.suc)","proof":["f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n_pred) = partial[A](f, n_pred.suc)"]}
+{"goal":"partial[A](f, n_pred.suc) = partial[A](f, n)","proof":["n_pred.suc != n"]}
+{"goal":"f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n_pred) = partial[A](f, n)","proof":["f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n_pred) != partial[A](f, n_pred.suc)"]}
+{"goal":"f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1) = partial[A](f, n)","proof":["f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n_pred) != partial[A](f, n)"]}
+{"goal":"partial_drop_first","proof":[]}
+{"goal":"n > 0","proof":["not n <= 0 or not 2 < n or 2 < 0","0 < n or n < 0 or 0 = n","n < 2 or 2 < n or 2 = n","2 <= n = n >= 2","n > 0 = 0 < n","not 0 < n","not 2 <= n or not n < 2","n <= 0 or 0 < n","n <= 0","n < 0 or 0 = n","not 2 < 0","not n < 0","0 = n","2 != n","2 <= n","not 2 < n","not n < 2","n < 2"]}
+{"goal":"partial[A](f, n) = f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1)","proof":["not n > 0 or f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1) = partial[A](f, n)"]}
+{"goal":"exists(k0: Nat) { k0.suc = n }","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { s0(x0).suc = x0 or 0 = x0 } }","s0(n).suc != n","n > n = n < n","not n < n or not n < n","s0(n).suc = n or 0 = n","0 = n","n > n","n < n"]}
+{"goal":"n_minus_1 + 1 = n","proof":["n_minus_1 + 1 = 1 + n_minus_1","1 + n_minus_1 != n","1 + n_minus_1 = n_minus_1.suc"]}
+{"goal":"n - 1 = n_minus_1","proof":["n_minus_1 + 1 != n or n - 1 = n_minus_1"]}
+{"goal":"n_minus_1.suc >= 2","proof":["not n >= 2"]}
+{"goal":"n_minus_1 >= 1","proof":["not 1.suc <= n_minus_1.suc or 1 <= n_minus_1","1 <= n_minus_1 = n_minus_1 >= 1","2 <= n_minus_1.suc = n_minus_1.suc >= 2","not 1 <= n_minus_1","2 <= n_minus_1.suc","not 1.suc <= n_minus_1.suc","1.suc <= n_minus_1.suc"]}
+{"goal":"exists(k0: Nat) { k0.suc = n_minus_1 }","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { s0(x0).suc = x0 or 0 = x0 } }","s0(n_minus_1).suc != n_minus_1","not 0 ∈ 0.suc.range or not 0 >= 0.suc","s0(n_minus_1).suc = n_minus_1 or n_minus_1 = 0","n_minus_1 = 0","0 ∈ 0.suc.range","n_minus_1 >= 0.suc","0 >= 0.suc"]}
+{"goal":"n_minus_2 + 1 = n_minus_1","proof":["n_minus_2.suc + 1 = (n_minus_2 + 1).suc","(n_minus_2 + 1).suc != n_minus_1.suc or n_minus_2 + 1 = n_minus_1","(n_minus_2 + 1).suc != n_minus_1.suc"]}
+{"goal":"n_minus_1 - 1 = n_minus_2","proof":["n_minus_2 + 1 != n_minus_1 or n_minus_1 - 1 = n_minus_2"]}
+{"goal":"n - 2 = n_minus_2","proof":["n_minus_2 + 2 != n or n - 2 = n_minus_2","n_minus_2 + 2 != n","n_minus_2 + 1.suc = (n_minus_2 + 1).suc","1 + 1 = 1.suc"]}
+{"goal":"partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_1) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2.suc)","proof":["n_minus_2.suc != n_minus_1"]}
+{"goal":"partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2.suc) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2) + compose[Nat, Nat, A](f, Nat.suc)(n_minus_2)","proof":["partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2) + compose[Nat, Nat, A](f, Nat.suc, n_minus_2) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2.suc)"]}
+{"goal":"compose[Nat, Nat, A](f, Nat.suc)(n_minus_2) = f(n_minus_2.suc)","proof":["compose[Nat, Nat, A](f, Nat.suc, n_minus_2) = f(n_minus_2.suc)"]}
+{"goal":"n_minus_2.suc = n_minus_1","proof":[]}
+{"goal":"n_minus_1 = n - 1","proof":[]}
+{"goal":"compose[Nat, Nat, A](f, Nat.suc)(n_minus_2) = f(n_minus_1)","proof":["compose[Nat, Nat, A](f, Nat.suc, n_minus_2) != f(n_minus_2.suc)"]}
+{"goal":"f(n_minus_1) = f(n - 1)","proof":["n - 1 != n_minus_1"]}
+{"goal":"partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_1) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2) + f(n - 1)","proof":[]}
+{"goal":"partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_1)","proof":["n - 1 != n_minus_1"]}
+{"goal":"partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2) + f(n - 1)","proof":["partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2) + f(n - 1) != partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_1)"]}
+{"goal":"partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2)","proof":["n - 2 != n_minus_2"]}
+{"goal":"partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1) = partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1)","proof":["partial[A](compose[Nat, Nat, A](f, Nat.suc), n_minus_2) + f(n - 1) != partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1)"]}
+{"goal":"f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1) = f(0) + (partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1))","proof":["partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1) != partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 1)"]}
+{"goal":"f(0) + (partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1)) = f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1)","proof":["f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1) = f(0) + (partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1))"]}
+{"goal":"f(0) + (partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1)) = f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1)","proof":[]}
+{"goal":"partial[A](f, n) = f(0) + partial[A](compose[Nat, Nat, A](f, Nat.suc), n - 2) + f(n - 1)","proof":[]}
+{"goal":"partial_split_first_last","proof":[]}
 {"goal":"p(List.nil[T])","proof":["map[T, U](List.nil[T], f).length != List.nil[T].length or p(List.nil[T])","List.nil[T] != List.nil[T] or map[T, U](List.nil[T], f) = List.nil[U]","map[T, U](List.nil[T], f).length != List.nil[T].length","List.nil[T] != List.nil[T] or List.nil[T].length = 0","List.nil[U] != List.nil[U] or List.nil[U].length = 0","List.nil[U].length = 0","List.nil[T].length = 0","map[T, U](List.nil[T], f).length != 0","map[T, U](List.nil[T], f) = List.nil[U]"]}
 {"goal":"map[T, U](List.cons(head, tail), f).length = List.cons(head, tail).length","proof":["not p(tail) or map[T, U](tail, f).length = tail.length","List.cons(head, tail) != List.cons(head, tail) or List.cons(f(head), map[T, U](tail, f)) = map[T, U](List.cons(head, tail), f)","List.cons(head, tail) != List.cons(head, tail) or List.cons(head, tail).length = tail.length.suc","List.cons(f(head), map[T, U](tail, f)) != List.cons(f(head), map[T, U](tail, f)) or List.cons(f(head), map[T, U](tail, f)).length = map[T, U](tail, f).length.suc","List.cons(f(head), map[T, U](tail, f)).length = map[T, U](tail, f).length.suc","List.cons(head, tail).length = tail.length.suc","List.cons(f(head), map[T, U](tail, f)) = map[T, U](List.cons(head, tail), f)","map[T, U](tail, f).length = tail.length"]}
 {"goal":"p(list)","proof":["let (s0: List<T> -> Bool -> T, s1: List<T> -> Bool -> List<T>) satisfy { forall(x0: List<T> -> Bool, x1: List<T>) { not x0(List.nil[T]) or x0(s1(x0)) or x0(x1) } and forall(x2: List<T> -> Bool, x3: List<T>) { not x2(List.cons(s0(x2), s1(x2))) or not x2(List.nil[T]) or x2(x3) } }","map[T, U](List.cons(s0(p), s1(p)), f).length != List.cons(s0(p), s1(p)).length or p(List.cons(s0(p), s1(p)))","not p(s1(p)) or map[T, U](List.cons(s0(p), s1(p)), f).length = List.cons(s0(p), s1(p)).length","not p(List.cons(s0(p), s1(p))) or not p(List.nil[T]) or p(list)","not p(List.nil[T]) or p(s1(p)) or p(list)","p(s1(p))","not p(List.cons(s0(p), s1(p)))","map[T, U](List.cons(s0(p), s1(p)), f).length = List.cons(s0(p), s1(p)).length"]}
