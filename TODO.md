@@ -26,10 +26,11 @@ Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 
 - [x] Add `mul_zero_left` and `mul_zero_right` axioms to Semiring typeclass - **DONE** (src/semiring.ac:19-26)
 - [x] Prove `sum_scalar_mul` theorem - **DONE** (src/list.ac:1273-1312)
 - [x] Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums - **DONE** (src/list.ac:1484-1511)
-- [x] Prove reindexing theorems for partial sums - **DONE** (src/list.ac:1513-1586)
-  - `partial_shift_suc`: shifts indices by 1 using `compose(f, Nat.suc)`
+- [x] Prove reindexing theorems for partial sums - **DONE**
+  - `partial_shift_suc`: shifts indices by 1 using `compose(f, Nat.suc)` (src/list.ac:1513-1586)
+  - `partial_split_last`: splits off the last term: `partial(f, n.suc) = partial(f, n) + f(n)` (src/list.ac:1588-1600)
 - [ ] **NEXT STEP**: Complete the binomial theorem proof (currently commented out in src/nat/nat_combo.ac:274)
-  - May need additional reindexing helpers or term-by-term combination theorems
+  - May need additional term-by-term combination theorems to apply Pascal's identity
 
 ## Helper Theorems Needed
 

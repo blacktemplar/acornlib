@@ -1585,6 +1585,20 @@ theorem partial_shift_suc[A: AddCommMonoid](f: Nat -> A, n: Nat) {
     p(n)
 }
 
+/// Splitting off the last term of a partial sum.
+theorem partial_split_last[A: AddCommMonoid](f: Nat -> A, n: Nat) {
+    partial(f, n.suc) = partial(f, n) + f(n)
+} by {
+    // Expand partial(f, n.suc)
+    partial(f, n.suc) = sum(map(n.suc.range, f))
+    n.suc.range = n.range.append(n)
+    map(n.suc.range, f) = map(n.range.append(n), f)
+    map(n.range.append(n), f) = map(n.range, f).append(f(n))
+    sum(map(n.range, f).append(f(n))) = sum(map(n.range, f)) + f(n)
+    sum(map(n.range, f)) = partial(f, n)
+    sum(map(n.suc.range, f)) = partial(f, n) + f(n)
+}
+
 theorem map_length[T, U](list: List[T], f: T -> U) {
     map(list, f).length = list.length
 } by {
