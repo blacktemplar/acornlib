@@ -34,7 +34,12 @@ After using `partial_scalar_mul`, we get two sums that need to be combined:
    - `n >= 2 implies partial(f, n) = f(0) + partial(compose(f, Nat.suc), n - 2) + f(n - 1)`
    - Useful for isolating boundary terms
 
-**Next step:** Attempt the binomial proof again using these new tools.
+4. [x] `binomial_term_recurrence` - Recursive relation for binomial terms - **DONE** (src/nat/nat_combo.ac:261-312)
+   - `0 < k and k <= m implies binomial_term(a, b, m.suc, k) = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)`
+   - This expresses how each binomial term for m+1 decomposes into scaled terms from level m
+   - Key relation needed for the inductive step of the binomial theorem
+
+**Next step:** Attempt the binomial proof again using these new tools, especially the recurrence relation.
 
 ---
 

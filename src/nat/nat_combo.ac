@@ -258,6 +258,59 @@ define binomial_term(a: Nat, b: Nat, n: Nat, k: Nat) -> Nat {
     n.choose(k) * a.exp(k) * b.exp(n - k)
 }
 
+/// Recursive relation for binomial terms: each term for n+1 equals a times the shifted
+/// term for n plus b times the corresponding term for n.
+theorem binomial_term_recurrence(a: Nat, b: Nat, m: Nat, k: Nat) {
+    0 < k and k <= m implies
+    binomial_term(a, b, m.suc, k) =
+    a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)
+} by {
+    // Establish k_pred for k - 1
+    let (k_pred: Nat) satisfy { k_pred.suc = k }
+    k_pred + 1 = k
+    k - 1 = k_pred
+    k_pred < k
+    k_pred <= m
+
+    // Expand LHS: binomial_term(a, b, m.suc, k)
+    binomial_term(a, b, m.suc, k) = m.suc.choose(k) * a.exp(k) * b.exp(m.suc - k)
+
+    // Expand first term of RHS: a * binomial_term(a, b, m, k - 1)
+    binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.exp(k_pred) * b.exp(m - k_pred)
+    a * binomial_term(a, b, m, k_pred) = a * (m.choose(k_pred) * a.exp(k_pred) * b.exp(m - k_pred))
+    a * binomial_term(a, b, m, k_pred) = a * m.choose(k_pred) * a.exp(k_pred) * b.exp(m - k_pred)
+    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * (a * a.exp(k_pred)) * b.exp(m - k_pred)
+    a.exp(k) = a * a.exp(k_pred)
+    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.exp(k) * b.exp(m - k_pred)
+    m - k_pred = m.suc - k
+    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.exp(k) * b.exp(m.suc - k)
+    a * binomial_term(a, b, m, k - 1) = m.choose(k - 1) * a.exp(k) * b.exp(m.suc - k)
+
+    // Expand second term of RHS: b * binomial_term(a, b, m, k)
+    k <= m
+    binomial_term(a, b, m, k) = m.choose(k) * a.exp(k) * b.exp(m - k)
+    b * binomial_term(a, b, m, k) = b * (m.choose(k) * a.exp(k) * b.exp(m - k))
+    b * binomial_term(a, b, m, k) = b * m.choose(k) * a.exp(k) * b.exp(m - k)
+    b * binomial_term(a, b, m, k) = m.choose(k) * a.exp(k) * (b * b.exp(m - k))
+    m - k + 1 = m.suc - k
+    b.exp(m.suc - k) = b.exp(m - k + 1)
+    b.exp(m - k + 1) = b * b.exp(m - k)
+    b * binomial_term(a, b, m, k) = m.choose(k) * a.exp(k) * b.exp(m.suc - k)
+
+    // Combine the two terms using the distributive property
+    let rhs_sum = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)
+    rhs_sum = m.choose(k - 1) * a.exp(k) * b.exp(m.suc - k) + m.choose(k) * a.exp(k) * b.exp(m.suc - k)
+    rhs_sum = (m.choose(k - 1) + m.choose(k)) * a.exp(k) * b.exp(m.suc - k)
+
+    // Apply Pascal's identity
+    m.suc.choose(k) = m.choose(k - 1) + m.choose(k)
+    rhs_sum = m.suc.choose(k) * a.exp(k) * b.exp(m.suc - k)
+
+    // Connect LHS and RHS
+    binomial_term(a, b, m.suc, k) = rhs_sum
+    binomial_term(a, b, m.suc, k) = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)
+}
+
 // TODO: The binomial theorem proof is work in progress.
 // The base case verifies successfully.
 // The inductive step is partially complete but requires:
