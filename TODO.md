@@ -23,16 +23,13 @@ Note: We use `n.suc` because `partial(f, m)` sums from 0 to m-1, so we need n+1 
 - [x] Prove `partial_one`: `partial(f, 1) = f(0)` - **DONE** (src/list.ac:1186)
 - [x] Prove `map_sum_add` helper theorem - **DONE** (src/list.ac:1202)
 - [x] Prove `partial_add` theorem - **DONE** (src/list.ac:1252)
-- [ ] **NEXT STEP**: Add `mul_zero_left` and `mul_zero_right` axioms to Semiring typeclass
-  - These cannot be derived without additive inverses
-  - Requires updating all Semiring instances: Nat (already has theorems), Rat, Real, etc.
-  - See discussion in src/list.ac:1267-1290
-- [ ] Prove `sum_scalar_mul` theorem (requires mul_zero axioms) - **BLOCKED**
-- [ ] Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums - **BLOCKED**
-  - Requires sum_scalar_mul
-  - Also has prover limitations with map_map application
-- [ ] Prove reindexing theorems for partial sums
-- [ ] Complete the binomial theorem proof (currently commented out in src/nat/nat_combo.ac:274)
+- [x] Add `mul_zero_left` and `mul_zero_right` axioms to Semiring typeclass - **DONE** (src/semiring.ac:19-26)
+- [x] Prove `sum_scalar_mul` theorem - **DONE** (src/list.ac:1273-1312)
+- [x] Prove `partial_scalar_mul` for distributing scalar multiplication through partial sums - **DONE** (src/list.ac:1484-1511)
+- [x] Prove reindexing theorems for partial sums - **DONE** (src/list.ac:1513-1586)
+  - `partial_shift_suc`: shifts indices by 1 using `compose(f, Nat.suc)`
+- [ ] **NEXT STEP**: Complete the binomial theorem proof (currently commented out in src/nat/nat_combo.ac:274)
+  - May need additional reindexing helpers or term-by-term combination theorems
 
 ## Helper Theorems Needed
 
