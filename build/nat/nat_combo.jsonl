@@ -154,3 +154,9 @@
 {"goal":"binomial_term(a, b, m.suc, k) = rhs_sum","proof":["choose(m.suc, k) * a.exp(k) * b.exp(m.suc - k) != binomial_term(a, b, m.suc, k)"]}
 {"goal":"binomial_term(a, b, m.suc, k) = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)","proof":["a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k) != rhs_sum"]}
 {"goal":"binomial_term_recurrence","proof":[]}
+{"goal":"k.suc <= m","proof":["not k < m or k.suc <= m"]}
+{"goal":"0 < k.suc","proof":["0 < 0 + (1 * k).suc","1 * k = k","not 0 < (1 * k).suc","0 + (1 * k).suc = (1 * k).suc"]}
+{"goal":"binomial_term(a, b, m.suc, k.suc) = a * binomial_term(a, b, m, k.suc - 1) + b * binomial_term(a, b, m, k.suc)","proof":["not 0 < k.suc or not k.suc <= m or a * binomial_term(a, b, m, k.suc - 1) + b * binomial_term(a, b, m, k.suc) = binomial_term(a, b, m.suc, k.suc)"]}
+{"goal":"k.suc - 1 = k","proof":["k + 1 != k.suc or k.suc - 1 = k","k + 1 != k.suc","k + 1 = 1 + k","1 + k = k.suc"]}
+{"goal":"binomial_term(a, b, m.suc, k.suc) = a * binomial_term(a, b, m, k) + b * binomial_term(a, b, m, k.suc)","proof":["a * binomial_term(a, b, m, k.suc - 1) + b * binomial_term(a, b, m, k.suc) != binomial_term(a, b, m.suc, k.suc)"]}
+{"goal":"alt_binomial_term_recurrence","proof":[]}

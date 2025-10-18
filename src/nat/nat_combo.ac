@@ -345,6 +345,20 @@ theorem binomial_term_recurrence(a: Nat, b: Nat, m: Nat, k: Nat) {
     binomial_term(a, b, m.suc, k) = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)
 }
 
+/// Alternative form of the binomial term recurrence, avoiding subtraction by using k.suc.
+theorem alt_binomial_term_recurrence(a: Nat, b: Nat, m: Nat, k: Nat) {
+    k < m implies
+    binomial_term(a, b, m.suc, k.suc) =
+    a * binomial_term(a, b, m, k) + b * binomial_term(a, b, m, k.suc)
+} by {
+    // We have k < m, which gives us k.suc <= m and 0 < k.suc
+    k.suc <= m
+    0 < k.suc
+    binomial_term(a, b, m.suc, k.suc) = a * binomial_term(a, b, m, k.suc - 1) + b * binomial_term(a, b, m, k.suc)
+    k.suc - 1 = k
+    binomial_term(a, b, m.suc, k.suc) = a * binomial_term(a, b, m, k) + b * binomial_term(a, b, m, k.suc)
+}
+
 // TODO: binomial theorem proof in progress
 // /// The binomial theorem: (a + b)^n equals the sum of binomial terms.
 // theorem binomial(a: Nat, b: Nat, n: Nat) {
