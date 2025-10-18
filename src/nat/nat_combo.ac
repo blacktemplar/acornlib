@@ -258,6 +258,40 @@ define binomial_term(a: Nat, b: Nat, n: Nat, k: Nat) -> Nat {
     n.choose(k) * a.exp(k) * b.exp(n - k)
 }
 
+/// The boundary term at k=0 for the binomial expansion.
+theorem binomial_term_zero(a: Nat, b: Nat, m: Nat) {
+    binomial_term(a, b, m.suc, 0) = b * binomial_term(a, b, m, 0)
+} by {
+    binomial_term(a, b, m.suc, 0) = m.suc.choose(0) * a.exp(0) * b.exp(m.suc)
+    binomial_term(a, b, m.suc, 0) = 1 * 1 * b.exp(m.suc)
+    binomial_term(a, b, m.suc, 0) = b.exp(m.suc)
+    b.exp(m.suc) = b * b.exp(m)
+    binomial_term(a, b, m.suc, 0) = b * b.exp(m)
+
+    binomial_term(a, b, m, 0) = m.choose(0) * a.exp(0) * b.exp(m)
+    binomial_term(a, b, m, 0) = 1 * 1 * b.exp(m)
+    binomial_term(a, b, m, 0) = b.exp(m)
+
+    binomial_term(a, b, m.suc, 0) = b * binomial_term(a, b, m, 0)
+}
+
+/// The boundary term at k=m+1 for the binomial expansion.
+theorem binomial_term_top(a: Nat, b: Nat, m: Nat) {
+    binomial_term(a, b, m.suc, m.suc) = a * binomial_term(a, b, m, m)
+} by {
+    binomial_term(a, b, m.suc, m.suc) = m.suc.choose(m.suc) * a.exp(m.suc) * b.exp(0)
+    binomial_term(a, b, m.suc, m.suc) = 1 * a.exp(m.suc) * 1
+    binomial_term(a, b, m.suc, m.suc) = a.exp(m.suc)
+    a.exp(m.suc) = a * a.exp(m)
+    binomial_term(a, b, m.suc, m.suc) = a * a.exp(m)
+
+    binomial_term(a, b, m, m) = m.choose(m) * a.exp(m) * b.exp(0)
+    binomial_term(a, b, m, m) = 1 * a.exp(m) * 1
+    binomial_term(a, b, m, m) = a.exp(m)
+
+    binomial_term(a, b, m.suc, m.suc) = a * binomial_term(a, b, m, m)
+}
+
 /// Recursive relation for binomial terms: each term for n+1 equals a times the shifted
 /// term for n plus b times the corresponding term for n.
 theorem binomial_term_recurrence(a: Nat, b: Nat, m: Nat, k: Nat) {
@@ -311,16 +345,41 @@ theorem binomial_term_recurrence(a: Nat, b: Nat, m: Nat, k: Nat) {
     binomial_term(a, b, m.suc, k) = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)
 }
 
-// TODO: The binomial theorem proof is work in progress.
-// The base case verifies successfully.
-// The inductive step is partially complete but requires:
-//   1. Reindexing one sum using partial_shift_suc to align terms
-//   2. Applying Pascal's identity term-by-term: (m choose k-1) + (m choose k) = (m+1 choose k)
-//   3. Handling boundary terms at k=0 and k=m+1
-// Current status: Can distribute (a+b)*(a+b)^m and use partial_scalar_mul to get two sums.
-//                 Need to combine these sums to get partial(binomial_term(a, b, m.suc), m.suc.suc).
-//
+// TODO: binomial theorem proof in progress
 // /// The binomial theorem: (a + b)^n equals the sum of binomial terms.
 // theorem binomial(a: Nat, b: Nat, n: Nat) {
 //     (a + b).exp(n) = partial(binomial_term(a, b, n), n.suc)
+// } by {
+//     define f(x: Nat) -> Bool {
+//         (a + b).exp(x) = partial(binomial_term(a, b, x), x.suc)
+//     }
+//
+//     // Base case: n = 0
+//     (a + b).exp(0) = 1
+//     binomial_term(a, b, 0, 0) = 0.choose(0) * a.exp(0) * b.exp(0)
+//     binomial_term(a, b, 0, 0) = 1 * 1 * 1
+//     binomial_term(a, b, 0, 0) = 1
+//     partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)
+//     (a + b).exp(0) = partial(binomial_term(a, b, 0), 0.suc)
+//     f(0)
+//
+//     // Inductive step
+//     forall(m: Nat) {
+//         if f(m) {
+//             // Induction hypothesis
+//             (a + b).exp(m) = partial(binomial_term(a, b, m), m.suc)
+//
+//             // LHS: (a + b)^(m+1) = (a + b) * (a + b)^m
+//             (a + b).exp(m.suc) = (a + b) * (a + b).exp(m)
+//             (a + b).exp(m.suc) = (a + b) * partial(binomial_term(a, b, m), m.suc)
+//
+//             // We need to show this equals partial(binomial_term(a, b, m.suc), m.suc.suc)
+//             // This is the hard part - we'll leave it for now and just assert equality
+//             // TODO: Complete the inductive step using binomial_term_recurrence
+//
+//             f(m.suc)
+//         }
+//     }
+//
+//     f(n)
 // }

@@ -103,6 +103,26 @@
 {"goal":"(choose(n)(k - 1) + choose(n)(k)) * (k.factorial * (n.suc - k).factorial) = n.suc.factorial","proof":["n.suc * n.factorial != n.suc.factorial","n.suc != n.suc or n.suc * n.factorial = n.suc.factorial"]}
 {"goal":"choose(n.suc)(k) = choose(n)(k - 1) + choose(n)(k)","proof":["(choose(n, k - 1) + choose(n, k)) * (k.factorial * (n.suc - k).factorial) != choose(n.suc, k) * (k.factorial * (n.suc - k).factorial) or k.factorial * (n.suc - k).factorial = 0 or choose(n, k - 1) + choose(n, k) = choose(n.suc, k)","(choose(n, k - 1) + choose(n, k)) * (k.factorial * (n.suc - k).factorial) != choose(n.suc, k) * (k.factorial * (n.suc - k).factorial) or k.factorial * (n.suc - k).factorial = 0","(choose(n, k - 1) + choose(n, k)) * (k.factorial * (n.suc - k).factorial) = choose(n.suc, k) * (k.factorial * (n.suc - k).factorial)","(choose(n, k - 1) + choose(n, k)) * (k.factorial * (n.suc - k).factorial) != choose(n.suc, k) * (k.factorial * (n.suc - k).factorial)"]}
 {"goal":"pascal","proof":[]}
+{"goal":"binomial_term(a, b, m.suc, 0) = choose(m.suc)(0) * a.exp(0) * b.exp(m.suc)","proof":["choose(m.suc, 0) * a.exp(0) * b.exp(m.suc - 0) = binomial_term(a, b, m.suc, 0)","m.suc - 0 = m.suc"]}
+{"goal":"binomial_term(a, b, m.suc, 0) = 1 * 1 * b.exp(m.suc)","proof":["b.exp(m.suc) * (1 * 1) = 1 * 1 * b.exp(m.suc)","b.exp(m.suc) * (choose(m.suc, 0) * a.exp(0)) = choose(m.suc, 0) * a.exp(0) * b.exp(m.suc)","choose(m.suc, 0) * a.exp(0) = a.exp(0) * choose(m.suc, 0)","choose(m.suc, 0) = 1","a.exp(0) = 1"]}
+{"goal":"binomial_term(a, b, m.suc, 0) = b.exp(m.suc)","proof":["choose(m.suc, 0) * a.exp(0) = a.exp(0) * choose(m.suc, 0)","choose(m.suc, 0) = 1","a.exp(0) = 1","1 * 1 = 1","1 * b.exp(m.suc) = b.exp(m.suc)"]}
+{"goal":"b.exp(m.suc) = b * b.exp(m)","proof":["m.suc != m.suc or b * b.exp(m) = b.exp(m.suc)"]}
+{"goal":"binomial_term(a, b, m.suc, 0) = b * b.exp(m)","proof":["binomial_term(a, b, m.suc, 0) != b.exp(m.suc)"]}
+{"goal":"binomial_term(a, b, m, 0) = choose(m)(0) * a.exp(0) * b.exp(m)","proof":["choose(m, 0) * a.exp(0) * b.exp(m - 0) = binomial_term(a, b, m, 0)","m - 0 = m"]}
+{"goal":"binomial_term(a, b, m, 0) = 1 * 1 * b.exp(m)","proof":["b.exp(m) * (1 * 1) = 1 * 1 * b.exp(m)","b.exp(m) * (choose(m, 0) * a.exp(0)) = choose(m, 0) * a.exp(0) * b.exp(m)","choose(m, 0) * a.exp(0) = a.exp(0) * choose(m, 0)","choose(m, 0) = 1","choose(m.suc, 0) = 1","a.exp(0) = 1"]}
+{"goal":"binomial_term(a, b, m, 0) = b.exp(m)","proof":["choose(m, 0) * a.exp(0) = a.exp(0) * choose(m, 0)","choose(m, 0) = 1","choose(m.suc, 0) = 1","a.exp(0) = 1","1 * 1 = 1","1 * b.exp(m) = b.exp(m)"]}
+{"goal":"binomial_term(a, b, m.suc, 0) = b * binomial_term(a, b, m, 0)","proof":["binomial_term(a, b, m.suc, 0) != b * b.exp(m)"]}
+{"goal":"binomial_term_zero","proof":[]}
+{"goal":"binomial_term(a, b, m.suc, m.suc) = choose(m.suc)(m.suc) * a.exp(m.suc) * b.exp(0)","proof":["choose(m.suc, m.suc) * a.exp(m.suc) * b.exp(m.suc - m.suc) = binomial_term(a, b, m.suc, m.suc)","m.suc - m.suc = 0","choose(m.suc, m.suc) * a.exp(m.suc) * b.exp(m.suc - m.suc) != binomial_term(a, b, m.suc, m.suc)"]}
+{"goal":"binomial_term(a, b, m.suc, m.suc) = 1 * a.exp(m.suc) * 1","proof":["1 * a.exp(m.suc) * 1 = 1 * (a.exp(m.suc) * 1)","b.exp(0) * (choose(m.suc, m.suc) * a.exp(m.suc)) = choose(m.suc, m.suc) * a.exp(m.suc) * b.exp(0)","choose(m.suc, m.suc) * a.exp(m.suc) = a.exp(m.suc) * choose(m.suc, m.suc)","choose(m.suc, m.suc) = 1","b.exp(0) = 1"]}
+{"goal":"binomial_term(a, b, m.suc, m.suc) = a.exp(m.suc)","proof":["a.exp(m.suc) * 1 = 1 * a.exp(m.suc)","1 * a.exp(m.suc) = a.exp(m.suc)"]}
+{"goal":"a.exp(m.suc) = a * a.exp(m)","proof":["m.suc != m.suc or a * a.exp(m) = a.exp(m.suc)"]}
+{"goal":"binomial_term(a, b, m.suc, m.suc) = a * a.exp(m)","proof":["binomial_term(a, b, m.suc, m.suc) != a.exp(m.suc)"]}
+{"goal":"binomial_term(a, b, m, m) = choose(m)(m) * a.exp(m) * b.exp(0)","proof":["choose(m, m) * a.exp(m) * b.exp(m - m) = binomial_term(a, b, m, m)","m - m = 0","choose(m, m) * a.exp(m) * b.exp(m - m) != binomial_term(a, b, m, m)"]}
+{"goal":"binomial_term(a, b, m, m) = 1 * a.exp(m) * 1","proof":["1 * a.exp(m) * 1 = 1 * (a.exp(m) * 1)","b.exp(0) * (choose(m, m) * a.exp(m)) = choose(m, m) * a.exp(m) * b.exp(0)","choose(m, m) * a.exp(m) = a.exp(m) * choose(m, m)","choose(m, m) = 1","b.exp(0) = 1"]}
+{"goal":"binomial_term(a, b, m, m) = a.exp(m)","proof":["a.exp(m) * 1 = 1 * a.exp(m)","1 * a.exp(m) = a.exp(m)"]}
+{"goal":"binomial_term(a, b, m.suc, m.suc) = a * binomial_term(a, b, m, m)","proof":["binomial_term(a, b, m.suc, m.suc) != a * a.exp(m)"]}
+{"goal":"binomial_term_top","proof":[]}
 {"goal":"exists(k0: Nat) { k0.suc = k }","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { s0(x0).suc = x0 or 0 = x0 } }","s0(k).suc != k","not 0 < 0 or not 0 < 0","s0(k).suc = k or k = 0","k = 0","0 < 0"]}
 {"goal":"k_pred + 1 = k","proof":["k_pred + 1 = 1 + k_pred","1 + k_pred != k","1 + k_pred = k_pred.suc"]}
 {"goal":"k - 1 = k_pred","proof":["k_pred + 1 != k or k - 1 = k_pred"]}

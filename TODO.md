@@ -34,12 +34,29 @@ After using `partial_scalar_mul`, we get two sums that need to be combined:
    - `n >= 2 implies partial(f, n) = f(0) + partial(compose(f, Nat.suc), n - 2) + f(n - 1)`
    - Useful for isolating boundary terms
 
-4. [x] `binomial_term_recurrence` - Recursive relation for binomial terms - **DONE** (src/nat/nat_combo.ac:261-312)
+4. [x] `binomial_term_recurrence` - Recursive relation for binomial terms - **DONE** (src/nat/nat_combo.ac:295-346)
    - `0 < k and k <= m implies binomial_term(a, b, m.suc, k) = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)`
    - This expresses how each binomial term for m+1 decomposes into scaled terms from level m
-   - Key relation needed for the inductive step of the binomial theorem
+   - Key relation needed for the middle terms in the inductive step
 
-**Next step:** Attempt the binomial proof again using these new tools, especially the recurrence relation.
+5. [x] `binomial_term_zero` - Boundary case at k=0 - **DONE** (src/nat/nat_combo.ac:261-276)
+   - `binomial_term(a, b, m.suc, 0) = b * binomial_term(a, b, m, 0)`
+   - Handles the k=0 boundary term in the binomial expansion
+
+6. [x] `binomial_term_top` - Boundary case at k=m+1 - **DONE** (src/nat/nat_combo.ac:278-293)
+   - `binomial_term(a, b, m.suc, m.suc) = a * binomial_term(a, b, m, m)`
+   - Handles the k=m+1 boundary term in the binomial expansion
+
+**Next step:** Complete the binomial theorem proof (src/nat/nat_combo.ac:348-385, currently commented out).
+
+The proof structure is clear:
+- Base case (n=0) is straightforward and verifies
+- Inductive step needs to show: `(a+b) * partial(binomial_term(a,b,m), m.suc) = partial(binomial_term(a,b,m.suc), m.suc.suc)`
+- This requires:
+  1. Distributing `(a+b)` over the sum using `partial_scalar_mul` and `partial_add`
+  2. Reindexing one sum using `partial_shift_suc` to align the terms
+  3. Applying the three recurrence lemmas (zero, recurrence, top) to combine terms
+  4. Likely needs additional helper lemmas for sum manipulation
 
 ---
 
