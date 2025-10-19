@@ -2,6 +2,7 @@ from nat.nat_gcd import Nat
 from list import partial
 from semigroup import mul_fn
 from add_semigroup import add_fn
+from util import compose
 
 numerals Nat
 
@@ -357,6 +358,103 @@ theorem alt_binomial_term_recurrence(a: Nat, b: Nat, m: Nat, k: Nat) {
     binomial_term(a, b, m.suc, k.suc) = a * binomial_term(a, b, m, k.suc - 1) + b * binomial_term(a, b, m, k.suc)
     k.suc - 1 = k
     binomial_term(a, b, m.suc, k.suc) = a * binomial_term(a, b, m, k) + b * binomial_term(a, b, m, k.suc)
+}
+
+/// Helper: the middle partial sum splits into two parts using the recurrence.
+theorem binomial_middle_sum(a: Nat, b: Nat, m: Nat) {
+    partial(compose(binomial_term(a, b, m.suc), Nat.suc), m) =
+        a * partial(binomial_term(a, b, m), m) + b * partial(compose(binomial_term(a, b, m), Nat.suc), m)
+} by {
+    // Define helper functions for clarity
+    define f(k: Nat) -> Nat { binomial_term(a, b, m, k) }
+    define g(k: Nat) -> Nat { compose(binomial_term(a, b, m), Nat.suc)(k) }
+    define h(k: Nat) -> Nat { compose(binomial_term(a, b, m.suc), Nat.suc)(k) }
+
+    // Show pointwise equality: for each k < m, h(k) = a * f(k) + b * g(k)
+    forall(k: Nat) {
+        if k < m {
+            // h(k) = binomial_term(a, b, m.suc, k.suc)
+            h(k) = compose(binomial_term(a, b, m.suc), Nat.suc)(k)
+            h(k) = binomial_term(a, b, m.suc, k.suc)
+
+            // Use alt_binomial_term_recurrence
+            binomial_term(a, b, m.suc, k.suc) = a * binomial_term(a, b, m, k) + b * binomial_term(a, b, m, k.suc)
+
+            // Simplify RHS
+            f(k) = binomial_term(a, b, m, k)
+            g(k) = binomial_term(a, b, m, k.suc)
+
+            h(k) = a * f(k) + b * g(k)
+            h(k) = mul_fn(a, f)(k) + mul_fn(b, g)(k)
+            h(k) = add_fn(mul_fn(a, f), mul_fn(b, g))(k)
+        }
+    }
+
+    // Use partial_pointwise_eq
+    partial(h, m) = partial(add_fn(mul_fn(a, f), mul_fn(b, g)), m)
+
+    // Use partial_add to split the sum
+    partial(add_fn(mul_fn(a, f), mul_fn(b, g)), m) = partial(mul_fn(a, f), m) + partial(mul_fn(b, g), m)
+
+    // Use partial_scalar_mul to factor out the scalars
+    partial(mul_fn(a, f), m) = a * partial(f, m)
+    partial(mul_fn(b, g), m) = b * partial(g, m)
+
+    // Combine everything
+    partial(h, m) = a * partial(f, m) + b * partial(g, m)
+    partial(compose(binomial_term(a, b, m.suc), Nat.suc), m) = a * partial(binomial_term(a, b, m), m) + b * partial(compose(binomial_term(a, b, m), Nat.suc), m)
+}
+
+/// Distributing (a + b) across a partial sum of binomial terms gives the next row.
+theorem binomial_distribution(a: Nat, b: Nat, m: Nat) {
+    (a + b) * partial(binomial_term(a, b, m), m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)
+} by {
+    // LHS: Expand using distributivity
+    (a + b) * partial(binomial_term(a, b, m), m.suc) = a * partial(binomial_term(a, b, m), m.suc) + b * partial(binomial_term(a, b, m), m.suc)
+
+    // RHS: Peel off the last term using partial_split_last
+    partial(binomial_term(a, b, m.suc), m.suc.suc) = partial(binomial_term(a, b, m.suc), m.suc) + binomial_term(a, b, m.suc, m.suc)
+
+    // Simplify the last term
+    binomial_term(a, b, m.suc, m.suc) = a * binomial_term(a, b, m, m)
+
+    // Now peel off the first term using partial_shift_suc
+    partial(binomial_term(a, b, m.suc), m.suc) = binomial_term(a, b, m.suc, 0) + partial(compose(binomial_term(a, b, m.suc), Nat.suc), m)
+
+    // Simplify the first term
+    binomial_term(a, b, m.suc, 0) = b * binomial_term(a, b, m, 0)
+
+    // Use binomial_middle_sum to split the middle partial sum
+    partial(compose(binomial_term(a, b, m.suc), Nat.suc), m) = a * partial(binomial_term(a, b, m), m) + b * partial(compose(binomial_term(a, b, m), Nat.suc), m)
+
+    // Build up the RHS step by step
+    // Start with: RHS = first + middle + last
+    let rhs_part1 = b * binomial_term(a, b, m, 0) + partial(compose(binomial_term(a, b, m.suc), Nat.suc), m)
+    partial(binomial_term(a, b, m.suc), m.suc) = rhs_part1
+    partial(binomial_term(a, b, m.suc), m.suc.suc) = rhs_part1 + a * binomial_term(a, b, m, m)
+
+    // Expand the middle part using binomial_middle_sum
+    rhs_part1 = b * binomial_term(a, b, m, 0) + a * partial(binomial_term(a, b, m), m) + b * partial(compose(binomial_term(a, b, m), Nat.suc), m)
+
+    // Combine the 'b' terms using partial_shift_suc
+    b * binomial_term(a, b, m, 0) + b * partial(compose(binomial_term(a, b, m), Nat.suc), m) = b * (binomial_term(a, b, m, 0) + partial(compose(binomial_term(a, b, m), Nat.suc), m))
+    binomial_term(a, b, m, 0) + partial(compose(binomial_term(a, b, m), Nat.suc), m) = partial(binomial_term(a, b, m), m.suc)
+    b * binomial_term(a, b, m, 0) + b * partial(compose(binomial_term(a, b, m), Nat.suc), m) = b * partial(binomial_term(a, b, m), m.suc)
+
+    // So rhs_part1 = b * partial(...) + a * partial(..., m)
+    rhs_part1 = b * partial(binomial_term(a, b, m), m.suc) + a * partial(binomial_term(a, b, m), m)
+
+    // Therefore the full RHS is
+    partial(binomial_term(a, b, m.suc), m.suc.suc) = b * partial(binomial_term(a, b, m), m.suc) + a * partial(binomial_term(a, b, m), m) + a * binomial_term(a, b, m, m)
+
+    // Combine the 'a' terms using partial_split_last
+    a * partial(binomial_term(a, b, m), m) + a * binomial_term(a, b, m, m) = a * (partial(binomial_term(a, b, m), m) + binomial_term(a, b, m, m))
+    partial(binomial_term(a, b, m), m) + binomial_term(a, b, m, m) = partial(binomial_term(a, b, m), m.suc)
+    a * partial(binomial_term(a, b, m), m) + a * binomial_term(a, b, m, m) = a * partial(binomial_term(a, b, m), m.suc)
+
+    // Final result
+    partial(binomial_term(a, b, m.suc), m.suc.suc) = b * partial(binomial_term(a, b, m), m.suc) + a * partial(binomial_term(a, b, m), m.suc)
+    partial(binomial_term(a, b, m.suc), m.suc.suc) = a * partial(binomial_term(a, b, m), m.suc) + b * partial(binomial_term(a, b, m), m.suc)
 }
 
 // TODO: binomial theorem proof in progress
