@@ -1,1 +1,18 @@
-{"goal":"zero_plus_zero","proof":["0 != 0 or 0 + 0 = 0"]}
+{"goal":"1 + 0.suc = 2","proof":["0 + 1 = 0.suc","1 + (0 + 1) != 2","0 + 1 = 1","1 + 1 != 2"]}
+{"goal":"one_plus_one","proof":[]}
+{"goal":"1 + 1.suc = 3","proof":["1 + 1 = 1.suc","1 + (1 + 1) != 3","1 + 2 != 3"]}
+{"goal":"one_plus_two","proof":[]}
+{"goal":"1 + 2.suc = 4","proof":["1 + 2 = 2.suc","1 + (1 + 2) != 4","1 + 3 != 4"]}
+{"goal":"one_plus_three","proof":[]}
+{"goal":"1 + 3.suc = 5","proof":["1 + 3 = 3.suc","1 + (1 + 3) != 5","1 + 4 != 5"]}
+{"goal":"one_plus_four","proof":[]}
+{"goal":"1 + 4.suc = 6","proof":["1 + 4 = 4.suc","1 + (1 + 4) != 6","1 + 5 != 6"]}
+{"goal":"one_plus_five","proof":[]}
+{"goal":"1 + 5.suc = 7","proof":["1 + 5.suc = (1 + 5).suc","(1 + 5).suc != 7","6.suc != 7"]}
+{"goal":"one_plus_six","proof":["1 + 6 = 6.suc","6.suc != 7"]}
+{"goal":"1 + 6.suc = 8","proof":["1 + 6.suc = (1 + 6).suc","(1 + 6).suc != 8","7.suc != 8"]}
+{"goal":"one_plus_seven","proof":["1 + 7 = 7.suc","7.suc != 8"]}
+{"goal":"1 + 7.suc = 9","proof":["1 + 7.suc = (1 + 7).suc","(1 + 7).suc != 9","8.suc != 9"]}
+{"goal":"one_plus_eight","proof":["1 + 8 = 8.suc","8.suc != 9"]}
+{"goal":"1 + 8.suc = 10","proof":["1 + 8.suc = (1 + 8).suc","(1 + 8).suc != 10","9.suc != 10"]}
+{"goal":"one_plus_nine","proof":["1 + 9 = 9.suc","9.suc != 10"]}
