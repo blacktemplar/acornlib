@@ -1,0 +1,9 @@
+from nat import Nat
+numerals Nat
+
+/// Single-digit addition facts for natural numbers.
+/// These facts can be used as building blocks for more complex arithmetic proofs.
+
+theorem zero_plus_zero {
+    0 + 0 = 0
+}
