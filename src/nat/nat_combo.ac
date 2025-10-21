@@ -1,4 +1,4 @@
-from nat.nat_gcd import Nat
+from nat.lattice import Nat
 from list import partial
 from semigroup import mul_fn
 from add_semigroup import add_fn

@@ -1,0 +1,44 @@
+// Typeclass relations for natural numbers.
+
+from nat.nat_gcd import Nat 
+
+attributes Nat {
+}
+
+// Demonstrating that Nat is a semiring.
+
+from add_semigroup import AddSemigroup
+
+instance Nat: AddSemigroup {
+    let add: (Nat, Nat) -> Nat = Nat.add 
+}
+
+from add_comm_semigroup import AddCommSemigroup
+
+instance Nat: AddCommSemigroup
+
+from add_monoid import AddMonoid
+
+instance Nat: AddMonoid {
+    let 0: Nat = Nat.0
+}
+
+from add_comm_monoid import AddCommMonoid
+
+instance Nat: AddCommMonoid
+
+from semigroup import Semigroup
+
+instance Nat: Semigroup {
+    let mul: (Nat, Nat) -> Nat = Nat.mul
+}
+
+from monoid import Monoid
+
+instance Nat: Monoid {
+    let 1: Nat = Nat.1
+}
+
+from semiring import Semiring
+
+instance Nat: Semiring
