@@ -457,41 +457,40 @@ theorem binomial_distribution(a: Nat, b: Nat, m: Nat) {
     partial(binomial_term(a, b, m.suc), m.suc.suc) = a * partial(binomial_term(a, b, m), m.suc) + b * partial(binomial_term(a, b, m), m.suc)
 }
 
-// TODO: binomial theorem proof in progress
-// /// The binomial theorem: (a + b)^n equals the sum of binomial terms.
-// theorem binomial(a: Nat, b: Nat, n: Nat) {
-//     (a + b).exp(n) = partial(binomial_term(a, b, n), n.suc)
-// } by {
-//     define f(x: Nat) -> Bool {
-//         (a + b).exp(x) = partial(binomial_term(a, b, x), x.suc)
-//     }
-//
-//     // Base case: n = 0
-//     (a + b).exp(0) = 1
-//     binomial_term(a, b, 0, 0) = 0.choose(0) * a.exp(0) * b.exp(0)
-//     binomial_term(a, b, 0, 0) = 1 * 1 * 1
-//     binomial_term(a, b, 0, 0) = 1
-//     partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)
-//     (a + b).exp(0) = partial(binomial_term(a, b, 0), 0.suc)
-//     f(0)
-//
-//     // Inductive step
-//     forall(m: Nat) {
-//         if f(m) {
-//             // Induction hypothesis
-//             (a + b).exp(m) = partial(binomial_term(a, b, m), m.suc)
-//
-//             // LHS: (a + b)^(m+1) = (a + b) * (a + b)^m
-//             (a + b).exp(m.suc) = (a + b) * (a + b).exp(m)
-//             (a + b).exp(m.suc) = (a + b) * partial(binomial_term(a, b, m), m.suc)
-//
-//             // We need to show this equals partial(binomial_term(a, b, m.suc), m.suc.suc)
-//             // This is the hard part - we'll leave it for now and just assert equality
-//             // TODO: Complete the inductive step using binomial_term_recurrence
-//
-//             f(m.suc)
-//         }
-//     }
-//
-//     f(n)
-// }
+/// The binomial theorem: (a + b)^n equals the sum of binomial terms.
+theorem binomial(a: Nat, b: Nat, n: Nat) {
+    (a + b).exp(n) = partial(binomial_term(a, b, n), n.suc)
+} by {
+    define f(x: Nat) -> Bool {
+        (a + b).exp(x) = partial(binomial_term(a, b, x), x.suc)
+    }
+
+    // Base case: n = 0
+    (a + b).exp(0) = 1
+    binomial_term(a, b, 0, 0) = 0.choose(0) * a.exp(0) * b.exp(0)
+    binomial_term(a, b, 0, 0) = 1 * 1 * 1
+    binomial_term(a, b, 0, 0) = 1
+    partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)
+    (a + b).exp(0) = partial(binomial_term(a, b, 0), 0.suc)
+    f(0)
+
+    // Inductive step
+    forall(m: Nat) {
+        if f(m) {
+            // Induction hypothesis
+            (a + b).exp(m) = partial(binomial_term(a, b, m), m.suc)
+
+            // LHS: (a + b)^(m+1) = (a + b) * (a + b)^m
+            (a + b).exp(m.suc) = (a + b) * (a + b).exp(m)
+            (a + b).exp(m.suc) = (a + b) * partial(binomial_term(a, b, m), m.suc)
+
+            // Apply binomial_distribution to complete the inductive step
+            (a + b) * partial(binomial_term(a, b, m), m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)
+            (a + b).exp(m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)
+
+            f(m.suc)
+        }
+    }
+
+    f(n)
+}

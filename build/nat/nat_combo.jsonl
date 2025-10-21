@@ -195,3 +195,18 @@
 {"goal":"partial(binomial_term(a, b, m.suc), m.suc.suc) = b * partial(binomial_term(a, b, m), m.suc) + a * partial(binomial_term(a, b, m), m.suc)","proof":["b * partial(binomial_term(a, b, m), m.suc) + (a * partial(binomial_term(a, b, m), m) + a * binomial_term(a, b, m, m)) = b * partial(binomial_term(a, b, m), m.suc) + a * partial(binomial_term(a, b, m), m) + a * binomial_term(a, b, m, m)"]}
 {"goal":"partial(binomial_term(a, b, m.suc), m.suc.suc) = a * partial(binomial_term(a, b, m), m.suc) + b * partial(binomial_term(a, b, m), m.suc)","proof":["b * partial(binomial_term(a, b, m), m.suc) + a * partial(binomial_term(a, b, m), m.suc) = a * partial(binomial_term(a, b, m), m.suc) + b * partial(binomial_term(a, b, m), m.suc)"]}
 {"goal":"binomial_distribution","proof":["a * partial(binomial_term(a, b, m), m.suc) + b * partial(binomial_term(a, b, m), m.suc) != (a + b) * partial(binomial_term(a, b, m), m.suc)"]}
+{"goal":"(a + b).exp(0) = 1","proof":["0 != 0 or (a + b).exp(0) = 1"]}
+{"goal":"binomial_term(a, b, 0, 0) = choose(0)(0) * a.exp(0) * b.exp(0)","proof":["choose(0, 0) * a.exp(0) * b.exp(0 - 0) = binomial_term(a, b, 0, 0)","0 - 0 = 0"]}
+{"goal":"binomial_term(a, b, 0, 0) = 1 * 1 * 1","proof":["list.scalar_mul(1 * 1, 1) = 1 * 1 * 1","list.scalar_mul(1, 1) = 1 * 1","b.exp(0) * (choose(0, 0) * a.exp(0)) = choose(0, 0) * a.exp(0) * b.exp(0)","choose(0, 0) * a.exp(0) = a.exp(0) * choose(0, 0)","1 * 1 = 1","a.exp(0) * 1 = a.exp(0)","b.exp(0) * 1 = b.exp(0)","choose(0, 0) = 1","a.exp(0) = 1","b.exp(0) = 1"]}
+{"goal":"binomial_term(a, b, 0, 0) = 1","proof":["1 * 1 * 1 != 1","1 * 1 = 1"]}
+{"goal":"partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)","proof":["partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)"]}
+{"goal":"(a + b).exp(0) = partial(binomial_term(a, b, 0), 0.suc)","proof":["list.sum[Nat](list.map[Nat, Nat](0.suc.range, binomial_term(a, b, 0))) = partial(binomial_term(a, b, 0), 0.suc)","list.sum[Nat](list.map[Nat, Nat](1.range, binomial_term(a, b, 0))) = partial(binomial_term(a, b, 0), 1)","0 + 1 = 0.suc","0 + 1 = 1"]}
+{"goal":"f(0)","proof":["partial(binomial_term(a, b, 0), 0.suc) != (a + b).exp(0) or f(0)"]}
+{"goal":"(a + b).exp(m) = partial(binomial_term(a, b, m), m.suc)","proof":["not f(m) or partial(binomial_term(a, b, m), m.suc) = (a + b).exp(m)"]}
+{"goal":"(a + b).exp(m.suc) = (a + b) * (a + b).exp(m)","proof":["m.suc != m.suc or (a + b) * (a + b).exp(m) = (a + b).exp(m.suc)"]}
+{"goal":"(a + b).exp(m.suc) = (a + b) * partial(binomial_term(a, b, m), m.suc)","proof":["(a + b) * (a + b).exp(m) != (a + b).exp(m.suc)"]}
+{"goal":"(a + b) * partial(binomial_term(a, b, m), m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)","proof":["(a + b) * partial(binomial_term(a, b, m), m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)"]}
+{"goal":"(a + b).exp(m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)","proof":["(a + b) * partial(binomial_term(a, b, m), m.suc) != partial(binomial_term(a, b, m.suc), m.suc.suc)"]}
+{"goal":"f(m.suc)","proof":["partial(binomial_term(a, b, m.suc), m.suc.suc) != (a + b).exp(m.suc) or f(m.suc)","partial(binomial_term(a, b, m.suc), m.suc.suc) != (a + b).exp(m.suc)"]}
+{"goal":"f(n)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(n)","not f(s0(f).suc)","not f(0) or f(s0(f)) or f(n)","not f(s0(f))","f(s0(f))"]}
+{"goal":"binomial","proof":["not f(n) or partial(binomial_term(a, b, n), n.suc) = (a + b).exp(n)"]}
