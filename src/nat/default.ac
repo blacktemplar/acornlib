@@ -1,4 +1,4 @@
-from nat.basic_addition import Nat 
+from nat.nat_gcd import Nat 
 
 attributes Nat {
 }

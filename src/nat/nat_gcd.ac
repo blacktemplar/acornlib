@@ -1,5 +1,5 @@
 from nat.nat_base import strong_induction, true_below
-from nat import Nat
+from nat.basic_addition import Nat
 from pair import Pair
 numerals Nat
 
