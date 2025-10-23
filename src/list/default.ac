@@ -1,0 +1,1 @@
+from list.list_functional import List, map, partial, sum

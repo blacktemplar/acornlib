@@ -197,7 +197,7 @@
 {"goal":"binomial_distribution","proof":["a * partial(binomial_term(a, b, m), m.suc) + b * partial(binomial_term(a, b, m), m.suc) != (a + b) * partial(binomial_term(a, b, m), m.suc)"]}
 {"goal":"(a + b).exp(0) = 1","proof":["0 != 0 or (a + b).exp(0) = 1"]}
 {"goal":"binomial_term(a, b, 0, 0) = choose(0)(0) * a.exp(0) * b.exp(0)","proof":["choose(0, 0) * a.exp(0) * b.exp(0 - 0) = binomial_term(a, b, 0, 0)","0 - 0 = 0"]}
-{"goal":"binomial_term(a, b, 0, 0) = 1 * 1 * 1","proof":["list.scalar_mul(1 * 1, 1) = 1 * 1 * 1","list.scalar_mul(1, 1) = 1 * 1","b.exp(0) * (choose(0, 0) * a.exp(0)) = choose(0, 0) * a.exp(0) * b.exp(0)","choose(0, 0) * a.exp(0) = a.exp(0) * choose(0, 0)","1 * 1 = 1","a.exp(0) * 1 = a.exp(0)","b.exp(0) * 1 = b.exp(0)","choose(0, 0) = 1","a.exp(0) = 1","b.exp(0) = 1"]}
+{"goal":"binomial_term(a, b, 0, 0) = 1 * 1 * 1","proof":["lib(list.list_sum).scalar_mul(1 * 1, 1) = 1 * 1 * 1","lib(list.list_sum).scalar_mul(1, 1) = 1 * 1","b.exp(0) * (choose(0, 0) * a.exp(0)) = choose(0, 0) * a.exp(0) * b.exp(0)","choose(0, 0) * a.exp(0) = a.exp(0) * choose(0, 0)","1 * 1 = 1","a.exp(0) * 1 = a.exp(0)","b.exp(0) * 1 = b.exp(0)","choose(0, 0) = 1","a.exp(0) = 1","b.exp(0) = 1"]}
 {"goal":"binomial_term(a, b, 0, 0) = 1","proof":["1 * 1 * 1 != 1","1 * 1 = 1"]}
 {"goal":"partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)","proof":["partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)"]}
 {"goal":"(a + b).exp(0) = partial(binomial_term(a, b, 0), 0.suc)","proof":["list.sum[Nat](list.map[Nat, Nat](0.suc.range, binomial_term(a, b, 0))) = partial(binomial_term(a, b, 0), 0.suc)","list.sum[Nat](list.map[Nat, Nat](1.range, binomial_term(a, b, 0))) = partial(binomial_term(a, b, 0), 1)","0 + 1 = 0.suc","0 + 1 = 1"]}
