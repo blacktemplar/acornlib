@@ -1,17 +1,17 @@
 from nat import Nat
-from int import Int, gcd
+from int import Int
 
 /// True if a fraction a/b is in reduced form (lowest terms).
 /// The denominator must be positive and gcd(a,b) must be 1.
 define is_reduced(a: Int, b: Int) -> Bool {
-    b > Int.0 and gcd(a, b) = Int.1
+    b > Int.0 and a.gcd(b) = Int.1
 }
 
 theorem denom_one_is_reduced(a: Int) {
     is_reduced(a, Int.1)
 } by {
     Int.1 > Int.0
-    gcd(a, Int.1) = Int.1
+    a.gcd(Int.1) = Int.1
 }
 
 /// Rational numbers represented as fractions in reduced form.
@@ -96,20 +96,20 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         Rat.0 = Rat.0
     } else {
         // Factor out the gcd
-        gcd(a, b) != Int.0
+        a.gcd(b) != Int.0
         let a1: Int satisfy {
-            a1 * gcd(a, b) = a
+            a1 * a.gcd(b) = a
         }
         let b1: Int satisfy {
-            b1 * gcd(a, b) = b
+            b1 * a.gcd(b) = b
         }
         b1 != Int.0
-        a * b = a * b1 * gcd(a, b)
-        a * b = b * a1 * gcd(a, b)
-        a * b1 * gcd(a, b) = b * a1 * gcd(a, b)
+        a * b = a * b1 * a.gcd(b)
+        a * b = b * a1 * a.gcd(b)
+        a * b1 * a.gcd(b) = b * a1 * a.gcd(b)
         a * b1 = b * a1
         cross_equals(a1, b1, a, b)
-        gcd(a1, b1) = Int.1
+        a1.gcd(b1) = Int.1
 
         // To reduce we also need to swap signs if the denominator is negative
         let a2 = a1 * int.unit_sign(b1)
@@ -118,9 +118,9 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         b2 != Int.0
         (a1 * int.unit_sign(b1)) * b1 = (b1 * int.unit_sign(b1)) * a1
         cross_equals(a2, b2, a1, b1)
-        gcd(a2, b2) = Int.1 * Int.from_nat(int.abs(int.unit_sign(b1)))
+        a2.gcd(b2) = Int.1 * Int.from_nat(int.abs(int.unit_sign(b1)))
         Int.from_nat(int.abs(int.unit_sign(b1))) = Int.1
-        gcd(a2, b2) = Int.1
+        a2.gcd(b2) = Int.1
         b2 != Int.0
         b2 > Int.0
         is_reduced(a2, b2)
@@ -138,13 +138,13 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
     cross_equals(r1.num, r1.denom, r2.num, r2.denom) implies r1 = r2
 } by {
     // The r1 fields divide into the r2 ones
-    gcd(r1.num, r1.denom) = Int.1
+    r1.num.gcd(r1.denom) = Int.1
     r1.denom.divides(r1.num * r2.denom)
     r1.denom.divides(r2.denom)
     int.abs(r1.denom).divides(int.abs(r2.denom))
 
     // The r2 fields divide into the r1 ones
-    gcd(r2.num, r2.denom) = Int.1
+    r2.num.gcd(r2.denom) = Int.1
     r2.denom.divides(r2.num * r1.denom)
     r2.denom.divides(r1.denom)
     int.abs(r2.denom).divides(int.abs(r1.denom))
@@ -234,7 +234,7 @@ theorem neg_is_reduced(r: Rat) {
     is_reduced(-r.num, r.denom)
 } by {
     r.denom > Int.0
-    gcd(-r.num, r.denom) = gcd(r.num, r.denom)
+    (-r.num).gcd(r.denom) = r.num.gcd(r.denom)
 }
 
 theorem neg_num(r: Rat) {
@@ -307,7 +307,7 @@ theorem unreduce_right(a: Int, b: Int) {
     let r = reduce(a, b)
     cross_equals(r.num, r.denom, a, b)
     r.num * b = a * r.denom
-    int.gcd(r.num, r.denom) = Int.1
+    r.num.gcd(r.denom) = Int.1
     r.denom.divides(r.num * b)
     r.denom.divides(b)
     let d: Int satisfy {

@@ -540,46 +540,49 @@ theorem div_pos_imp_lte(a: Int, b: Int) { a.divides(b) and b.is_positive implies
 
 // Theorems that relate to the GCD
 
-define gcd(a: Int, b: Int) -> Int {
-    Int.from_nat(abs(a).gcd(abs(b)))
+attributes Int {
+    /// The greatest common divisor of this integer and b.
+    define gcd(self, b: Int) -> Int {
+        Int.from_nat(abs(self).gcd(abs(b)))
+    }
 }
 
 theorem gcd_nonneg(a: Int, b: Int) {
-    not gcd(a, b).is_negative
+    not a.gcd(b).is_negative
 }
 
-theorem gcd_comm(a: Int, b: Int) { gcd(a, b) = gcd(b, a) } by {
+theorem gcd_comm(a: Int, b: Int) { a.gcd(b) = b.gcd(a) } by {
     Int.from_nat(abs(a).gcd(abs(b))) = Int.from_nat(abs(b).gcd(abs(a)))
 }
 
-theorem gcd_div_left(a: Int, b: Int) { gcd(a, b).divides(a) } by {
+theorem gcd_div_left(a: Int, b: Int) { a.gcd(b).divides(a) } by {
     Int.from_nat(abs(a).gcd(abs(b))).divides(a)
 }
 
-theorem gcd_div_right(a: Int, b: Int) { gcd(a, b).divides(b) }
+theorem gcd_div_right(a: Int, b: Int) { a.gcd(b).divides(b) }
 
-theorem divides_gcd(a: Int, b: Int, d: Int) { d.divides(a) and d.divides(b) implies d.divides(gcd(a, b)) } by {
+theorem divides_gcd(a: Int, b: Int, d: Int) { d.divides(a) and d.divides(b) implies d.divides(a.gcd(b)) } by {
     abs(d).divides(abs(a))
     abs(d).divides(abs(b))
     abs(d).divides(abs(a).gcd(abs(b)))
     d.divides(Int.from_nat(abs(a).gcd(abs(b))))
-    d.divides(gcd(a, b))
+    d.divides(a.gcd(b))
 }
 
 theorem gcd_pos(a: Int, b: Int) {
-    a != 0 and b != 0 implies gcd(a, b).is_positive
+    a != 0 and b != 0 implies a.gcd(b).is_positive
 } by {
     abs(a) != Nat.0
     abs(b) != Nat.0
     abs(a).gcd(abs(b)) != Nat.0
-    gcd(a, b) != 0
+    a.gcd(b) != 0
 }
 
 theorem gcd_is_gcd(a: Int, b: Int, d: Int) {
-    a != 0 and b != 0 and d.divides(a) and d.divides(b) implies d <= gcd(a, b)
+    a != 0 and b != 0 and d.divides(a) and d.divides(b) implies d <= a.gcd(b)
 } by {
-    gcd(a, b).is_positive
-    d.divides(gcd(a, b))
+    a.gcd(b).is_positive
+    d.divides(a.gcd(b))
 }
 
 // Theorems about the span of a linear combination
@@ -656,7 +659,7 @@ theorem spans_nat_mod(a: Int, b: Int, k: Nat, m: Nat) {
 }
 
 // Bezout's identity
-theorem spans_gcd(a: Int, b: Int) { spans(a, b, gcd(a, b)) } by {
+theorem spans_gcd(a: Int, b: Int) { spans(a, b, a.gcd(b)) } by {
     let f = function(n: Nat) {
         spans(a, b, Int.from_nat(n))
     }
@@ -674,29 +677,29 @@ theorem spans_gcd(a: Int, b: Int) { spans(a, b, gcd(a, b)) } by {
 // More theorems analogous to nat theorems
 
 theorem gcd_one_right(n: Int) {
-    gcd(n, 1) = 1
+    n.gcd(1) = 1
 } by {
     abs(n).gcd(Nat.1) = Nat.1
 }
 
 theorem gcd_one_left(n: Int) {
-    gcd(1, n) = 1
+    1.gcd(n) = 1
 }
 
 theorem gcd_mult_left(a: Int, b: Int, m: Int) {
-    Int.from_nat(abs(m)) * gcd(a, b) = gcd(m * a, m * b)
+    Int.from_nat(abs(m)) * a.gcd(b) = (m * a).gcd(m * b)
 }
 
 theorem gcd_mult_right(a: Int, b: Int, m: Int) {
-    gcd(a, b) * Int.from_nat(abs(m)) = gcd(a * m, b * m)
+    a.gcd(b) * Int.from_nat(abs(m)) = (a * m).gcd(b * m)
 }
 
 theorem cofactor(a: Int, b: Int, af: Int, bf: Int) {
     (
-        gcd(a, b) != 0 and
-        af * gcd(a, b) = a and
-        bf * gcd(a, b) = b
-    ) implies gcd(af, bf) = 1
+        a.gcd(b) != 0 and
+        af * a.gcd(b) = a and
+        bf * a.gcd(b) = b
+    ) implies af.gcd(bf) = 1
 } by {
     abs(a).gcd(abs(b)) != Nat.0
     abs(af) * abs(a).gcd(abs(b)) = abs(a)
@@ -705,15 +708,15 @@ theorem cofactor(a: Int, b: Int, af: Int, bf: Int) {
 }
 
 theorem gcd_nonzero_left(a: Int, b: Int) {
-    a != 0 implies gcd(a, b) != 0
+    a != 0 implies a.gcd(b) != 0
 } by {
     abs(a) != Nat.0
     abs(a).gcd(abs(b)) != Nat.0
-    gcd(a, b) != 0
+    a.gcd(b) != 0
 }
 
 theorem gcd_nonzero_right(a: Int, b: Int) {
-    b != 0 implies gcd(a, b) != 0
+    b != 0 implies a.gcd(b) != 0
 }
 
 theorem lt_mul_both(a: Int, b: Int, c: Int) {
@@ -844,11 +847,11 @@ define is_prime(a: Int) -> Bool {
 }
 
 theorem gcd_of_prime(p: Int, n: Int) {
-    is_prime(p) implies gcd(p, n) = 1 or p.divides(n)
+    is_prime(p) implies p.gcd(n) = 1 or p.divides(n)
 } by {
     abs(p).gcd(abs(n)) = Nat.1 or abs(p).divides(abs(n))
     if abs(p).gcd(abs(n)) = Nat.1 {
-        gcd(p, n) = 1
+        p.gcd(n) = 1
     } else {
         abs(p).divides(abs(n))
         p.divides(n)
@@ -857,7 +860,7 @@ theorem gcd_of_prime(p: Int, n: Int) {
 
 // Generalized version
 theorem euclids_lemma(a: Int, b: Int, c: Int) {
-    gcd(a, b) = 1 and a.divides(b * c) implies a.divides(c)
+    a.gcd(b) = 1 and a.divides(b * c) implies a.divides(c)
 } by {
     spans(a, b, 1)
     let (x: Int, y: Int) satisfy {
@@ -879,7 +882,7 @@ theorem euclids_lemma_prime(a: Int, b: Int, c: Int) {
     if a.divides(b) {
         a.divides(b)
     } else {
-        gcd(a, b) = 1
+        a.gcd(b) = 1
         a.divides(c)
     }
 }
