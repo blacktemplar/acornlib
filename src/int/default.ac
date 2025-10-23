@@ -541,7 +541,7 @@ theorem div_pos_imp_lte(a: Int, b: Int) { a.divides(b) and b.is_positive implies
 // Theorems that relate to the GCD
 
 define gcd(a: Int, b: Int) -> Int {
-    Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))
+    Int.from_nat(abs(a).gcd(abs(b)))
 }
 
 theorem gcd_nonneg(a: Int, b: Int) {
@@ -549,11 +549,11 @@ theorem gcd_nonneg(a: Int, b: Int) {
 }
 
 theorem gcd_comm(a: Int, b: Int) { gcd(a, b) = gcd(b, a) } by {
-    Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = Int.from_nat(nat_gcd.gcd(abs(b), abs(a)))
+    Int.from_nat(abs(a).gcd(abs(b))) = Int.from_nat(abs(b).gcd(abs(a)))
 }
 
 theorem gcd_div_left(a: Int, b: Int) { gcd(a, b).divides(a) } by {
-    Int.from_nat(nat_gcd.gcd(abs(a), abs(b))).divides(a)
+    Int.from_nat(abs(a).gcd(abs(b))).divides(a)
 }
 
 theorem gcd_div_right(a: Int, b: Int) { gcd(a, b).divides(b) }
@@ -561,8 +561,8 @@ theorem gcd_div_right(a: Int, b: Int) { gcd(a, b).divides(b) }
 theorem divides_gcd(a: Int, b: Int, d: Int) { d.divides(a) and d.divides(b) implies d.divides(gcd(a, b)) } by {
     abs(d).divides(abs(a))
     abs(d).divides(abs(b))
-    abs(d).divides(nat_gcd.gcd(abs(a), abs(b)))
-    d.divides(Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))
+    abs(d).divides(abs(a).gcd(abs(b)))
+    d.divides(Int.from_nat(abs(a).gcd(abs(b))))
     d.divides(gcd(a, b))
 }
 
@@ -571,7 +571,7 @@ theorem gcd_pos(a: Int, b: Int) {
 } by {
     abs(a) != Nat.0
     abs(b) != Nat.0
-    nat_gcd.gcd(abs(a), abs(b)) != Nat.0
+    abs(a).gcd(abs(b)) != Nat.0
     gcd(a, b) != 0
 }
 
@@ -668,7 +668,7 @@ theorem spans_gcd(a: Int, b: Int) { spans(a, b, gcd(a, b)) } by {
     nat_gcd.mod_maintains(f)
     f(abs(a))
     f(abs(b))
-    spans(a, b, Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))
+    spans(a, b, Int.from_nat(abs(a).gcd(abs(b))))
 }
 
 // More theorems analogous to nat theorems
@@ -676,7 +676,7 @@ theorem spans_gcd(a: Int, b: Int) { spans(a, b, gcd(a, b)) } by {
 theorem gcd_one_right(n: Int) {
     gcd(n, 1) = 1
 } by {
-    nat_gcd.gcd(abs(n), Nat.1) = Nat.1
+    abs(n).gcd(Nat.1) = Nat.1
 }
 
 theorem gcd_one_left(n: Int) {
@@ -698,17 +698,17 @@ theorem cofactor(a: Int, b: Int, af: Int, bf: Int) {
         bf * gcd(a, b) = b
     ) implies gcd(af, bf) = 1
 } by {
-    nat_gcd.gcd(abs(a), abs(b)) != Nat.0
-    abs(af) * nat_gcd.gcd(abs(a), abs(b)) = abs(a)
-    abs(bf) * nat_gcd.gcd(abs(a), abs(b)) = abs(b)
-    nat_gcd.gcd(abs(af), abs(bf)) = Nat.1
+    abs(a).gcd(abs(b)) != Nat.0
+    abs(af) * abs(a).gcd(abs(b)) = abs(a)
+    abs(bf) * abs(a).gcd(abs(b)) = abs(b)
+    abs(af).gcd(abs(bf)) = Nat.1
 }
 
 theorem gcd_nonzero_left(a: Int, b: Int) {
     a != 0 implies gcd(a, b) != 0
 } by {
     abs(a) != Nat.0
-    nat_gcd.gcd(abs(a), abs(b)) != Nat.0
+    abs(a).gcd(abs(b)) != Nat.0
     gcd(a, b) != 0
 }
 
@@ -846,8 +846,8 @@ define is_prime(a: Int) -> Bool {
 theorem gcd_of_prime(p: Int, n: Int) {
     is_prime(p) implies gcd(p, n) = 1 or p.divides(n)
 } by {
-    nat_gcd.gcd(abs(p), abs(n)) = Nat.1 or abs(p).divides(abs(n))
-    if nat_gcd.gcd(abs(p), abs(n)) = Nat.1 {
+    abs(p).gcd(abs(n)) = Nat.1 or abs(p).divides(abs(n))
+    if abs(p).gcd(abs(n)) = Nat.1 {
         gcd(p, n) = 1
     } else {
         abs(p).divides(abs(n))

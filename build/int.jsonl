@@ -283,22 +283,22 @@
 {"goal":"a <= Int.from_nat(abs(a))","proof":["a <= Int.from_nat(abs(a))"]}
 {"goal":"a <= b","proof":["not a <= Int.from_nat(abs(a)) or not Int.from_nat(abs(a)) <= b or a <= b","not Int.from_nat(abs(a)) <= b or not a <= Int.from_nat(abs(a))"]}
 {"goal":"div_pos_imp_lte","proof":[]}
-{"goal":"gcd_nonneg","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","Int.from_nat(abs(gcd(a, b))) != gcd(a, b) or not gcd(a, b).is_negative","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))","Int.from_nat(abs(gcd(a, b))) != gcd(a, b)"]}
-{"goal":"Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = Int.from_nat(nat_gcd.gcd(abs(b), abs(a)))","proof":["nat_gcd.gcd(abs(b), abs(a)) != nat_gcd.gcd(abs(a), abs(b))","nat_gcd.gcd(abs(b), abs(a)) = nat_gcd.gcd(abs(a), abs(b))"]}
-{"goal":"gcd_comm","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","Int.from_nat(nat_gcd.gcd(abs(b), abs(a))) = gcd(b, a)"]}
-{"goal":"Int.from_nat(nat_gcd.gcd(abs(a), abs(b))).divides(a)","proof":["not abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))).divides(abs(a)) or Int.from_nat(nat_gcd.gcd(abs(a), abs(b))).divides(a)","nat_gcd.gcd(abs(a), abs(b)).divides(abs(a))","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))","not abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))).divides(abs(a))"]}
-{"goal":"gcd_div_left","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)"]}
+{"goal":"gcd_nonneg","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","Int.from_nat(abs(gcd(a, b))) != gcd(a, b) or not gcd(a, b).is_negative","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))","Int.from_nat(abs(gcd(a, b))) != gcd(a, b)"]}
+{"goal":"Int.from_nat(abs(a).gcd(abs(b))) = Int.from_nat(abs(b).gcd(abs(a)))","proof":["abs(b).gcd(abs(a)) != abs(a).gcd(abs(b))","abs(b).gcd(abs(a)) = abs(a).gcd(abs(b))"]}
+{"goal":"gcd_comm","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","Int.from_nat(abs(b).gcd(abs(a))) = gcd(b, a)"]}
+{"goal":"Int.from_nat(abs(a).gcd(abs(b))).divides(a)","proof":["not abs(Int.from_nat(abs(a).gcd(abs(b)))).divides(abs(a)) or Int.from_nat(abs(a).gcd(abs(b))).divides(a)","abs(a).gcd(abs(b)).divides(abs(a))","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))","not abs(Int.from_nat(abs(a).gcd(abs(b)))).divides(abs(a))"]}
+{"goal":"gcd_div_left","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)"]}
 {"goal":"gcd_div_right","proof":["gcd(b, a) = gcd(a, b)","not gcd(b, a).divides(b)","gcd(b, a).divides(b)"]}
 {"goal":"abs(d).divides(abs(a))","proof":["not d.divides(a) or abs(d).divides(abs(a))"]}
 {"goal":"abs(d).divides(abs(b))","proof":["not d.divides(b) or abs(d).divides(abs(b))"]}
-{"goal":"abs(d).divides(nat_gcd.gcd(abs(a), abs(b)))","proof":["not abs(d).divides(abs(a)) or not abs(d).divides(abs(b)) or abs(d).divides(nat_gcd.gcd(abs(a), abs(b)))"]}
-{"goal":"d.divides(Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))","proof":["not abs(d).divides(abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))) or d.divides(Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))","not abs(d).divides(abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))))","abs(d).divides(abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))))"]}
-{"goal":"d.divides(gcd(a, b))","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)"]}
+{"goal":"abs(d).divides(abs(a).gcd(abs(b)))","proof":["not abs(d).divides(abs(a)) or not abs(d).divides(abs(b)) or abs(d).divides(abs(a).gcd(abs(b)))"]}
+{"goal":"d.divides(Int.from_nat(abs(a).gcd(abs(b))))","proof":["not abs(d).divides(abs(Int.from_nat(abs(a).gcd(abs(b))))) or d.divides(Int.from_nat(abs(a).gcd(abs(b))))","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))","not abs(d).divides(abs(Int.from_nat(abs(a).gcd(abs(b)))))","abs(d).divides(abs(Int.from_nat(abs(a).gcd(abs(b)))))"]}
+{"goal":"d.divides(gcd(a, b))","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)"]}
 {"goal":"divides_gcd","proof":[]}
 {"goal":"abs(a) != Nat.0","proof":["abs(a) != Nat.0 or 0 = a"]}
 {"goal":"abs(b) != Nat.0","proof":["abs(b) != Nat.0 or 0 = b"]}
-{"goal":"nat_gcd.gcd(abs(a), abs(b)) != Nat.0","proof":["nat_gcd.gcd(abs(a), abs(b)) != Nat.0 or abs(b) = Nat.0"]}
-{"goal":"gcd(a, b) != 0","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))"]}
+{"goal":"abs(a).gcd(abs(b)) != Nat.0","proof":["abs(a).gcd(abs(b)) != Nat.0 or abs(b) = Nat.0"]}
+{"goal":"gcd(a, b) != 0","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))"]}
 {"goal":"gcd_pos","proof":["gcd(a, b).is_negative or gcd(a, b).is_positive or gcd(a, b) = 0","gcd(a, b).is_negative","not gcd(a, b).is_negative"]}
 {"goal":"gcd(a, b).is_positive","proof":["gcd(a, b).is_positive or 0 = a or 0 = b"]}
 {"goal":"d.divides(gcd(a, b))","proof":["not d.divides(a) or not d.divides(b) or d.divides(gcd(a, b))"]}
@@ -346,21 +346,21 @@
 {"goal":"nat_gcd.mod_maintains(f)","proof":["let (s0: Nat -> Bool -> Nat, s1: Nat -> Bool -> Nat) satisfy { forall(x0: Nat -> Bool, x1: Nat, x2: Nat) { not nat_gcd.mod_maintains(x0) or not x0(x1) or not x0(x2) or x0(mod(x1, x2)) } and forall(x3: Nat -> Bool) { nat_gcd.mod_maintains(x3) or x3(s0(x3)) } and forall(x4: Nat -> Bool) { nat_gcd.mod_maintains(x4) or x4(s1(x4)) } and forall(x5: Nat -> Bool) { not x5(mod(s0(x5), s1(x5))) or nat_gcd.mod_maintains(x5) } }","not f(s0(f)) or not f(s1(f)) or f(mod(s0(f), s1(f)))","not f(mod(s0(f), s1(f))) or nat_gcd.mod_maintains(f)","not f(mod(s0(f), s1(f)))","nat_gcd.mod_maintains(f) or f(s1(f))","f(s1(f))","nat_gcd.mod_maintains(f) or f(s0(f))","not f(s0(f))","f(s0(f))"]}
 {"goal":"f(abs(a))","proof":["spans(a, b, Int.from_nat(abs(a))) = f(abs(a))","unit_sign(a) * a = Int.from_nat(abs(a))","spans(a, b, unit_sign(a) * a)","not spans(a, b, Int.from_nat(abs(a)))"]}
 {"goal":"f(abs(b))","proof":["spans(a, b, Int.from_nat(abs(b))) = f(abs(b))","unit_sign(b) * b = Int.from_nat(abs(b))","spans(a, b, unit_sign(b) * b)","not spans(a, b, Int.from_nat(abs(b)))"]}
-{"goal":"spans(a, b, Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))","proof":["spans(a, b, Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = f(nat_gcd.gcd(abs(a), abs(b)))","not f(nat_gcd.gcd(abs(a), abs(b)))","not nat_gcd.mod_maintains(f) or not f(abs(a)) or not f(abs(b)) or f(nat_gcd.gcd(abs(a), abs(b)))"]}
-{"goal":"spans_gcd","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)"]}
-{"goal":"nat_gcd.gcd(abs(n), Nat.1) = Nat.1","proof":["nat_gcd.gcd(abs(n), Nat.1) = nat_gcd.gcd(Nat.1, abs(n))","nat_gcd.gcd(Nat.1, abs(n)) != Nat.1","nat_gcd.gcd(Nat.1, abs(n)) = Nat.1"]}
-{"goal":"gcd_one_right","proof":["Int.from_nat(nat_gcd.gcd(abs(1), abs(n))) = gcd(1, n)","gcd(n, 1) = gcd(1, n)","nat_gcd.gcd(abs(n), Nat.1) = nat_gcd.gcd(Nat.1, abs(n))","abs(Int.from_nat(Nat.1)) = Nat.1"]}
+{"goal":"spans(a, b, Int.from_nat(abs(a).gcd(abs(b))))","proof":["spans(a, b, Int.from_nat(abs(a).gcd(abs(b)))) = f(abs(a).gcd(abs(b)))","not f(abs(a).gcd(abs(b)))","not nat_gcd.mod_maintains(f) or not f(abs(a)) or not f(abs(b)) or f(abs(a).gcd(abs(b)))"]}
+{"goal":"spans_gcd","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)"]}
+{"goal":"abs(n).gcd(Nat.1) = Nat.1","proof":["abs(n).gcd(Nat.1) = Nat.1.gcd(abs(n))","Nat.1.gcd(abs(n)) != Nat.1","Nat.1.gcd(abs(n)) = Nat.1"]}
+{"goal":"gcd_one_right","proof":["Int.from_nat(abs(1).gcd(abs(n))) = gcd(1, n)","gcd(n, 1) = gcd(1, n)","abs(n).gcd(Nat.1) = Nat.1.gcd(abs(n))","abs(Int.from_nat(Nat.1)) = Nat.1"]}
 {"goal":"gcd_one_left","proof":["gcd(n, 1) = gcd(1, n)","gcd(n, 1) != 1","gcd(n, 1) = 1"]}
-{"goal":"gcd_mult_left","proof":["nat_gcd.gcd(abs(m) * abs(a), abs(m) * abs(b)) = abs(m) * nat_gcd.gcd(abs(a), abs(b))","Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","Int.from_nat(nat_gcd.gcd(abs(m * a), abs(m * b))) = gcd(m * a, m * b)","Int.from_nat(abs(m)) * Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = Int.from_nat(abs(m) * nat_gcd.gcd(abs(a), abs(b)))","abs(Int.from_nat(abs(m))) * abs(gcd(a, b)) = abs(Int.from_nat(abs(m)) * gcd(a, b))","abs(m) * abs(a) = abs(m * a)","abs(m) * abs(b) = abs(m * b)","sub_nat(abs(Int.from_nat(abs(m)) * gcd(a, b)), Nat.0) = Int.from_nat(abs(Int.from_nat(abs(m)) * gcd(a, b)))","sub_nat(nat_gcd.gcd(abs(m * a), abs(m * b)), Nat.0) = Int.from_nat(nat_gcd.gcd(abs(m * a), abs(m * b)))","abs(Int.from_nat(abs(m))) = abs(m)","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))"]}
+{"goal":"gcd_mult_left","proof":["(abs(m) * abs(a)).gcd(abs(m) * abs(b)) = abs(m) * abs(a).gcd(abs(b))","Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","Int.from_nat(abs(m * a).gcd(abs(m * b))) = gcd(m * a, m * b)","Int.from_nat(abs(m)) * Int.from_nat(abs(a).gcd(abs(b))) = Int.from_nat(abs(m) * abs(a).gcd(abs(b)))","abs(Int.from_nat(abs(m))) * abs(gcd(a, b)) = abs(Int.from_nat(abs(m)) * gcd(a, b))","abs(m) * abs(a) = abs(m * a)","abs(m) * abs(b) = abs(m * b)","sub_nat(abs(Int.from_nat(abs(m)) * gcd(a, b)), Nat.0) = Int.from_nat(abs(Int.from_nat(abs(m)) * gcd(a, b)))","sub_nat(abs(m * a).gcd(abs(m * b)), Nat.0) = Int.from_nat(abs(m * a).gcd(abs(m * b)))","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))","abs(Int.from_nat(abs(m))) = abs(m)"]}
 {"goal":"gcd_mult_right","proof":["Int.from_nat(abs(m)) * gcd(a, b) = gcd(m * a, m * b)","gcd(a, b) * Int.from_nat(abs(m)) = Int.from_nat(abs(m)) * gcd(a, b)","m * a = a * m","m * b = b * m"]}
-{"goal":"nat_gcd.gcd(abs(a), abs(b)) != Nat.0","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","-Int.from_nat(Nat.0) = int_base.neg_nat(Nat.0)","--gcd(a, b) = gcd(a, b)"]}
-{"goal":"abs(af) * nat_gcd.gcd(abs(a), abs(b)) = abs(a)","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","abs(af) * abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = abs(af * Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))"]}
-{"goal":"abs(bf) * nat_gcd.gcd(abs(a), abs(b)) = abs(b)","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","abs(bf) * abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = abs(bf * Int.from_nat(nat_gcd.gcd(abs(a), abs(b))))","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))"]}
-{"goal":"nat_gcd.gcd(abs(af), abs(bf)) = Nat.1","proof":["abs(af) * nat_gcd.gcd(abs(a), abs(b)) != abs(a) or abs(bf) * nat_gcd.gcd(abs(a), abs(b)) != abs(b) or nat_gcd.gcd(abs(af), abs(bf)) = Nat.1 or nat_gcd.gcd(abs(a), abs(b)) = Nat.0","abs(af) * nat_gcd.gcd(abs(a), abs(b)) != abs(a) or abs(bf) * nat_gcd.gcd(abs(a), abs(b)) != abs(b) or nat_gcd.gcd(abs(a), abs(b)) = Nat.0 or nat_gcd.gcd(abs(af), abs(bf)) = Nat.1","abs(bf) * nat_gcd.gcd(abs(a), abs(b)) != abs(b) or abs(af) * nat_gcd.gcd(abs(a), abs(b)) != abs(a) or nat_gcd.gcd(abs(a), abs(b)) = Nat.0"]}
-{"goal":"cofactor","proof":["Int.from_nat(nat_gcd.gcd(abs(af), abs(bf))) = gcd(af, bf)"]}
+{"goal":"abs(a).gcd(abs(b)) != Nat.0","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","abs(a).gcd(abs(b)) != Nat.0 or abs(b) = Nat.0","abs(b) = Nat.0","-Int.from_nat(Nat.0) = int_base.neg_nat(Nat.0)","--gcd(a, b) = gcd(a, b)"]}
+{"goal":"abs(af) * abs(a).gcd(abs(b)) = abs(a)","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","abs(af) * abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(af * Int.from_nat(abs(a).gcd(abs(b))))","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))"]}
+{"goal":"abs(bf) * abs(a).gcd(abs(b)) = abs(b)","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","abs(bf) * abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(bf * Int.from_nat(abs(a).gcd(abs(b))))","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))"]}
+{"goal":"abs(af).gcd(abs(bf)) = Nat.1","proof":["abs(af) * abs(a).gcd(abs(b)) != abs(a) or abs(bf) * abs(a).gcd(abs(b)) != abs(b) or abs(af).gcd(abs(bf)) = Nat.1 or abs(a).gcd(abs(b)) = Nat.0","abs(af) * abs(a).gcd(abs(b)) != abs(a) or abs(bf) * abs(a).gcd(abs(b)) != abs(b) or abs(a).gcd(abs(b)) = Nat.0 or abs(af).gcd(abs(bf)) = Nat.1","abs(bf) * abs(a).gcd(abs(b)) != abs(b) or abs(af) * abs(a).gcd(abs(b)) != abs(a) or abs(a).gcd(abs(b)) = Nat.0"]}
+{"goal":"cofactor","proof":["Int.from_nat(abs(af).gcd(abs(bf))) = gcd(af, bf)"]}
 {"goal":"abs(a) != Nat.0","proof":["abs(a) != Nat.0 or 0 = a"]}
-{"goal":"nat_gcd.gcd(abs(a), abs(b)) != Nat.0","proof":["nat_gcd.gcd(abs(a), abs(b)) != Nat.0 or abs(a) = Nat.0"]}
-{"goal":"gcd(a, b) != 0","proof":["Int.from_nat(nat_gcd.gcd(abs(a), abs(b))) = gcd(a, b)","abs(Int.from_nat(nat_gcd.gcd(abs(a), abs(b)))) = nat_gcd.gcd(abs(a), abs(b))"]}
+{"goal":"abs(a).gcd(abs(b)) != Nat.0","proof":["abs(a).gcd(abs(b)) != Nat.0 or abs(a) = Nat.0"]}
+{"goal":"gcd(a, b) != 0","proof":["Int.from_nat(abs(a).gcd(abs(b))) = gcd(a, b)","abs(Int.from_nat(abs(a).gcd(abs(b)))) = abs(a).gcd(abs(b))"]}
 {"goal":"gcd_nonzero_left","proof":[]}
 {"goal":"gcd_nonzero_right","proof":["gcd(b, a) != 0 or 0 = b","gcd(a, b) = gcd(b, a)","gcd(b, a) = 0"]}
 {"goal":"lt_mul_both","proof":["not a.is_positive or not b < c or b * a < c * a","b * a = a * b","c * a = a * c","not a * b < c * a","not a.is_positive or b * a < c * a","not b * a < c * a","b * a < c * a"]}
@@ -409,8 +409,8 @@
 {"goal":"m * d * a = m * b","proof":["m * (d * a) = m * d * a"]}
 {"goal":"divides_mul_left","proof":["d * (m * a) = d * m * a","d * (m * a) != m * b or (m * a).divides(m * b)","m * d = d * m","d * m * a = m * b","d * (m * a) != m * b"]}
 {"goal":"divides_mul_right","proof":["not a.divides(b) or (m * a).divides(m * b)","m * a = a * m","m * b = b * m","not (m * a).divides(b * m)","(m * a).divides(m * b)"]}
-{"goal":"nat_gcd.gcd(abs(p), abs(n)) = Nat.1 or abs(p).divides(abs(n))","proof":["not abs(p).is_prime or abs(p).divides(abs(n)) or nat_gcd.gcd(abs(p), abs(n)) = Nat.1","not abs(p).is_prime","abs(p).is_prime = is_prime(p)"]}
-{"goal":"gcd(p, n) = 1","proof":["Int.from_nat(nat_gcd.gcd(abs(p), abs(n))) = gcd(p, n)"]}
+{"goal":"abs(p).gcd(abs(n)) = Nat.1 or abs(p).divides(abs(n))","proof":["not abs(p).is_prime or abs(p).gcd(abs(n)) = Nat.1 or abs(p).divides(abs(n))","not abs(p).is_prime","abs(p).is_prime = is_prime(p)"]}
+{"goal":"gcd(p, n) = 1","proof":["Int.from_nat(abs(p).gcd(abs(n))) = gcd(p, n)"]}
 {"goal":"abs(p).divides(abs(n))","proof":[]}
 {"goal":"p.divides(n)","proof":["not abs(p).divides(abs(n)) or p.divides(n)"]}
 {"goal":"gcd_of_prime","proof":[]}
