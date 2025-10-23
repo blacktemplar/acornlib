@@ -8,7 +8,7 @@
 {"goal":"g(n)","proof":["let s0: Nat satisfy { forall(x0: Nat) { true_below(g, s0) or g(x0) } and forall(x1: Nat) { not g(s0) or g(x1) } }","not g(s0) or g(n)","not g(s0)","not true_below(g, s0) or g(s0)","true_below(g, s0) or g(s0)","not true_below(g, s0)","true_below(g, s0)"]}
 {"goal":"has_min","proof":["let s0: (Nat -> Bool, Nat) -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not has_min(x0, x1) or not x0(x1) or is_min(x0, s0(x0, x1)) } and forall(x2: Nat -> Bool, x3: Nat) { has_min(x2, x3) or x2(x3) } and forall(x4: Nat -> Bool, x5: Nat, x6: Nat) { not is_min(x4, x5) or has_min(x4, x6) } }","not is_min(f, s0(f, n))","has_min(f, n) = g(n)","not has_min(f, n) or not f(n) or is_min(f, s0(f, n))","has_min(f, n)","not has_min(f, n)"]}
 {"goal":"not f(x) <= f(x.suc)","proof":["not f(x) <= f(x.suc) or no_infinite_decreasing(f)"]}
-{"goal":"0 + f(0) <= f(0)","proof":["nat_base.mod(f(0), 0) <= f(0)","nat_base.mod(f(0), 0) = f(0)","0 + f(0) = f(0)","not f(0) <= f(0)"]}
+{"goal":"0 + f(0) <= f(0)","proof":["nat_base.nat_mod(f(0), 0) <= f(0)","nat_base.nat_mod(f(0), 0) = f(0)","0 + f(0) = f(0)","not f(0) <= f(0)"]}
 {"goal":"h(0)","proof":["0 + f(0) <= f(0) = h(0)"]}
 {"goal":"x + f(x) <= f(0)","proof":["x + f(x) <= f(0) = h(x)"]}
 {"goal":"not f(x) <= f(x.suc)","proof":["not f(x) <= f(x.suc)"]}
@@ -36,11 +36,11 @@
 {"goal":"f(x.suc) = gcd_step_n(p, x.suc).second","proof":["gcd_step_n(p, x.suc).second = f(x.suc)"]}
 {"goal":"f(x.suc) = gcd_step(q).second","proof":["gcd_step_n(p, x.suc).second != f(x.suc)"]}
 {"goal":"q.second != 0","proof":["gcd_step_n(p, x).second = f(x)"]}
-{"goal":"gcd_step(q) = Pair.new(q.second, nat_base.mod(q.first)(q.second))","proof":["Pair.new(q.second, nat_base.mod(q.first, q.second)) = gcd_step(q) or q.second = 0"]}
-{"goal":"nat_base.mod(q.first)(q.second) = gcd_step(q).second","proof":["Pair.new(q.second, nat_base.mod(q.first, q.second)).second = nat_base.mod(q.first, q.second)"]}
-{"goal":"f(x.suc) = nat_base.mod(q.first)(q.second)","proof":["nat_base.mod(q.first, q.second) != gcd_step(q).second"]}
-{"goal":"f(x.suc) = nat_base.mod(q.first)(f(x))","proof":["gcd_step_n(p, x).second = f(x)"]}
-{"goal":"nat_base.mod(q.first)(f(x)) < f(x)","proof":["nat_base.mod(q.first, f(x)) < f(x) or f(x) = 0"]}
+{"goal":"gcd_step(q) = Pair.new(q.second, nat_base.nat_mod(q.first)(q.second))","proof":["Pair.new(q.second, nat_base.nat_mod(q.first, q.second)) = gcd_step(q) or q.second = 0"]}
+{"goal":"nat_base.nat_mod(q.first)(q.second) = gcd_step(q).second","proof":["Pair.new(q.second, nat_base.nat_mod(q.first, q.second)).second = nat_base.nat_mod(q.first, q.second)"]}
+{"goal":"f(x.suc) = nat_base.nat_mod(q.first)(q.second)","proof":["nat_base.nat_mod(q.first, q.second) != gcd_step(q).second"]}
+{"goal":"f(x.suc) = nat_base.nat_mod(q.first)(f(x))","proof":["gcd_step_n(p, x).second = f(x)"]}
+{"goal":"nat_base.nat_mod(q.first)(f(x)) < f(x)","proof":["nat_base.nat_mod(q.first, f(x)) < f(x) or f(x) = 0"]}
 {"goal":"f(x.suc) < f(x)","proof":[]}
 {"goal":"decreasing_to_zero(f)","proof":["let s0: Nat -> Nat -> Nat satisfy { forall(x0: Nat -> Nat, x1: Nat) { not decreasing_to_zero(x0) or x0(x1.suc) < x0(x1) or 0 = x0(x1) } and forall(x2: Nat -> Nat) { x2(s0(x2)) != 0 or decreasing_to_zero(x2) } and forall(x3: Nat -> Nat) { not x3(s0(x3).suc) < x3(s0(x3)) or decreasing_to_zero(x3) } }","f(s0(f).suc) < f(s0(f)) or f(s0(f)) = 0","not f(s0(f).suc) < f(s0(f)) or decreasing_to_zero(f)","f(s0(f)) != 0 or decreasing_to_zero(f)","f(s0(f)) != 0","not f(s0(f).suc) < f(s0(f))","f(s0(f).suc) < f(s0(f))"]}
 {"goal":"gcd_terminates","proof":["let s0: Nat -> Nat -> Nat satisfy { forall(x0: Nat -> Nat) { not decreasing_to_zero(x0) or x0(s0(x0)) = 0 } }","gcd_step_n(p, s0(f)).second != 0","gcd_step_n(p, s0(f)).second = f(s0(f))","not decreasing_to_zero(f) or f(s0(f)) = 0","f(s0(f)) = 0"]}
@@ -52,13 +52,13 @@
 {"goal":"num_gcd_steps_terminates","proof":["not gcd_termination(p, num_gcd_steps(p)) or gcd_step_n(p, num_gcd_steps(p)).second = 0"]}
 {"goal":"a.divides(p.first)","proof":["not divides_both(a, p) or a.divides(p.first)"]}
 {"goal":"a.divides(p.second)","proof":["not divides_both(a, p) or a.divides(p.second)"]}
-{"goal":"a.divides(nat_base.mod(p.first)(p.second))","proof":["not a.divides(p.first) or not a.divides(p.second) or a.divides(nat_base.mod(p.first, p.second))"]}
+{"goal":"a.divides(nat_base.nat_mod(p.first)(p.second))","proof":["not a.divides(p.first) or not a.divides(p.second) or a.divides(nat_base.nat_mod(p.first, p.second))"]}
 {"goal":"gcd_step(p) = p","proof":["p.second != 0 or gcd_step(p) = p"]}
 {"goal":"divides_both(a, gcd_step(p))","proof":["not divides_both(a, p)"]}
-{"goal":"gcd_step(p) = Pair.new(p.second, nat_base.mod(p.first)(p.second))","proof":["Pair.new(p.second, nat_base.mod(p.first, p.second)) = gcd_step(p) or p.second = 0"]}
-{"goal":"gcd_step(p).second = nat_base.mod(p.first)(p.second)","proof":["Pair.new(p.second, nat_base.mod(p.first, p.second)).second = nat_base.mod(p.first, p.second)"]}
+{"goal":"gcd_step(p) = Pair.new(p.second, nat_base.nat_mod(p.first)(p.second))","proof":["Pair.new(p.second, nat_base.nat_mod(p.first, p.second)) = gcd_step(p) or p.second = 0"]}
+{"goal":"gcd_step(p).second = nat_base.nat_mod(p.first)(p.second)","proof":["Pair.new(p.second, nat_base.nat_mod(p.first, p.second)).second = nat_base.nat_mod(p.first, p.second)"]}
 {"goal":"a.divides(gcd_step(p).second)","proof":[]}
-{"goal":"gcd_step(p).first = p.second","proof":["Pair.new(p.second, nat_base.mod(p.first, p.second)).first = p.second"]}
+{"goal":"gcd_step(p).first = p.second","proof":["Pair.new(p.second, nat_base.nat_mod(p.first, p.second)).first = p.second"]}
 {"goal":"a.divides(gcd_step(p).first)","proof":[]}
 {"goal":"divides_both(a, gcd_step(p))","proof":["not a.divides(gcd_step(p).first) or not a.divides(gcd_step(p).second) or divides_both(a, gcd_step(p))"]}
 {"goal":"divides_both_step","proof":[]}
@@ -81,14 +81,14 @@
 {"goal":"divides_gcd","proof":[]}
 {"goal":"p = gcd_step(p)","proof":["p.second != 0 or gcd_step(p) = p"]}
 {"goal":"divides_both(a, p)","proof":["not divides_both(a, gcd_step(p))"]}
-{"goal":"gcd_step(p) = Pair.new(p.second, nat_base.mod(p.first)(p.second))","proof":["Pair.new(p.second, nat_base.mod(p.first, p.second)) = gcd_step(p) or p.second = 0"]}
+{"goal":"gcd_step(p) = Pair.new(p.second, nat_base.nat_mod(p.first)(p.second))","proof":["Pair.new(p.second, nat_base.nat_mod(p.first, p.second)) = gcd_step(p) or p.second = 0"]}
 {"goal":"a.divides(gcd_step(p).first)","proof":["not divides_both(a, gcd_step(p)) or a.divides(gcd_step(p).first)"]}
-{"goal":"exists(k0: Nat) { a.divides(Pair.new(p.second, k0).first) }","proof":["not a.divides(Pair.new(p.second, nat_base.mod(p.first, p.second)).first)"]}
+{"goal":"exists(k0: Nat) { a.divides(Pair.new(p.second, k0).first) }","proof":["not a.divides(Pair.new(p.second, nat_base.nat_mod(p.first, p.second)).first)"]}
 {"goal":"a.divides(p.second)","proof":["let s0: Nat satisfy { a.divides(Pair.new(p.second, s0).first) }","Pair.new(p.second, s0).first = p.second"]}
 {"goal":"a.divides(gcd_step(p).second)","proof":["not divides_both(a, gcd_step(p)) or a.divides(gcd_step(p).second)"]}
-{"goal":"exists(k0: Nat) { a.divides(Pair.new(k0, nat_base.mod(p.first)(p.second)).second) }","proof":["not a.divides(Pair.new(p.second, nat_base.mod(p.first, p.second)).second)"]}
-{"goal":"a.divides(nat_base.mod(p.first)(p.second))","proof":["let s0: Nat satisfy { a.divides(Pair.new(s0, nat_base.mod(p.first, p.second)).second) }","Pair.new(s0, nat_base.mod(p.first, p.second)).second = nat_base.mod(p.first, p.second)"]}
-{"goal":"a.divides(p.first)","proof":["not a.divides(nat_base.mod(p.first, p.second)) or not a.divides(p.second) or a.divides(p.first)"]}
+{"goal":"exists(k0: Nat) { a.divides(Pair.new(k0, nat_base.nat_mod(p.first)(p.second)).second) }","proof":["not a.divides(Pair.new(p.second, nat_base.nat_mod(p.first, p.second)).second)"]}
+{"goal":"a.divides(nat_base.nat_mod(p.first)(p.second))","proof":["let s0: Nat satisfy { a.divides(Pair.new(s0, nat_base.nat_mod(p.first, p.second)).second) }","Pair.new(s0, nat_base.nat_mod(p.first, p.second)).second = nat_base.nat_mod(p.first, p.second)"]}
+{"goal":"a.divides(p.first)","proof":["not a.divides(nat_base.nat_mod(p.first, p.second)) or not a.divides(p.second) or a.divides(p.first)"]}
 {"goal":"divides_both(a, p)","proof":["not a.divides(p.first) or not a.divides(p.second) or divides_both(a, p)"]}
 {"goal":"divides_both_unstep","proof":[]}
 {"goal":"divides_both(d, p)","proof":["0 != 0 or gcd_step_n(p, 0) = p","gcd_step_n(p, 0) = p"]}
@@ -155,12 +155,12 @@
 {"goal":"f(gcd_step_n(p, x.suc).first)","proof":[]}
 {"goal":"f(gcd_step_n(p, x.suc).second)","proof":[]}
 {"goal":"g(x.suc)","proof":["not f(gcd_step_n(p, x.suc).first) or not f(gcd_step_n(p, x.suc).second) or g(x.suc)"]}
-{"goal":"Pair.new(gcd_step_n(p, x).second, nat_base.mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second)) = gcd_step(gcd_step_n(p, x))","proof":["Pair.new(gcd_step_n(p, x).second, nat_base.mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)) = gcd_step(gcd_step_n(p, x)) or gcd_step_n(p, x).second = 0"]}
-{"goal":"gcd_step_n(p, x.suc).first = gcd_step_n(p, x).second","proof":["Pair.new(gcd_step_n(p, x).second, nat_base.mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)).first = gcd_step_n(p, x).second","gcd_step(gcd_step_n(p, x)).first != gcd_step_n(p, x).second"]}
-{"goal":"nat_base.mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second) = gcd_step(gcd_step_n(p, x)).second","proof":["Pair.new(gcd_step_n(p, x).second, nat_base.mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)).second = nat_base.mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)"]}
-{"goal":"gcd_step_n(p, x.suc).second = nat_base.mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second)","proof":["nat_base.mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second) != gcd_step(gcd_step_n(p, x)).second"]}
+{"goal":"Pair.new(gcd_step_n(p, x).second, nat_base.nat_mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second)) = gcd_step(gcd_step_n(p, x))","proof":["Pair.new(gcd_step_n(p, x).second, nat_base.nat_mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)) = gcd_step(gcd_step_n(p, x)) or gcd_step_n(p, x).second = 0"]}
+{"goal":"gcd_step_n(p, x.suc).first = gcd_step_n(p, x).second","proof":["Pair.new(gcd_step_n(p, x).second, nat_base.nat_mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)).first = gcd_step_n(p, x).second","gcd_step(gcd_step_n(p, x)).first != gcd_step_n(p, x).second"]}
+{"goal":"nat_base.nat_mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second) = gcd_step(gcd_step_n(p, x)).second","proof":["Pair.new(gcd_step_n(p, x).second, nat_base.nat_mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)).second = nat_base.nat_mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second)"]}
+{"goal":"gcd_step_n(p, x.suc).second = nat_base.nat_mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second)","proof":["nat_base.nat_mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second) != gcd_step(gcd_step_n(p, x)).second"]}
 {"goal":"f(gcd_step_n(p, x.suc).first)","proof":[]}
-{"goal":"f(nat_base.mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second))","proof":["not mod_maintains(f) or not f(gcd_step_n(p, x).first) or not f(gcd_step_n(p, x).second) or f(nat_base.mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second))"]}
+{"goal":"f(nat_base.nat_mod(gcd_step_n(p, x).first)(gcd_step_n(p, x).second))","proof":["not mod_maintains(f) or not f(gcd_step_n(p, x).first) or not f(gcd_step_n(p, x).second) or f(nat_base.nat_mod(gcd_step_n(p, x).first, gcd_step_n(p, x).second))"]}
 {"goal":"f(gcd_step_n(p, x.suc).second)","proof":[]}
 {"goal":"g(x.suc)","proof":["not f(gcd_step_n(p, x.suc).first) or not f(gcd_step_n(p, x.suc).second) or g(x.suc)"]}
 {"goal":"g(num_gcd_steps(p))","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not g(s0(g)) or g(s0(g).suc)","not g(num_gcd_steps(Pair.new(a, b)))","not g(s0(g).suc) or not g(0) or g(num_gcd_steps(p))","not g(s0(g).suc)","not g(0) or g(s0(g)) or g(num_gcd_steps(Pair.new(a, b)))","not g(s0(g))","g(s0(g))"]}
@@ -187,7 +187,7 @@
 {"goal":"m * a.gcd(b) = 0","proof":["m * a.gcd(b) = a.gcd(b) * m","a.gcd(b) * m != 0","a.gcd(b) * 0 != 0","0 != 0 or a.gcd(b) * 0 = 0"]}
 {"goal":"(m * a).gcd(m * b) = 0","proof":["(0 * b).gcd(0 * a) = (0 * a).gcd(0 * b)","(0 * b).gcd(0) = 0 * b","0 * a = 0","0 * b = 0"]}
 {"goal":"m * a.gcd(b) = (m * a).gcd(m * b)","proof":["(m * a).gcd(m * b) = m * a.gcd(b) or m = 0"]}
-{"goal":"gcd_mult_left","proof":["nat_base.mod(a.gcd(b) * m, m) = 0","m != 0 or nat_base.mod(a.gcd(b) * m, m) = a.gcd(b) * m","nat_base.mod(a.gcd(b) * m, m) = a.gcd(b) * m","m * a.gcd(b) = a.gcd(b) * m","(m * a).gcd(m * b) != a.gcd(b) * m","a.gcd(b) * m != 0"]}
+{"goal":"gcd_mult_left","proof":["nat_base.nat_mod(a.gcd(b) * m, m) = 0","m != 0 or nat_base.nat_mod(a.gcd(b) * m, m) = a.gcd(b) * m","nat_base.nat_mod(a.gcd(b) * m, m) = a.gcd(b) * m","m * a.gcd(b) = a.gcd(b) * m","(m * a).gcd(m * b) != a.gcd(b) * m","a.gcd(b) * m != 0"]}
 {"goal":"gcd_mult_right","proof":["(b * m).gcd(a * m) = (a * m).gcd(b * m)","m * a = a * m","m * a.gcd(b) = a.gcd(b) * m","m * b = b * m"]}
 {"goal":"af.gcd(bf).divides(af)","proof":["bf.gcd(af) = af.gcd(bf)","not bf.gcd(af).divides(af)","bf.gcd(af).divides(af)"]}
 {"goal":"(a.gcd(b) * af.gcd(bf)).divides(a)","proof":["not af.gcd(bf).divides(af) or (a.gcd(b) * af.gcd(bf)).divides(a.gcd(b) * af)","af * a.gcd(b) = a.gcd(b) * af","not (a.gcd(b) * af.gcd(bf)).divides(af * a.gcd(b))","(a.gcd(b) * af.gcd(bf)).divides(a.gcd(b) * af)"]}

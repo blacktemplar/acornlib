@@ -1111,7 +1111,7 @@ theorem sub_zero(a: Nat) { a - 0 = a }
 
 theorem add_imp_sub(a: Nat, b: Nat, c: Nat) { a + b = c implies c - b = a }
 
-let mod(a: Nat, m: Nat) -> r: Nat satisfy {
+let nat_mod(a: Nat, m: Nat) -> r: Nat satisfy {
     if m != 0 {
         r < m and exists(q: Nat) { q * m + r = a }
     } else {
@@ -1130,7 +1130,7 @@ let mod(a: Nat, m: Nat) -> r: Nat satisfy {
 
 attributes Nat {
     /// The remainder when dividing this number by m.
-    let mod = mod
+    let mod = nat_mod
 }
 
 theorem add_mod(a: Nat, m: Nat) {

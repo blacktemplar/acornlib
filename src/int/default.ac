@@ -639,7 +639,7 @@ theorem spans_negate(a: Int, b: Int, c: Int) { spans(a, b, c) implies spans(a, b
     spans(a, b, -(1) * c)
 }
 
-let mod = nat_base.mod
+let mod = nat_base.nat_mod
 
 theorem spans_nat_mod(a: Int, b: Int, k: Nat, m: Nat) {
     spans(a, b, Int.from_nat(k)) and spans(a, b, Int.from_nat(m)) implies spans(a, b, Int.from_nat(mod(k, m)))

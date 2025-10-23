@@ -529,23 +529,23 @@
 {"goal":"exists(k0: Nat, k1: Nat) { k1 < m and k0 * m + k1 = a }","proof":["let (s0: (Nat, Nat) -> Nat, s1: (Nat, Nat) -> Nat) satisfy { forall(x0: Nat, x1: Nat) { not 0 < x0 or s1(x1, x0) < x0 } and forall(x2: Nat, x3: Nat) { not 0 < x2 or s0(x3, x2) * x2 + s1(x3, x2) = x3 } }","s0(a, m) * m + s1(a, m) != a or not s1(a, m) < m","not 0 < m or s0(a, m) * m + s1(a, m) = a","not 0 < m or s1(a, m) < m","s1(a, m) < m","s0(a, m) * m + s1(a, m) = a"]}
 {"goal":"a = a","proof":[]}
 {"goal":"exists(k0: Nat) { if m != 0 { k0 < m and exists(k1: Nat) { k1 * m + k0 = a } } else { k0 = a } }","proof":["let (s0: Nat, s1: Nat) satisfy { s1 < m or 0 = m and (s0 * m + s1 = a or 0 = m) }","s0 * m + s1 != a or not s1 < m or 0 = m","a != a or 0 != m","0 != m"]}
-{"goal":"mod(a)(0) = a","proof":["0 != 0 or mod(a, 0) = a"]}
+{"goal":"nat_mod(a)(0) = a","proof":["0 != 0 or nat_mod(a, 0) = a"]}
 {"goal":"0 * 0 = 0","proof":["0 != 0 or 0 * 0 = 0"]}
-{"goal":"0 * 0 + mod(a)(0) = a","proof":["0 + mod(a, 0) != a","0 + a != a","0 + a = a"]}
-{"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not add_mod(x0, x1) or s0(x0, x1) * x1 + mod(x0, x1) = x0 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 * x3 + mod(x4, x3) != x4 or add_mod(x4, x3) } }","s0(a, m) * m + mod(a, m) != a","0 * 0 + mod(a, 0) != a or add_mod(a, 0)","not add_mod(a, m) or s0(a, m) * m + mod(a, m) = a","not add_mod(a, m)","add_mod(a, 0)","not add_mod(a, 0)"]}
-{"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or mod(x5, x4) = x5 } }","s0(a, m) * m + mod(a, m) != a","s0(a, m) * m + mod(a, m) = a or m = 0"]}
-{"goal":"add_mod","proof":["let s0: Nat satisfy { s0 * m + mod(a, m) = a }","s0 * m + mod(a, m) != a"]}
-{"goal":"mod_by_zero","proof":["0 != 0 or mod(a, 0) = a"]}
-{"goal":"mod(0)(m) = 0","proof":["mod(0, 0) != 0","0 != 0 or mod(0, 0) = 0"]}
-{"goal":"mod(0)(m) = 0","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or mod(x5, x4) = x5 } }","s0(0, m) * m + mod(0, m) = 0 or m = 0","s0(0, m) * m + mod(0, m) != 0 or mod(0, m) = 0","s0(0, m) * m + mod(0, m) != 0"]}
+{"goal":"0 * 0 + nat_mod(a)(0) = a","proof":["0 + nat_mod(a, 0) != a","0 + a != a","0 + a = a"]}
+{"goal":"exists(k0: Nat) { k0 * m + nat_mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not add_mod(x0, x1) or s0(x0, x1) * x1 + nat_mod(x0, x1) = x0 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 * x3 + nat_mod(x4, x3) != x4 or add_mod(x4, x3) } }","s0(a, m) * m + nat_mod(a, m) != a","0 * 0 + nat_mod(a, 0) != a or add_mod(a, 0)","not add_mod(a, m) or s0(a, m) * m + nat_mod(a, m) = a","not add_mod(a, m)","add_mod(a, 0)","not add_mod(a, 0)"]}
+{"goal":"exists(k0: Nat) { k0 * m + nat_mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { nat_mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + nat_mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or nat_mod(x5, x4) = x5 } }","s0(a, m) * m + nat_mod(a, m) != a","s0(a, m) * m + nat_mod(a, m) = a or m = 0"]}
+{"goal":"add_mod","proof":["let s0: Nat satisfy { s0 * m + nat_mod(a, m) = a }","s0 * m + nat_mod(a, m) != a"]}
+{"goal":"mod_by_zero","proof":["0 != 0 or nat_mod(a, 0) = a"]}
+{"goal":"nat_mod(0)(m) = 0","proof":["nat_mod(0, 0) != 0","0 != 0 or nat_mod(0, 0) = 0"]}
+{"goal":"nat_mod(0)(m) = 0","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { nat_mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + nat_mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or nat_mod(x5, x4) = x5 } }","s0(0, m) * m + nat_mod(0, m) = 0 or m = 0","s0(0, m) * m + nat_mod(0, m) != 0 or nat_mod(0, m) = 0","s0(0, m) * m + nat_mod(0, m) != 0"]}
 {"goal":"mod_of_zero","proof":[]}
-{"goal":"mod(a)(m) <= a","proof":["not mod(a, 0) <= a","a <= a or a < a","not a < a or not a < a","mod(a, 0) = a","not a <= a","a < a"]}
-{"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or mod(x5, x4) = x5 } }","s0(a, m) * m + mod(a, m) != a","s0(a, m) * m + mod(a, m) = a or 0 = m"]}
-{"goal":"mod(a)(m) + q * m = a","proof":["q * m + mod(a, m) = mod(a, m) + q * m"]}
-{"goal":"mod(a)(m) <= a","proof":["mod(a, m) + q * m != a or mod(a, m) <= a"]}
+{"goal":"nat_mod(a)(m) <= a","proof":["not nat_mod(a, 0) <= a","a <= a or a < a","not a < a or not a < a","nat_mod(a, 0) = a","not a <= a","a < a"]}
+{"goal":"exists(k0: Nat) { k0 * m + nat_mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { nat_mod(x0, x1) < x1 or 0 = x1 } and forall(x2: Nat, x3: Nat) { s0(x2, x3) * x3 + nat_mod(x2, x3) = x2 or 0 = x3 } and forall(x4: Nat, x5: Nat) { 0 != x4 or nat_mod(x5, x4) = x5 } }","s0(a, m) * m + nat_mod(a, m) != a","s0(a, m) * m + nat_mod(a, m) = a or m = 0"]}
+{"goal":"nat_mod(a)(m) + q * m = a","proof":["nat_mod(a, m) + q * m = q * m + nat_mod(a, m)"]}
+{"goal":"nat_mod(a)(m) <= a","proof":["nat_mod(a, m) + q * m != a or nat_mod(a, m) <= a"]}
 {"goal":"mod_lte","proof":[]}
-{"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + mod(x0, x1) = x0 } }","s0(a, m) * m + mod(a, m) != a","s0(a, m) * m + mod(a, m) = a"]}
-{"goal":"a - mod(a)(m) = q * m","proof":["q * m + mod(a, m) != a or a - mod(a, m) = q * m"]}
+{"goal":"exists(k0: Nat) { k0 * m + nat_mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + nat_mod(x0, x1) = x0 } }","s0(a, m) * m + nat_mod(a, m) != a","s0(a, m) * m + nat_mod(a, m) = a"]}
+{"goal":"a - nat_mod(a)(m) = q * m","proof":["q * m + nat_mod(a, m) != a or a - nat_mod(a, m) = q * m"]}
 {"goal":"m.divides(q * m)","proof":["q * m != m * q or m.divides(q * m)","q * m = m * q","q * m != m * q"]}
 {"goal":"div_sub_mod","proof":[]}
 {"goal":"a * (b - c) = a * b - a * c","proof":["0 - 0 = 0","0 * (b - c) = 0","0 * b = 0","0 * c = 0"]}
@@ -572,49 +572,49 @@
 {"goal":"d.divides((qa - qb) * d)","proof":["not d.divides(d) or d.divides(d * (qa - qb))","d * (qa - qb) = (qa - qb) * d","d.divides(d)","not d.divides(d * (qa - qb))"]}
 {"goal":"d.divides(a - b)","proof":[]}
 {"goal":"divides_sub","proof":[]}
-{"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + mod(x0, x1) = x0 } }","s0(a, m) * m + mod(a, m) != a","s0(a, m) * m + mod(a, m) = a"]}
-{"goal":"mod(a)(m) + q * m = a","proof":["mod(a, m) + q * m = q * m + mod(a, m)"]}
-{"goal":"mod(a)(m) = a - q * m","proof":["mod(a, m) + q * m != a or a - q * m = mod(a, m)"]}
+{"goal":"exists(k0: Nat) { k0 * m + nat_mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + nat_mod(x0, x1) = x0 } }","s0(a, m) * m + nat_mod(a, m) != a","s0(a, m) * m + nat_mod(a, m) = a"]}
+{"goal":"nat_mod(a)(m) + q * m = a","proof":["nat_mod(a, m) + q * m = q * m + nat_mod(a, m)"]}
+{"goal":"nat_mod(a)(m) = a - q * m","proof":["nat_mod(a, m) + q * m != a or a - q * m = nat_mod(a, m)"]}
 {"goal":"d.divides(q * m)","proof":["not d.divides(m) or d.divides(m * q)","q * m = m * q","not d.divides(m * q)"]}
 {"goal":"d.divides(a - q * m)","proof":["not d.divides(a) or not d.divides(q * m) or d.divides(a - q * m)"]}
-{"goal":"d.divides(mod(a)(m))","proof":[]}
+{"goal":"d.divides(nat_mod(a)(m))","proof":[]}
 {"goal":"divides_mod","proof":[]}
 {"goal":"m.divides(m)","proof":["m * 1 != m or m.divides(m)","m * 1 != m","m * 1 = m"]}
-{"goal":"m.divides(mod(a)(m))","proof":["not m.divides(a) or not m.divides(m) or m.divides(mod(a, m))"]}
-{"goal":"mod(a)(m) < m","proof":["mod(a, m) < m or 0 = m"]}
-{"goal":"not m <= mod(a)(m)","proof":["not mod(a, m) < m or not m <= mod(a, m)"]}
-{"goal":"mod(a)(m) = 0","proof":["not m.divides(mod(a, m)) or mod(a, m) = 0 or m <= mod(a, m)"]}
+{"goal":"m.divides(nat_mod(a)(m))","proof":["not m.divides(a) or not m.divides(m) or m.divides(nat_mod(a, m))"]}
+{"goal":"nat_mod(a)(m) < m","proof":["nat_mod(a, m) < m or m = 0"]}
+{"goal":"not m <= nat_mod(a)(m)","proof":["not m <= nat_mod(a, m) or not nat_mod(a, m) < m"]}
+{"goal":"nat_mod(a)(m) = 0","proof":["not m.divides(nat_mod(a, m)) or m <= nat_mod(a, m) or nat_mod(a, m) = 0"]}
 {"goal":"a = 0","proof":["not 0.divides(a) or 0 = a","0.divides(a)","not 0.divides(a)"]}
-{"goal":"mod(a)(m) = 0","proof":["mod(0, m) != 0","0 != m or mod(0, m) = 0"]}
-{"goal":"mod(a)(m) = 0","proof":[]}
+{"goal":"nat_mod(a)(m) = 0","proof":["nat_mod(0, m) != 0","nat_mod(0, 0) != 0","0 != 0 or nat_mod(0, 0) = 0"]}
+{"goal":"nat_mod(a)(m) = 0","proof":[]}
 {"goal":"div_imp_mod","proof":[]}
-{"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + mod(x0, x1) = x0 } }","s0(a, m) * m + mod(a, m) != a","s0(a, m) * m + mod(a, m) = a"]}
-{"goal":"0 + mod(a)(m) = a","proof":["0 * m = 0","0 * m + mod(a, m) = a"]}
-{"goal":"mod(a)(m) = a","proof":["mod(a, m) + 0 != a or mod(a, m) = a - 0","mod(a, m) + 0 = 0 + mod(a, m)","a - 0 = a","mod(a, m) != a - 0","mod(a, m) + 0 = a","mod(a, m) + 0 != a"]}
+{"goal":"exists(k0: Nat) { k0 * m + nat_mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + nat_mod(x0, x1) = x0 } }","s0(a, m) * m + nat_mod(a, m) != a","s0(a, m) * m + nat_mod(a, m) = a"]}
+{"goal":"0 + nat_mod(a)(m) = a","proof":["0 * m = 0","0 * m + nat_mod(a, m) = a"]}
+{"goal":"nat_mod(a)(m) = a","proof":["nat_mod(a, m) + 0 != a or nat_mod(a, m) = a - 0","nat_mod(a, m) + 0 = 0 + nat_mod(a, m)","a - 0 = a","nat_mod(a, m) != a - 0","nat_mod(a, m) + 0 = a","nat_mod(a, m) + 0 != a"]}
 {"goal":"m != 0","proof":["a < 0","not a < 0 or a <= 0","a <= 0","not a <= 0 or 0 = a","not a < 0 or 0 != a","0 = a","0 != a"]}
 {"goal":"q * m != 0","proof":["q * m != 0 or q = 0 or m = 0"]}
 {"goal":"m.divides(q * m)","proof":["q * m != m * q or m.divides(q * m)","q * m = m * q","q * m != m * q"]}
 {"goal":"m <= q * m","proof":["not m.divides(q * m) or m <= q * m or q * m = 0"]}
-{"goal":"m <= a","proof":["not m <= q * m or not q * m <= a or m <= a","q * m + mod(a, m) != a or q * m <= a","not m <= q * m or not q * m <= a","q * m <= a","not q * m <= a"]}
+{"goal":"m <= a","proof":["not m <= q * m or not q * m <= a or m <= a","q * m + nat_mod(a, m) != a or q * m <= a","not m <= q * m or not q * m <= a","q * m <= a","not q * m <= a"]}
 {"goal":"false","proof":["not a < m or not m <= a"]}
-{"goal":"mod(a)(m) = a","proof":[]}
+{"goal":"nat_mod(a)(m) = a","proof":[]}
 {"goal":"small_mod","proof":[]}
-{"goal":"mod(a)(m) < m","proof":["mod(a, m) < m or m = 0"]}
-{"goal":"mod(mod(a)(m))(m) = mod(a)(m)","proof":["not mod(a, m) < m or mod(mod(a, m), m) = mod(a, m)"]}
-{"goal":"mod_mod(a, m)","proof":["mod(mod(a, m), m) != mod(a, m) or mod_mod(a, m)"]}
-{"goal":"mod(mod(a)(m))(m) = mod(a)(m)","proof":["mod(mod(a, m), 0) != mod(a, m)","0 != 0 or mod(mod(a, m), 0) = mod(a, m)"]}
-{"goal":"mod_mod(a, m)","proof":["mod(mod(a, m), m) != mod(a, m) or mod_mod(a, m)"]}
-{"goal":"mod_mod","proof":["not mod_mod(a, m) or mod(mod(a, m), m) = mod(a, m)"]}
+{"goal":"nat_mod(a)(m) < m","proof":["nat_mod(a, m) < m or m = 0"]}
+{"goal":"nat_mod(nat_mod(a)(m))(m) = nat_mod(a)(m)","proof":["not nat_mod(a, m) < m or nat_mod(nat_mod(a, m), m) = nat_mod(a, m)"]}
+{"goal":"mod_mod(a, m)","proof":["nat_mod(nat_mod(a, m), m) != nat_mod(a, m) or mod_mod(a, m)"]}
+{"goal":"nat_mod(nat_mod(a)(m))(m) = nat_mod(a)(m)","proof":["nat_mod(nat_mod(a, m), 0) != nat_mod(a, m)","0 != 0 or nat_mod(nat_mod(a, m), 0) = nat_mod(a, m)"]}
+{"goal":"mod_mod(a, m)","proof":["nat_mod(nat_mod(a, m), m) != nat_mod(a, m) or mod_mod(a, m)"]}
+{"goal":"mod_mod","proof":["not mod_mod(a, m) or nat_mod(nat_mod(a, m), m) = nat_mod(a, m)"]}
 {"goal":"m.divides(q * m)","proof":["q * m != m * q or m.divides(q * m)","q * m = m * q","q * m != m * q"]}
-{"goal":"mod_mul","proof":["not m.divides(q * m) or mod(q * m, m) = 0"]}
+{"goal":"mod_mul","proof":["not m.divides(q * m) or nat_mod(q * m, m) = 0"]}
 {"goal":"divides_add_copy","proof":["not d.divides(a) or not d.divides(b) or d.divides(a + b)"]}
-{"goal":"exists(k0: Nat) { k0 * m + mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + mod(x0, x1) = x0 } }","s0(a, m) * m + mod(a, m) != a","s0(a, m) * m + mod(a, m) = a"]}
+{"goal":"exists(k0: Nat) { k0 * m + nat_mod(a)(m) = a }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { s0(x0, x1) * x1 + nat_mod(x0, x1) = x0 } }","s0(a, m) * m + nat_mod(a, m) != a","s0(a, m) * m + nat_mod(a, m) = a"]}
 {"goal":"m.divides(q * m)","proof":["q * m != m * q or m.divides(q * m)","q * m = m * q","q * m != m * q"]}
 {"goal":"d.divides(q * m)","proof":["not d.divides(m) or d.divides(m * q)","q * m = m * q","not d.divides(m * q)"]}
-{"goal":"d.divides(q * m + mod(a)(m))","proof":["not d.divides(q * m) or not d.divides(mod(a, m)) or d.divides(q * m + mod(a, m))"]}
+{"goal":"d.divides(q * m + nat_mod(a)(m))","proof":["not d.divides(q * m) or not d.divides(nat_mod(a, m)) or d.divides(q * m + nat_mod(a, m))"]}
 {"goal":"d.divides(a)","proof":["not d.divides(q * m + mod(a, m))"]}
 {"goal":"d.divides(m)","proof":[]}
-{"goal":"d.divides(mod(a)(m))","proof":[]}
+{"goal":"d.divides(nat_mod(a)(m))","proof":[]}
 {"goal":"false","proof":["not d.divides(a) or divides_unmod(d, a, m)"]}
 {"goal":"divides_unmod","proof":[]}
 {"goal":"not a * c < a * b","proof":["a * b < a * b","not a * b < a * b or not a * b < a * b"]}
@@ -654,7 +654,7 @@
 {"goal":"one_exp(0)","proof":["1.exp(0) != 1 or one_exp(0)","1.exp(0) != 1","0 != 0 or 1.exp(0) = 1"]}
 {"goal":"one_exp(n)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","1.exp(s0(one_exp).suc) != 1 or one_exp(s0(one_exp).suc)","not one_exp(s0(one_exp)) or 1.exp(s0(one_exp)) = 1","s0(one_exp).suc != s0(one_exp).suc or 1 * 1.exp(s0(one_exp)) = 1.exp(s0(one_exp).suc)","not one_exp(s0(one_exp).suc) or not one_exp(0) or one_exp(n)","not one_exp(s0(one_exp).suc)","not one_exp(0) or one_exp(s0(one_exp)) or one_exp(n)","one_exp(s0(one_exp))","1 * 1 = 1","1 * 1.exp(s0(one_exp)) = 1.exp(s0(one_exp).suc)","1.exp(s0(one_exp)) = 1","1.exp(s0(one_exp).suc) != 1"]}
 {"goal":"one_exp","proof":["not one_exp(n) or 1.exp(n) = 1"]}
-{"goal":"f(0)","proof":["1 <= a.exp(0) = f(0)","not 1 <= a.exp(0)","mod(1, 0) <= 1","a.exp(0) = 1","not 1 <= 1","mod(1, 0) = 1"]}
+{"goal":"f(0)","proof":["1 <= a.exp(0) = f(0)","not 1 <= a.exp(0)","nat_mod(1, 0) <= 1","a.exp(0) = 1","not 1 <= 1","nat_mod(1, 0) = 1"]}
 {"goal":"1 <= a.exp(x)","proof":["1 <= a.exp(x) = f(x)"]}
 {"goal":"a.exp(x) <= a.exp(x.suc)","proof":["x.suc != x.suc or a * a.exp(x) = a.exp(x.suc)","a.exp(x) <= a.exp(x) * a or a = 0","a * a.exp(x) = a.exp(x) * a","a.exp(x) <= a.exp(x) * a","a * a.exp(x) = a.exp(x.suc)","not a.exp(x) <= a * a.exp(x)"]}
 {"goal":"1 <= a.exp(x.suc)","proof":["not 1 <= a.exp(x) or not a.exp(x) <= a.exp(x.suc) or 1 <= a.exp(x.suc)","not a.exp(x) <= a.exp(x.suc) or not 1 <= a.exp(x)"]}
@@ -666,7 +666,7 @@
 {"goal":"1 <= a.exp(b_pred)","proof":["1 <= a.exp(b_pred) or a = 0","a = 0","1 < 0","not 1 < 0 or 1 <= 0","not 1 <= 0 or 1 = 0","not 1 < a or 1 != a","1 != a","1 != 0","1 <= 0","not 1 <= 0"]}
 {"goal":"exp_gt_one","proof":["not 1 < a or a.exp(b_pred) * a != a.exp(b) or a.exp(b_pred) < a.exp(b) or a.exp(b_pred) = 0","not 1 <= a.exp(b_pred) or not a.exp(b_pred) < a.exp(b) or 1 < a.exp(b)","not 1 <= 0 or 1 < 0 or 1 = 0","a * a.exp(b_pred) = a.exp(b_pred) * a","1 != 0 or b * 1 = 0","b * 1 = b","not 1 < 0","a.exp(b_pred) * a = a.exp(b)","not a.exp(b_pred) < a.exp(b) or not 1 <= a.exp(b_pred)","b * 1 != 0","not a.exp(b_pred) < a.exp(b)","a.exp(b_pred) = 0","1 <= 0","1 != 0","1 = 0"]}
 {"goal":"1 <= a.exp(b)","proof":["1 <= a.exp(b) or a = 0"]}
-{"goal":"exp_ne_zero","proof":["1 <= 0","a.exp(0) * a.exp(b) = a.exp(0 + b)","a.exp(b) != 0 or mod(a, a.exp(b)) = a","a.exp(b) != 0 or mod(b, a.exp(b)) = b","a * 1 = 1 * a","mod(a, a.exp(b)) = a","mod(b, a.exp(b)) = b","not 1 <= 0 or 1 = 0","1 = 0","a.exp(1) = a","mod(a, 0) - 0 = mod(a, 0)","mod(b, 0) - 0 = mod(b, 0)","1 * (a - 0) = a - 0","1 * (b - 0) = b - 0","0 + 1 * b = 1 * b"]}
+{"goal":"exp_ne_zero","proof":["1 <= 0","a.exp(0) * a.exp(b) = a.exp(0 + b)","a.exp(b) != 0 or nat_mod(a, a.exp(b)) = a","a.exp(b) != 0 or nat_mod(b, a.exp(b)) = b","a * 1 = 1 * a","nat_mod(a, a.exp(b)) = a","nat_mod(b, a.exp(b)) = b","not 1 <= 0 or 1 = 0","1 = 0","a.exp(1) = a","nat_mod(a, 0) - 0 = nat_mod(a, 0)","nat_mod(b, 0) - 0 = nat_mod(b, 0)","1 * (a - 0) = a - 0","1 * (b - 0) = b - 0","0 + 1 * b = 1 * b"]}
 {"goal":"exists(k0: Nat) { b + k0 = c }","proof":["let s0: (Nat, Nat) -> Nat satisfy { forall(x0: Nat, x1: Nat) { not x0 <= x1 or x0 + s0(x0, x1) = x1 } and forall(x2: Nat, x3: Nat, x4: Nat) { x2 + x3 != x4 or x2 <= x4 } }","b + s0(b, c) != c","not b <= c or b + s0(b, c) = c"]}
 {"goal":"a.exp(c) = a.exp(b) * a.exp(d)","proof":["a.exp(b) * a.exp(d) = a.exp(b + d)"]}
 {"goal":"a.exp(d) != 0","proof":["a.exp(d) != 0 or 0 = a"]}
