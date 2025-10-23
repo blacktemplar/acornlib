@@ -1,5 +1,6 @@
 from nat import Nat
 from int import Int
+from int.lattice import abs
 from rat.rat_base import Rat, reduce
 from order import LinearOrder
 
@@ -70,7 +71,7 @@ theorem lt_some_nat(a: Rat) {
     let i: Int satisfy {
         a < Rat.from_int(i)
     }
-    let n = int.abs(i)
+    let n = abs(i)
     i <= Int.from_nat(n)
     Rat.from_int(i) <= Rat.from_nat(n)
 }
@@ -346,7 +347,7 @@ theorem triangle_ineq(a: Rat, b: Rat) {
     a + b = reduce(an + bn, c)
     (a + b).abs = reduce((an + bn).abs, c.abs)
     (an + bn).abs <= an.abs + bn.abs
-    Int.from_nat(int.abs(c.abs)) = c.abs
+    Int.from_nat(abs(c.abs)) = c.abs
     not c.abs.is_negative
     reduce((an + bn).abs, c.abs) <= reduce(an.abs + bn.abs, c.abs)
     (a + b).abs <= reduce(an.abs + bn.abs, c.abs)

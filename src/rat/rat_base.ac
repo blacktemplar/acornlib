@@ -1,5 +1,6 @@
 from nat import Nat
 from int import Int
+from int.lattice import unit_sign, abs
 
 /// True if a fraction a/b is in reduced form (lowest terms).
 /// The denominator must be positive and gcd(a,b) must be 1.
@@ -112,14 +113,14 @@ let reduce(a: Int, b: Int) -> r: Rat satisfy {
         a1.gcd(b1) = Int.1
 
         // To reduce we also need to swap signs if the denominator is negative
-        let a2 = a1 * int.unit_sign(b1)
-        let b2 = b1 * int.unit_sign(b1)
-        b2 = Int.from_nat(int.abs(b1))
+        let a2 = a1 * unit_sign(b1)
+        let b2 = b1 * unit_sign(b1)
+        b2 = Int.from_nat(abs(b1))
         b2 != Int.0
-        (a1 * int.unit_sign(b1)) * b1 = (b1 * int.unit_sign(b1)) * a1
+        (a1 * unit_sign(b1)) * b1 = (b1 * unit_sign(b1)) * a1
         cross_equals(a2, b2, a1, b1)
-        a2.gcd(b2) = Int.1 * Int.from_nat(int.abs(int.unit_sign(b1)))
-        Int.from_nat(int.abs(int.unit_sign(b1))) = Int.1
+        a2.gcd(b2) = Int.1 * Int.from_nat(abs(unit_sign(b1)))
+        Int.from_nat(abs(unit_sign(b1))) = Int.1
         a2.gcd(b2) = Int.1
         b2 != Int.0
         b2 > Int.0
@@ -141,16 +142,16 @@ theorem cross_eq_imp_eq(r1: Rat, r2: Rat) {
     r1.num.gcd(r1.denom) = Int.1
     r1.denom.divides(r1.num * r2.denom)
     r1.denom.divides(r2.denom)
-    int.abs(r1.denom).divides(int.abs(r2.denom))
+    abs(r1.denom).divides(abs(r2.denom))
 
     // The r2 fields divide into the r1 ones
     r2.num.gcd(r2.denom) = Int.1
     r2.denom.divides(r2.num * r1.denom)
     r2.denom.divides(r1.denom)
-    int.abs(r2.denom).divides(int.abs(r1.denom))
+    abs(r2.denom).divides(abs(r1.denom))
 
     // Prove int equality from nat equality
-    int.abs(r1.denom) = int.abs(r2.denom)
+    abs(r1.denom) = abs(r2.denom)
     r1.denom.is_positive
     r2.denom.is_positive
     r1.denom = r2.denom

@@ -1,5 +1,6 @@
 from nat import Nat
 from int import Int
+from int.lattice import abs
 import rat.rat_base
 from rat import Rat
 
@@ -913,15 +914,15 @@ theorem floor_exists(a: Real) {
         let big: Int satisfy {
             a < Real.from_int(big)
         }
-        f(int.abs(m) + int.abs(big))
-        Real.from_int(m + Int.from_nat(int.abs(m) + int.abs(big))) <= a
-        Real.from_int(m + Int.from_nat(int.abs(m) + int.abs(big))) < Real.from_int(big)
-        m + Int.from_nat(int.abs(m) + int.abs(big)) < big
-        m + Int.from_nat(int.abs(m)) + Int.from_nat(int.abs(big)) < big
-        big <= Int.from_nat(int.abs(big))
-        -m <= Int.from_nat(int.abs(m))
-        Int.0 <= m + Int.from_nat(int.abs(m))
-        Int.0 + big <= m + Int.from_nat(int.abs(m)) + Int.from_nat(int.abs(big))
+        f(abs(m) + abs(big))
+        Real.from_int(m + Int.from_nat(abs(m) + abs(big))) <= a
+        Real.from_int(m + Int.from_nat(abs(m) + abs(big))) < Real.from_int(big)
+        m + Int.from_nat(abs(m) + abs(big)) < big
+        m + Int.from_nat(abs(m)) + Int.from_nat(abs(big)) < big
+        big <= Int.from_nat(abs(big))
+        -m <= Int.from_nat(abs(m))
+        Int.0 <= m + Int.from_nat(abs(m))
+        Int.0 + big <= m + Int.from_nat(abs(m)) + Int.from_nat(abs(big))
         false
     }
 }
@@ -1009,10 +1010,10 @@ theorem lt_add_pos_rat(a: Real, r: Rat) {
         }
 
         // Just add enough r's to get to an integer
-        f(int.abs(r.denom))
-        a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(int.abs(r.denom))))
+        f(abs(r.denom))
+        a = a + Real.from_rat(r * Rat.from_int(Int.from_nat(abs(r.denom))))
         r.denom.is_positive
-        Int.from_nat(int.abs(r.denom)) = r.denom
+        Int.from_nat(abs(r.denom)) = r.denom
         a = a + Real.from_rat(r * Rat.from_int(r.denom))
         a = a + Real.from_rat(Rat.from_int(r.num))
         r.num.is_positive
