@@ -724,7 +724,7 @@
 {"goal":"nat_lt_imp_rat_lt","proof":[]}
 {"goal":"Rat.from_nat(n) = Rat.0","proof":["Rat.from_int(Int.from_nat(Nat.0)) = Rat.from_nat(Nat.0)","Rat.new(Int.from_nat(Nat.0), Int.1) = Rat.from_int(Int.from_nat(Nat.0))","-Int.from_nat(n) = lib(int.int_base).neg_nat(n)","--Int.from_nat(Nat.0) = Int.from_nat(Nat.0)"]}
 {"goal":"Rat.0 <= Rat.from_nat(n)","proof":["Rat.from_nat(n) != Rat.0 or Rat.0 <= Rat.from_nat(n)"]}
-{"goal":"Nat.0 < n","proof":["nat_base.bounded_sub(Nat.0, n) + n = Nat.0 or Nat.0 < n","nat_base.bounded_sub(Nat.0, n) + n != Nat.0 or n = Nat.0","nat_base.bounded_sub(Nat.0, n) + n = Nat.0"]}
+{"goal":"Nat.0 < n","proof":["lib(nat.nat_base).bounded_sub(Nat.0, n) + n = Nat.0 or Nat.0 < n","lib(nat.nat_base).bounded_sub(Nat.0, n) + n != Nat.0 or n = Nat.0","lib(nat.nat_base).bounded_sub(Nat.0, n) + n = Nat.0"]}
 {"goal":"Rat.from_nat(Nat.0) < Rat.from_nat(n)","proof":["not Nat.0 < n or Rat.from_nat(Nat.0) < Rat.from_nat(n)"]}
 {"goal":"Rat.0 < Rat.from_nat(n)","proof":["Rat.from_nat(n) > Rat.0 = Rat.0 < Rat.from_nat(n)","Rat.from_nat(n) > Rat.from_nat(Nat.0) = Rat.from_nat(Nat.0) < Rat.from_nat(n)","Rat.from_int(Int.from_nat(Nat.0)) = Rat.from_nat(Nat.0)","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)"]}
 {"goal":"Rat.0 <= Rat.from_nat(n)","proof":["not Rat.0 < Rat.from_nat(n) or Rat.0 <= Rat.from_nat(n)"]}
