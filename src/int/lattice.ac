@@ -1,6 +1,5 @@
-import nat.nat_base
-import nat.nat_gcd
 from nat import Nat
+from nat.nat_gcd import mod_maintains
 from int.int_base import Int, abs, abs_neg, abs_zero, neg_neg, neg_sub, nonzero_pos_or_neg, sub_eq_zero, sub_nat
 
 numerals Int
@@ -642,7 +641,7 @@ theorem spans_negate(a: Int, b: Int, c: Int) { spans(a, b, c) implies spans(a, b
     spans(a, b, -(1) * c)
 }
 
-let mod = nat_base.nat_mod
+let mod = Nat.mod
 
 theorem spans_nat_mod(a: Int, b: Int, k: Nat, m: Nat) {
     spans(a, b, Int.from_nat(k)) and spans(a, b, Int.from_nat(m)) implies spans(a, b, Int.from_nat(mod(k, m)))
@@ -668,7 +667,7 @@ theorem spans_gcd(a: Int, b: Int) { spans(a, b, a.gcd(b)) } by {
             f(mod(m, n))
         }
     }
-    nat_gcd.mod_maintains(f)
+    mod_maintains(f)
     f(abs(a))
     f(abs(b))
     spans(a, b, Int.from_nat(abs(a).gcd(abs(b))))
