@@ -259,6 +259,18 @@ theorem lt_add_left(a: Int, b: Int, c: Int) { b < c implies a + b < a + c } by {
 
 theorem lte_add_left(a: Int, b: Int, c: Int) { b <= c implies a + b <= a + c }
 
+theorem lte_nonnegative_ints_implies_nats(n: Nat, m: Nat) {
+    Int.from_nat(n) <= Int.from_nat(m) implies n <= m
+} by {
+    if Int.from_nat(n) = Int.from_nat(m) {
+        n = m
+    } else {
+        Int.from_nat(n) < Int.from_nat(m)
+        (Int.from_nat(m) - Int.from_nat(n)).is_positive
+        Int.from_nat(m) - Int.from_nat(n) = sub_nat(m, n)
+    }
+}
+
 theorem abs_add_nonneg(a: Int, b: Int) {
     not a.is_negative and not b.is_negative implies abs(a + b) = abs(a) + abs(b)
 } by {
