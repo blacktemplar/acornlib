@@ -222,7 +222,7 @@ define image(a: Nat -> Real, x: Real) -> Bool {
 
 theorem ub_imp_image_ub(a: Nat -> Real, b: Real) {
     is_upper_bound(a, b)
-    implies real_set.is_upper_bound(image(a), b)
+    implies b.is_set_upper_bound(image(a))
 }
 
 // If there's an upper bound, there's a least upper bound.
@@ -231,15 +231,15 @@ theorem ub_imp_lub(a: Nat -> Real, b: Real) {
         is_least_upper_bound(a, c)
     }
 } by {
-    real_set.is_upper_bound(image(a), b)
+    b.is_set_upper_bound(image(a))
     let c: Real satisfy {
-        real_set.is_least_upper_bound(image(a), c)
+        c.is_set_least_upper_bound(image(a))
     }
     is_upper_bound(a, c)
     forall(x: Real) {
         if x < c {
             if is_upper_bound(a, x) {
-                real_set.is_upper_bound(image(a), x)
+                x.is_set_upper_bound(image(a))
                 false
             }
         }

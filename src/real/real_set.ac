@@ -6,33 +6,34 @@ from real.real_ring import Real, converges, converges_to, limit
 // This file proves theorems about sets of real numbers.
 
 attributes Real {
-    // Placeholder to let other modules import Real from here.
-}
-
-// Not strict.
-define is_upper_bound(s: Real -> Bool, x: Real) -> Bool {
-    forall(y: Real) {
-        s(y) implies y <= x
+    /// True if this real number is an upper bound for the set s.
+    define is_set_upper_bound(self, s: Real -> Bool) -> Bool {
+        forall(y: Real) {
+            s(y) implies y <= self
+        }
     }
-}
 
-define is_lower_bound(s: Real -> Bool, x: Real) -> Bool {
-    forall(y: Real) {
-        s(y) implies x <= y
+    /// True if this real number is a lower bound for the set s.
+    define is_set_lower_bound(self, s: Real -> Bool) -> Bool {
+        forall(y: Real) {
+            s(y) implies self <= y
+        }
     }
-}
 
-define is_least_upper_bound(s: Real -> Bool, x: Real) -> Bool {
-    is_upper_bound(s, x) and
-    forall(y: Real) {
-        is_upper_bound(s, y) implies x <= y
+    /// True if this real number is the least upper bound (supremum) for the set s.
+    define is_set_least_upper_bound(self, s: Real -> Bool) -> Bool {
+        self.is_set_upper_bound(s) and
+        forall(y: Real) {
+            y.is_set_upper_bound(s) implies self <= y
+        }
     }
-}
 
-define is_greatest_lower_bound(s: Real -> Bool, x: Real) -> Bool {
-    is_lower_bound(s, x) and
-    forall(y: Real) {
-        is_lower_bound(s, y) implies y <= x
+    /// True if this real number is the greatest lower bound (infimum) for the set s.
+    define is_set_greatest_lower_bound(self, s: Real -> Bool) -> Bool {
+        self.is_set_lower_bound(s) and
+        forall(y: Real) {
+            y.is_set_lower_bound(s) implies y <= self
+        }
     }
 }
 
@@ -47,29 +48,29 @@ define is_nonempty(s: Real -> Bool) -> Bool {
 // sup_cut is the Dedekind cut that will be the supremum of s.
 // First we define it, then we prove that it is a Dedekind cut.
 define sup_cut(s: Real -> Bool, r: Rat) -> Bool {
-    not is_upper_bound(s, Real.from_rat(r))
-} 
+    not Real.from_rat(r).is_set_upper_bound(s)
+}
 
 theorem sup_cut_is_cut(s: Real -> Bool, ub: Real) {
-    is_nonempty(s) and is_upper_bound(s, ub)
+    is_nonempty(s) and ub.is_set_upper_bound(s)
     implies
     is_cut(sup_cut(s))
 } by {
     let x: Real satisfy {
         s(x)
     }
-    
+
     let r1: Rat satisfy {
         Real.from_rat(r1) < x
     }
-    
-    not is_upper_bound(s, Real.from_rat(r1))
+
+    not Real.from_rat(r1).is_set_upper_bound(s)
     sup_cut(s, r1)
-    
+
     let r2: Rat satisfy {
         Real.from_rat(r2) > ub
     }
-    
+
     // Show that r2 is an upper bound of s
     forall(y: Real) {
         if s(y) {
@@ -79,30 +80,30 @@ theorem sup_cut_is_cut(s: Real -> Bool, ub: Real) {
             y <= Real.from_rat(r2)
         }
     }
-    is_upper_bound(s, Real.from_rat(r2))
+    Real.from_rat(r2).is_set_upper_bound(s)
     not sup_cut(s, r2)
 }
 
 theorem sup_cut_is_lower(s: Real -> Bool, ub: Real) {
-    is_nonempty(s) and is_upper_bound(s, ub)
+    is_nonempty(s) and ub.is_set_upper_bound(s)
     implies
     is_lower(sup_cut(s))
 } by {
     forall(x: Rat, y: Rat) {
         if sup_cut(s, y) and x < y {
-            not is_upper_bound(s, Real.from_rat(y))
+            not Real.from_rat(y).is_set_upper_bound(s)
             let z: Real satisfy {
                 s(z) and z > Real.from_rat(y)
-            }      
-            z > Real.from_rat(x)            
-            not is_upper_bound(s, Real.from_rat(x))
+            }
+            z > Real.from_rat(x)
+            not Real.from_rat(x).is_set_upper_bound(s)
             sup_cut(s, x)
         }
     }
 }
  
 theorem sup_cut_not_has_greatest(s: Real -> Bool, ub: Real) {
-    is_nonempty(s) and is_upper_bound(s, ub)
+    is_nonempty(s) and ub.is_set_upper_bound(s)
     implies
     not has_greatest(sup_cut(s))
 } by {
@@ -110,25 +111,25 @@ theorem sup_cut_not_has_greatest(s: Real -> Bool, ub: Real) {
         let q: Rat satisfy {
             is_greatest(sup_cut(s), q)
         }
-        
+
         sup_cut(s, q)
-        not is_upper_bound(s, Real.from_rat(q))
+        not Real.from_rat(q).is_set_upper_bound(s)
         let z: Real satisfy {
             s(z) and z > Real.from_rat(q)
         }
-        
+
         Real.from_rat(q) < z
         let q_prime: Rat satisfy {
             q < q_prime and Real.from_rat(q_prime) < z
         }
-        
+
         // Since Real.from_rat(q_prime) < z and z is in s,
         // Real.from_rat(q_prime) is not an upper bound for s
-        not is_upper_bound(s, Real.from_rat(q_prime))
-        
+        not Real.from_rat(q_prime).is_set_upper_bound(s)
+
         // Therefore q_prime is in the cut
         sup_cut(s, q_prime)
-        
+
         // But q < q_prime, contradicting our assumption
         not q_prime <= q
         not is_greatest(sup_cut(s), q)
@@ -137,20 +138,20 @@ theorem sup_cut_not_has_greatest(s: Real -> Bool, ub: Real) {
 }
 
 theorem sup_cut_is_dedekind_cut(s: Real -> Bool, ub: Real) {
-    is_nonempty(s) and is_upper_bound(s, ub)
+    is_nonempty(s) and ub.is_set_upper_bound(s)
     implies
     is_dedekind_cut(sup_cut(s))
 }
 
 theorem ub_imp_lub(s: Real -> Bool, x: Real) {
-    is_nonempty(s) and is_upper_bound(s, x)
+    is_nonempty(s) and x.is_set_upper_bound(s)
     implies exists(y: Real) {
-        is_least_upper_bound(s, y)
+        y.is_set_least_upper_bound(s)
     }
 } by {
     is_dedekind_cut(sup_cut(s))
     let y = Real.new(sup_cut(s))
-    
+
     // Part 1: Show y is an upper bound of s
     forall(z: Real) {
         if s(z) {
@@ -159,24 +160,24 @@ theorem ub_imp_lub(s: Real -> Bool, x: Real) {
                     z > Real.from_rat(q) and Real.from_rat(q) > y
                 }
                 not sup_cut(s, q)
-                is_upper_bound(s, Real.from_rat(q))
+                Real.from_rat(q).is_set_upper_bound(s)
                 z <= Real.from_rat(q)
                 false
             }
         }
     }
-    is_upper_bound(s, y)
-    
+    y.is_set_upper_bound(s)
+
     // Part 2: Show y is the least upper bound
     forall(w: Real) {
-        if is_upper_bound(s, w) {
+        if w.is_set_upper_bound(s) {
             // We'll prove y <= w by contradiction
             if y > w {
                 let q: Rat satisfy {
                     y > Real.from_rat(q) and Real.from_rat(q) > w
                 }
                 sup_cut(s, q)
-                not is_upper_bound(s, Real.from_rat(q))
+                not Real.from_rat(q).is_set_upper_bound(s)
                 let z: Real satisfy {
                     s(z) and z > Real.from_rat(q)
                 }
@@ -184,10 +185,10 @@ theorem ub_imp_lub(s: Real -> Bool, x: Real) {
                 Real.from_rat(q) > w
                 z > Real.from_rat(q)
                 z > w
-                false 
+                false
             }
         }
-    }    
+    }
 }
 
 define flip(f: Real -> Bool, x: Real) -> Bool {
@@ -206,7 +207,7 @@ theorem flip_flip(f: Real -> Bool) {
 }
 
 theorem lb_imp_flip_ub(f: Real -> Bool, x: Real) {
-    is_lower_bound(f, x) implies is_upper_bound(flip(f), -x)
+    x.is_set_lower_bound(f) implies (-x).is_set_upper_bound(flip(f))
 } by {
     forall(y: Real) {
         if flip(f, y) {
@@ -229,7 +230,7 @@ theorem neg_lte(a: Real, b: Real) {
 }
 
 theorem ub_imp_flip_lb(f: Real -> Bool, x: Real) {
-    is_upper_bound(f, x) implies is_lower_bound(flip(f), -x)
+    x.is_set_upper_bound(f) implies (-x).is_set_lower_bound(flip(f))
 } by {
     forall(y: Real) {
         if flip(f, y) {
@@ -241,34 +242,34 @@ theorem ub_imp_flip_lb(f: Real -> Bool, x: Real) {
 }
 
 theorem glb_imp_flip_lub(f: Real -> Bool, x: Real) {
-    is_greatest_lower_bound(f, x)
-    implies is_least_upper_bound(flip(f), -x)
+    x.is_set_greatest_lower_bound(f)
+    implies (-x).is_set_least_upper_bound(flip(f))
 } by {
-    is_lower_bound(f, x)
-    is_upper_bound(flip(f), -x)
-    
+    x.is_set_lower_bound(f)
+    (-x).is_set_upper_bound(flip(f))
+
     forall(y: Real) {
-        if is_upper_bound(flip(f), y) {
-            is_lower_bound(flip(flip(f)), -y)
-            is_lower_bound(f, -y)
+        if y.is_set_upper_bound(flip(f)) {
+            (-y).is_set_lower_bound(flip(flip(f)))
+            (-y).is_set_lower_bound(f)
             -y <= x
             -x <= y
         }
     }
-    is_least_upper_bound(flip(f), -x)
+    (-x).is_set_least_upper_bound(flip(f))
 }
 
 theorem lub_imp_flip_glb(f: Real -> Bool, x: Real) {
-    is_least_upper_bound(f, x)
-    implies is_greatest_lower_bound(flip(f), -x)
+    x.is_set_least_upper_bound(f)
+    implies (-x).is_set_greatest_lower_bound(flip(f))
 } by {
-    is_upper_bound(f, x)
-    is_lower_bound(flip(f), -x)
-    
+    x.is_set_upper_bound(f)
+    (-x).is_set_lower_bound(flip(f))
+
     forall(y: Real) {
-        if is_lower_bound(flip(f), y) {
-            is_upper_bound(flip(flip(f)), -y)
-            is_upper_bound(f, -y)
+        if y.is_set_lower_bound(flip(f)) {
+            (-y).is_set_upper_bound(flip(flip(f)))
+            (-y).is_set_upper_bound(f)
             x <= -y
             y <= -x
         }
@@ -276,17 +277,17 @@ theorem lub_imp_flip_glb(f: Real -> Bool, x: Real) {
 }
 
 theorem lb_imp_glb(s: Real -> Bool, x: Real) {
-    is_nonempty(s) and is_lower_bound(s, x)
+    is_nonempty(s) and x.is_set_lower_bound(s)
     implies exists(y: Real) {
-        is_greatest_lower_bound(s, y)
+        y.is_set_greatest_lower_bound(s)
     }
 } by {
     is_nonempty(flip(s))
-    is_upper_bound(flip(s), -x)
+    (-x).is_set_upper_bound(flip(s))
     let y: Real satisfy {
-        is_least_upper_bound(flip(s), y)
+        y.is_set_least_upper_bound(flip(s))
     }
-    is_greatest_lower_bound(flip(flip(s)), -y)
+    (-y).is_set_greatest_lower_bound(flip(flip(s)))
     flip(flip(s)) = s
-    is_greatest_lower_bound(s, -y)
+    (-y).is_set_greatest_lower_bound(s)
 }
