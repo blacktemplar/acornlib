@@ -2,9 +2,9 @@ from util import constant, compose
 from nat import Nat
 from rat import Rat
 from list import partial, sum, map, List
-import real.real_set
+from real.real_set import Real
 from real.real_seq import cauchy_bound, tail_bound, add_seq, neg_rat_seq
-from real.real_ring import Real, converges, converges_to, limit, lift_seq
+from real.real_ring import converges, converges_to, limit, lift_seq
 
 numerals Real
 
