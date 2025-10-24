@@ -1,6 +1,6 @@
 /// This file defines Cauchy sequences and proves various things about them.
 from nat import Nat
-from rat import Rat
+from rat import Rat, iop
 from util import compose
 from real.real_base import Real, is_cut, is_lower, is_greatest, has_greatest, is_dedekind_cut
 
@@ -711,11 +711,11 @@ let rat_approx(x: Real, eps: Rat) -> r: Rat satisfy {
 // A sequence of rationals that approximates a real number.
 // Chosen to be easy to calculate with.
 define rat_seq(x: Real, n: Nat) -> Rat {
-    rat_approx(x, rat.iop(n))
+    rat_approx(x, iop(n))
 }
 
 theorem rat_seq_is_close(x: Real, n: Nat) {
-    x.is_close(Real.from_rat(rat_seq(x, n)), Real.from_rat(rat.iop(n)))
+    x.is_close(Real.from_rat(rat_seq(x, n)), Real.from_rat(iop(n)))
 }
 
 theorem abs_lt_imp_close_to_zero(x: Real, eps: Real) {
@@ -734,7 +734,7 @@ theorem abs_lt_imp_close_to_zero(x: Real, eps: Real) {
 }
 
 theorem iop_limit {
-    converges_to(lift_seq(rat.iop), Real.0)
+    converges_to(lift_seq(iop), Real.0)
 } by {
     forall(eps: Real) {
         if eps.is_positive {
@@ -744,21 +744,21 @@ theorem iop_limit {
             }
             let n: Nat satisfy {
                 forall(i: Nat) {
-                    n <= i implies rat.iop(i) < reps
+                    n <= i implies iop(i) < reps
                 }
             }
 
             forall(i: Nat) {
                 if n <= i {
-                    rat.iop(i) < reps
-                    rat.iop(i).is_positive
-                    Real.from_rat(rat.iop(i)).is_positive
-                    Real.from_rat(rat.iop(i)).abs = Real.from_rat(rat.iop(i))
-                    Real.from_rat(rat.iop(i)) < eps
-                    Real.from_rat(rat.iop(i)).abs < eps
-                    lift_seq(rat.iop)(i) = Real.from_rat(rat.iop(i))
-                    lift_seq(rat.iop)(i).abs < eps
-                    lift_seq(rat.iop)(i).is_close(Real.0, eps)
+                    iop(i) < reps
+                    iop(i).is_positive
+                    Real.from_rat(iop(i)).is_positive
+                    Real.from_rat(iop(i)).abs = Real.from_rat(iop(i))
+                    Real.from_rat(iop(i)) < eps
+                    Real.from_rat(iop(i)).abs < eps
+                    lift_seq(iop)(i) = Real.from_rat(iop(i))
+                    lift_seq(iop)(i).abs < eps
+                    lift_seq(iop)(i).is_close(Real.0, eps)
                 }
             }
         }
@@ -842,7 +842,7 @@ theorem limit_add_seq(a: Nat -> Real, b: Nat -> Real) {
 }
 
 theorem lift_rat_seq_close(x: Real, n: Nat) {
-    lift_seq(rat_seq(x))(n).is_close(x, Real.from_rat(rat.iop(n)))
+    lift_seq(rat_seq(x))(n).is_close(x, Real.from_rat(iop(n)))
 }
 
 theorem rat_seq_converges_to(x: Real) {
@@ -856,14 +856,14 @@ theorem rat_seq_converges_to(x: Real) {
             }
             let n: Nat satisfy {
                 forall(i: Nat) {
-                    n <= i implies rat.iop(i) < reps
+                    n <= i implies iop(i) < reps
                 }
             }
 
             forall(i: Nat) {
                 if n <= i {
-                    lift_seq(rat_seq(x))(i).is_close(x, Real.from_rat(rat.iop(i)))
-                    Real.from_rat(rat.iop(i)) < eps
+                    lift_seq(rat_seq(x))(i).is_close(x, Real.from_rat(iop(i)))
+                    Real.from_rat(iop(i)) < eps
                     (Real.from_rat(rat_seq(x, i)) - x).abs < eps
                     lift_seq(rat_seq(x))(i).is_close(x, eps)
                 }
