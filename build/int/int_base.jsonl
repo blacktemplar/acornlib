@@ -10,7 +10,7 @@
 {"goal":"exists(k0: Nat) { neg_nat(n) = Int.neg_suc(k0) and abs(neg_nat(n)) = k0.suc }","proof":["(n - Nat.1).suc != abs(neg_nat(n)) or Int.neg_suc(n - Nat.1) != neg_nat(n)","Int.neg_suc(n - Nat.1) != neg_nat(n) or (n - Nat.1).suc = abs(neg_nat(n))","(n - Nat.1).suc != abs(neg_nat(n))","(n - Nat.1).suc = abs(neg_nat(n))"]}
 {"goal":"neg_nat(n) = Int.neg_suc(n - Nat.1)","proof":[]}
 {"goal":"k = n - Nat.1","proof":["Int.neg_suc(n - Nat.1) = Int.neg_suc(k)","Int.neg_suc(n - Nat.1) != Int.neg_suc(k) or n - Nat.1 = k"]}
-{"goal":"n = (n - Nat.1).suc","proof":["nat_base.bounded_sub(n, Nat.1) + Nat.1 = n or n < Nat.1","not n < Nat.0.suc or n < Nat.0 or Nat.0 = n","n - Nat.1 = nat_base.bounded_sub(n, Nat.1)","n - Nat.1 + Nat.1 = (n - Nat.1).suc","n - Nat.1 + Nat.1 != n","not n < Nat.0","nat_base.bounded_sub(n, Nat.1) + Nat.1 != n","not n < Nat.0.suc","n < Nat.1","not n < Nat.1"]}
+{"goal":"n = (n - Nat.1).suc","proof":["lib(nat.nat_base).bounded_sub(n, Nat.1) + Nat.1 = n or n < Nat.1","not n < Nat.0.suc or n < Nat.0 or n = Nat.0","n - Nat.1 = lib(nat.nat_base).bounded_sub(n, Nat.1)","n - Nat.1 + Nat.1 = (n - Nat.1).suc","n - Nat.1 + Nat.1 != n","not n < Nat.0","lib(nat.nat_base).bounded_sub(n, Nat.1) + Nat.1 != n","not n < Nat.0.suc","n < Nat.1","not n < Nat.1"]}
 {"goal":"k.suc = n","proof":["(n - Nat.1).suc != n"]}
 {"goal":"abs(neg_nat(n)) = n","proof":["abs(neg_nat(n)) != k.suc"]}
 {"goal":"abs_neg_nat","proof":[]}

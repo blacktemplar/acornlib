@@ -1,5 +1,3 @@
-import nat.nat_base
-import nat.nat_gcd
 from nat import Nat
 
 /// The `Int` type represents integers.
