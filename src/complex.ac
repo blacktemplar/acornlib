@@ -503,6 +503,14 @@ from ring import Ring
 
 instance Complex: Ring
 
+from comm_semigroup import CommSemigroup
+
+instance Complex: CommSemigroup
+
+from comm_monoid import CommMonoid
+
+instance Complex: CommMonoid
+
 from comm_ring import CommRing
 
 instance Complex: CommRing

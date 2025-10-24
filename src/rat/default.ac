@@ -605,6 +605,14 @@ from ring import Ring
 
 instance Rat: Ring
 
+from comm_semigroup import CommSemigroup
+
+instance Rat: CommSemigroup
+
+from comm_monoid import CommMonoid
+
+instance Rat: CommMonoid
+
 from comm_ring import CommRing
 
 instance Rat: CommRing

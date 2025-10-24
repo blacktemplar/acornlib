@@ -500,6 +500,14 @@ from ring import Ring
 
 instance Real: Ring
 
+from comm_semigroup import CommSemigroup
+
+instance Real: CommSemigroup
+
+from comm_monoid import CommMonoid
+
+instance Real: CommMonoid
+
 from comm_ring import CommRing
 
 instance Real: CommRing
