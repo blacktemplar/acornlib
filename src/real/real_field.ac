@@ -1,6 +1,7 @@
 from list import partial
 from nat import Nat
 from rat import Rat
+from monoid import Monoid
 from real.real_seq import cauchy_bound, tail_bound, neg_rat_seq, eventual_eq
 from real.real_ring import lift_seq, converges, converges_to, limit, eventual_lb, limit_rat, rat_seq, mul_rat_seq
 from real.real_series import Real, neg_seq
@@ -270,11 +271,11 @@ theorem mul_left_cancel(a: Real, b: Real, c: Real) {
 
 theorem geom_series(r: Real) {
     r.abs < 1 implies
-    limit(partial(r.pow)) = 1 / (1 - r)
+    limit(partial(Monoid.pow(r))) = 1 / (1 - r)
 } by {
-    1 + r * limit(partial(r.pow)) = limit(partial(r.pow))
-    1 = limit(partial(r.pow)) - r * limit(partial(r.pow))
-    1 = (1 - r) * limit(partial(r.pow))
+    1 + r * limit(partial(Monoid.pow(r))) = limit(partial(Monoid.pow(r)))
+    1 = limit(partial(Monoid.pow(r))) - r * limit(partial(Monoid.pow(r)))
+    1 = (1 - r) * limit(partial(Monoid.pow(r)))
     (1 - r) != Real.0
-    limit(partial(r.pow)) = 1 / (1 - r)
+    limit(partial(Monoid.pow(r))) = 1 / (1 - r)
 }
