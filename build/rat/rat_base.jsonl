@@ -518,14 +518,14 @@
 {"goal":"Rat.1 * a.reciprocal.reciprocal = a","proof":["Rat.1 / a.reciprocal = a","Rat.1 * a.reciprocal.reciprocal = Rat.1 / a.reciprocal"]}
 {"goal":"reciprocal_inverts","proof":["Rat.1 * a.reciprocal.reciprocal = a.reciprocal.reciprocal"]}
 {"goal":"a.reciprocal.is_positive","proof":["not a.is_positive or a.reciprocal.is_positive"]}
-{"goal":"exists(k0: Int) { a.reciprocal < Rat.from_int(k0) }","proof":["not a.reciprocal < Rat.from_int(floor(a.reciprocal) + Int.1)","a.reciprocal < Rat.from_int(floor(a.reciprocal) + Int.1)"]}
+{"goal":"exists(k0: Int) { a.reciprocal < Rat.from_int(k0) }","proof":["not a.reciprocal < Rat.from_int(floor_impl(a.reciprocal) + Int.1)","a.reciprocal < Rat.from_int(floor_impl(a.reciprocal) + Int.1)"]}
 {"goal":"Rat.from_int(n).reciprocal < a.reciprocal.reciprocal","proof":["not a.reciprocal < Rat.from_int(n) or not a.reciprocal.is_positive or Rat.from_int(n).reciprocal < a.reciprocal.reciprocal"]}
 {"goal":"a.reciprocal.reciprocal = a","proof":["a.reciprocal.reciprocal = a or Rat.0 = a","Rat.0 = a","a.num.is_positive = a.is_positive","Rat.new(Int.0, Int.1) = Rat.from_int(Int.0)","Rat.from_int(Int.0).num = Int.0"]}
 {"goal":"Rat.from_int(n).is_positive","proof":["not a.reciprocal <= Rat.from_int(n) or not a.reciprocal.is_positive or Rat.from_int(n).is_positive","not a.reciprocal < Rat.from_int(n) or a.reciprocal <= Rat.from_int(n)","not a.reciprocal <= Rat.from_int(n) or not a.reciprocal.is_positive","a.reciprocal <= Rat.from_int(n)","not a.reciprocal <= Rat.from_int(n)"]}
 {"goal":"n.is_positive","proof":["-Int.from_nat(lib(int.int_base).abs(n)) = n or n.is_positive","-Int.from_nat(lib(int.int_base).abs(n)) = n","Rat.from_int(n).num.is_positive = Rat.from_int(n).is_positive","Rat.from_int(-Int.from_nat(lib(int.int_base).abs(n))).num = -Int.from_nat(lib(int.int_base).abs(n))"]}
 {"goal":"smaller_int_reciprocal","proof":["not Rat.from_int(n).reciprocal < a or not n.is_positive","not Rat.from_int(n).reciprocal < a","Rat.from_int(n).reciprocal < a"]}
-{"goal":"a >= Rat.from_int(floor(a))","proof":["Rat.from_int(floor(a)) <= a = a >= Rat.from_int(floor(a))","not Rat.from_int(floor(a)) <= a","Rat.from_int(floor(a)) <= a"]}
-{"goal":"gte_some_int","proof":["not a >= Rat.from_int(floor(a))"]}
+{"goal":"a >= Rat.from_int(a.floor)","proof":["Rat.from_int(a.floor) <= a = a >= Rat.from_int(a.floor)","not Rat.from_int(a.floor) <= a","Rat.from_int(floor_impl(a)) <= a","a.floor = floor_impl(a)"]}
+{"goal":"gte_some_int","proof":["not a >= Rat.from_int(a.floor)"]}
 {"goal":"Rat.from_int(r.denom).num != Int.0","proof":["(-r).denom = r.denom","Rat.from_int(r.denom).num = r.denom","r.denom = Int.0","(-r).denom = Int.0","(-r).denom != Int.0"]}
 {"goal":"Rat.from_int(r.denom) != Rat.0","proof":["Rat.0.num != Int.0"]}
 {"goal":"Rat.from_int(r.num) / Rat.from_int(r.denom) * Rat.from_int(r.denom) = Rat.from_int(r.num)","proof":["Rat.from_int(r.num) / Rat.from_int(r.denom) * Rat.from_int(r.denom) = Rat.from_int(r.num) or Rat.from_int(r.denom) = Rat.0"]}

@@ -23,8 +23,8 @@
 {"goal":"a.num <= a.denom * a.num","proof":["not a.num.divides(a.denom * a.num) or not (a.denom * a.num).is_positive or a.num <= a.denom * a.num","not a.denom.is_positive or not a.num.is_positive or (a.denom * a.num).is_positive","a.denom * a.num != a.denom * a.num or a.num.divides(a.denom * a.num)","a.denom.is_positive","a.num.divides(a.denom * a.num)","not (a.denom * a.num).is_positive"]}
 {"goal":"a.num <= a.num * a.denom","proof":["a.num * a.denom = a.denom * a.num"]}
 {"goal":"pos_lte_num","proof":["not a.num <= a.num * a.denom or a <= Rat.from_int(a.num)"]}
-{"goal":"lt_some_int","proof":["not a < Rat.from_int(rat_base.floor(a) + Int.1)","a < Rat.from_int(rat_base.floor(a) + Int.1)"]}
-{"goal":"exists(k0: Int) { a < Rat.from_int(k0) }","proof":["not a < Rat.from_int(rat_base.floor(a) + Int.1)","a < Rat.from_int(rat_base.floor(a) + Int.1)"]}
+{"goal":"lt_some_int","proof":["not a < Rat.from_int(rat_base.floor_impl(a) + Int.1)","a < Rat.from_int(rat_base.floor_impl(a) + Int.1)"]}
+{"goal":"exists(k0: Int) { a < Rat.from_int(k0) }","proof":["not a < Rat.from_int(rat_base.floor_impl(a) + Int.1)","a < Rat.from_int(rat_base.floor_impl(a) + Int.1)"]}
 {"goal":"i <= Int.from_nat(n)","proof":["not i <= Int.from_nat(lib(int.int_base).abs(i))","i <= Int.from_nat(lib(int.int_base).abs(i))"]}
 {"goal":"Rat.from_int(i) <= Rat.from_nat(n)","proof":["not i <= Int.from_nat(n) or Rat.from_int(i) <= Rat.from_int(Int.from_nat(n))","Rat.from_int(Int.from_nat(n)) = Rat.from_nat(n)","Rat.from_int(i) <= Rat.from_int(Int.from_nat(n))","not Rat.from_int(i) <= Rat.from_int(Int.from_nat(n))"]}
 {"goal":"lt_some_nat","proof":["not a < Rat.from_nat(n)","not a < Rat.from_int(i) or not Rat.from_int(i) <= Rat.from_nat(n) or a < Rat.from_nat(n)","not Rat.from_int(i) <= Rat.from_nat(n) or not a < Rat.from_int(i)"]}

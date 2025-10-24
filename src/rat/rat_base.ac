@@ -1213,8 +1213,15 @@ theorem floor_exists(a: Rat) {
     a < Rat.from_int(q + Int.1)
 }
 
-let floor(a: Rat) -> q: Int satisfy {
+let floor_impl(a: Rat) -> q: Int satisfy {
     Rat.from_int(q) <= a and a < Rat.from_int(q + Int.1)
+}
+
+attributes Rat {
+    /// The floor of a rational number (the greatest integer less than or equal to it).
+    define floor(self) -> Int {
+        floor_impl(self)
+    }
 }
 
 theorem mul_lt_lt(a: Rat, b: Rat, c: Rat, d: Rat) {
@@ -1294,7 +1301,7 @@ theorem gte_some_int(a: Rat) {
         a >= Rat.from_int(n)
     }
 } by {
-    a >= Rat.from_int(floor(a))
+    a >= Rat.from_int(a.floor)
 }
 
 theorem mul_denom(r: Rat) {
