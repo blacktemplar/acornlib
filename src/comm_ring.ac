@@ -1,5 +1,5 @@
-from add_comm_group import AddCommGroup
+from comm_monoid import CommMonoid
 from ring import Ring
 
 /// A commutative ring is a ring where multiplication is also commutative.
-typeclass CommRing extends Ring, AddCommGroup
+typeclass CommRing extends Ring, CommMonoid

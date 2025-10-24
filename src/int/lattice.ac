@@ -1142,6 +1142,14 @@ from ring import Ring
 
 instance Int: Ring
 
+from comm_semigroup import CommSemigroup
+
+instance Int: CommSemigroup
+
+from comm_monoid import CommMonoid
+
+instance Int: CommMonoid
+
 from comm_ring import CommRing
 
 instance Int: CommRing
