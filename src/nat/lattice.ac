@@ -47,16 +47,8 @@ numerals Nat
 
 attributes Nat {
     /// Note that 0^0 = 1.
-    /// TODO: ideally this would use an inherited `pow` from `Monoid`.
     define exp(self, b: Nat) -> Nat {
-        match b {
-            Nat.0 {
-                1
-            }
-            Nat.suc(pred) {
-                self * self.exp(pred)
-            }
-        }
+        Monoid.pow(self, b)
     }
 }
 
