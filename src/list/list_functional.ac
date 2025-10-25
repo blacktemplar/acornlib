@@ -23,3 +23,157 @@ define fold_right[T, U](list: List[T], f: (T, U) -> U, init: U) -> U {
         }
     }
 }
+
+/// Reverses a list.
+define reverse[T](list: List[T]) -> List[T] {
+    match list {
+        List.nil {
+            List.nil[T]
+        }
+        List.cons(head, tail) {
+            reverse(tail).append(head)
+        }
+    }
+}
+
+theorem reverse_length[T](list: List[T]) {
+    reverse(list).length = list.length
+} by {
+    define p(l: List[T]) -> Bool {
+        reverse(l).length = l.length
+    }
+
+    // Base case: empty list
+    p(List.nil[T])
+
+    // Induction
+    forall(head: T, tail: List[T]) {
+        if p(tail) {
+            // Induction hypothesis: reverse(tail).length = tail.length
+            reverse(List.cons(head, tail)).length = (reverse(tail) + List.singleton(head)).length
+            // Use add_length theorem
+            (reverse(tail) + List.singleton(head)).length = reverse(tail).length + List.singleton(head).length
+            reverse(tail).length = tail.length
+            List.cons(head, tail).length = tail.length.suc
+            p(List.cons(head, tail))
+        }
+    }
+
+    List.induction(function (l: List[T]) {
+        p(l)
+    })
+}
+
+theorem reverse_add[T](list1: List[T], list2: List[T]) {
+    reverse(list1 + list2) = reverse(list2) + reverse(list1)
+} by {
+    define p(l1: List[T]) -> Bool {
+        reverse(l1 + list2) = reverse(list2) + reverse(l1)
+    }
+
+    // Base case: empty list
+    reverse(List.nil[T] + list2) = reverse(list2)
+    reverse(list2) + reverse(List.nil[T]) = reverse(list2) + List.nil[T]
+    reverse(list2) + List.nil[T] = reverse(list2)
+    p(List.nil[T])
+
+    // Induction
+    forall(head: T, tail: List[T]) {
+        if p(tail) {
+            // Induction hypothesis: reverse(tail + list2) = reverse(list2) + reverse(tail)
+            reverse(List.cons(head, tail) + list2) = reverse(List.cons(head, tail + list2))
+            reverse(List.cons(head, tail + list2)) = reverse(tail + list2).append(head)
+            reverse(tail + list2).append(head) = (reverse(tail + list2) + List.singleton(head))
+            (reverse(tail + list2) + List.singleton(head)) = ((reverse(list2) + reverse(tail)) + List.singleton(head))
+            ((reverse(list2) + reverse(tail)) + List.singleton(head)) = (reverse(list2) + (reverse(tail) + List.singleton(head)))
+            (reverse(list2) + (reverse(tail) + List.singleton(head))) = (reverse(list2) + reverse(tail).append(head))
+            (reverse(list2) + reverse(tail).append(head)) = (reverse(list2) + reverse(List.cons(head, tail)))
+            reverse(List.cons(head, tail) + list2) = reverse(list2) + reverse(List.cons(head, tail))
+            p(List.cons(head, tail))
+        }
+    }
+
+    List.induction(function (l: List[T]) {
+        p(l)
+    })
+}
+
+theorem reverse_involution[T](list: List[T]) {
+    reverse(reverse(list)) = list
+} by {
+    define p(l: List[T]) -> Bool {
+        reverse(reverse(l)) = l
+    }
+
+    // Base case: empty list
+    p(List.nil[T])
+
+    // Induction
+    forall(head: T, tail: List[T]) {
+        if p(tail) {
+            // Induction hypothesis: reverse(reverse(tail)) = tail
+            reverse(reverse(List.cons(head, tail))) = reverse(reverse(tail).append(head))
+            reverse(reverse(tail).append(head)) = reverse(reverse(tail) + List.singleton(head))
+            reverse(reverse(tail) + List.singleton(head)) = reverse(List.singleton(head)) + reverse(reverse(tail))
+            reverse(List.singleton(head)) = List.singleton(head)
+            reverse(List.singleton(head)) + reverse(reverse(tail)) = List.singleton(head) + tail
+            List.singleton(head) + tail = List.cons(head, tail)
+            reverse(reverse(List.cons(head, tail))) = List.cons(head, tail)
+            p(List.cons(head, tail))
+        }
+    }
+
+    List.induction(function (l: List[T]) {
+        p(l)
+    })
+}
+
+theorem reverse_contains[T](list: List[T], item: T) {
+    reverse(list).contains(item) = list.contains(item)
+} by {
+    define p(l: List[T]) -> Bool {
+        reverse(l).contains(item) = l.contains(item)
+    }
+
+    // Base case: empty list
+    p(List.nil[T])
+
+    // Induction
+    forall(head: T, tail: List[T]) {
+        if p(tail) {
+            // Induction hypothesis: reverse(tail).contains(item) = tail.contains(item)
+            reverse(List.cons(head, tail)).contains(item) = (reverse(tail) + List.singleton(head)).contains(item)
+
+            // Show both directions of the equivalence
+            if (reverse(tail) + List.singleton(head)).contains(item) {
+                if reverse(tail).contains(item) {
+                    tail.contains(item)
+                    List.cons(head, tail).contains(item)
+                } else {
+                    List.singleton(head).contains(item)
+                    head = item
+                    List.cons(head, tail).contains(item)
+                }
+                List.cons(head, tail).contains(item)
+            }
+
+            if List.cons(head, tail).contains(item) {
+                if head = item {
+                    List.singleton(head).contains(item)
+                    (reverse(tail) + List.singleton(head)).contains(item)
+                } else {
+                    tail.contains(item)
+                    reverse(tail).contains(item)
+                    (reverse(tail) + List.singleton(head)).contains(item)
+                }
+                (reverse(tail) + List.singleton(head)).contains(item)
+            }
+
+            p(List.cons(head, tail))
+        }
+    }
+
+    List.induction(function (l: List[T]) {
+        p(l)
+    })
+}
