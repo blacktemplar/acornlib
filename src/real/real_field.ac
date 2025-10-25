@@ -271,11 +271,11 @@ theorem mul_left_cancel(a: Real, b: Real, c: Real) {
 
 theorem geom_series(r: Real) {
     r.abs < 1 implies
-    limit(partial(Monoid.pow(r))) = 1 / (1 - r)
+    limit(partial(r.pow)) = 1 / (1 - r)
 } by {
-    1 + r * limit(partial(Monoid.pow(r))) = limit(partial(Monoid.pow(r)))
-    1 = limit(partial(Monoid.pow(r))) - r * limit(partial(Monoid.pow(r)))
-    1 = (1 - r) * limit(partial(Monoid.pow(r)))
+    1 + r * limit(partial(r.pow)) = limit(partial(r.pow))
+    1 = limit(partial(r.pow)) - r * limit(partial(r.pow))
+    1 = (1 - r) * limit(partial(r.pow))
     (1 - r) != Real.0
-    limit(partial(Monoid.pow(r))) = 1 / (1 - r)
+    limit(partial(r.pow)) = 1 / (1 - r)
 }

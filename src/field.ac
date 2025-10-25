@@ -23,26 +23,26 @@ typeclass F: Field extends CommRing {
 
 attributes F: Field {
     /// Extends Monoid.pow to raise a field element to an integer.
-    /// Similar to how we define Field.inverse this defines `F.0`.pow(x) for negative x to be `0`.
-    define pow(self, exp: Int) -> F {
+    /// Similar to how we define Field.inverse this defines `F.0`.zpow(x) for negative x to be `0`.
+    define zpow(self, exp: Int) -> F {
         match exp {
             Int.from_nat(n) {
-                Monoid.pow(self, n)
+                self.pow(n)
             }
             Int.neg_suc(k) {
-                Monoid.pow(self, k.suc).inverse
+                self.pow(k.suc).inverse
             }
         }
     }
 }
 
 theorem zero_pow[F: Field](n: Int) {
-    n > Int.0 implies F.0.pow(n) = F.0
+    n > Int.0 implies F.0.zpow(n) = F.0
 } by {
     match n {
         Int.from_nat(k) {
-            F.0.pow(n) = Monoid.pow(F.0, k)
-            F.0.pow(n) = F.0
+            F.0.zpow(n) = F.0.pow(k)
+            F.0.zpow(n) = F.0
         }
         Int.neg_suc(k) {
             n < Int.0
@@ -99,10 +99,10 @@ theorem inverse_dist[F: Field](a: F, b: F) {
 // a^(-n) = (a.inverse)^n for n Nat and >=1
 theorem pow_inverse_nat[F: Field](a: F, k: Nat) {
     // n = k + 1
-    a.pow(Int.neg_suc(k)) = a.inverse.pow(Int.from_nat(k.suc))
+    a.zpow(Int.neg_suc(k)) = a.inverse.zpow(Int.from_nat(k.suc))
 } by {
     let f: Nat -> Bool = function(x: Nat) {
-        a.pow(Int.neg_suc(x)) = a.inverse.pow(Int.from_nat(x.suc))
+        a.zpow(Int.neg_suc(x)) = a.inverse.zpow(Int.from_nat(x.suc))
     }
     // base case
     f(Nat.0)
@@ -110,8 +110,8 @@ theorem pow_inverse_nat[F: Field](a: F, k: Nat) {
     // Inductive step
     forall(l: Nat) {
         if f(l) {
-            Monoid.pow(a, l.suc.suc) = Monoid.pow(a, l.suc) * a
-            (Monoid.pow(a, l.suc) * a).inverse = Monoid.pow(a, l.suc).inverse * a.inverse
+            a.pow(l.suc.suc) = a.pow(l.suc) * a
+            (a.pow(l.suc) * a).inverse = a.pow(l.suc).inverse * a.inverse
             f(l.suc)
         }
     }
@@ -119,36 +119,36 @@ theorem pow_inverse_nat[F: Field](a: F, k: Nat) {
 
 // a^(-n) = (a.inverse)^n
 theorem pow_inverse[F: Field](a: F, n: Int) {
-    a.pow(-n) = a.inverse.pow(n)
+    a.zpow(-n) = a.inverse.zpow(n)
 } by {
     match n {
         Int.from_nat(k) {
             if k = Nat.0 {
                 -n = Int.0
-                a.pow(-n) = F.1
-                a.inverse.pow(n) = F.1
-                a.pow(-n) = a.inverse.pow(n)
+                a.zpow(-n) = F.1
+                a.inverse.zpow(n) = F.1
+                a.zpow(-n) = a.inverse.zpow(n)
             } else {
                 let l: Nat satisfy { l.suc = k }
                 -n = Int.neg_suc(l)
-                a.pow(-n) = a.inverse.pow(Int.from_nat(l.suc))
-                a.pow(-n) = a.inverse.pow(n)
+                a.zpow(-n) = a.inverse.zpow(Int.from_nat(l.suc))
+                a.zpow(-n) = a.inverse.zpow(n)
             }
         }
         Int.neg_suc(k) {
             -n = Int.from_nat(k.suc)
-            a.inverse.pow(n) = a.inverse.inverse.pow(Int.from_nat(k.suc))
-            a.inverse.pow(n) = a.pow(Int.from_nat(k.suc))
-            a.pow(-n) = a.inverse.pow(n)
+            a.inverse.zpow(n) = a.inverse.inverse.zpow(Int.from_nat(k.suc))
+            a.inverse.zpow(n) = a.zpow(Int.from_nat(k.suc))
+            a.zpow(-n) = a.inverse.zpow(n)
         }
     }
 }
 
 theorem pow_nat_times_inverse[F: Field](a: F, n: Nat) {
-   a != F.0 implies Monoid.pow(a, n.suc) * a.inverse = Monoid.pow(a, n)
+   a != F.0 implies a.pow(n.suc) * a.inverse = a.pow(n)
 } by {
     let f: Nat -> Bool = function(x: Nat) {
-        Monoid.pow(a, x.suc) * a.inverse = Monoid.pow(a, x)
+        a.pow(x.suc) * a.inverse = a.pow(x)
     }
 
     // base case
@@ -157,18 +157,18 @@ theorem pow_nat_times_inverse[F: Field](a: F, n: Nat) {
     // Induction step
     forall(l: Nat) {
         if f(l) {
-            Monoid.pow(a, l.suc) = Monoid.pow(a, l) * a
-            Monoid.pow(a, l.suc) * a.inverse = Monoid.pow(a, l)
+            a.pow(l.suc) = a.pow(l) * a
+            a.pow(l.suc) * a.inverse = a.pow(l)
             f(l.suc)
         }
     }
 }
 
 theorem pow_nat_sub_inverse[F: Field](a: F, n: Nat, m: Nat) {
-    a != F.0 and m <= n implies Monoid.pow(a, n) * Monoid.pow(a.inverse, m) = Monoid.pow(a, n - m)
+    a != F.0 and m <= n implies a.pow(n) * a.inverse.pow(m) = a.pow(n - m)
 } by {
     let f: Nat -> Bool = function(x: Nat) {
-        x > n or Monoid.pow(a, n) * Monoid.pow(a.inverse, x) = Monoid.pow(a, n - x)
+        x > n or a.pow(n) * a.inverse.pow(x) = a.pow(n - x)
     }
 
     // base case
@@ -182,11 +182,11 @@ theorem pow_nat_sub_inverse[F: Field](a: F, n: Nat, m: Nat) {
                 f(l.suc)
             } else {
                 l.suc <= n
-                Monoid.pow(a.inverse, l.suc) = Monoid.pow(a.inverse, l) * a.inverse
-                Monoid.pow(a, n) * Monoid.pow(a.inverse, l.suc) = Monoid.pow(a, n) * Monoid.pow(a.inverse, l) * a.inverse
-                Monoid.pow(a, n) * Monoid.pow(a.inverse, l.suc) = Monoid.pow(a, n - l) * a.inverse
+                a.inverse.pow(l.suc) = a.inverse.pow(l) * a.inverse
+                a.pow(n) * a.inverse.pow(l.suc) = a.pow(n) * a.inverse.pow(l) * a.inverse
+                a.pow(n) * a.inverse.pow(l.suc) = a.pow(n - l) * a.inverse
                 n - l = (n - l.suc).suc
-                Monoid.pow(a, n) * Monoid.pow(a.inverse, l.suc) = Monoid.pow(a, n - l.suc)
+                a.pow(n) * a.inverse.pow(l.suc) = a.pow(n - l.suc)
                 f(l.suc)
             }
         }
@@ -194,7 +194,7 @@ theorem pow_nat_sub_inverse[F: Field](a: F, n: Nat, m: Nat) {
 }
 
 theorem pow_sub_inverse[F: Field](a: F, n: Int, m: Int) {
-    a != F.0 and n >= Int.0 and m >= Int.0 implies a.pow(n) * a.inverse.pow(m) = a.pow(n - m)
+    a != F.0 and n >= Int.0 and m >= Int.0 implies a.zpow(n) * a.inverse.zpow(m) = a.zpow(n - m)
 } by {
     let l: Nat satisfy {
         n = Int.from_nat(l)
@@ -203,23 +203,23 @@ theorem pow_sub_inverse[F: Field](a: F, n: Int, m: Int) {
         m = Int.from_nat(k)
     }
     if m <= n {
-        a.pow(n) * a.inverse.pow(m) = Monoid.pow(a, l) * Monoid.pow(a.inverse, k)
+        a.zpow(n) * a.inverse.zpow(m) = a.pow(l) * a.inverse.pow(k)
         k <= l
-        a.pow(n) * a.inverse.pow(m) = Monoid.pow(a, l - k)
-        a.pow(n) * a.inverse.pow(m) = a.pow(n - m)
+        a.zpow(n) * a.inverse.zpow(m) = a.pow(l - k)
+        a.zpow(n) * a.inverse.zpow(m) = a.zpow(n - m)
     } else {
-        a.pow(n) * a.inverse.pow(m) = a.inverse.pow(m) * a.inverse.inverse.pow(n)
-        a.pow(n) * a.inverse.pow(m) = Monoid.pow(a.inverse, k) * Monoid.pow(a.inverse.inverse, l)
+        a.zpow(n) * a.inverse.zpow(m) = a.inverse.zpow(m) * a.inverse.inverse.zpow(n)
+        a.zpow(n) * a.inverse.zpow(m) = a.inverse.pow(k) * a.inverse.inverse.pow(l)
         l <= k
         a.inverse != F.0
-        a.pow(n) * a.inverse.pow(m) = Monoid.pow(a.inverse, k - l)
-        a.pow(n) * a.inverse.pow(m) = a.inverse.pow(m - n)
-        a.pow(n) * a.inverse.pow(m) = a.pow(n - m)
+        a.zpow(n) * a.inverse.zpow(m) = a.inverse.pow(k - l)
+        a.zpow(n) * a.inverse.zpow(m) = a.inverse.zpow(m - n)
+        a.zpow(n) * a.inverse.zpow(m) = a.zpow(n - m)
     }
 }
 
 theorem pow_add_nonnegative[F: Field](a: F, n: Int, m: Int) {
-    n >= Int.0 and m >= Int.0 implies a.pow(n) * a.pow(m) = a.pow(n + m)
+    n >= Int.0 and m >= Int.0 implies a.zpow(n) * a.zpow(m) = a.zpow(n + m)
 } by {
     let l: Nat satisfy {
         n = Int.from_nat(l)
@@ -227,32 +227,32 @@ theorem pow_add_nonnegative[F: Field](a: F, n: Int, m: Int) {
     let k: Nat satisfy {
         m = Int.from_nat(k)
     }
-    a.pow(n) * a.pow(m) = Monoid.pow(a, l) * Monoid.pow(a, k)
+    a.zpow(n) * a.zpow(m) = a.pow(l) * a.pow(k)
 }
 
 theorem pow_add[F: Field](a: F, n: Int, m: Int) {
-    (n >= Int.0 and m >= Int.0) or a != F.0 implies a.pow(n) * a.pow(m) = a.pow(n + m)
+    (n >= Int.0 and m >= Int.0) or a != F.0 implies a.zpow(n) * a.zpow(m) = a.zpow(n + m)
 } by {
     if n >= Int.0 {
         if m >= Int.0 {
-            a.pow(n) * a.pow(m) = a.pow(n + m)
+            a.zpow(n) * a.zpow(m) = a.zpow(n + m)
         } else {
-            a.pow(n) * a.pow(m) = a.pow(n) * a.inverse.pow(-m)
-            a.pow(n) * a.pow(m) = a.pow(n - (-m))
-            a.pow(n) * a.pow(m) = a.pow(n + m)
+            a.zpow(n) * a.zpow(m) = a.zpow(n) * a.inverse.zpow(-m)
+            a.zpow(n) * a.zpow(m) = a.zpow(n - (-m))
+            a.zpow(n) * a.zpow(m) = a.zpow(n + m)
         }
     } else {
         -n >= Int.0
         if m >= Int.0 {
-            a.pow(n) * a.pow(m) = a.inverse.pow(-n) * a.pow(m)
-            a.pow(n) * a.pow(m) = a.pow(m) * a.inverse.pow(-n)
-            a.pow(n) * a.pow(m) = a.pow(m - (-n))
-            a.pow(n) * a.pow(m) = a.pow(n + m)
+            a.zpow(n) * a.zpow(m) = a.inverse.zpow(-n) * a.zpow(m)
+            a.zpow(n) * a.zpow(m) = a.zpow(m) * a.inverse.zpow(-n)
+            a.zpow(n) * a.zpow(m) = a.zpow(m - (-n))
+            a.zpow(n) * a.zpow(m) = a.zpow(n + m)
         } else {
             -m >= Int.0
-            a.pow(n) * a.pow(m) = a.inverse.pow(-n) * a.inverse.pow(-m)
-            a.pow(n) * a.pow(m) = a.inverse.pow(-n + (-m))
-            a.pow(n) * a.pow(m) = a.pow(n + m)
+            a.zpow(n) * a.zpow(m) = a.inverse.zpow(-n) * a.inverse.zpow(-m)
+            a.zpow(n) * a.zpow(m) = a.inverse.zpow(-n + (-m))
+            a.zpow(n) * a.zpow(m) = a.zpow(n + m)
         }
     }
 } 
