@@ -1,0 +1,46 @@
+from nat import Nat
+from add_group import AddGroup
+from order import PartialOrder, LinearOrder
+
+/// A left-ordered group is a group with a left-invariant order.
+/// This means that if `a <= b`, then `c + a <= c + b` for any c in the group.
+typeclass G: AddLeftOrderedGroup extends AddGroup, LinearOrder {
+    /// Left addition preserves the order relation: if `a ≤ b`, then `c + a ≤ c + b`.
+    left_invariance(a: G, b: G, c: G) {
+        a <= b implies c + a <= c + b
+    }
+}
+
+theorem lt_trans[G: AddLeftOrderedGroup](a: G, b: G, c: G) {
+    a < b and b < c implies a < c
+} by {
+    a <= b and a != b
+    b <= c and b != c
+    a <= c and a != c
+}
+
+/// An ordered group has both left and right invariance.
+typeclass G: AddOrderedGroup extends AddLeftOrderedGroup {
+    /// Right addition preserves the order relation: if `a ≤ b`, then `a + c ≤ b + c`.
+    right_invariance(a: G, b: G, c: G) {
+        a <= b implies a + c <= b + c
+    }
+}
+
+theorem negative_of_nonnegative[G: AddLeftOrderedGroup](a: G) {
+    G.0 <= a implies -a <= G.0
+}
+
+theorem negative_of_negative[G: AddLeftOrderedGroup](a: G) {
+    a <= G.0 implies G.0 <= -a
+}
+
+theorem add_inequality[F: AddOrderedGroup](a: F, b: F, c: F, d: F) {
+    a <= b and c <= d implies a + c <= b + d
+}
+
+theorem minus_flips_inequality[F: AddOrderedGroup](a: F, b: F) {
+    a <= b implies -b <= -a
+} by {
+    F.0 <= b + -a
+}

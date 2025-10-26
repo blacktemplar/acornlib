@@ -1193,3 +1193,8 @@ theorem int_total(a: Int, b: Int) { a <= b or b <= a } by {
 }
 
 instance Int: LinearOrder
+
+from add_ordered_group import AddLeftOrderedGroup, AddOrderedGroup
+
+instance Int: AddLeftOrderedGroup
+instance Int: AddOrderedGroup

@@ -347,3 +347,34 @@ theorem pow_pow[F: Field](a: F, n: Int, m: Int) {
         }
     }
 }
+
+theorem inverse_not_zero[F: Field](a: F) {
+    a != F.0 implies a.inverse != F.0
+}
+
+theorem mul_not_zero[F: Field](a: F, b: F) {
+    a != F.0 and b != F.0 implies a * b != F.0
+} by {
+    if a * b = F.0 {
+        a * b * b.inverse = F.0
+        false
+    }
+}
+
+theorem pow_not_zero[F: Field](a: F, n: Nat) {
+    a != F.0 implies a.pow(n) != F.0
+} by {
+    // Define a helper function for induction
+    define f(x: Nat) -> Bool { a.pow(x) != F.0 }
+
+    // Base case
+    f(Nat.0)
+
+    // Inductive step
+    forall(x: Nat) {
+        if f(x) {
+            a.pow(x.suc) = a.pow(x) * a
+            f(x.suc)
+        }
+    }
+}
