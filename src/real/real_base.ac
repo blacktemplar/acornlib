@@ -1452,6 +1452,11 @@ from add_comm_group import AddCommGroup
 
 instance Real: AddCommGroup
 
+from add_ordered_group import AddLeftOrderedGroup, AddOrderedGroup
+
+instance Real: AddLeftOrderedGroup
+instance Real: AddOrderedGroup
+
 attributes Real {
     /// The absolute value of this real number.
     define abs(self) -> Real {

@@ -129,3 +129,11 @@
 {"goal":"a.zpow(n).zpow(m) = a.inverse.zpow(-n * -m).inverse","proof":["not -n >= Int.0 or not -m >= Int.0 or a.inverse.zpow(-n * -m) = a.inverse.zpow(-n).zpow(-m)","a.inverse.zpow(-n * -m).inverse != a.inverse.zpow(-n).zpow(-m).inverse","a.inverse.zpow(-n * -m) != a.inverse.zpow(-n).zpow(-m)"]}
 {"goal":"a.zpow(n).zpow(m) = a.zpow(n * m)","proof":["a.inverse.zpow(-n).zpow(-m) = a.inverse.zpow(-n).zpow(m).inverse","a.zpow(--(n * m)) = a.zpow(-(n * m)).inverse","-n * -m = n * m","a.zpow(-(-n * -m)) = a.inverse.zpow(-n * -m)","a.zpow(--n) = a.inverse.zpow(-n)","Int.1 * n = n","--(-n * -m) = -n * -m","--(Int.1 * n) = Int.1 * n","a.inverse.zpow(-n * -m).inverse.inverse = a.inverse.zpow(-n * -m)"]}
 {"goal":"pow_pow","proof":[]}
+{"goal":"inverse_not_zero","proof":["a.inverse.inverse = a"]}
+{"goal":"a * b * b.inverse = F.0","proof":["F.0 * b.inverse != F.0","b.inverse * F.0 = F.0 * b.inverse","b.inverse * F.0 = F.0"]}
+{"goal":"false","proof":["a * b * b.inverse = a * (b * b.inverse)","b * b.inverse = F.1 or F.0 = b","a * F.1 = a","a * (b * b.inverse) = F.0","a * F.1 != F.0","b * b.inverse = F.1"]}
+{"goal":"mul_not_zero","proof":[]}
+{"goal":"f(Nat.0)","proof":["a.pow(Nat.0) = F.0 or f(Nat.0)","a.pow(Nat.0) = F.0","Nat.0 != Nat.0 or a.pow(Nat.0) = F.1","a.pow(Nat.0) = F.1"]}
+{"goal":"a.pow(x.suc) = a.pow(x) * a","proof":["x.suc != x.suc or a * a.pow(x) = a.pow(x.suc)","a.pow(x) * a = a * a.pow(x)","a * a.pow(x) != a.pow(x.suc)"]}
+{"goal":"f(x.suc)","proof":["a.pow(x.suc) = F.0 or f(x.suc)","a.pow(x) != F.0 or not f(x)","a.pow(x.suc) = F.0","a.pow(x) * a != F.0 or a.pow(x) = F.0 or F.0 = a","a.pow(x) * a = F.0","a.pow(x) != F.0","a.pow(x) = F.0"]}
+{"goal":"pow_not_zero","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(Nat.0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(Nat.0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","a.pow(n) != F.0 or not f(n)","not f(n)","not f(s0(f).suc) or not f(Nat.0) or f(n)","not f(Nat.0) or f(s0(f)) or f(n)","f(s0(f)) or f(n)","f(s0(f))","not f(s0(f).suc)","f(s0(f).suc)"]}

@@ -262,6 +262,10 @@ instance Real: Field {
     let inverse = Real.reciprocal
 }
 
+from ordered_field import OrderedField
+
+instance Real: OrderedField
+
 attributes Real {
     /// The quotient of two real numbers (`self/other`).
     define div(self, other: Real) -> Real {

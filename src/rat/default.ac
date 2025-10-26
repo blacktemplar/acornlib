@@ -641,3 +641,12 @@ theorem rat_total(a: Rat, b: Rat) { a <= b or b <= a } by {
 }
 
 instance Rat: LinearOrder
+
+from add_ordered_group import AddLeftOrderedGroup, AddOrderedGroup
+
+instance Rat: AddLeftOrderedGroup
+instance Rat: AddOrderedGroup
+
+from ordered_field import OrderedField
+
+instance Rat: OrderedField
