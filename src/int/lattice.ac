@@ -991,44 +991,41 @@ theorem plus_abs_gte_zero(n: Int) {
     }
 }
 
-attributes Int {
-    /// Note that 0^0 = 1.
-    /// TODO: we should be able to inherit `pow` from some underlying algebraic structure.
-    define exp(self, b: Nat) -> Int {
-        match b {
-            Nat.0 {
-                1
-            }
-            Nat.suc(pred) {
-                self * self.exp(pred)
-            }
-        }
-    }
+from semigroup import Semigroup
+
+instance Int: Semigroup {
+    let mul: (Int, Int) -> Int = Int.mul
+}
+
+from monoid import Monoid
+
+instance Int: Monoid {
+    let 1: Int = Int.1
 }
 
 theorem exp_one(a: Int) {
-    a.exp(Nat.1) = a
+    a.pow(Nat.1) = a
 } by {
-    a * a.exp(Nat.0) = a
-    a.exp(Nat.0.suc) = a
+    a * a.pow(Nat.0) = a
+    a.pow(Nat.0.suc) = a
 }
 
 theorem exp_zero(a: Int) {
-    a.exp(Nat.0) = 1
+    a.pow(Nat.0) = 1
 }
 
 theorem exp_add(a: Int, b: Nat, c: Nat) {
-    a.exp(b + c) = a.exp(b) * a.exp(c)
+    a.pow(b + c) = a.pow(b) * a.pow(c)
 } by {
     // Inductive step
     let f = function(x: Nat) {
-        a.exp(b + x) = a.exp(b) * a.exp(x)
+        a.pow(b + x) = a.pow(b) * a.pow(x)
     }
     f(Nat.0)
     forall(x: Nat) {
         if f(x) {
-            a.exp(b + x) = a.exp(b) * a.exp(x)
-            a.exp(b + x.suc) = a.exp(b) * a.exp(x.suc)
+            a.pow(b + x) = a.pow(b) * a.pow(x)
+            a.pow(b + x.suc) = a.pow(b) * a.pow(x.suc)
             f(x.suc)
         }
     }
@@ -1036,17 +1033,17 @@ theorem exp_add(a: Int, b: Nat, c: Nat) {
 }
 
 theorem exp_mul(a: Int, b: Nat, c: Nat) {
-    a.exp(b * c) = a.exp(b).exp(c)
+    a.pow(b * c) = a.pow(b).pow(c)
 } by {
     // Inductive step
     let f = function(x: Nat) {
-        a.exp(b * x) = a.exp(b).exp(x)
+        a.pow(b * x) = a.pow(b).pow(x)
     }
     f(Nat.0)
     forall(x: Nat) {
         if f(x) {
-            a.exp(b * x) = a.exp(b).exp(x)
-            a.exp(b * x.suc) = a.exp(b).exp(x.suc)
+            a.pow(b * x) = a.pow(b).pow(x)
+            a.pow(b * x.suc) = a.pow(b).pow(x.suc)
             f(x.suc)
         }
     }
@@ -1054,7 +1051,7 @@ theorem exp_mul(a: Int, b: Nat, c: Nat) {
 }
 
 theorem zero_exp(n: Nat) {
-    n != Nat.0 implies 0.exp(n) = 0
+    n != Nat.0 implies 0.pow(n) = 0
 } by {
     let b: Nat satisfy {
         n = b.suc
@@ -1062,41 +1059,41 @@ theorem zero_exp(n: Nat) {
 }
 
 theorem one_exp(n: Nat) {
-    1.exp(n) = 1
+    1.pow(n) = 1
 } by {
     one_exp(Nat.0)
     one_exp(n)
 }
 
 theorem pos_exp(a: Int, n: Nat) {
-    a.is_positive implies a.exp(n).is_positive
+    a.is_positive implies a.pow(n).is_positive
 } by {
     let f = function(x: Nat) {
-        a.exp(x).is_positive
+        a.pow(x).is_positive
     }
     f(Nat.0)
     f(n)
 }
 
 theorem sq_eq_mul(a: Int) {
-    a * a = a.exp(Nat.2)
+    a * a = a.pow(Nat.2)
 }
 
 theorem sq_pos(a: Int) {
-    a != 0 implies a.exp(Nat.2).is_positive
+    a != 0 implies a.pow(Nat.2).is_positive
 }
 
 theorem exp_abs_eq_abs_exp(a: Int, n: Nat) {
-    abs(a.exp(n)) = abs(a).exp(n)
+    abs(a.pow(n)) = abs(a).pow(n)
 } by {
     let f = function(x: Nat) {
-        abs(a.exp(x)) = abs(a).exp(x)
+        abs(a.pow(x)) = abs(a).pow(x)
     }
     f(Nat.0)
     forall(x: Nat) {
         if f(x) {
-            abs(a.exp(x)) = abs(a).exp(x)
-            abs(a.exp(x.suc)) = abs(a).exp(x.suc)
+            abs(a.pow(x)) = abs(a).pow(x)
+            abs(a.pow(x.suc)) = abs(a).pow(x.suc)
             f(x.suc)
         }
     }
@@ -1133,18 +1130,6 @@ theorem member_triangle(a: Int, b: Int) {
 }
 
 // Connecting Int to its multiplicative algebraic structure.
-
-from semigroup import Semigroup
-
-instance Int: Semigroup {
-    let mul: (Int, Int) -> Int = Int.mul
-}
-
-from monoid import Monoid
-
-instance Int: Monoid {
-    let 1: Int = Int.1
-}
 
 from semiring import Semiring
 

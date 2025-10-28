@@ -27,18 +27,6 @@ from add_comm_monoid import AddCommMonoid
 
 instance Nat: AddCommMonoid
 
-from semigroup import Semigroup
-
-instance Nat: Semigroup {
-    let mul: (Nat, Nat) -> Nat = Nat.mul
-}
-
-from monoid import Monoid
-
-instance Nat: Monoid {
-    let 1: Nat = Nat.1
-}
-
 from semiring import Semiring
 
 instance Nat: Semiring

@@ -256,22 +256,22 @@ theorem pascal(n: Nat, k: Nat) {
 
 // Helper function for the binomial theorem
 define binomial_term(a: Nat, b: Nat, n: Nat, k: Nat) -> Nat {
-    n.choose(k) * a.exp(k) * b.exp(n - k)
+    n.choose(k) * a.pow(k) * b.pow(n - k)
 }
 
 /// The boundary term at k=0 for the binomial expansion.
 theorem binomial_term_zero(a: Nat, b: Nat, m: Nat) {
     binomial_term(a, b, m.suc, 0) = b * binomial_term(a, b, m, 0)
 } by {
-    binomial_term(a, b, m.suc, 0) = m.suc.choose(0) * a.exp(0) * b.exp(m.suc)
-    binomial_term(a, b, m.suc, 0) = 1 * 1 * b.exp(m.suc)
-    binomial_term(a, b, m.suc, 0) = b.exp(m.suc)
-    b.exp(m.suc) = b * b.exp(m)
-    binomial_term(a, b, m.suc, 0) = b * b.exp(m)
+    binomial_term(a, b, m.suc, 0) = m.suc.choose(0) * a.pow(0) * b.pow(m.suc)
+    binomial_term(a, b, m.suc, 0) = 1 * 1 * b.pow(m.suc)
+    binomial_term(a, b, m.suc, 0) = b.pow(m.suc)
+    b.pow(m.suc) = b * b.pow(m)
+    binomial_term(a, b, m.suc, 0) = b * b.pow(m)
 
-    binomial_term(a, b, m, 0) = m.choose(0) * a.exp(0) * b.exp(m)
-    binomial_term(a, b, m, 0) = 1 * 1 * b.exp(m)
-    binomial_term(a, b, m, 0) = b.exp(m)
+    binomial_term(a, b, m, 0) = m.choose(0) * a.pow(0) * b.pow(m)
+    binomial_term(a, b, m, 0) = 1 * 1 * b.pow(m)
+    binomial_term(a, b, m, 0) = b.pow(m)
 
     binomial_term(a, b, m.suc, 0) = b * binomial_term(a, b, m, 0)
 }
@@ -280,15 +280,15 @@ theorem binomial_term_zero(a: Nat, b: Nat, m: Nat) {
 theorem binomial_term_top(a: Nat, b: Nat, m: Nat) {
     binomial_term(a, b, m.suc, m.suc) = a * binomial_term(a, b, m, m)
 } by {
-    binomial_term(a, b, m.suc, m.suc) = m.suc.choose(m.suc) * a.exp(m.suc) * b.exp(0)
-    binomial_term(a, b, m.suc, m.suc) = 1 * a.exp(m.suc) * 1
-    binomial_term(a, b, m.suc, m.suc) = a.exp(m.suc)
-    a.exp(m.suc) = a * a.exp(m)
-    binomial_term(a, b, m.suc, m.suc) = a * a.exp(m)
+    binomial_term(a, b, m.suc, m.suc) = m.suc.choose(m.suc) * a.pow(m.suc) * b.pow(0)
+    binomial_term(a, b, m.suc, m.suc) = 1 * a.pow(m.suc) * 1
+    binomial_term(a, b, m.suc, m.suc) = a.pow(m.suc)
+    a.pow(m.suc) = a * a.pow(m)
+    binomial_term(a, b, m.suc, m.suc) = a * a.pow(m)
 
-    binomial_term(a, b, m, m) = m.choose(m) * a.exp(m) * b.exp(0)
-    binomial_term(a, b, m, m) = 1 * a.exp(m) * 1
-    binomial_term(a, b, m, m) = a.exp(m)
+    binomial_term(a, b, m, m) = m.choose(m) * a.pow(m) * b.pow(0)
+    binomial_term(a, b, m, m) = 1 * a.pow(m) * 1
+    binomial_term(a, b, m, m) = a.pow(m)
 
     binomial_term(a, b, m.suc, m.suc) = a * binomial_term(a, b, m, m)
 }
@@ -308,38 +308,38 @@ theorem binomial_term_recurrence(a: Nat, b: Nat, m: Nat, k: Nat) {
     k_pred <= m
 
     // Expand LHS: binomial_term(a, b, m.suc, k)
-    binomial_term(a, b, m.suc, k) = m.suc.choose(k) * a.exp(k) * b.exp(m.suc - k)
+    binomial_term(a, b, m.suc, k) = m.suc.choose(k) * a.pow(k) * b.pow(m.suc - k)
 
     // Expand first term of RHS: a * binomial_term(a, b, m, k - 1)
-    binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.exp(k_pred) * b.exp(m - k_pred)
-    a * binomial_term(a, b, m, k_pred) = a * (m.choose(k_pred) * a.exp(k_pred) * b.exp(m - k_pred))
-    a * binomial_term(a, b, m, k_pred) = a * m.choose(k_pred) * a.exp(k_pred) * b.exp(m - k_pred)
-    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * (a * a.exp(k_pred)) * b.exp(m - k_pred)
-    a.exp(k) = a * a.exp(k_pred)
-    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.exp(k) * b.exp(m - k_pred)
+    binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.pow(k_pred) * b.pow(m - k_pred)
+    a * binomial_term(a, b, m, k_pred) = a * (m.choose(k_pred) * a.pow(k_pred) * b.pow(m - k_pred))
+    a * binomial_term(a, b, m, k_pred) = a * m.choose(k_pred) * a.pow(k_pred) * b.pow(m - k_pred)
+    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * (a * a.pow(k_pred)) * b.pow(m - k_pred)
+    a.pow(k) = a * a.pow(k_pred)
+    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.pow(k) * b.pow(m - k_pred)
     m - k_pred = m.suc - k
-    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.exp(k) * b.exp(m.suc - k)
-    a * binomial_term(a, b, m, k - 1) = m.choose(k - 1) * a.exp(k) * b.exp(m.suc - k)
+    a * binomial_term(a, b, m, k_pred) = m.choose(k_pred) * a.pow(k) * b.pow(m.suc - k)
+    a * binomial_term(a, b, m, k - 1) = m.choose(k - 1) * a.pow(k) * b.pow(m.suc - k)
 
     // Expand second term of RHS: b * binomial_term(a, b, m, k)
     k <= m
-    binomial_term(a, b, m, k) = m.choose(k) * a.exp(k) * b.exp(m - k)
-    b * binomial_term(a, b, m, k) = b * (m.choose(k) * a.exp(k) * b.exp(m - k))
-    b * binomial_term(a, b, m, k) = b * m.choose(k) * a.exp(k) * b.exp(m - k)
-    b * binomial_term(a, b, m, k) = m.choose(k) * a.exp(k) * (b * b.exp(m - k))
+    binomial_term(a, b, m, k) = m.choose(k) * a.pow(k) * b.pow(m - k)
+    b * binomial_term(a, b, m, k) = b * (m.choose(k) * a.pow(k) * b.pow(m - k))
+    b * binomial_term(a, b, m, k) = b * m.choose(k) * a.pow(k) * b.pow(m - k)
+    b * binomial_term(a, b, m, k) = m.choose(k) * a.pow(k) * (b * b.pow(m - k))
     m - k + 1 = m.suc - k
-    b.exp(m.suc - k) = b.exp(m - k + 1)
-    b.exp(m - k + 1) = b * b.exp(m - k)
-    b * binomial_term(a, b, m, k) = m.choose(k) * a.exp(k) * b.exp(m.suc - k)
+    b.pow(m.suc - k) = b.pow(m - k + 1)
+    b.pow(m - k + 1) = b * b.pow(m - k)
+    b * binomial_term(a, b, m, k) = m.choose(k) * a.pow(k) * b.pow(m.suc - k)
 
     // Combine the two terms using the distributive property
     let rhs_sum = a * binomial_term(a, b, m, k - 1) + b * binomial_term(a, b, m, k)
-    rhs_sum = m.choose(k - 1) * a.exp(k) * b.exp(m.suc - k) + m.choose(k) * a.exp(k) * b.exp(m.suc - k)
-    rhs_sum = (m.choose(k - 1) + m.choose(k)) * a.exp(k) * b.exp(m.suc - k)
+    rhs_sum = m.choose(k - 1) * a.pow(k) * b.pow(m.suc - k) + m.choose(k) * a.pow(k) * b.pow(m.suc - k)
+    rhs_sum = (m.choose(k - 1) + m.choose(k)) * a.pow(k) * b.pow(m.suc - k)
 
     // Apply Pascal's identity
     m.suc.choose(k) = m.choose(k - 1) + m.choose(k)
-    rhs_sum = m.suc.choose(k) * a.exp(k) * b.exp(m.suc - k)
+    rhs_sum = m.suc.choose(k) * a.pow(k) * b.pow(m.suc - k)
 
     // Connect LHS and RHS
     binomial_term(a, b, m.suc, k) = rhs_sum
@@ -459,34 +459,34 @@ theorem binomial_distribution(a: Nat, b: Nat, m: Nat) {
 
 /// The binomial theorem: (a + b)^n equals the sum of binomial terms.
 theorem binomial(a: Nat, b: Nat, n: Nat) {
-    (a + b).exp(n) = partial(binomial_term(a, b, n), n.suc)
+    (a + b).pow(n) = partial(binomial_term(a, b, n), n.suc)
 } by {
     define f(x: Nat) -> Bool {
-        (a + b).exp(x) = partial(binomial_term(a, b, x), x.suc)
+        (a + b).pow(x) = partial(binomial_term(a, b, x), x.suc)
     }
 
     // Base case: n = 0
-    (a + b).exp(0) = 1
-    binomial_term(a, b, 0, 0) = 0.choose(0) * a.exp(0) * b.exp(0)
+    (a + b).pow(0) = 1
+    binomial_term(a, b, 0, 0) = 0.choose(0) * a.pow(0) * b.pow(0)
     binomial_term(a, b, 0, 0) = 1 * 1 * 1
     binomial_term(a, b, 0, 0) = 1
     partial(binomial_term(a, b, 0), 1) = binomial_term(a, b, 0, 0)
-    (a + b).exp(0) = partial(binomial_term(a, b, 0), 0.suc)
+    (a + b).pow(0) = partial(binomial_term(a, b, 0), 0.suc)
     f(0)
 
     // Inductive step
     forall(m: Nat) {
         if f(m) {
             // Induction hypothesis
-            (a + b).exp(m) = partial(binomial_term(a, b, m), m.suc)
+            (a + b).pow(m) = partial(binomial_term(a, b, m), m.suc)
 
             // LHS: (a + b)^(m+1) = (a + b) * (a + b)^m
-            (a + b).exp(m.suc) = (a + b) * (a + b).exp(m)
-            (a + b).exp(m.suc) = (a + b) * partial(binomial_term(a, b, m), m.suc)
+            (a + b).pow(m.suc) = (a + b) * (a + b).pow(m)
+            (a + b).pow(m.suc) = (a + b) * partial(binomial_term(a, b, m), m.suc)
 
             // Apply binomial_distribution to complete the inductive step
             (a + b) * partial(binomial_term(a, b, m), m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)
-            (a + b).exp(m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)
+            (a + b).pow(m.suc) = partial(binomial_term(a, b, m.suc), m.suc.suc)
 
             f(m.suc)
         }

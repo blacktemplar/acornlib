@@ -1,6 +1,6 @@
 from comm_semigroup import CommSemigroup
 from monoid import Monoid
-from nat.nat_base import Nat // For Nat.0, Nat.suc, and general Nat usage
+from nat.nat_monoid import Nat // For Nat.0, Nat.suc, and general Nat usage
 
 /// CommMonoid represents a commutative, multiplicative monoid.
 typeclass M: CommMonoid extends CommSemigroup, Monoid {
