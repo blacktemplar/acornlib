@@ -1,5 +1,6 @@
 from nat.lattice import Nat
-from list.list_sum import List, map, partial, sum
+from nat.nat_base import sub_one_sub_lt
+from list.list_sum import List, list_extensionality, map, partial, sum
 from option import Option
 
 numerals Nat
@@ -254,4 +255,80 @@ theorem reverse_get_idx[T](list: List[T], idx: Nat) {
     List.induction(function (l: List[T]) {
         p(l)
     })
+}
+
+/// Helper lemma: reverse(n.range) and map(n.range, {n-1-i}) agree at every index.
+theorem range_reverse_map_get_idx(n: Nat, idx: Nat) {
+    idx < n implies reverse(n.range).get_idx(idx) = map(n.range, function(i: Nat) { n - 1 - i }).get_idx(idx)
+} by {
+    if idx < n {
+        if n = 0 {
+            // idx < 0 is impossible, so this case is vacuous
+            false
+        } else {
+            // n > 0 case
+            n > 0
+
+            // Apply reverse_get_idx theorem
+            n.range.length = n
+            idx < n.range.length
+            reverse(n.range).get_idx(idx) = n.range.get_idx(n.range.length - 1 - idx)
+            n.range.length - 1 - idx = n - 1 - idx
+            reverse(n.range).get_idx(idx) = n.range.get_idx(n - 1 - idx)
+
+            // Use sub_one_sub_lt to show n - 1 - idx < n
+            n > 0
+            sub_one_sub_lt(n, idx)
+
+            // Apply range_idx_eq_idx theorem
+            n - 1 - idx < n
+            n.range.get_idx(n - 1 - idx) = Option.some(n - 1 - idx)
+            reverse(n.range).get_idx(idx) = Option.some(n - 1 - idx)
+
+            // Apply map_range theorem
+            idx < n
+            map(n.range, function(i: Nat) { n - 1 - i }).get_idx(idx) = Option.some((n - 1) - idx)
+
+            // Both sides equal Option.some(n - 1 - idx)
+            reverse(n.range).get_idx(idx) = map(n.range, function(i: Nat) { n - 1 - i }).get_idx(idx)
+        }
+    }
+}
+
+/// The reverse of n.range equals mapping the subtraction function over n.range.
+/// In other words, [0, 1, 2, ..., n-1] reversed equals [n-1, n-2, ..., 1, 0],
+/// which is the same as mapping i to (n-1-i) over the original range.
+theorem range_reverse_map(n: Nat) {
+    reverse(n.range) = map(n.range, function(i: Nat) { n - 1 - i })
+} by {
+    if n = 0 {
+        // Base case: 0.range = [], and both sides equal []
+        reverse(0.range) = List.nil[Nat]
+        map(0.range, function(i: Nat) { 0 - 1 - i }) = List.nil[Nat]
+    } else {
+        // n > 0 case
+        n > 0
+
+        // Both lists have the same length
+        reverse(n.range).length = n.range.length
+        n.range.length = n
+        map(n.range, function(i: Nat) { n - 1 - i }).length = n.range.length
+        reverse(n.range).length = map(n.range, function(i: Nat) { n - 1 - i }).length
+
+        // They agree at every index by the helper lemma
+        forall(idx: Nat) {
+            if idx < reverse(n.range).length {
+                range_reverse_map_get_idx(n, idx)
+                reverse(n.range).get_idx(idx) = map(n.range, function(i: Nat) { n - 1 - i }).get_idx(idx)
+            }
+        }
+
+        // Apply list extensionality to conclude the lists are equal
+        reverse(n.range).length = map(n.range, function(i: Nat) { n - 1 - i }).length
+        forall(idx: Nat) {
+            idx < reverse(n.range).length implies reverse(n.range).get_idx(idx) = map(n.range, function(i: Nat) { n - 1 - i }).get_idx(idx)
+        }
+        list_extensionality(reverse(n.range), map(n.range, function(i: Nat) { n - 1 - i }))
+        reverse(n.range) = map(n.range, function(i: Nat) { n - 1 - i })
+    }
 }
