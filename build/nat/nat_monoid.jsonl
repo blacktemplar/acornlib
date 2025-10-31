@@ -6,13 +6,13 @@
 {"goal":"a.pow(b + x) = a.pow(b) * a.pow(x)","proof":["a.pow(b) * a.pow(x) = a.pow(b + x)"]}
 {"goal":"a.pow(b + x.suc) = a.pow(b) * a.pow(x.suc)","proof":["a.pow(b) * a.pow(x.suc) = a.pow(b + x.suc)"]}
 {"goal":"f(x.suc)","proof":["a.pow(b) * a.pow(x.suc) != a.pow(b + x.suc) or f(x.suc)"]}
-{"goal":"f(c)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(c)","not f(s0(f).suc)","not f(0) or f(s0(f)) or f(c)","not f(s0(f))","f(s0(f))"]}
+{"goal":"f(c)","proof":["a.pow(b) * a.pow(c) != a.pow(b + c) or f(c)","a.pow(b) * a.pow(c) = a.pow(b + c)"]}
 {"goal":"exp_add","proof":["not f(c) or a.pow(b) * a.pow(c) = a.pow(b + c)"]}
 {"goal":"f(0)","proof":["a.pow(b * 0) != a.pow(b).pow(0) or f(0)","a.pow(b * 0) = a.pow(b).pow(0)"]}
 {"goal":"a.pow(b * x) = a.pow(b).pow(x)","proof":["not f(x) or a.pow(b * x) = a.pow(b).pow(x)"]}
 {"goal":"a.pow(b * x.suc) = a.pow(b).pow(x.suc)","proof":["a.pow(b * x.suc) = a.pow(b).pow(x.suc)"]}
 {"goal":"f(x.suc)","proof":["a.pow(b * x.suc) != a.pow(b).pow(x.suc) or f(x.suc)"]}
-{"goal":"f(c)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(c)","not f(s0(f).suc)","not f(0) or f(s0(f)) or f(c)","not f(s0(f))","f(s0(f))"]}
+{"goal":"f(c)","proof":["a.pow(b * c) != a.pow(b).pow(c) or f(c)","a.pow(b * c) = a.pow(b).pow(c)"]}
 {"goal":"exp_mul","proof":["not f(c) or a.pow(b * c) = a.pow(b).pow(c)"]}
 {"goal":"exists(k0: Nat) { n = k0.suc }","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { s0(x0).suc = x0 or 0 = x0 } }","s0(n).suc != n","s0(n).suc = n or n = 0"]}
 {"goal":"zero_exp","proof":["b.suc != b.suc or 0 * 0.pow(b) = 0.pow(b.suc)","0.pow(b.suc) != 0","0 * 0.pow(b) = 0","0 * 0.pow(b) = 0.pow(b.suc)"]}
@@ -24,7 +24,7 @@
 {"goal":"a.pow(x) <= a.pow(x.suc)","proof":["x.suc != x.suc or a * a.pow(x) = a.pow(x.suc)","a.pow(x) <= a.pow(x) * a or a = 0","a.pow(x) * a = a * a.pow(x)","a.pow(x) <= a.pow(x) * a","a * a.pow(x) = a.pow(x.suc)","not a.pow(x) <= a * a.pow(x)"]}
 {"goal":"1 <= a.pow(x.suc)","proof":["not 1 <= a.pow(x) or not a.pow(x) <= a.pow(x.suc) or 1 <= a.pow(x.suc)","not a.pow(x) <= a.pow(x.suc) or not 1 <= a.pow(x)"]}
 {"goal":"f(x.suc)","proof":["1 <= a.pow(x.suc) = f(x.suc)"]}
-{"goal":"f(b)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(b)","not f(s0(f).suc)","not f(0) or f(s0(f)) or f(b)","not f(s0(f))","f(s0(f))"]}
+{"goal":"f(b)","proof":["let s0: (Nat -> Bool) -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(0) or f(b)","not f(s0(f).suc)","not f(0) or f(s0(f)) or f(b)","not f(s0(f))","f(s0(f))"]}
 {"goal":"exp_gte_one","proof":["1 <= a.pow(b) = f(b)"]}
 {"goal":"exists(k0: Nat) { b = k0.suc }","proof":["let s0: Nat -> Nat satisfy { forall(x0: Nat) { s0(x0).suc = x0 or 0 = x0 } }","s0(b).suc != b","s0(b).suc = b or b = 0"]}
 {"goal":"a.pow(b) = a * a.pow(b_pred)","proof":["b_pred.suc != b or a * a.pow(b_pred) = a.pow(b)"]}

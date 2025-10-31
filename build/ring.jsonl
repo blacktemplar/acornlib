@@ -47,5 +47,5 @@
 {"goal":"-R.1 + a.pow(x.suc) = a.pow(x.suc) + -R.1","proof":["a.pow(x.suc) + -R.1 = -R.1 + a.pow(x.suc)"]}
 {"goal":"(a + -R.1) * sum[R](map[Nat, R](x.suc.range, a.pow)) = a.pow(x.suc) + -R.1","proof":[]}
 {"goal":"f(x.suc)","proof":["(a + -R.1) * sum[R](map[Nat, R](x.suc.range, a.pow)) != a.pow(x.suc) + -R.1 or f(x.suc)"]}
-{"goal":"f(n)","proof":["let s0: Nat -> Bool -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(Nat.0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(Nat.0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(Nat.0) or f(n)","not f(s0(f).suc)","not f(Nat.0) or f(s0(f)) or f(n)","not f(s0(f))","f(s0(f))"]}
+{"goal":"f(n)","proof":["let s0: (Nat -> Bool) -> Nat satisfy { forall(x0: Nat -> Bool, x1: Nat) { not x0(Nat.0) or x0(s0(x0)) or x0(x1) } and forall(x2: Nat -> Bool, x3: Nat) { not x2(s0(x2).suc) or not x2(Nat.0) or x2(x3) } }","not f(s0(f)) or f(s0(f).suc)","not f(s0(f).suc) or not f(Nat.0) or f(n)","not f(s0(f).suc)","not f(Nat.0) or f(s0(f)) or f(n)","not f(s0(f))","f(s0(f))"]}
 {"goal":"geometric_sum","proof":["not f(n) or (a + -R.1) * sum[R](map[Nat, R](n.range, a.pow)) = a.pow(n) + -R.1"]}
