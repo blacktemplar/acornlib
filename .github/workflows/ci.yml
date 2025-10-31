@@ -19,4 +19,4 @@ jobs:
         run: npm install -g @acornprover/cli
 
       - name: Run Acorn
-        run: acorn
+        run: acorn verify --strict
