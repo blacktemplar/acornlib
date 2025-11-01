@@ -16,27 +16,47 @@ All foundational definitions, algebraic properties, absolute convergence infrast
 
 ---
 
-### Phase 2: Convergence Proofs 🚧 IN PROGRESS
+### Phase 2: Convergence Proofs 🚀 ACTIVE EXECUTION
 
-**🎯 Next Steps:**
+**Current Plan: Prove Foundation Lemmas to Unlock Cauchy Convergence**
 
-These theorems complete the proof that Cauchy products of absolutely convergent series converge:
+**🎯 Immediate Tasks (In Order):**
 
-1. **`partial_product_as_double_sum`** ⏳ TODO
-   - Statement: `partial(a,n) * partial(b,n) = double_sum(n, n, function(i,j) { a(i) * b(j) })`
-   - Strategy: Use `double_sum_col_expand` and induction
-   - Note: Use named helpers like `row_sum` to avoid lambda issues
+1. **`mul_le_mul_nonneg`** ✅ COMPLETE
+   - Proved using `lte_mul_nonneg_right` and `lte_mul_nonneg_left` via transitivity
+   - Located at cauchy.ac:1327
 
-2. **`cauchy_partial_product_bound`** ⏳ TODO (commented scaffolding around line ~1200)
-   - Statement: For nonnegative sequences, `partial(cauchy_seq(a,b),n) ≤ partial(a,n) * partial(b,n)`
-   - Strategy: Show Cauchy product is subset of full product expansion
-   - Depends on: `partial_product_as_double_sum` or alternative approach
+2. **`partial_monotone`** ✅ COMPLETE
+   - Proved using existing `nonneg_imp_partial_increasing` theorem
+   - Located at cauchy.ac:1354
 
-3. **`cauchy_product_abs_converges`** ⏳ TODO (Mertens' Theorem)
+3. **`double_sum_diagonal_bound`** 🚧 BLOCKED - Needs Infrastructure
+   - Statement: `cauchy_product(a, b, m) <= double_sum(m.suc, m.suc, prod_fn(a, b))` for nonnegative a,b
+   - Status: Mathematical argument complete and documented (cauchy.ac:1380-1398)
+   - Issue: Acorn cannot automatically verify the subset sum property
+   - **Blocking issue**: Needs formal lemma about subset sums of nonnegative terms
+   - Two possible approaches:
+     a) Prove general lemma: summing nonnegative terms over subset ≤ summing over full set
+     b) Explicitly construct: Cauchy sum + additional nonnegative terms = double sum
+   - This is the KEY BLOCKER for all remaining work
+
+4. **`cauchy_partial_product_bound`** 🚧 BLOCKED (depends on #3)
+   - Requires `double_sum_diagonal_bound` to complete the inductive step
+   - Mathematical argument fully documented
+   - Cannot proceed until #3 is resolved
+
+**Previously Completed:**
+
+✅ `partial_product_as_double_sum` - Shows `partial(a,n) * partial(b,n) = ∑ᵢ∑ⱼ a(i)*b(j)`
+✅ `double_sum_row_expand` - Infrastructure for row expansion
+✅ Infrastructure: `prod_fn`, `row_val`, `cauchy_indicator`
+
+5. **`cauchy_product_abs_converges`** (Mertens' Theorem) - Blocked on #4
    - Statement: If `absolutely_converges(a)` and `absolutely_converges(b)`, then `absolutely_converges(cauchy_seq(a, b))`
    - Strategy: Use comparison test with `cauchy_partial_product_bound`
+   - Status: Full proof structure documented
 
-4. **Cauchy product limit formula** ⏳ TODO
+6. **Cauchy product limit formula** - Blocked on #5
    - Statement: `limit(partial(cauchy_seq(a, b))) = limit(partial(a)) * limit(partial(b))`
    - Will need: Theorem about products of convergent sequences
 
